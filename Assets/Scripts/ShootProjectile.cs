@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Extensions;
+using Assets.Scripts.Towers;
 
 namespace Assets.Scripts
 {
@@ -30,10 +31,17 @@ namespace Assets.Scripts
         public int Range;
 
         /// <summary>
+        /// The tower.
+        /// </summary>
+        private Tower tower;
+
+        /// <summary>
         /// Start checking for enemies.
         /// </summary>
         void Start()
         {
+            tower = gameObject.GetComponent<Tower>();
+
             InvokeRepeating(nameof(CheckForEnemies), 0, 1f / FireRate);
         }
 
@@ -70,7 +78,7 @@ namespace Assets.Scripts
             projectileComponent.StartPosition = transform.position;
             projectileComponent.Range = Range;
 
-            var rb = projectile.AddComponent<Rigidbody2D>();
+            var rb = projectile.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(enemy.transform) * ProjectileSpeed;
         }
 
