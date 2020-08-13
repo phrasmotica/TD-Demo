@@ -72,7 +72,7 @@ namespace Assets.Scripts
 
             for (int i = 0; i < enemyCount; i++)
             {
-                var enemy = Instantiate(EnemyPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
+                var enemy = Instantiate(EnemyPrefab);
                 enemy.GetComponent<Enemy>().OnKill = (reward) => Money += reward;
 
                 yield return new WaitForSeconds(1);
