@@ -23,6 +23,11 @@ namespace Assets.Scripts
         private int health;
 
         /// <summary>
+        /// Returns the enemy's current health as a decimal value between 0 and 1.
+        /// </summary>
+        public float HealthFraction => (float) health / StartingHealth;
+
+        /// <summary>
         /// Delegate to run on death.
         /// </summary>
         public Action<int> OnKill { private get; set; }
