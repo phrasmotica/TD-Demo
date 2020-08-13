@@ -50,7 +50,7 @@ namespace Assets.Scripts
         /// <summary>
         /// If hit by a projectile, take damage and destroy the projectile.
         /// </summary>
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             var otherObj = collision.gameObject;
 
