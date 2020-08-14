@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts.Controller;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -9,11 +10,6 @@ namespace Assets.Scripts
         /// The current wave.
         /// </summary>
         private int CurrentWave;
-
-        /// <summary>
-        /// The current money.
-        /// </summary>
-        private int Money;
 
         /// <summary>
         /// The number of waves.
@@ -27,12 +23,18 @@ namespace Assets.Scripts
         public GameObject EnemyPrefab;
 
         /// <summary>
+        /// The money store.
+        /// </summary>
+        private MoneyStore MoneyStore;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         public void Start()
         {
+            MoneyStore = gameObject.GetComponent<MoneyStore>();
+
             Physics2D.gravity = Vector2.zero;
-            Money = 0;
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace Assets.Scripts
             for (int i = 0; i < enemyCount; i++)
             {
                 var enemy = Instantiate(EnemyPrefab);
-                enemy.GetComponent<Enemy>().OnKill = (reward) => Money += reward;
+                enemy.GetComponent<Enemy>().OnKill = (reward) => MoneyStore.AddMoney(reward);
 
                 yield return new WaitForSeconds(1);
             }
@@ -93,7 +95,6 @@ namespace Assets.Scripts
         public void OnGUI()
         {
             GUI.Label(new Rect(0, 0, 160, 30), $"Wave {CurrentWave}");
-            GUI.Label(new Rect(0, 30, 160, 30), $"Money {Money}");
         }
     }
 }
