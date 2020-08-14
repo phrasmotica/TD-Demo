@@ -24,6 +24,14 @@ namespace Assets.Scripts.Controller
         }
 
         /// <summary>
+        /// Returns whether we can afford the given price.
+        /// </summary>
+        public bool CanAfford(int price)
+        {
+            return price <= Money;
+        }
+
+        /// <summary>
         /// Adds the given amount of money to the current pot.
         /// </summary>
         public void AddMoney(int amount)

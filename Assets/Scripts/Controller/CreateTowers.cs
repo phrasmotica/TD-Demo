@@ -31,9 +31,17 @@ namespace Assets.Scripts.Controller
         {
             using (var logger = new MethodLogger(nameof(CreateTowers)))
             {
-                logger.Log("Creating tower");
-                var tower = Instantiate(TowerPrefab);
-                tower.GetComponent<Tower>().OnPlace = (price) => MoneyStore.AddMoney(-price);
+                // only create if we can afford the tower
+                if (MoneyStore.CanAfford(TowerPrefab.GetComponent<Tower>().Price))
+                {
+                    logger.Log("Creating tower");
+                    var tower = Instantiate(TowerPrefab);
+                    tower.GetComponent<Tower>().OnPlace = (price) => MoneyStore.AddMoney(-price);
+                }
+                else
+                {
+                    logger.Log("Cannot afford tower!");
+                }
             }
         }
     }
