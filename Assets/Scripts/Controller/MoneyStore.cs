@@ -5,6 +5,12 @@ namespace Assets.Scripts.Controller
     public class MoneyStore : MonoBehaviour
     {
         /// <summary>
+        /// The starting money.
+        /// </summary>
+        [Range(10, 100)]
+        public int StartingMoney;
+
+        /// <summary>
         /// The current money.
         /// </summary>
         private int Money;
@@ -14,7 +20,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public void Start()
         {
-            Money = 10;
+            Money = StartingMoney;
         }
 
         /// <summary>
