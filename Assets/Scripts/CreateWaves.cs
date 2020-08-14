@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Assets.Scripts.Controller;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -9,7 +10,24 @@ namespace Assets.Scripts
         /// <summary>
         /// The current wave.
         /// </summary>
-        private int CurrentWave;
+        private int CurrentWave
+        {
+            get
+            {
+                return currentWave;
+            }
+            set
+            {
+                currentWave = value;
+                WaveText.text = $"Wave {currentWave}";
+            }
+        }
+        private int currentWave;
+
+        /// <summary>
+        /// The text used to display the waves.
+        /// </summary>
+        public Text WaveText;
 
         /// <summary>
         /// The number of waves.
@@ -87,14 +105,6 @@ namespace Assets.Scripts
         private int GetEnemyCount(int waveNumber)
         {
             return waveNumber;
-        }
-
-        /// <summary>
-        /// Renders a GUI.
-        /// </summary>
-        public void OnGUI()
-        {
-            GUI.Label(new Rect(0, 0, 160, 30), $"Wave {CurrentWave}");
         }
     }
 }

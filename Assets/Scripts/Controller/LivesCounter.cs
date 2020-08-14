@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
@@ -11,9 +12,26 @@ namespace Assets.Scripts.Controller
         public int StartingLives;
 
         /// <summary>
-        /// The number of lives.
+        /// The current number of lives.
         /// </summary>
-        private int Lives;
+        private int Lives
+        {
+            get
+            {
+                return lives;
+            }
+            set
+            {
+                lives = value;
+                LivesText.text = $"Lives: {lives}";
+            }
+        }
+        private int lives;
+
+        /// <summary>
+        /// The text used to display the lives.
+        /// </summary>
+        public Text LivesText;
 
         /// <summary>
         /// Start is called before the first frame update.
@@ -29,14 +47,6 @@ namespace Assets.Scripts.Controller
         public void AddLives(int amount)
         {
             Lives += amount;
-        }
-
-        /// <summary>
-        /// Renders a GUI.
-        /// </summary>
-        public void OnGUI()
-        {
-            GUI.Label(new Rect(0, 60, 160, 30), $"Lives {Lives}");
         }
     }
 }

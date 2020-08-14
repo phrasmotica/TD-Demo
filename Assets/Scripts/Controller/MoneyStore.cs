@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
@@ -13,7 +14,24 @@ namespace Assets.Scripts.Controller
         /// <summary>
         /// The current money.
         /// </summary>
-        private int Money;
+        private int Money
+        {
+            get
+            {
+                return money;
+            }
+            set
+            {
+                money = value;
+                MoneyText.text = $"Money: {money}";
+            }
+        }
+        private int money;
+
+        /// <summary>
+        /// The text used to display the money.
+        /// </summary>
+        public Text MoneyText;
 
         /// <summary>
         /// Start is called before the first frame update.
@@ -37,14 +55,6 @@ namespace Assets.Scripts.Controller
         public void AddMoney(int amount)
         {
             Money += amount;
-        }
-
-        /// <summary>
-        /// Renders a GUI.
-        /// </summary>
-        public void OnGUI()
-        {
-            GUI.Label(new Rect(0, 30, 160, 30), $"Money {Money}");
         }
     }
 }
