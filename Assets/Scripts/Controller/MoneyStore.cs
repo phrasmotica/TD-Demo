@@ -14,7 +14,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public void Start()
         {
-            Money = 0;
+            Money = 10;
         }
 
         /// <summary>

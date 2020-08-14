@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,15 +14,26 @@ namespace Assets.Scripts.Towers
         public TowerState State;
 
         /// <summary>
-        /// The tower's initial Z position.
+        /// The tower's price.
         /// </summary>
-        private float InitialZPos;
+        [Range(0, 5)]
+        public int Price;
 
         /// <summary>
         /// The time taken in seconds for this tower to warm up.
         /// </summary>
         [Range(0, 5)]
         public int WarmupTime;
+
+        /// <summary>
+        /// Delegate to run on placing the tower.
+        /// </summary>
+        public Action<int> OnPlace { private get; set; }
+
+        /// <summary>
+        /// The tower's initial Z position.
+        /// </summary>
+        private float InitialZPos;
 
         // Start is called before the first frame update
         private void Start()
@@ -44,6 +56,7 @@ namespace Assets.Scripts.Towers
                     if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                     {
                         logger.Log($"Placed tower at {worldPoint}");
+                        OnPlace(Price);
                         DoWarmup();
                     }
                 }

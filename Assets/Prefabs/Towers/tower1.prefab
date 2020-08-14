@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  Price: 2
   WarmupTime: 3
 --- !u!114 &6398639229438502375
 MonoBehaviour:

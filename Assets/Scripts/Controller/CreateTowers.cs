@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Util;
+﻿using Assets.Scripts.Towers;
+using Assets.Scripts.Util;
 using UnityEngine;
 
 namespace Assets.Scripts.Controller
@@ -11,6 +12,19 @@ namespace Assets.Scripts.Controller
         public GameObject TowerPrefab;
 
         /// <summary>
+        /// The money store.
+        /// </summary>
+        private MoneyStore MoneyStore;
+
+        /// <summary>
+        /// Start is called before the first frame update.
+        /// </summary>
+        private void Start()
+        {
+            MoneyStore = gameObject.GetComponent<MoneyStore>();
+        }
+
+        /// <summary>
         /// Creates a tower.
         /// </summary>
         public void CreateTower()
@@ -18,7 +32,8 @@ namespace Assets.Scripts.Controller
             using (var logger = new MethodLogger(nameof(CreateTowers)))
             {
                 logger.Log("Creating tower");
-                Instantiate(TowerPrefab);
+                var tower = Instantiate(TowerPrefab);
+                tower.GetComponent<Tower>().OnPlace = (price) => MoneyStore.AddMoney(-price);
             }
         }
     }
