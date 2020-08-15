@@ -47,6 +47,12 @@ namespace Assets.Scripts.Controller
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
+            var towers = GameObject.FindGameObjectsWithTag("Tower");
+            foreach (var t in towers)
+            {
+                Destroy(t);
+            }
+
             Destroy(gameOverCanvas);
         }
     }
