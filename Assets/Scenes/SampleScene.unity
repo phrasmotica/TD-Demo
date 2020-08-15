@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eee215412f1b34b98bfff6b0300c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LivesController: {fileID: 0}
+  LivesController: {fileID: 438958076}
 --- !u!1 &709282964
 GameObject:
   m_ObjectHideFlags: 0
