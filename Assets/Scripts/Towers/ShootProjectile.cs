@@ -42,6 +42,7 @@ namespace Assets.Scripts.Towers
         {
             tower = gameObject.GetComponent<Tower>();
 
+            // TODO: only start shooting once the tower has warmed up
             InvokeRepeating(nameof(CheckForEnemies), 0, 1f / FireRate);
         }
 
