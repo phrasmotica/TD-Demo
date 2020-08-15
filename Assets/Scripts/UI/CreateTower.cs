@@ -14,6 +14,11 @@ namespace Assets.Scripts.UI
         public GameObject TowerPrefab;
 
         /// <summary>
+        /// Gets the price of the tower.
+        /// </summary>
+        private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
+
+        /// <summary>
         /// The sell tower script.
         /// </summary>
         public SellTower SellTower;
@@ -39,7 +44,7 @@ namespace Assets.Scripts.UI
             using (var logger = new MethodLogger(nameof(CreateTower)))
             {
                 // only create if we can afford the tower
-                if (MoneyController.CanAfford(TowerPrefab.GetComponent<Tower>().Price))
+                if (MoneyController.CanAfford(TowerPrice))
                 {
                     logger.Log("Creating tower");
                     var towerObj = Instantiate(TowerPrefab);
@@ -59,7 +64,7 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void SetInteractable(int money)
         {
-            GetComponent<Button>().interactable = money >= TowerPrefab.GetComponent<Tower>().Price;
+            GetComponent<Button>().interactable = money >= TowerPrice;
         }
     }
 }
