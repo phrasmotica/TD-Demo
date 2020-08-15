@@ -51,18 +51,21 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void CheckForEnemies()
         {
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy")
-                                    .Where(e => transform.GetDistanceToObject(e) <= Range)
-                                    .OrderBy(e => transform.GetDistanceToObject(e))
-                                    .ToArray();
-
-            if (enemies.Any())
+            if (tower.CanFire)
             {
-                var nearestEnemy = enemies[0];
-                var distance = transform.GetDistanceToObject(nearestEnemy);
-                Debug.Log($"Distance: {distance}");
+                var enemies = GameObject.FindGameObjectsWithTag("Enemy")
+                                        .Where(e => transform.GetDistanceToObject(e) <= Range)
+                                        .OrderBy(e => transform.GetDistanceToObject(e))
+                                        .ToArray();
 
-                Shoot(nearestEnemy.GetComponent<Enemy>());
+                if (enemies.Any())
+                {
+                    var nearestEnemy = enemies[0];
+                    var distance = transform.GetDistanceToObject(nearestEnemy);
+                    Debug.Log($"Distance: {distance}");
+
+                    Shoot(nearestEnemy.GetComponent<Enemy>());
+                }
             }
         }
 

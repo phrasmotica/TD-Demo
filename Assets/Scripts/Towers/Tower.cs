@@ -37,6 +37,11 @@ namespace Assets.Scripts.Towers
         public float WarmupProgress => Age / WarmupTime;
 
         /// <summary>
+        /// Gets whether the tower can fire.
+        /// </summary>
+        public bool CanFire => State == TowerState.Firing;
+
+        /// <summary>
         /// The sell tower script.
         /// </summary>
         public SellTower SellTower;
