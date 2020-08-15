@@ -77,6 +77,11 @@ namespace Assets.Scripts.Towers
         private bool isSelected;
 
         /// <summary>
+        /// Whether this tower is colliding with another tower.
+        /// </summary>
+        private bool isCollidingWithAnotherTower;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
@@ -105,9 +110,16 @@ namespace Assets.Scripts.Towers
 
                     if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                     {
-                        logger.Log($"Placed tower at {worldPoint}");
-                        OnPlace(Price);
-                        DoWarmup();
+                        if (!isCollidingWithAnotherTower)
+                        {
+                            logger.Log($"Placed tower at {worldPoint}");
+                            OnPlace(Price);
+                            DoWarmup();
+                        }
+                        else
+                        {
+                            logger.Log("Tower collision, cannot place here");
+                        }
                     }
                 }
 
@@ -166,6 +178,28 @@ namespace Assets.Scripts.Towers
                         range.SetActive(true);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Set tower collision flag if necessary.
+        /// </summary>
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.gameObject.CompareTag(Tags.TowerTag))
+            {
+                isCollidingWithAnotherTower = true;
+            }
+        }
+
+        /// <summary>
+        /// Clear tower collision flag if necessary.
+        /// </summary>
+        private void OnTriggerExit2D(Collider2D collider)
+        {
+            if (collider.gameObject.CompareTag(Tags.TowerTag))
+            {
+                isCollidingWithAnotherTower = false;
             }
         }
 
