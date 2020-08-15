@@ -14,12 +14,12 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The position where the projectile was fired from.
         /// </summary>
-        public Vector3 StartPosition;
+        public Vector3 StartPosition { get; set; }
 
         /// <summary>
         /// The range of this projectile.
         /// </summary>
-        public int Range;
+        public int Range { get; set; }
 
         private void Update()
         {

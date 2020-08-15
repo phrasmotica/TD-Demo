@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6789323038238934127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2959f71de0ec2414fbc4ab5f32f45754, type: 3}
+  m_Script: {fileID: 11500000, guid: 673c9bc7564b29e4e98dbc8e68f9c624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 3
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6789323038238934127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085e7f7f8ac19ec4c8a941ed6fd40c9b, type: 3}
+  m_Script: {fileID: 11500000, guid: b7443006d171c8344adbed54761aaad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   InitialVelocity: 2
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6789323038238934127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3b752efa44ef745a3241bf13899584, type: 3}
+  m_Script: {fileID: 11500000, guid: 660769246b4390c45970b1aa1ed57857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OffsetY: 0.2
