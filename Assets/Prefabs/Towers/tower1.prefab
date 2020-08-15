@@ -517,7 +517,6 @@ MonoBehaviour:
   Price: 2
   WarmupTime: 3
   SellTower: {fileID: 0}
-  ShouldDrawRange: 1
 --- !u!114 &6398639229438502375
 MonoBehaviour:
   m_ObjectHideFlags: 0
