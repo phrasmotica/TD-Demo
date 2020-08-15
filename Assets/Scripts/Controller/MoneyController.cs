@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
@@ -10,6 +11,11 @@ namespace Assets.Scripts.Controller
         /// </summary>
         [Range(10, 100)]
         public int StartingMoney;
+
+        /// <summary>
+        /// The create tower script.
+        /// </summary>
+        public CreateTower CreateTower;
 
         /// <summary>
         /// The current money.
@@ -24,6 +30,7 @@ namespace Assets.Scripts.Controller
             {
                 money = value;
                 MoneyText.text = $"Money: {money}";
+                CreateTower.SetInteractable(money);
             }
         }
         private int money;
