@@ -38,7 +38,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public void Start()
         {
-            Money = StartingMoney;
+            ResetMoney();
         }
 
         /// <summary>
@@ -55,6 +55,14 @@ namespace Assets.Scripts.Controller
         public void AddMoney(int amount)
         {
             Money += amount;
+        }
+
+        /// <summary>
+        /// Resets to the starting money.
+        /// </summary>
+        public void ResetMoney()
+        {
+            Money = StartingMoney;
         }
     }
 }

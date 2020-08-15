@@ -44,7 +44,7 @@ namespace Assets.Scripts.Controller
         private void Start()
         {
             gameOverScreen = gameObject.GetComponent<GameOverScreen>();
-            Lives = StartingLives;
+            ResetLives();
         }
 
         /// <summary>
@@ -54,6 +54,14 @@ namespace Assets.Scripts.Controller
         {
             Lives += amount;
             CheckForGameEnd();
+        }
+
+        /// <summary>
+        /// Resets to the starting lives.
+        /// </summary>
+        public void ResetLives()
+        {
+            Lives = StartingLives;
         }
 
         /// <summary>

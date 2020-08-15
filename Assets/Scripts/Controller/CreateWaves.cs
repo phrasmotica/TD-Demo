@@ -58,6 +58,7 @@ namespace Assets.Scripts.Controller
         {
             MoneyStore = gameObject.GetComponent<MoneyStore>();
 
+            ResetWaves();
             Physics2D.gravity = Vector2.zero;
         }
 
@@ -93,6 +94,14 @@ namespace Assets.Scripts.Controller
         private int GetEnemyCount(int waveNumber)
         {
             return waveNumber;
+        }
+
+        /// <summary>
+        /// Resets to wave zero, ready for the start of a game.
+        /// </summary>
+        public void ResetWaves()
+        {
+            CurrentWave = 0;
         }
     }
 }
