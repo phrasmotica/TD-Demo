@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Towers;
 using Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
@@ -10,6 +11,34 @@ namespace Assets.Scripts.Controller
         /// The tower prefab.
         /// </summary>
         public GameObject TowerPrefab;
+
+        /// <summary>
+        /// The sell tower button.
+        /// </summary>
+        public Button SellTowerButton;
+
+        /// <summary>
+        /// The fraction of its price that a tower should sell for.
+        /// </summary>
+        [Range(0.5f, 1)]
+        public float SellFraction;
+
+        /// <summary>
+        /// The selected tower.
+        /// </summary>
+        public Tower SelectedTower
+        {
+            get
+            {
+                return selectedTower;
+            }
+            set
+            {
+                selectedTower = value;
+                SellTowerButton.interactable = selectedTower != null;
+            }
+        }
+        private Tower selectedTower;
 
         /// <summary>
         /// The money controller.
@@ -35,12 +64,37 @@ namespace Assets.Scripts.Controller
                 if (MoneyController.CanAfford(TowerPrefab.GetComponent<Tower>().Price))
                 {
                     logger.Log("Creating tower");
-                    var tower = Instantiate(TowerPrefab);
-                    tower.GetComponent<Tower>().OnPlace = (price) => MoneyController.AddMoney(-price);
+                    var towerObj = Instantiate(TowerPrefab);
+                    var tower = towerObj.GetComponent<Tower>();
+                    tower.TowersController = this;
+                    tower.OnPlace = (price) => MoneyController.AddMoney(-price);
                 }
                 else
                 {
                     logger.Log("Cannot afford tower!");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sells the given tower.
+        /// </summary>
+        public void SellTower()
+        {
+            using (var logger = new MethodLogger(nameof(TowersController)))
+            {
+                if (SelectedTower != null)
+                {
+                    var sellPrice = (int) (SelectedTower.Price * SellFraction);
+                    logger.Log($"Selling tower for {sellPrice}");
+
+                    MoneyController.AddMoney(sellPrice);
+                    Destroy(SelectedTower.gameObject);
+                    SelectedTower = null;
+                }
+                else
+                {
+                    logger.LogError("Select a tower first!");
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts.Controller;
 using Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -26,6 +27,11 @@ namespace Assets.Scripts.Towers
         public int WarmupTime;
 
         /// <summary>
+        /// The towers controller.
+        /// </summary>
+        public TowersController TowersController;
+
+        /// <summary>
         /// Delegate to run on placing the tower.
         /// </summary>
         public Action<int> OnPlace { private get; set; }
@@ -35,14 +41,25 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private float InitialZPos;
 
-        // Start is called before the first frame update
+        /// <summary>
+        /// The tower selection object.
+        /// </summary>
+        private GameObject selectionObj;
+
+        /// <summary>
+        /// Start is called before the first frame update.
+        /// </summary>
         private void Start()
         {
             InitialZPos = transform.position.z;
             State = TowerState.Positioning;
+
+            selectionObj = gameObject.transform.Find("selection").gameObject;
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame.
+        /// </summary>
         private void Update()
         {
             using (var logger = new MethodLogger(nameof(Tower)))
@@ -58,6 +75,25 @@ namespace Assets.Scripts.Towers
                         logger.Log($"Placed tower at {worldPoint}");
                         OnPlace(Price);
                         DoWarmup();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set this as the selected tower when clicked.
+        /// </summary>
+        private void OnMouseUp()
+        {
+            using (var logger = new MethodLogger(nameof(Tower)))
+            {
+                if (State == TowerState.Firing)
+                {
+                    if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+                    {
+                        logger.Log($"Selected tower");
+                        TowersController.SelectedTower = this;
+                        selectionObj.SetActive(true);
                     }
                 }
             }
