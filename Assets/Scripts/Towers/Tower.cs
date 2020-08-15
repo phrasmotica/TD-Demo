@@ -57,6 +57,11 @@ namespace Assets.Scripts.Towers
         private GameObject selectionObj;
 
         /// <summary>
+        /// The tower range object.
+        /// </summary>
+        private GameObject range;
+
+        /// <summary>
         /// The sprite renderer.
         /// </summary>
         private SpriteRenderer spriteRenderer;
@@ -69,7 +74,9 @@ namespace Assets.Scripts.Towers
             InitialZPos = transform.position.z;
             State = TowerState.Positioning;
 
-            selectionObj = gameObject.transform.Find("selection").gameObject;
+            selectionObj = transform.Find("selection").gameObject;
+            range = transform.Find("range").gameObject;
+
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
@@ -98,6 +105,30 @@ namespace Assets.Scripts.Towers
                 {
                     Age += Time.deltaTime;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Mouse is over the tower so draw the range.
+        /// </summary>
+        private void OnMouseEnter()
+        {
+            using (var logger = new MethodLogger(nameof(Range)))
+            {
+                logger.Log("Showing range");
+                range.SetActive(true);
+            }
+        }
+
+        /// <summary>
+        /// Mouse is no longer over the tower so hide the range.
+        /// </summary>
+        private void OnMouseExit()
+        {
+            using (var logger = new MethodLogger(nameof(Range)))
+            {
+                logger.Log("Hiding range");
+                range.SetActive(false);
             }
         }
 
