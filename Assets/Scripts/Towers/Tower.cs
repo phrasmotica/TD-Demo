@@ -67,6 +67,11 @@ namespace Assets.Scripts.Towers
         private SpriteRenderer spriteRenderer;
 
         /// <summary>
+        /// Whether this tower is selected.
+        /// </summary>
+        private bool isSelected;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
@@ -115,8 +120,11 @@ namespace Assets.Scripts.Towers
         {
             using (var logger = new MethodLogger(nameof(Range)))
             {
-                logger.Log("Showing range");
-                range.SetActive(true);
+                if (!isSelected)
+                {
+                    logger.Log("Showing range of unselected tower");
+                    range.SetActive(true);
+                }
             }
         }
 
@@ -127,8 +135,11 @@ namespace Assets.Scripts.Towers
         {
             using (var logger = new MethodLogger(nameof(Range)))
             {
-                logger.Log("Hiding range");
-                range.SetActive(false);
+                if (!isSelected)
+                {
+                    logger.Log("Hiding range of unselected tower");
+                    range.SetActive(false);
+                }
             }
         }
 
@@ -144,8 +155,10 @@ namespace Assets.Scripts.Towers
                     if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                     {
                         logger.Log($"Selected tower");
+                        isSelected = true;
                         SellTower.SelectedTower = this;
                         selectionObj.SetActive(true);
+                        range.SetActive(true);
                     }
                 }
             }
