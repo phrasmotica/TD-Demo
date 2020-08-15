@@ -12,6 +12,11 @@ namespace Assets.Scripts.Controller
         public int StartingLives;
 
         /// <summary>
+        /// The game over screen script.
+        /// </summary>
+        private GameOverScreen gameOverScreen;
+
+        /// <summary>
         /// The current number of lives.
         /// </summary>
         private int Lives
@@ -38,6 +43,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         private void Start()
         {
+            gameOverScreen = gameObject.GetComponent<GameOverScreen>();
             Lives = StartingLives;
         }
 
@@ -47,6 +53,18 @@ namespace Assets.Scripts.Controller
         public void AddLives(int amount)
         {
             Lives += amount;
+            CheckForGameEnd();
+        }
+
+        /// <summary>
+        /// Checks if the game should end, and if so ends the game.
+        /// </summary>
+        private void CheckForGameEnd()
+        {
+            if (Lives <= 0)
+            {
+                gameOverScreen.EndGame();
+            }
         }
     }
 }

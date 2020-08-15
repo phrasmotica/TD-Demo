@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 438958074}
   - component: {fileID: 438958075}
   - component: {fileID: 438958076}
+  - component: {fileID: 438958077}
   m_Layer: 0
   m_Name: controller
   m_TagString: GameController
@@ -446,8 +447,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c22454557d492c40a225e2980fc7c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingLives: 50
+  StartingLives: 1
   LivesText: {fileID: 149377255}
+--- !u!114 &438958077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438958071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a353f578fceb54f90611723830ce33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOverCanvasPrefab: {fileID: 9070692962457196100, guid: f8e9012a77948f848b5964ca1d9cf8f3,
+    type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

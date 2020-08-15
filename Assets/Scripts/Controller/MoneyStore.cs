@@ -14,13 +14,13 @@ namespace Assets.Scripts.Controller
         /// <summary>
         /// The current money.
         /// </summary>
-        private int Money
+        public int Money
         {
             get
             {
                 return money;
             }
-            set
+            private set
             {
                 money = value;
                 MoneyText.text = $"Money: {money}";
