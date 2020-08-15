@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Util;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Towers
 {
     /// <summary>
     /// Draws the range of a tower.

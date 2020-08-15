@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Util;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Enemies
 {
     /// <summary>
     /// Draws the health of an enemy.
@@ -46,7 +46,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Draw the range if necessary.
+        /// Draw the health if necessary.
         /// </summary>
         private void Update()
         {
@@ -62,7 +62,7 @@ namespace Assets.Scripts
         /// </summary>
         private void OnMouseEnter()
         {
-            using (var logger = new MethodLogger(nameof(DrawRange)))
+            using (var logger = new MethodLogger(nameof(DrawHealth)))
             {
                 logger.Log("Drawing health");
                 ShouldDrawHealth = true;
@@ -74,7 +74,7 @@ namespace Assets.Scripts
         /// </summary>
         private void OnMouseExit()
         {
-            using (var logger = new MethodLogger(nameof(DrawRange)))
+            using (var logger = new MethodLogger(nameof(DrawHealth)))
             {
                 logger.Log("Not drawing health");
                 ShouldDrawHealth = false;

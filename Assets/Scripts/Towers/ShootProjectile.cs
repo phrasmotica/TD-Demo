@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using UnityEngine;
 using Assets.Scripts.Extensions;
-using Assets.Scripts.Towers;
+using Assets.Scripts.Enemies;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Towers
 {
     public class ShootProjectile : MonoBehaviour
     {

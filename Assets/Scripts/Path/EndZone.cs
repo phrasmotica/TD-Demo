@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Controller;
+using Assets.Scripts.Enemies;
 using UnityEngine;
 
 namespace Assets.Scripts.Path
