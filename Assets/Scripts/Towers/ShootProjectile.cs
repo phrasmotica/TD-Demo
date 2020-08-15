@@ -2,6 +2,7 @@
 using UnityEngine;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Enemies;
+using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Towers
 {
@@ -53,7 +54,7 @@ namespace Assets.Scripts.Towers
         {
             if (tower.CanFire)
             {
-                var enemies = GameObject.FindGameObjectsWithTag("Enemy")
+                var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag)
                                         .Where(e => transform.GetDistanceToObject(e) <= Range)
                                         .OrderBy(e => transform.GetDistanceToObject(e))
                                         .ToArray();

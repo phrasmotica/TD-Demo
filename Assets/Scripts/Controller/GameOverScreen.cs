@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Util;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
@@ -47,7 +48,7 @@ namespace Assets.Scripts.Controller
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
-            var towers = GameObject.FindGameObjectsWithTag("Tower");
+            var towers = GameObject.FindGameObjectsWithTag(Tags.TowerTag);
             foreach (var t in towers)
             {
                 Destroy(t);
