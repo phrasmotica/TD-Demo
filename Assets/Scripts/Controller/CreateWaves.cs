@@ -19,6 +19,7 @@ namespace Assets.Scripts.Controller
             {
                 currentWave = value;
                 WaveText.text = $"Wave {currentWave}";
+                SendWaveButtonText.text = $"Send wave {currentWave + 1}";
             }
         }
         private int currentWave;
@@ -27,6 +28,11 @@ namespace Assets.Scripts.Controller
         /// The text used to display the waves.
         /// </summary>
         public Text WaveText;
+
+        /// <summary>
+        /// The text on the button used for sending the next wave.
+        /// </summary>
+        public Text SendWaveButtonText;
 
         /// <summary>
         /// The number of waves.
@@ -55,27 +61,11 @@ namespace Assets.Scripts.Controller
         }
 
         /// <summary>
-        /// Starts the waves.
+        /// Starts the coroutine to send the next wave.
         /// </summary>
-        public void StartWaves()
+        public void DoSendNextWave()
         {
-            Debug.Log("StartWaves()");
-
-            StartCoroutine(SendAllWaves());
-        }
-
-        /// <summary>
-        /// Sends all the waves on a timer.
-        /// </summary>
-        public IEnumerator SendAllWaves()
-        {
-            Debug.Log("SendAllWaves()");
-
-            for (int i = 1; i <= NumberOfWaves; i++)
-            {
-                yield return StartCoroutine(SendWave(i));
-                yield return new WaitForSeconds(3);
-            }
+            StartCoroutine(SendWave(++CurrentWave));
         }
 
         /// <summary>
@@ -84,8 +74,6 @@ namespace Assets.Scripts.Controller
         public IEnumerator SendWave(int waveNumber)
         {
             Debug.Log($"SendWave({waveNumber})");
-
-            CurrentWave = waveNumber;
 
             var enemyCount = GetEnemyCount(waveNumber);
 

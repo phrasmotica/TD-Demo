@@ -346,7 +346,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start waves
+  m_Text: Send wave 1
 --- !u!222 &268013315
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveText: {fileID: 834971719}
+  SendWaveButtonText: {fileID: 268013314}
   NumberOfWaves: 5
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
@@ -1200,7 +1201,7 @@ GameObject:
   - component: {fileID: 1775969660}
   - component: {fileID: 1775969659}
   m_Layer: 5
-  m_Name: StartWavesButton
+  m_Name: SendWaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1270,7 +1271,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 438958072}
-        m_MethodName: StartWaves
+        m_MethodName: DoSendNextWave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
