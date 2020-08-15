@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using Assets.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Controller
 {
     public class CreateWaves : MonoBehaviour
     {
