@@ -37,14 +37,35 @@ namespace Assets.Scripts.Towers
         private Tower tower;
 
         /// <summary>
-        /// Start checking for enemies.
+        /// The time in seconds since the last shot was fired, or null if the tower has not fired a
+        /// shot yet. Tracking this ensures a tower can start firing immediately whenever an enemy
+        /// appears instead of having to wait for a fixed cycle of its fire rate.
         /// </summary>
-        void Start()
-        {
-            tower = gameObject.GetComponent<Tower>();
+        private float? timeSinceLastShot;
 
-            // TODO: only start shooting once the tower has warmed up
-            InvokeRepeating(nameof(CheckForEnemies), 0, 1f / FireRate);
+        /// <summary>
+        /// Get reference to tower script.
+        /// </summary>
+        private void Start()
+        {
+            tower = GetComponent<Tower>();
+        }
+
+        /// <summary>
+        /// Update time since last shot and check for enemies.
+        /// </summary>
+        private void Update()
+        {
+            if (!timeSinceLastShot.HasValue)
+            {
+                timeSinceLastShot = Time.deltaTime;
+            }
+            else
+            {
+                timeSinceLastShot += Time.deltaTime;
+            }
+
+            CheckForEnemies();
         }
 
         /// <summary>
@@ -63,9 +84,13 @@ namespace Assets.Scripts.Towers
                 {
                     var nearestEnemy = enemies[0];
                     var distance = transform.GetDistanceToObject(nearestEnemy);
-                    Debug.Log($"Distance: {distance}");
 
-                    Shoot(nearestEnemy.GetComponent<Enemy>());
+                    // if there is an enemy in range and enough time has passed since the last shot, fire a shot
+                    if (!timeSinceLastShot.HasValue || timeSinceLastShot >= 1f / FireRate)
+                    {
+                        timeSinceLastShot = 0;
+                        Shoot(nearestEnemy.GetComponent<Enemy>());
+                    }
                 }
             }
         }
