@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Assets.Scripts.Controller;
+using Assets.Scripts.UI;
 using Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,9 +27,9 @@ namespace Assets.Scripts.Towers
         public int WarmupTime;
 
         /// <summary>
-        /// The towers controller.
+        /// The sell tower script.
         /// </summary>
-        public TowersController TowersController;
+        public SellTower SellTower;
 
         /// <summary>
         /// Delegate to run on placing the tower.
@@ -92,7 +92,7 @@ namespace Assets.Scripts.Towers
                     if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                     {
                         logger.Log($"Selected tower");
-                        TowersController.SelectedTower = this;
+                        SellTower.SelectedTower = this;
                         selectionObj.SetActive(true);
                     }
                 }

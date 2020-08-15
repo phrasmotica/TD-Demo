@@ -443,7 +443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 438958073}
   - component: {fileID: 438958072}
-  - component: {fileID: 438958074}
   - component: {fileID: 438958075}
   - component: {fileID: 438958076}
   - component: {fileID: 438958077}
@@ -485,22 +484,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &438958074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438958071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239808596d4a224479ac2ae1a88cb3e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
-    type: 3}
-  SellTowerButton: {fileID: 1250217729}
-  SellFraction: 0.5
 --- !u!114 &438958075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,6 +1072,7 @@ GameObject:
   - component: {fileID: 1250217731}
   - component: {fileID: 1250217730}
   - component: {fileID: 1250217729}
+  - component: {fileID: 1250217732}
   m_Layer: 5
   m_Name: SellTowerButton
   m_TagString: Untagged
@@ -1158,18 +1142,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1250217730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 438958074}
-        m_MethodName: SellTower
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1250217730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,6 +1180,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250217727}
   m_CullTransparentMesh: 0
+--- !u!114 &1250217732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250217727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a43cb0ba10a3e439d7e3b0f2e7fdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
+    type: 3}
+  MoneyController: {fileID: 438958075}
+  SellFraction: 0.5
 --- !u!1 &1640738268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,18 +1356,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1719435094}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 438958074}
-        m_MethodName: CreateTower
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1719435094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1428,7 +1406,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb545fd839cc284d940e091451d3268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 7631867566107524507, guid: 981d681464ba4a447b23baad8b0e6b6b, type: 3}
+  TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
+    type: 3}
+  SellTower: {fileID: 1250217732}
+  MoneyController: {fileID: 438958075}
 --- !u!1 &1775969657
 GameObject:
   m_ObjectHideFlags: 0
