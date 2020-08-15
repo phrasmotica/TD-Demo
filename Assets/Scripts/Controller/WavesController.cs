@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
-    public class CreateWaves : MonoBehaviour
+    public class WavesController : MonoBehaviour
     {
         /// <summary>
         /// The current wave.
@@ -47,16 +47,16 @@ namespace Assets.Scripts.Controller
         public GameObject EnemyPrefab;
 
         /// <summary>
-        /// The money store.
+        /// The money controller.
         /// </summary>
-        private MoneyStore MoneyStore;
+        private MoneyController MoneyController;
 
         /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         public void Start()
         {
-            MoneyStore = gameObject.GetComponent<MoneyStore>();
+            MoneyController = gameObject.GetComponent<MoneyController>();
 
             ResetWaves();
             Physics2D.gravity = Vector2.zero;
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Controller
             for (int i = 0; i < enemyCount; i++)
             {
                 var enemy = Instantiate(EnemyPrefab);
-                enemy.GetComponent<Enemy>().OnKill = (reward) => MoneyStore.AddMoney(reward);
+                enemy.GetComponent<Enemy>().OnKill = (reward) => MoneyController.AddMoney(reward);
 
                 yield return new WaitForSeconds(1);
             }

@@ -22,8 +22,8 @@ namespace Assets.Scripts.Controller
         {
             gameOverCanvas = Instantiate(GameOverCanvasPrefab);
 
-            var moneyStore = GetComponent<MoneyStore>();
-            var finishingMoney = moneyStore.Money;
+            var moneyController = GetComponent<MoneyController>();
+            var finishingMoney = moneyController.Money;
 
             var panelTransform = gameOverCanvas.transform.Find("Panel");
             var moneyText = panelTransform.Find("MoneyText");
@@ -38,13 +38,13 @@ namespace Assets.Scripts.Controller
         /// </summary>
         private void RestartGame()
         {
-            var waveController = GetComponent<CreateWaves>();
-            waveController.ResetWaves();
+            var wavesController = GetComponent<WavesController>();
+            wavesController.ResetWaves();
 
-            var moneyController = GetComponent<MoneyStore>();
+            var moneyController = GetComponent<MoneyController>();
             moneyController.ResetMoney();
 
-            var livesController = GetComponent<LivesCounter>();
+            var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
             Destroy(gameOverCanvas);

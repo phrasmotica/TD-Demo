@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
-    public class MoneyStore : MonoBehaviour
+    public class MoneyController : MonoBehaviour
     {
         /// <summary>
         /// The starting money.

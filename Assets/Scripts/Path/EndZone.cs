@@ -7,9 +7,9 @@ namespace Assets.Scripts.Path
     public class EndZone : MonoBehaviour
     {
         /// <summary>
-        /// The lives counter.
+        /// The lives controller.
         /// </summary>
-        public LivesCounter LivesCounter;
+        public LivesController LivesController;
 
         /// <summary>
         /// When an enemy collides, deduct a life and destroy the enemy.
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Path
             var enemyComponent = otherObj.GetComponent<Enemy>();
             if (enemyComponent != null)
             {
-                LivesCounter.AddLives(-1);
+                LivesController.AddLives(-1);
                 Destroy(otherObj);
             }
         }

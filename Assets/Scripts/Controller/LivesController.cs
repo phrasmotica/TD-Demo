@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
-    public class LivesCounter : MonoBehaviour
+    public class LivesController : MonoBehaviour
     {
         /// <summary>
         /// The number of starting lives.

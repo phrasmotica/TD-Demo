@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controller
 {
-    public class CreateTowers : MonoBehaviour
+    public class TowersController : MonoBehaviour
     {
         /// <summary>
         /// The tower prefab.
@@ -12,16 +12,16 @@ namespace Assets.Scripts.Controller
         public GameObject TowerPrefab;
 
         /// <summary>
-        /// The money store.
+        /// The money controller.
         /// </summary>
-        private MoneyStore MoneyStore;
+        private MoneyController MoneyController;
 
         /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
         {
-            MoneyStore = gameObject.GetComponent<MoneyStore>();
+            MoneyController = gameObject.GetComponent<MoneyController>();
         }
 
         /// <summary>
@@ -29,14 +29,14 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public void CreateTower()
         {
-            using (var logger = new MethodLogger(nameof(CreateTowers)))
+            using (var logger = new MethodLogger(nameof(TowersController)))
             {
                 // only create if we can afford the tower
-                if (MoneyStore.CanAfford(TowerPrefab.GetComponent<Tower>().Price))
+                if (MoneyController.CanAfford(TowerPrefab.GetComponent<Tower>().Price))
                 {
                     logger.Log("Creating tower");
                     var tower = Instantiate(TowerPrefab);
-                    tower.GetComponent<Tower>().OnPlace = (price) => MoneyStore.AddMoney(-price);
+                    tower.GetComponent<Tower>().OnPlace = (price) => MoneyController.AddMoney(-price);
                 }
                 else
                 {

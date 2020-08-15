@@ -430,7 +430,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 438958071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de76b1e3f98a99f41853e879eee389f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 109a10b7cd025ee488a10faa364a925f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   StartingMoney: 10
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eee215412f1b34b98bfff6b0300c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LivesCounter: {fileID: 438958076}
+  LivesController: {fileID: 0}
 --- !u!1 &709282964
 GameObject:
   m_ObjectHideFlags: 0
