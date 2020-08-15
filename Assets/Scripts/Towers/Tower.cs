@@ -27,6 +27,16 @@ namespace Assets.Scripts.Towers
         public int WarmupTime;
 
         /// <summary>
+        /// The time in seconds since this tower was created.
+        /// </summary>
+        private float Age;
+
+        /// <summary>
+        /// Gets the progress of this tower's warmup process.
+        /// </summary>
+        public float WarmupProgress => Age / WarmupTime;
+
+        /// <summary>
         /// The sell tower script.
         /// </summary>
         public SellTower SellTower;
@@ -47,6 +57,11 @@ namespace Assets.Scripts.Towers
         private GameObject selectionObj;
 
         /// <summary>
+        /// The sprite renderer.
+        /// </summary>
+        private SpriteRenderer spriteRenderer;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
@@ -55,6 +70,7 @@ namespace Assets.Scripts.Towers
             State = TowerState.Positioning;
 
             selectionObj = gameObject.transform.Find("selection").gameObject;
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -76,6 +92,11 @@ namespace Assets.Scripts.Towers
                         OnPlace(Price);
                         DoWarmup();
                     }
+                }
+
+                if (State == TowerState.Warmup)
+                {
+                    Age += Time.deltaTime;
                 }
             }
         }
@@ -105,6 +126,7 @@ namespace Assets.Scripts.Towers
         private void DoWarmup()
         {
             State = TowerState.Warmup;
+            spriteRenderer.color = ColourHelper.HalfOpacity;
             StartCoroutine(Warmup());
         }
 
@@ -115,6 +137,7 @@ namespace Assets.Scripts.Towers
             yield return new WaitForSeconds(WarmupTime);
 
             Debug.Log($"Tower ready");
+            spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
         }
     }
