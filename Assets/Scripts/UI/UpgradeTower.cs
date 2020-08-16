@@ -60,7 +60,7 @@ namespace Assets.Scripts.UI
                     logger.Log($"Upgrading tower for {TowerUpgradePrice}");
 
                     MoneyController.AddMoney(-TowerUpgradePrice);
-                    SelectedTower.transform.Find("upgrade1").gameObject.SetActive(true);
+                    SelectedTower.Upgrade();
                 }
                 else
                 {

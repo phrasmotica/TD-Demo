@@ -53,8 +53,7 @@ namespace Assets.Scripts.UI
             {
                 if (SelectedTower != null)
                 {
-                    // TODO: track tower value so we can sell it for more if it's been upgraded
-                    var sellPrice = (int) (SelectedTower.Price * SellFraction);
+                    var sellPrice = (int) (SelectedTower.TotalValue * SellFraction);
                     logger.Log($"Selling tower for {sellPrice}");
 
                     MoneyController.AddMoney(sellPrice);

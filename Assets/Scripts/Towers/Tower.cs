@@ -27,6 +27,11 @@ namespace Assets.Scripts.Towers
         public int UpgradePrice;
 
         /// <summary>
+        /// Gets or sets this tower's value, i.e. the price it will be sold for.
+        /// </summary>
+        public int TotalValue { get; set; }
+
+        /// <summary>
         /// The time taken in seconds for this tower to warm up.
         /// </summary>
         [Range(0, 5)]
@@ -93,6 +98,11 @@ namespace Assets.Scripts.Towers
         private bool isCollidingWithAnotherTower;
 
         /// <summary>
+        /// The upgrade level.
+        /// </summary>
+        private int UpgradeLevel;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
@@ -125,6 +135,7 @@ namespace Assets.Scripts.Towers
                         {
                             logger.Log($"Placed tower at {worldPoint}");
                             OnPlace(Price);
+                            TotalValue += Price;
                             DoWarmup();
                         }
                         else
@@ -240,6 +251,20 @@ namespace Assets.Scripts.Towers
             Debug.Log($"Tower ready");
             spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
+        }
+
+        /// <summary>
+        /// Upgrades the tower to the next level.
+        /// </summary>
+        public void Upgrade()
+        {
+            using (var logger = new MethodLogger(nameof(Tower)))
+            {
+                TotalValue += UpgradePrice;
+                var newUpgradeLevel = ++UpgradeLevel;
+
+                logger.Log($"Tower is now level {newUpgradeLevel}, total value {TotalValue}");
+            }
         }
 
         /// <summary>
