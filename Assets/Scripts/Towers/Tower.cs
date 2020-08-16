@@ -80,12 +80,17 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The tower range object.
         /// </summary>
-        private GameObject range;
+        private Range range;
 
         /// <summary>
         /// The sprite renderer.
         /// </summary>
         private SpriteRenderer spriteRenderer;
+
+        /// <summary>
+        /// The base shoot projectile script.
+        /// </summary>
+        private ShootProjectile baseShootProjectile;
 
         /// <summary>
         /// Whether this tower is selected.
@@ -111,9 +116,12 @@ namespace Assets.Scripts.Towers
             State = TowerState.Positioning;
 
             selectionObj = transform.Find("selection").gameObject;
-            range = transform.Find("range").gameObject;
+            range = transform.Find("range").GetComponent<Range>();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            baseShootProjectile = GetComponent<ShootProjectile>();
+            range.RangeToDraw = baseShootProjectile.Range;
         }
 
         /// <summary>
@@ -162,7 +170,7 @@ namespace Assets.Scripts.Towers
                 if (!isSelected)
                 {
                     logger.Log("Showing range of unselected tower");
-                    range.SetActive(true);
+                    range.gameObject.SetActive(true);
                 }
             }
         }
@@ -177,7 +185,7 @@ namespace Assets.Scripts.Towers
                 if (!isSelected)
                 {
                     logger.Log("Hiding range of unselected tower");
-                    range.SetActive(false);
+                    range.gameObject.SetActive(false);
                 }
             }
         }
@@ -199,7 +207,7 @@ namespace Assets.Scripts.Towers
                             isSelected = true;
                             AttachToUI();
                             selectionObj.SetActive(true);
-                            range.SetActive(true);
+                            range.gameObject.SetActive(true);
                         }
                         else
                         {

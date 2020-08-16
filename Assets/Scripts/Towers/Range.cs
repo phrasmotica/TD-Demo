@@ -15,6 +15,23 @@ namespace Assets.Scripts.Towers
         public int Segments;
 
         /// <summary>
+        /// Gets or sets the range to draw.
+        /// </summary>
+        public int RangeToDraw
+        {
+            get
+            {
+                return rangeToDraw;
+            }
+            set
+            {
+                rangeToDraw = value;
+                DrawRange();
+            }
+        }
+        private int rangeToDraw;
+
+        /// <summary>
         /// The line renderer.
         /// </summary>
         private LineRenderer lineRenderer;
@@ -36,12 +53,9 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void DrawRange()
         {
-            var shootProjectileComponent = GetComponentInParent<ShootProjectile>();
-            var range = shootProjectileComponent.Range;
-
             using (var logger = new MethodLogger(nameof(Range)))
             {
-                logger.Log($"Drawing range of {range}");
+                logger.Log($"Drawing range of {RangeToDraw}");
             }
 
             lineRenderer.positionCount = Segments + 1;
@@ -53,8 +67,8 @@ namespace Assets.Scripts.Towers
 
             for (int i = 0; i < Segments + 1; i++)
             {
-                x = Mathf.Sin(Mathf.Deg2Rad * angle) * range;
-                y = Mathf.Cos(Mathf.Deg2Rad * angle) * range;
+                x = Mathf.Sin(Mathf.Deg2Rad * angle) * RangeToDraw;
+                y = Mathf.Cos(Mathf.Deg2Rad * angle) * RangeToDraw;
 
                 lineRenderer.SetPosition(i, new Vector3(x, y, 0));
 
