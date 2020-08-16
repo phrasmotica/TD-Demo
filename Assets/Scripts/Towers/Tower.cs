@@ -135,7 +135,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseEnter()
         {
-            using (var logger = new MethodLogger(nameof(Range)))
+            using (var logger = new MethodLogger(nameof(Tower)))
             {
                 if (!isSelected)
                 {
@@ -150,7 +150,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseExit()
         {
-            using (var logger = new MethodLogger(nameof(Range)))
+            using (var logger = new MethodLogger(nameof(Tower)))
             {
                 if (!isSelected)
                 {
