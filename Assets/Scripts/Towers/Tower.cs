@@ -264,6 +264,16 @@ namespace Assets.Scripts.Towers
                 var newUpgradeLevel = ++UpgradeLevel;
 
                 logger.Log($"Tower is now level {newUpgradeLevel}, total value {TotalValue}");
+
+                // enable only the relevant upgrade object
+                foreach (Transform child in transform)
+                {
+                    if (child.CompareTag(Tags.TowerUpgradeTag))
+                    {
+                        var name = child.gameObject.name;
+                        child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
+                    }
+                }
             }
         }
 
