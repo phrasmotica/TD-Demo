@@ -17,19 +17,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets or sets the range to draw.
         /// </summary>
-        public int RangeToDraw
-        {
-            get
-            {
-                return rangeToDraw;
-            }
-            set
-            {
-                rangeToDraw = value;
-                DrawRange();
-            }
-        }
-        private int rangeToDraw;
+        public int RangeToDraw { get; set; }
 
         /// <summary>
         /// The line renderer.
@@ -41,21 +29,20 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Start()
         {
+            lineRenderer = GetComponent<LineRenderer>();
+            lineRenderer.positionCount = Segments + 1;
+            lineRenderer.useWorldSpace = false;
+
             logger = new MethodLogger(nameof(Range));
+
+            DrawRange();
         }
 
         /// <summary>
         /// Draws the range.
         /// </summary>
-        private void DrawRange()
+        public void DrawRange()
         {
-            if (lineRenderer == null)
-            {
-                lineRenderer = GetComponent<LineRenderer>();
-                lineRenderer.positionCount = Segments + 1;
-                lineRenderer.useWorldSpace = false;
-            }
-
             logger.Log($"Drawing range of {RangeToDraw}");
 
             float x;

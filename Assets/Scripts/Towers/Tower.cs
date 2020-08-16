@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using Assets.Scripts.UI;
 using Assets.Scripts.Util;
 using UnityEngine;
@@ -347,6 +348,7 @@ namespace Assets.Scripts.Towers
                     childSprite.enabled = false;
 
                     range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
+                    range.DrawRange();
                 }
             }
 
