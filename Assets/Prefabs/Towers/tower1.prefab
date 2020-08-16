@@ -533,8 +533,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
-  ProjectileSpeed: 6
-  FireRate: 6
+  ProjectileSpeed: 4
+  FireRate: 4
   Range: 3
 --- !u!50 &7281785081105197190
 Rigidbody2D:
@@ -593,6 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3001204075191419682}
   - component: {fileID: 6731234698070022104}
+  - component: {fileID: 8200338766900823789}
   m_Layer: 0
   m_Name: upgrade1
   m_TagString: TowerUpgrade
@@ -664,3 +665,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8200338766900823789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806496068603671578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4325cd8f13529064b88eee68524be0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
+    type: 3}
+  ProjectileSpeed: 5
+  FireRate: 5
+  Range: 4

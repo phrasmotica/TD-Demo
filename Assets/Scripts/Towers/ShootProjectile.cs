@@ -48,7 +48,8 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Start()
         {
-            tower = GetComponent<Tower>();
+            // upgrade objects are children of the original tower
+            tower = GetComponent<Tower>() ?? GetComponentInParent<Tower>();
         }
 
         /// <summary>

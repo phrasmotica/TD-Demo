@@ -280,8 +280,11 @@ namespace Assets.Scripts.Towers
                     {
                         var name = child.gameObject.name;
                         child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
+                        range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
                     }
                 }
+
+                baseShootProjectile.enabled = UpgradeLevel <= 0;
             }
         }
 
