@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class SellTower : MonoBehaviour
+    public class UpgradeTower : MonoBehaviour
     {
         /// <summary>
         /// The money controller.
@@ -14,10 +14,14 @@ namespace Assets.Scripts.UI
         public MoneyController MoneyController;
 
         /// <summary>
-        /// The fraction of its price that a tower should sell for.
+        /// Gets the upgrade price of the tower.
         /// </summary>
-        [Range(0.5f, 1)]
-        public float SellFraction;
+        private int TowerUpgradePrice => SelectedTower.UpgradePrice;
+
+        /// <summary>
+        /// Gets whether the tower can be upgraded.
+        /// </summary>
+        private bool CanUpgradeTower => SelectedTower != null && MoneyController.CanAfford(TowerUpgradePrice);
 
         /// <summary>
         /// The selected tower.
@@ -41,29 +45,26 @@ namespace Assets.Scripts.UI
         /// </summary>
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(SellTowerObj);
+            GetComponent<Button>().onClick.AddListener(UpgradeTowerObj);
         }
 
         /// <summary>
         /// Creates a tower.
         /// </summary>
-        public void SellTowerObj()
+        public void UpgradeTowerObj()
         {
-            using (var logger = new MethodLogger(nameof(SellTower)))
+            using (var logger = new MethodLogger(nameof(UpgradeTower)))
             {
-                if (SelectedTower != null)
+                if (CanUpgradeTower)
                 {
-                    // TODO: track tower value so we can sell it for more if it's been upgraded
-                    var sellPrice = (int) (SelectedTower.Price * SellFraction);
-                    logger.Log($"Selling tower for {sellPrice}");
+                    logger.Log($"Upgrading tower for {TowerUpgradePrice}");
 
-                    MoneyController.AddMoney(sellPrice);
-                    Destroy(SelectedTower.gameObject);
-                    SelectedTower.DetachFromUI();
+                    MoneyController.AddMoney(-TowerUpgradePrice);
+                    SelectedTower.transform.Find("upgrade1").gameObject.SetActive(true);
                 }
                 else
                 {
-                    logger.LogError("Select a tower first!");
+                    logger.LogError("Cannot upgrade tower!");
                 }
             }
         }
@@ -73,7 +74,7 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void SetInteractable()
         {
-            GetComponent<Button>().interactable = SelectedTower != null;
+            GetComponent<Button>().interactable = CanUpgradeTower;
         }
     }
 }

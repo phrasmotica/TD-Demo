@@ -19,6 +19,11 @@ namespace Assets.Scripts.UI
         private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
 
         /// <summary>
+        /// The upgrade tower script.
+        /// </summary>
+        public UpgradeTower UpgradeTower;
+
+        /// <summary>
         /// The sell tower script.
         /// </summary>
         public SellTower SellTower;
@@ -49,6 +54,7 @@ namespace Assets.Scripts.UI
                     logger.Log("Creating tower");
                     var towerObj = Instantiate(TowerPrefab);
                     var tower = towerObj.GetComponent<Tower>();
+                    tower.UpgradeTower = UpgradeTower;
                     tower.SellTower = SellTower;
                     tower.OnPlace = (price) => MoneyController.AddMoney(-price);
                 }

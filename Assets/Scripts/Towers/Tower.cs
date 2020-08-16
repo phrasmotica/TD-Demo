@@ -21,6 +21,12 @@ namespace Assets.Scripts.Towers
         public int Price;
 
         /// <summary>
+        /// The tower's price.
+        /// </summary>
+        [Range(0, 3)]
+        public int UpgradePrice;
+
+        /// <summary>
         /// The time taken in seconds for this tower to warm up.
         /// </summary>
         [Range(0, 5)]
@@ -40,6 +46,11 @@ namespace Assets.Scripts.Towers
         /// Gets whether the tower can fire.
         /// </summary>
         public bool CanFire => State == TowerState.Firing;
+
+        /// <summary>
+        /// The upgrade tower script.
+        /// </summary>
+        public UpgradeTower UpgradeTower { get; set; }
 
         /// <summary>
         /// The sell tower script.
@@ -173,7 +184,7 @@ namespace Assets.Scripts.Towers
                     {
                         logger.Log($"Selected tower");
                         isSelected = true;
-                        SellTower.SelectedTower = this;
+                        AttachToUI();
                         selectionObj.SetActive(true);
                         range.SetActive(true);
                     }
@@ -222,6 +233,24 @@ namespace Assets.Scripts.Towers
             Debug.Log($"Tower ready");
             spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
+        }
+
+        /// <summary>
+        /// Sets references to this tower in the UI.
+        /// </summary>
+        public void AttachToUI()
+        {
+            UpgradeTower.SelectedTower = this;
+            SellTower.SelectedTower = this;
+        }
+
+        /// <summary>
+        /// Removes references to this tower from the UI.
+        /// </summary>
+        public void DetachFromUI()
+        {
+            UpgradeTower.SelectedTower = null;
+            SellTower.SelectedTower = null;
         }
     }
 
