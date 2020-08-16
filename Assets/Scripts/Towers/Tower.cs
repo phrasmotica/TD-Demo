@@ -48,14 +48,14 @@ namespace Assets.Scripts.Towers
         public bool CanFire => State == TowerState.Firing;
 
         /// <summary>
-        /// The upgrade tower script.
+        /// The tower controller script.
         /// </summary>
-        public UpgradeTower UpgradeTower { get; set; }
+        public TowerController TowerController { get; set; }
 
         /// <summary>
-        /// The sell tower script.
+        /// Gets whether no tower is selected.
         /// </summary>
-        public SellTower SellTower { get; set; }
+        private bool NoTowerSelected => TowerController.SelectedTower == null;
 
         /// <summary>
         /// Delegate to run on placing the tower.
@@ -182,11 +182,18 @@ namespace Assets.Scripts.Towers
                 {
                     if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                     {
-                        logger.Log($"Selected tower");
-                        isSelected = true;
-                        AttachToUI();
-                        selectionObj.SetActive(true);
-                        range.SetActive(true);
+                        if (NoTowerSelected)
+                        {
+                            logger.Log($"Selected tower");
+                            isSelected = true;
+                            AttachToUI();
+                            selectionObj.SetActive(true);
+                            range.SetActive(true);
+                        }
+                        else
+                        {
+                            logger.Log("Another tower is already selected!");
+                        }
                     }
                 }
             }
@@ -240,8 +247,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         public void AttachToUI()
         {
-            UpgradeTower.SelectedTower = this;
-            SellTower.SelectedTower = this;
+            TowerController.SelectedTower = this;
         }
 
         /// <summary>
@@ -249,8 +255,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         public void DetachFromUI()
         {
-            UpgradeTower.SelectedTower = null;
-            SellTower.SelectedTower = null;
+            TowerController.SelectedTower = null;
         }
     }
 
