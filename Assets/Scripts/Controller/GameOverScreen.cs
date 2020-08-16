@@ -40,6 +40,7 @@ namespace Assets.Scripts.Controller
         private void RestartGame()
         {
             var wavesController = GetComponent<WavesController>();
+            wavesController.StopAllCoroutines();
             wavesController.ResetWaves();
 
             var moneyController = GetComponent<MoneyController>();
@@ -52,6 +53,12 @@ namespace Assets.Scripts.Controller
             foreach (var t in towers)
             {
                 Destroy(t);
+            }
+
+            var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag);
+            foreach (var e in enemies)
+            {
+                Destroy(e);
             }
 
             Destroy(gameOverCanvas);
