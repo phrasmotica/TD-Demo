@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Tower
   - TowerUpgrade
+  - PathZone
   layers:
   - Default
   - TransparentFX
