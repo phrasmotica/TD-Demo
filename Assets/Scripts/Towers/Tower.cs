@@ -44,7 +44,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The sell tower script.
         /// </summary>
-        public SellTower SellTower;
+        public SellTower SellTower { get; set; }
 
         /// <summary>
         /// Delegate to run on placing the tower.
