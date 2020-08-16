@@ -6,7 +6,7 @@ namespace Assets.Scripts.Towers
     /// <summary>
     /// Script for the range of a tower.
     /// </summary>
-    public class Range : MonoBehaviour
+    public class Range : BaseBehaviour
     {
         /// <summary>
         /// The number of segments to draw.
@@ -37,6 +37,14 @@ namespace Assets.Scripts.Towers
         private LineRenderer lineRenderer;
 
         /// <summary>
+        /// Initialise the script.
+        /// </summary>
+        private void Start()
+        {
+            logger = new MethodLogger(nameof(Range));
+        }
+
+        /// <summary>
         /// Draws the range.
         /// </summary>
         private void DrawRange()
@@ -48,10 +56,7 @@ namespace Assets.Scripts.Towers
                 lineRenderer.useWorldSpace = false;
             }
 
-            using (var logger = new MethodLogger(nameof(Range)))
-            {
-                logger.Log($"Drawing range of {RangeToDraw}");
-            }
+            logger.Log($"Drawing range of {RangeToDraw}");
 
             float x;
             float y;

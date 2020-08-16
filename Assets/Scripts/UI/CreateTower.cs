@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class CreateTower : MonoBehaviour
+    public class CreateTower : BaseBehaviour
     {
         /// <summary>
         /// The tower prefab.
@@ -24,11 +24,13 @@ namespace Assets.Scripts.UI
         public MoneyController MoneyController;
 
         /// <summary>
-        /// Set click listener.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(CreateTowerObj);
+
+            logger = new MethodLogger(nameof(CreateTower));
         }
 
         /// <summary>
@@ -36,21 +38,18 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void CreateTowerObj()
         {
-            using (var logger = new MethodLogger(nameof(CreateTower)))
+            // only create if we can afford the tower
+            if (MoneyController.CanAfford(TowerPrice))
             {
-                // only create if we can afford the tower
-                if (MoneyController.CanAfford(TowerPrice))
-                {
-                    logger.Log("Creating tower");
-                    var towerObj = Instantiate(TowerPrefab);
-                    var tower = towerObj.GetComponent<Tower>();
-                    tower.TowerController = GetComponentInParent<TowerController>();
-                    tower.OnPlace = (price) => MoneyController.AddMoney(-price);
-                }
-                else
-                {
-                    logger.Log("Cannot afford tower!");
-                }
+                logger.Log("Creating tower");
+                var towerObj = Instantiate(TowerPrefab);
+                var tower = towerObj.GetComponent<Tower>();
+                tower.TowerController = GetComponentInParent<TowerController>();
+                tower.OnPlace = (price) => MoneyController.AddMoney(-price);
+            }
+            else
+            {
+                logger.Log("Cannot afford tower!");
             }
         }
 

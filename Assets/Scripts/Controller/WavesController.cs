@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using Assets.Scripts.Enemies;
+using Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Controller
 {
-    public class WavesController : MonoBehaviour
+    public class WavesController : BaseBehaviour
     {
         /// <summary>
         /// The current wave.
@@ -58,6 +59,8 @@ namespace Assets.Scripts.Controller
         {
             MoneyController = gameObject.GetComponent<MoneyController>();
 
+            logger = new MethodLogger(nameof(WavesController));
+
             ResetWaves();
             Physics2D.gravity = Vector2.zero;
         }
@@ -75,7 +78,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public IEnumerator SendWave(int waveNumber)
         {
-            Debug.Log($"SendWave({waveNumber})");
+            logger.Log($"SendWave({waveNumber})");
 
             var enemyCount = GetEnemyCount(waveNumber);
 

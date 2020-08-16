@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class SellTower : MonoBehaviour
+    public class SellTower : BaseBehaviour
     {
         /// <summary>
         /// The money controller.
@@ -37,11 +37,13 @@ namespace Assets.Scripts.UI
         private Tower selectedTower;
 
         /// <summary>
-        /// Set click listener.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(SellTowerObj);
+
+            logger = new MethodLogger(nameof(SellTower));
         }
 
         /// <summary>
@@ -49,21 +51,18 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void SellTowerObj()
         {
-            using (var logger = new MethodLogger(nameof(SellTower)))
+            if (SelectedTower != null)
             {
-                if (SelectedTower != null)
-                {
-                    var sellPrice = (int) (SelectedTower.TotalValue * SellFraction);
-                    logger.Log($"Selling tower for {sellPrice}");
+                var sellPrice = (int) (SelectedTower.TotalValue * SellFraction);
+                logger.Log($"Selling tower for {sellPrice}");
 
-                    MoneyController.AddMoney(sellPrice);
-                    Destroy(SelectedTower.gameObject);
-                    SelectedTower.DetachFromUI();
-                }
-                else
-                {
-                    logger.LogError("Select a tower first!");
-                }
+                MoneyController.AddMoney(sellPrice);
+                Destroy(SelectedTower.gameObject);
+                SelectedTower.DetachFromUI();
+            }
+            else
+            {
+                logger.LogError("Select a tower first!");
             }
         }
 

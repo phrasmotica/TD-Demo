@@ -7,7 +7,7 @@ namespace Assets.Scripts.Enemies
     /// Draws the health of an enemy.
     /// </summary>
     [ExecuteInEditMode]
-    public class DrawHealth : MonoBehaviour
+    public class DrawHealth : BaseBehaviour
     {
         /// <summary>
         /// The sprite renderer.
@@ -36,13 +36,15 @@ namespace Assets.Scripts.Enemies
         public float OffsetY;
 
         /// <summary>
-        /// Get reference to line renderer.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             sprite = gameObject.GetComponent<SpriteRenderer>();
             line = gameObject.GetComponent<LineRenderer>();
             enemy = gameObject.GetComponent<Enemy>();
+
+            logger = new MethodLogger(nameof(DrawHealth));
         }
 
         /// <summary>
@@ -62,11 +64,8 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseEnter()
         {
-            using (var logger = new MethodLogger(nameof(DrawHealth)))
-            {
-                logger.Log("Drawing health");
-                ShouldDrawHealth = true;
-            }
+            logger.Log("Drawing health");
+            ShouldDrawHealth = true;
         }
 
         /// <summary>
@@ -74,11 +73,8 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseExit()
         {
-            using (var logger = new MethodLogger(nameof(DrawHealth)))
-            {
-                logger.Log("Not drawing health");
-                ShouldDrawHealth = false;
-            }
+            logger.Log("Not drawing health");
+            ShouldDrawHealth = false;
         }
 
         /// <summary>

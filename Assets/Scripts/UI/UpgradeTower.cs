@@ -1,13 +1,11 @@
-﻿using System;
-using Assets.Scripts.Controller;
+﻿using Assets.Scripts.Controller;
 using Assets.Scripts.Towers;
 using Assets.Scripts.Util;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class UpgradeTower : MonoBehaviour
+    public class UpgradeTower : BaseBehaviour
     {
         /// <summary>
         /// The money controller.
@@ -42,11 +40,13 @@ namespace Assets.Scripts.UI
         private Tower selectedTower;
 
         /// <summary>
-        /// Set click listener.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(UpgradeTowerObj);
+
+            logger = new MethodLogger(nameof(UpgradeTower));
         }
 
         /// <summary>
@@ -54,19 +54,16 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void UpgradeTowerObj()
         {
-            using (var logger = new MethodLogger(nameof(UpgradeTower)))
+            if (CanUpgradeTower)
             {
-                if (CanUpgradeTower)
-                {
-                    logger.Log($"Upgrading tower for {TowerUpgradePrice}");
+                logger.Log($"Upgrading tower for {TowerUpgradePrice}");
 
-                    MoneyController.AddMoney(-TowerUpgradePrice);
-                    SelectedTower.DoUpgrade();
-                }
-                else
-                {
-                    logger.LogError("Cannot upgrade tower!");
-                }
+                MoneyController.AddMoney(-TowerUpgradePrice);
+                SelectedTower.DoUpgrade();
+            }
+            else
+            {
+                logger.LogError("Cannot upgrade tower!");
             }
         }
 

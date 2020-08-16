@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Towers
 {
-    public class Tower : MonoBehaviour
+    public class Tower : BaseBehaviour
     {
         /// <summary>
         /// The tower's state.
@@ -163,7 +163,7 @@ namespace Assets.Scripts.Towers
         public bool CanUpgrade => UpgradeLevel < MaxUpgradeLevel;
 
         /// <summary>
-        /// Start is called before the first frame update.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
@@ -177,6 +177,8 @@ namespace Assets.Scripts.Towers
 
             baseShootProjectile = GetComponent<ShootProjectile>();
             range.RangeToDraw = baseShootProjectile.Range;
+
+            logger = new MethodLogger(nameof(Tower));
         }
 
         /// <summary>
@@ -184,39 +186,36 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Update()
         {
-            using (var logger = new MethodLogger(nameof(Tower)))
+            if (State == TowerState.Positioning)
             {
-                if (State == TowerState.Positioning)
-                {
-                    var mousePosition = Input.mousePosition;
-                    var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-                    transform.position = new Vector3(worldPoint.x, worldPoint.y, InitialZPos);
+                var mousePosition = Input.mousePosition;
+                var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+                transform.position = new Vector3(worldPoint.x, worldPoint.y, InitialZPos);
 
-                    if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+                {
+                    if (!isCollidingWithAnotherTower)
                     {
-                        if (!isCollidingWithAnotherTower)
-                        {
-                            logger.Log($"Placed tower at {worldPoint}");
-                            OnPlace(Price);
-                            TotalValue += Price;
-                            DoWarmup();
-                        }
-                        else
-                        {
-                            logger.Log("Tower collision, cannot place here");
-                        }
+                        logger.Log($"Placed tower at {worldPoint}");
+                        OnPlace(Price);
+                        TotalValue += Price;
+                        DoWarmup();
+                    }
+                    else
+                    {
+                        logger.Log("Tower collision, cannot place here");
                     }
                 }
+            }
 
-                if (State == TowerState.Warmup)
-                {
-                    Age += Time.deltaTime;
-                }
+            if (State == TowerState.Warmup)
+            {
+                Age += Time.deltaTime;
+            }
 
-                if (State == TowerState.Upgrading)
-                {
-                    UpgradeAge += Time.deltaTime;
-                }
+            if (State == TowerState.Upgrading)
+            {
+                UpgradeAge += Time.deltaTime;
             }
         }
 
@@ -225,13 +224,10 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseEnter()
         {
-            using (var logger = new MethodLogger(nameof(Tower)))
+            if (!IsSelected)
             {
-                if (!IsSelected)
-                {
-                    logger.Log("Showing range of unselected tower");
-                    range.gameObject.SetActive(true);
-                }
+                logger.Log("Showing range of unselected tower");
+                range.gameObject.SetActive(true);
             }
         }
 
@@ -240,13 +236,10 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseExit()
         {
-            using (var logger = new MethodLogger(nameof(Tower)))
+            if (!IsSelected)
             {
-                if (!IsSelected)
-                {
-                    logger.Log("Hiding range of unselected tower");
-                    range.gameObject.SetActive(false);
-                }
+                logger.Log("Hiding range of unselected tower");
+                range.gameObject.SetActive(false);
             }
         }
 
@@ -255,22 +248,19 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseUp()
         {
-            using (var logger = new MethodLogger(nameof(Tower)))
+            if (State == TowerState.Firing)
             {
-                if (State == TowerState.Firing)
+                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+                    if (NoTowerSelected)
                     {
-                        if (NoTowerSelected)
-                        {
-                            logger.Log($"Selected tower");
-                            IsSelected = true;
-                            AttachToUI();
-                        }
-                        else
-                        {
-                            logger.Log("Another tower is already selected!");
-                        }
+                        logger.Log($"Selected tower");
+                        IsSelected = true;
+                        AttachToUI();
+                    }
+                    else
+                    {
+                        logger.Log("Another tower is already selected!");
                     }
                 }
             }
@@ -313,10 +303,10 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private IEnumerator Warmup()
         {
-            Debug.Log($"Tower warming up for {WarmupTime} seconds");
+            logger.Log($"Tower warming up for {WarmupTime} seconds");
             yield return new WaitForSeconds(WarmupTime);
 
-            Debug.Log($"Tower ready");
+            logger.Log($"Tower ready");
             spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
         }
@@ -336,40 +326,37 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private IEnumerator Upgrade()
         {
-            using (var logger = new MethodLogger(nameof(Tower)))
+            logger.Log($"Tower upgrading for {UpgradeTime} seconds");
+            yield return new WaitForSeconds(UpgradeTime);
+
+            TotalValue += UpgradePrice;
+            var newUpgradeLevel = ++UpgradeLevel;
+
+            logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {TotalValue}");
+
+            // enable only the relevant upgrade object
+            foreach (Transform child in transform)
             {
-                Debug.Log($"Tower upgrading for {UpgradeTime} seconds");
-                yield return new WaitForSeconds(UpgradeTime);
-
-                TotalValue += UpgradePrice;
-                var newUpgradeLevel = ++UpgradeLevel;
-
-                logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {TotalValue}");
-
-                // enable only the relevant upgrade object
-                foreach (Transform child in transform)
+                if (child.CompareTag(Tags.TowerUpgradeTag))
                 {
-                    if (child.CompareTag(Tags.TowerUpgradeTag))
-                    {
-                        var name = child.gameObject.name;
-                        child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
+                    var name = child.gameObject.name;
+                    child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
 
-                        var childSprite = child.GetComponent<SpriteRenderer>();
-                        spriteRenderer.sprite = childSprite.sprite;
-                        childSprite.enabled = false;
+                    var childSprite = child.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sprite = childSprite.sprite;
+                    childSprite.enabled = false;
 
-                        range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
-                    }
+                    range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
                 }
-
-                baseShootProjectile.enabled = UpgradeLevel <= 0;
-
-                spriteRenderer.color = ColourHelper.FullOpacity;
-                State = TowerState.Firing;
-                UpgradeAge = 0;
-
-                TowerController.Refresh();
             }
+
+            baseShootProjectile.enabled = UpgradeLevel <= 0;
+
+            spriteRenderer.color = ColourHelper.FullOpacity;
+            State = TowerState.Firing;
+            UpgradeAge = 0;
+
+            TowerController.Refresh();
         }
 
         /// <summary>

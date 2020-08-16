@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Path
 {
-    public class Path : MonoBehaviour
+    public class Path : BaseBehaviour
     {
         /// <summary>
         /// The tower controller.
@@ -13,23 +13,28 @@ namespace Assets.Scripts.Path
         public TowerController TowerController;
 
         /// <summary>
+        /// Initialise the script.
+        /// </summary>
+        private void Start()
+        {
+            logger = new MethodLogger(nameof(Path));
+        }
+
+        /// <summary>
         /// Deselect tower when clicked.
         /// </summary>
         private void OnMouseUp()
         {
-            using (var logger = new MethodLogger(nameof(Path)))
+            if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
-                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+                if (TowerController.SelectedTower != null)
                 {
-                    if (TowerController.SelectedTower != null)
-                    {
-                        logger.Log("Deselecting tower");
-                        TowerController.Deselect();
-                    }
-                    else
-                    {
-                        logger.Log("No tower to deselect!");
-                    }
+                    logger.Log("Deselecting tower");
+                    TowerController.Deselect();
+                }
+                else
+                {
+                    logger.Log("No tower to deselect!");
                 }
             }
         }
