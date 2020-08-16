@@ -27,14 +27,18 @@ namespace Assets.Scripts.Path
         {
             if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
-                if (TowerController.SelectedTower != null)
+                var isOverGameObject = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+                if (!isOverGameObject)
                 {
-                    logger.Log("Deselecting tower");
-                    TowerController.Deselect();
-                }
-                else
-                {
-                    logger.Log("No tower to deselect!");
+                    if (TowerController.SelectedTower != null)
+                    {
+                        logger.Log("Deselecting tower");
+                        TowerController.Deselect();
+                    }
+                    else
+                    {
+                        logger.Log("No tower to deselect!");
+                    }
                 }
             }
         }
