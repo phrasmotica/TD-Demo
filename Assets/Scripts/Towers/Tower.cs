@@ -109,9 +109,21 @@ namespace Assets.Scripts.Towers
         private ShootProjectile baseShootProjectile;
 
         /// <summary>
-        /// Whether this tower is selected.
+        /// Gets or sets whether this tower is selected.
         /// </summary>
-        private bool isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                selectionObj.SetActive(value);
+                range.gameObject.SetActive(value);
+            }
+        }
 
         /// <summary>
         /// Whether this tower is colliding with another tower.
@@ -122,6 +134,7 @@ namespace Assets.Scripts.Towers
         /// The upgrade level.
         /// </summary>
         private int UpgradeLevel;
+        private bool isSelected;
 
         /// <summary>
         /// Gets the maximum upgrade level for this tower.
@@ -214,7 +227,7 @@ namespace Assets.Scripts.Towers
         {
             using (var logger = new MethodLogger(nameof(Tower)))
             {
-                if (!isSelected)
+                if (!IsSelected)
                 {
                     logger.Log("Showing range of unselected tower");
                     range.gameObject.SetActive(true);
@@ -229,7 +242,7 @@ namespace Assets.Scripts.Towers
         {
             using (var logger = new MethodLogger(nameof(Tower)))
             {
-                if (!isSelected)
+                if (!IsSelected)
                 {
                     logger.Log("Hiding range of unselected tower");
                     range.gameObject.SetActive(false);
@@ -251,10 +264,8 @@ namespace Assets.Scripts.Towers
                         if (NoTowerSelected)
                         {
                             logger.Log($"Selected tower");
-                            isSelected = true;
+                            IsSelected = true;
                             AttachToUI();
-                            selectionObj.SetActive(true);
-                            range.gameObject.SetActive(true);
                         }
                         else
                         {

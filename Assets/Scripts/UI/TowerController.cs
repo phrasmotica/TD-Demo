@@ -43,6 +43,15 @@ namespace Assets.Scripts.UI
         }
 
         /// <summary>
+        /// Deselected the selected tower.
+        /// </summary>
+        public void Deselect()
+        {
+            SelectedTower.IsSelected = false;
+            SelectedTower = null;
+        }
+
+        /// <summary>
         /// Refreshes the child UI scripts.
         /// </summary>
         public void Refresh()
