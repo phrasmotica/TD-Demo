@@ -34,6 +34,11 @@ namespace Assets.Scripts.Controller
         private int lives;
 
         /// <summary>
+        /// Gets whether the game is over.
+        /// </summary>
+        private bool GameIsOver => Lives <= 0;
+
+        /// <summary>
         /// The text used to display the lives.
         /// </summary>
         public Text LivesText;
@@ -52,8 +57,11 @@ namespace Assets.Scripts.Controller
         /// </summary>
         public void AddLives(int amount)
         {
-            Lives += amount;
-            CheckForGameEnd();
+            if (!GameIsOver)
+            {
+                Lives += amount;
+                CheckForGameEnd();
+            }
         }
 
         /// <summary>
@@ -69,7 +77,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         private void CheckForGameEnd()
         {
-            if (Lives <= 0)
+            if (GameIsOver)
             {
                 gameOverScreen.EndGame();
             }
