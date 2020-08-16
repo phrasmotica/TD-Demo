@@ -41,5 +41,13 @@ namespace Assets.Scripts.UI
             upgradeTower = GetComponentInChildren<UpgradeTower>();
             sellTower = GetComponentInChildren<SellTower>();
         }
+
+        /// <summary>
+        /// Refreshes the child UI scripts.
+        /// </summary>
+        public void Refresh()
+        {
+            upgradeTower.SetInteractable();
+        }
     }
 }

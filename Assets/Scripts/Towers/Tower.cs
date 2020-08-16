@@ -38,14 +38,30 @@ namespace Assets.Scripts.Towers
         public int WarmupTime;
 
         /// <summary>
+        /// The time taken in seconds for this tower to upgrade.
+        /// </summary>
+        [Range(0, 2)]
+        public int UpgradeTime;
+
+        /// <summary>
         /// The time in seconds since this tower was created.
         /// </summary>
         private float Age;
 
         /// <summary>
+        /// The time in seconds since this tower's upgrade started.
+        /// </summary>
+        private float UpgradeAge;
+
+        /// <summary>
         /// Gets the progress of this tower's warmup process.
         /// </summary>
         public float WarmupProgress => Age / WarmupTime;
+
+        /// <summary>
+        /// Gets the progress of this tower's upgrade process.
+        /// </summary>
+        public float UpgradeProgress => UpgradeAge / UpgradeTime;
 
         /// <summary>
         /// Gets whether the tower can fire.
@@ -108,6 +124,32 @@ namespace Assets.Scripts.Towers
         private int UpgradeLevel;
 
         /// <summary>
+        /// Gets the maximum upgrade level for this tower.
+        /// </summary>
+        private int MaxUpgradeLevel
+        {
+            get
+            {
+                var max = 0;
+
+                foreach (Transform child in transform)
+                {
+                    if (child.CompareTag(Tags.TowerUpgradeTag))
+                    {
+                        max++;
+                    }
+                }
+
+                return max;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the tower can be upgraded.
+        /// </summary>
+        public bool CanUpgrade => UpgradeLevel < MaxUpgradeLevel;
+
+        /// <summary>
         /// Start is called before the first frame update.
         /// </summary>
         private void Start()
@@ -156,6 +198,11 @@ namespace Assets.Scripts.Towers
                 if (State == TowerState.Warmup)
                 {
                     Age += Time.deltaTime;
+                }
+
+                if (State == TowerState.Upgrading)
+                {
+                    UpgradeAge += Time.deltaTime;
                 }
             }
         }
@@ -241,7 +288,7 @@ namespace Assets.Scripts.Towers
         }
 
         /// <summary>
-        /// Make the tower warm up before being ready to fire.
+        /// Starts the coroutine to make the tower warm up.
         /// </summary>
         private void DoWarmup()
         {
@@ -250,7 +297,9 @@ namespace Assets.Scripts.Towers
             StartCoroutine(Warmup());
         }
 
-
+        /// <summary>
+        /// Make the tower warm up before being ready to fire.
+        /// </summary>
         private IEnumerator Warmup()
         {
             Debug.Log($"Tower warming up for {WarmupTime} seconds");
@@ -262,16 +311,29 @@ namespace Assets.Scripts.Towers
         }
 
         /// <summary>
+        /// Starts the coroutine to upgrade the tower.
+        /// </summary>
+        public void DoUpgrade()
+        {
+            State = TowerState.Upgrading;
+            spriteRenderer.color = ColourHelper.HalfOpacity;
+            StartCoroutine(Upgrade());
+        }
+
+        /// <summary>
         /// Upgrades the tower to the next level.
         /// </summary>
-        public void Upgrade()
+        private IEnumerator Upgrade()
         {
             using (var logger = new MethodLogger(nameof(Tower)))
             {
+                Debug.Log($"Tower upgrading for {UpgradeTime} seconds");
+                yield return new WaitForSeconds(UpgradeTime);
+
                 TotalValue += UpgradePrice;
                 var newUpgradeLevel = ++UpgradeLevel;
 
-                logger.Log($"Tower is now level {newUpgradeLevel}, total value {TotalValue}");
+                logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {TotalValue}");
 
                 // enable only the relevant upgrade object
                 foreach (Transform child in transform)
@@ -280,11 +342,22 @@ namespace Assets.Scripts.Towers
                     {
                         var name = child.gameObject.name;
                         child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
+
+                        var childSprite = child.GetComponent<SpriteRenderer>();
+                        spriteRenderer.sprite = childSprite.sprite;
+                        childSprite.enabled = false;
+
                         range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
                     }
                 }
 
                 baseShootProjectile.enabled = UpgradeLevel <= 0;
+
+                spriteRenderer.color = ColourHelper.FullOpacity;
+                State = TowerState.Firing;
+                UpgradeAge = 0;
+
+                TowerController.Refresh();
             }
         }
 

@@ -37,28 +37,21 @@ namespace Assets.Scripts.Towers
         private LineRenderer lineRenderer;
 
         /// <summary>
-        /// Get reference to line renderer.
-        /// </summary>
-        private void Start()
-        {
-            lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.positionCount = Segments + 1;
-            lineRenderer.useWorldSpace = false;
-
-            DrawRange();
-        }
-
-        /// <summary>
         /// Draws the range.
         /// </summary>
         private void DrawRange()
         {
+            if (lineRenderer == null)
+            {
+                lineRenderer = GetComponent<LineRenderer>();
+                lineRenderer.positionCount = Segments + 1;
+                lineRenderer.useWorldSpace = false;
+            }
+
             using (var logger = new MethodLogger(nameof(Range)))
             {
                 logger.Log($"Drawing range of {RangeToDraw}");
             }
-
-            lineRenderer.positionCount = Segments + 1;
 
             float x;
             float y;

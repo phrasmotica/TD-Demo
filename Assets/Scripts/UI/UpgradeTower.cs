@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Controller;
+﻿using System;
+using Assets.Scripts.Controller;
 using Assets.Scripts.Towers;
 using Assets.Scripts.Util;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// Gets whether the tower can be upgraded.
         /// </summary>
-        private bool CanUpgradeTower => SelectedTower != null && MoneyController.CanAfford(TowerUpgradePrice);
+        private bool CanUpgradeTower => SelectedTower != null && SelectedTower.CanUpgrade && MoneyController.CanAfford(TowerUpgradePrice);
 
         /// <summary>
         /// The selected tower.
@@ -60,7 +61,7 @@ namespace Assets.Scripts.UI
                     logger.Log($"Upgrading tower for {TowerUpgradePrice}");
 
                     MoneyController.AddMoney(-TowerUpgradePrice);
-                    SelectedTower.Upgrade();
+                    SelectedTower.DoUpgrade();
                 }
                 else
                 {
