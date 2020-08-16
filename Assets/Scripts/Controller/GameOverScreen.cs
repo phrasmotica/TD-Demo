@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Util;
+﻿using Assets.Scripts.UI;
+using Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,11 @@ namespace Assets.Scripts.Controller
         /// The game over canvas prefab.
         /// </summary>
         public GameObject GameOverCanvasPrefab;
+
+        /// <summary>
+        /// The tower controller script.
+        /// </summary>
+        public TowerController TowerController;
 
         /// <summary>
         /// The instantiated game over canvas.
@@ -48,6 +54,8 @@ namespace Assets.Scripts.Controller
 
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
+
+            TowerController.SelectedTower = null;
 
             var towers = GameObject.FindGameObjectsWithTag(Tags.TowerTag);
             foreach (var t in towers)

@@ -527,6 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameOverCanvasPrefab: {fileID: 9070692962457196100, guid: f8e9012a77948f848b5964ca1d9cf8f3,
     type: 3}
+  TowerController: {fileID: 709282969}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,8 +1632,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
-  UpgradeTower: {fileID: 1274034837}
-  SellTower: {fileID: 1250217732}
   MoneyController: {fileID: 438958075}
 --- !u!1 &1775969657
 GameObject:
