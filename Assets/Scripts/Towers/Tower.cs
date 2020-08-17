@@ -101,7 +101,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The tower range object.
         /// </summary>
-        private RangeFill range;
+        private Range range;
 
         /// <summary>
         /// The sprite renderer.
@@ -211,7 +211,7 @@ namespace Assets.Scripts.Towers
 
             selectionObj = transform.Find("selection").gameObject;
 
-            range = Instantiate(RangePrefab, transform).GetComponent<RangeFill>();
+            range = Instantiate(RangePrefab, transform).GetComponent<Range>();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 

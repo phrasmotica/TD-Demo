@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Assets.Scripts.Towers
 {
     /// <summary>
-    /// Script for the range fill sprite of a tower.
+    /// Script for the range sprite of a tower.
     /// </summary>
-    public class RangeFill : BaseBehaviour
+    public class Range : BaseBehaviour
     {
         /// <summary>
         /// Gets or sets the range to draw.
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Towers
         private bool towerCanBePlaced = true;
 
         /// <summary>
-        /// The line renderer.
+        /// The sprite renderer.
         /// </summary>
         private SpriteRenderer spriteRenderer;
 
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Towers
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
 
-            logger = new MethodLogger(nameof(RangeFill));
+            logger = new MethodLogger(nameof(Range));
 
             DrawRange();
         }
