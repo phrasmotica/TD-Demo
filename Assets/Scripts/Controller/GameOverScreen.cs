@@ -38,6 +38,8 @@ namespace Assets.Scripts.Controller
 
             var restartButton = panelTransform.Find("RestartButton");
             restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
+
+            TowerController.GetComponentInChildren<CreateTower>().Cancel();
         }
 
         /// <summary>

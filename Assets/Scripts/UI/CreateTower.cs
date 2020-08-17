@@ -52,15 +52,7 @@ namespace Assets.Scripts.UI
             // escape to cancel new tower creation
             if (towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
             {
-                logger.Log("Cancelling tower creation");
-
-                if (newTowerObj != null)
-                {
-                    Destroy(newTowerObj);
-                    newTowerObj = null;
-                }
-
-                towerController.IsPositioningNewTower = false;
+                Cancel();
             }
         }
 
@@ -91,6 +83,22 @@ namespace Assets.Scripts.UI
             {
                 logger.Log("Cannot afford tower!");
             }
+        }
+
+        /// <summary>
+        /// Cancels tower creation.
+        /// </summary>
+        public void Cancel()
+        {
+            logger.Log("Cancelling tower creation");
+
+            if (newTowerObj != null)
+            {
+                Destroy(newTowerObj);
+                newTowerObj = null;
+            }
+
+            towerController.IsPositioningNewTower = false;
         }
 
         /// <summary>
