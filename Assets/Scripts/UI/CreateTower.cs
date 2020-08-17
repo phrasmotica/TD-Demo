@@ -19,9 +19,19 @@ namespace Assets.Scripts.UI
         private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
 
         /// <summary>
+        /// The new tower object.
+        /// </summary>
+        private GameObject newTowerObj;
+
+        /// <summary>
         /// The money controller.
         /// </summary>
         public MoneyController MoneyController;
+
+        /// <summary>
+        /// The tower controller.
+        /// </summary>
+        private TowerController towerController;
 
         /// <summary>
         /// Initialise the script.
@@ -30,7 +40,28 @@ namespace Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(CreateTowerObj);
 
+            towerController = GetComponentInParent<TowerController>();
             logger = new MethodLogger(nameof(CreateTower));
+        }
+
+        /// <summary>
+        /// Listen for key presses.
+        /// </summary>
+        private void Update()
+        {
+            // escape to cancel new tower creation
+            if (towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
+            {
+                logger.Log("Cancelling tower creation");
+
+                if (newTowerObj != null)
+                {
+                    Destroy(newTowerObj);
+                    newTowerObj = null;
+                }
+
+                towerController.IsPositioningNewTower = false;
+            }
         }
 
         /// <summary>
@@ -42,16 +73,17 @@ namespace Assets.Scripts.UI
             if (MoneyController.CanAfford(TowerPrice))
             {
                 logger.Log("Creating tower");
-                var towerObj = Instantiate(TowerPrefab);
-                var tower = towerObj.GetComponent<Tower>();
+                newTowerObj = Instantiate(TowerPrefab);
+                var newTower = newTowerObj.GetComponent<Tower>();
 
                 var towerController = GetComponentInParent<TowerController>();
                 towerController.IsPositioningNewTower = true;
-                tower.TowerController = towerController;
+                newTower.TowerController = towerController;
 
-                tower.OnPlace = (price) =>
+                newTower.OnPlace = (price) =>
                 {
                     MoneyController.AddMoney(-price);
+                    newTowerObj = null;
                     towerController.IsPositioningNewTower = false;
                 };
             }
