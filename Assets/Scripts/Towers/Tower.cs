@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using Assets.Scripts.UI;
 using Assets.Scripts.Util;
 using UnityEngine;
@@ -132,6 +131,16 @@ namespace Assets.Scripts.Towers
         private bool isCollidingWithAnotherTower;
 
         /// <summary>
+        /// Whether this tower is colliding with a path zone.
+        /// </summary>
+        private bool isCollidingWithPathZone;
+
+        /// <summary>
+        /// Gets whether the tower can be upgraded.
+        /// </summary>
+        public bool CanBePlaced => !isCollidingWithAnotherTower && !isCollidingWithPathZone;
+
+        /// <summary>
         /// The upgrade level.
         /// </summary>
         private int UpgradeLevel;
@@ -195,16 +204,20 @@ namespace Assets.Scripts.Towers
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (!isCollidingWithAnotherTower)
+                    if (isCollidingWithAnotherTower)
+                    {
+                        logger.Log("Tower collision, cannot place here");
+                    }
+                    else if (isCollidingWithPathZone)
+                    {
+                        logger.Log("Path collision, cannot place here");
+                    }
+                    else
                     {
                         logger.Log($"Placed tower at {worldPoint}");
                         OnPlace(Price);
                         TotalValue += Price;
                         DoWarmup();
-                    }
-                    else
-                    {
-                        logger.Log("Tower collision, cannot place here");
                     }
                 }
             }
@@ -276,6 +289,11 @@ namespace Assets.Scripts.Towers
             {
                 isCollidingWithAnotherTower = true;
             }
+
+            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
+            {
+                isCollidingWithPathZone = true;
+            }
         }
 
         /// <summary>
@@ -286,6 +304,11 @@ namespace Assets.Scripts.Towers
             if (collider.gameObject.CompareTag(Tags.TowerTag))
             {
                 isCollidingWithAnotherTower = false;
+            }
+
+            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
+            {
+                isCollidingWithPathZone = false;
             }
         }
 
