@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Util;
+﻿using System.Collections;
+using Assets.Scripts.Util;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
@@ -28,6 +29,12 @@ namespace Assets.Scripts.Enemies
         /// Whether to draw the health.
         /// </summary>
         private bool ShouldDrawHealth;
+
+        /// <summary>
+        /// The time in seconds to draw the enemy's health for when it's hit.
+        /// </summary>
+        [Range(0.5f, 3f)]
+        public float PeekTime;
 
         /// <summary>
         /// The offset with which to render the health bar.
@@ -90,6 +97,24 @@ namespace Assets.Scripts.Enemies
 
             line.SetPosition(0, new Vector3(start, spriteExtentY + OffsetY, 0));
             line.SetPosition(1, new Vector3(start + width, spriteExtentY + OffsetY, 0));
+        }
+
+        /// <summary>
+        /// Starts the coroutine to show the enemy's health briefly.
+        /// </summary>
+        public void DoPeekHealth()
+        {
+            StartCoroutine(PeekHealth());
+        }
+
+        /// <summary>
+        /// Show's the enemy's health briefly.
+        /// </summary>
+        private IEnumerator PeekHealth()
+        {
+            ShouldDrawHealth = true;
+            yield return new WaitForSeconds(PeekTime);
+            ShouldDrawHealth = false;
         }
     }
 }
