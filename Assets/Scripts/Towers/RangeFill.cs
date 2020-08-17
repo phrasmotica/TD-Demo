@@ -16,7 +16,19 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets or sets whether the parent tower can be placed.
         /// </summary>
-        public bool TowerCanBePlaced => GetComponentInParent<Tower>().CanBePlaced;
+        public bool TowerCanBePlaced
+        {
+            get
+            {
+                return towerCanBePlaced;
+            }
+            set
+            {
+                towerCanBePlaced = value;
+                DrawRange();
+            }
+        }
+        private bool towerCanBePlaced = true;
 
         /// <summary>
         /// The line renderer.
@@ -42,6 +54,9 @@ namespace Assets.Scripts.Towers
         {
             logger.Log($"Drawing range of {RangeToDraw}");
 
+            // set sprite colour
+            spriteRenderer.color = TowerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
+
             // width (thus height) of sprite in world space units
             var spriteSize = spriteRenderer.sprite.bounds.size.x;
 
@@ -50,5 +65,15 @@ namespace Assets.Scripts.Towers
 
             transform.localScale = new Vector3(scale, scale, 1);
         }
+
+        /// <summary>
+        /// Gets the sprite colour for when the tower can be placed.
+        /// </summary>
+        private static Color CanBePlacedColour => Color.white;
+
+        /// <summary>
+        /// Gets the sprite colour for when the tower cannot be placed.
+        /// </summary>
+        private static Color CannotBePlacedColour => Color.red;
     }
 }

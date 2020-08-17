@@ -132,19 +132,43 @@ namespace Assets.Scripts.Towers
         private bool isSelected;
 
         /// <summary>
-        /// Whether this tower is colliding with another tower.
+        /// Gets or sets whether this tower is colliding with another tower.
         /// </summary>
+        private bool IsCollidingWithAnotherTower
+        {
+            get
+            {
+                return isCollidingWithAnotherTower;
+            }
+            set
+            {
+                isCollidingWithAnotherTower = value;
+                range.TowerCanBePlaced = CanBePlaced;
+            }
+        }
         private bool isCollidingWithAnotherTower;
 
         /// <summary>
-        /// Whether this tower is colliding with a path zone.
+        /// Gets or sets whether this tower is colliding with a path zone.
         /// </summary>
+        private bool IsCollidingWithPathZone
+        {
+            get
+            {
+                return isCollidingWithPathZone;
+            }
+            set
+            {
+                isCollidingWithPathZone = value;
+                range.TowerCanBePlaced = CanBePlaced;
+            }
+        }
         private bool isCollidingWithPathZone;
 
         /// <summary>
         /// Gets whether the tower can be upgraded.
         /// </summary>
-        public bool CanBePlaced => !isCollidingWithAnotherTower && !isCollidingWithPathZone;
+        public bool CanBePlaced => !IsCollidingWithAnotherTower && !IsCollidingWithPathZone;
 
         /// <summary>
         /// The upgrade level.
@@ -210,11 +234,11 @@ namespace Assets.Scripts.Towers
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (isCollidingWithAnotherTower)
+                    if (IsCollidingWithAnotherTower)
                     {
                         logger.Log("Tower collision, cannot place here");
                     }
-                    else if (isCollidingWithPathZone)
+                    else if (IsCollidingWithPathZone)
                     {
                         logger.Log("Path collision, cannot place here");
                     }
@@ -293,12 +317,12 @@ namespace Assets.Scripts.Towers
         {
             if (collider.gameObject.CompareTag(Tags.TowerTag))
             {
-                isCollidingWithAnotherTower = true;
+                IsCollidingWithAnotherTower = true;
             }
 
             if (collider.gameObject.CompareTag(Tags.PathZoneTag))
             {
-                isCollidingWithPathZone = true;
+                IsCollidingWithPathZone = true;
             }
         }
 
@@ -309,12 +333,12 @@ namespace Assets.Scripts.Towers
         {
             if (collider.gameObject.CompareTag(Tags.TowerTag))
             {
-                isCollidingWithAnotherTower = false;
+                IsCollidingWithAnotherTower = false;
             }
 
             if (collider.gameObject.CompareTag(Tags.PathZoneTag))
             {
-                isCollidingWithPathZone = false;
+                IsCollidingWithPathZone = false;
             }
         }
 
