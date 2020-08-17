@@ -268,7 +268,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseEnter()
         {
-            if (!IsSelected)
+            if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
                 logger.Log("Showing range of unselected tower");
                 range.gameObject.SetActive(true);
@@ -280,7 +280,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void OnMouseExit()
         {
-            if (!IsSelected)
+            if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
                 logger.Log("Hiding range of unselected tower");
                 range.gameObject.SetActive(false);

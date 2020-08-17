@@ -44,8 +44,16 @@ namespace Assets.Scripts.UI
                 logger.Log("Creating tower");
                 var towerObj = Instantiate(TowerPrefab);
                 var tower = towerObj.GetComponent<Tower>();
-                tower.TowerController = GetComponentInParent<TowerController>();
-                tower.OnPlace = (price) => MoneyController.AddMoney(-price);
+
+                var towerController = GetComponentInParent<TowerController>();
+                towerController.IsPositioningNewTower = true;
+                tower.TowerController = towerController;
+
+                tower.OnPlace = (price) =>
+                {
+                    MoneyController.AddMoney(-price);
+                    towerController.IsPositioningNewTower = false;
+                };
             }
             else
             {

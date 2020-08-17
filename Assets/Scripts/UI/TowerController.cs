@@ -24,6 +24,11 @@ namespace Assets.Scripts.UI
         private Tower selectedTower;
 
         /// <summary>
+        /// Gets or sets whether we're positioning a newly-created tower.
+        /// </summary>
+        public bool IsPositioningNewTower { get; set; }
+
+        /// <summary>
         /// The upgrade tower script.
         /// </summary>
         private UpgradeTower upgradeTower;
