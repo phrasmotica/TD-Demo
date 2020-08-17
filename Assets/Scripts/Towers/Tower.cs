@@ -129,6 +129,7 @@ namespace Assets.Scripts.Towers
                 range.gameObject.SetActive(value);
             }
         }
+        private bool isSelected;
 
         /// <summary>
         /// Whether this tower is colliding with another tower.
@@ -149,7 +150,6 @@ namespace Assets.Scripts.Towers
         /// The upgrade level.
         /// </summary>
         private int UpgradeLevel;
-        private bool isSelected;
 
         /// <summary>
         /// Gets the maximum upgrade level for this tower.
