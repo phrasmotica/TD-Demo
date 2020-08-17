@@ -10,6 +10,11 @@ namespace Assets.Scripts.Towers
     public class Tower : BaseBehaviour
     {
         /// <summary>
+        /// The range prefab.
+        /// </summary>
+        public GameObject RangePrefab;
+
+        /// <summary>
         /// The tower's state.
         /// </summary>
         public TowerState State;
@@ -96,7 +101,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The tower range object.
         /// </summary>
-        private Range range;
+        private RangeFill range;
 
         /// <summary>
         /// The sprite renderer.
@@ -181,7 +186,8 @@ namespace Assets.Scripts.Towers
             State = TowerState.Positioning;
 
             selectionObj = transform.Find("selection").gameObject;
-            range = transform.Find("range").GetComponent<Range>();
+
+            range = Instantiate(RangePrefab, transform).GetComponent<RangeFill>();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 
