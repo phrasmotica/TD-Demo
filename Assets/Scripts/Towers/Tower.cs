@@ -199,7 +199,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets whether the tower can be upgraded.
         /// </summary>
-        public bool CanUpgrade => UpgradeLevel < MaxUpgradeLevel;
+        public bool CanUpgrade => State == TowerState.Firing && UpgradeLevel < MaxUpgradeLevel;
 
         /// <summary>
         /// Initialise the script.
@@ -371,6 +371,7 @@ namespace Assets.Scripts.Towers
         {
             State = TowerState.Upgrading;
             spriteRenderer.color = ColourHelper.HalfOpacity;
+            TowerController.Refresh();
             StartCoroutine(Upgrade());
         }
 
