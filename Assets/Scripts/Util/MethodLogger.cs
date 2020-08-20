@@ -1,10 +1,12 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Assets.Scripts.Util
 {
-    public class MethodLogger : IDisposable
+    /// <summary>
+    /// Logger that includes a class and calling method name in its messages.
+    /// </summary>
+    public class MethodLogger
     {
         /// <summary>
         /// The class name.
@@ -37,11 +39,6 @@ namespace Assets.Scripts.Util
         public void LogError(string message)
         {
             Debug.LogError($"{ClassName}.{MethodName}(): {message}");
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }

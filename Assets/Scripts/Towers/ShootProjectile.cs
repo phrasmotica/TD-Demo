@@ -6,7 +6,7 @@ using Assets.Scripts.Util;
 
 namespace Assets.Scripts.Towers
 {
-    public class ShootProjectile : MonoBehaviour
+    public class ShootProjectile : BaseBehaviour
     {
         /// <summary>
         /// The projectile prefab.
@@ -48,7 +48,10 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Start()
         {
-            tower = GetComponent<Tower>();
+            // upgrade objects are children of the original tower
+            tower = GetComponent<Tower>() ?? GetComponentInParent<Tower>();
+
+            logger = new MethodLogger(nameof(ShootProjectile));
         }
 
         /// <summary>
@@ -100,7 +103,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Shoot(Enemy enemy)
         {
-            Debug.Log($"Shoot {enemy.gameObject.name}, position {enemy.transform.position}");
+            logger.Log($"Shoot {enemy.gameObject.name}, position {enemy.transform.position}");
 
             var projectile = Instantiate(ProjectilePrefab, gameObject.transform);
 

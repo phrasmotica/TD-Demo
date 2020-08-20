@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class CreateTower : MonoBehaviour
+    public class CreateTower : BaseBehaviour
     {
         /// <summary>
         /// The tower prefab.
@@ -19,9 +19,9 @@ namespace Assets.Scripts.UI
         private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
 
         /// <summary>
-        /// The sell tower script.
+        /// The new tower object.
         /// </summary>
-        public SellTower SellTower;
+        private GameObject newTowerObj;
 
         /// <summary>
         /// The money controller.
@@ -29,11 +29,31 @@ namespace Assets.Scripts.UI
         public MoneyController MoneyController;
 
         /// <summary>
-        /// Set click listener.
+        /// The tower controller.
+        /// </summary>
+        private TowerController towerController;
+
+        /// <summary>
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(CreateTowerObj);
+
+            towerController = GetComponentInParent<TowerController>();
+            logger = new MethodLogger(nameof(CreateTower));
+        }
+
+        /// <summary>
+        /// Listen for key presses.
+        /// </summary>
+        private void Update()
+        {
+            // escape to cancel new tower creation
+            if (towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
+            {
+                Cancel();
+            }
         }
 
         /// <summary>
@@ -41,22 +61,44 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void CreateTowerObj()
         {
-            using (var logger = new MethodLogger(nameof(CreateTower)))
+            // only create if we can afford the tower
+            if (MoneyController.CanAfford(TowerPrice))
             {
-                // only create if we can afford the tower
-                if (MoneyController.CanAfford(TowerPrice))
+                logger.Log("Creating tower");
+                newTowerObj = Instantiate(TowerPrefab);
+                var newTower = newTowerObj.GetComponent<Tower>();
+
+                var towerController = GetComponentInParent<TowerController>();
+                towerController.IsPositioningNewTower = true;
+                newTower.TowerController = towerController;
+
+                newTower.OnPlace = (price) =>
                 {
-                    logger.Log("Creating tower");
-                    var towerObj = Instantiate(TowerPrefab);
-                    var tower = towerObj.GetComponent<Tower>();
-                    tower.SellTower = SellTower;
-                    tower.OnPlace = (price) => MoneyController.AddMoney(-price);
-                }
-                else
-                {
-                    logger.Log("Cannot afford tower!");
-                }
+                    MoneyController.AddMoney(-price);
+                    newTowerObj = null;
+                    towerController.IsPositioningNewTower = false;
+                };
             }
+            else
+            {
+                logger.Log("Cannot afford tower!");
+            }
+        }
+
+        /// <summary>
+        /// Cancels tower creation.
+        /// </summary>
+        public void Cancel()
+        {
+            logger.Log("Cancelling tower creation");
+
+            if (newTowerObj != null)
+            {
+                Destroy(newTowerObj);
+                newTowerObj = null;
+            }
+
+            towerController.IsPositioningNewTower = false;
         }
 
         /// <summary>

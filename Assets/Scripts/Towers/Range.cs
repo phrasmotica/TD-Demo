@@ -4,29 +4,45 @@ using UnityEngine;
 namespace Assets.Scripts.Towers
 {
     /// <summary>
-    /// Script for the range of a tower.
+    /// Script for the range sprite of a tower.
     /// </summary>
-    public class Range : MonoBehaviour
+    public class Range : BaseBehaviour
     {
         /// <summary>
-        /// The number of segments to draw.
+        /// Gets or sets the range to draw.
         /// </summary>
-        [Range(10, 100)]
-        public int Segments;
+        public int RangeToDraw { get; set; }
 
         /// <summary>
-        /// The line renderer.
+        /// Gets or sets whether the parent tower can be placed.
         /// </summary>
-        private LineRenderer lineRenderer;
+        public bool TowerCanBePlaced
+        {
+            get
+            {
+                return towerCanBePlaced;
+            }
+            set
+            {
+                towerCanBePlaced = value;
+                DrawRange();
+            }
+        }
+        private bool towerCanBePlaced = true;
 
         /// <summary>
-        /// Get reference to line renderer.
+        /// The sprite renderer.
+        /// </summary>
+        private SpriteRenderer spriteRenderer;
+
+        /// <summary>
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
-            lineRenderer = GetComponent<LineRenderer>();
-            lineRenderer.positionCount = Segments + 1;
-            lineRenderer.useWorldSpace = false;
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+            logger = new MethodLogger(nameof(Range));
 
             DrawRange();
         }
@@ -34,32 +50,30 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Draws the range.
         /// </summary>
-        private void DrawRange()
+        public void DrawRange()
         {
-            var shootProjectileComponent = GetComponentInParent<ShootProjectile>();
-            var range = shootProjectileComponent.Range;
+            logger.Log($"Drawing range of {RangeToDraw}");
 
-            using (var logger = new MethodLogger(nameof(Range)))
-            {
-                logger.Log($"Drawing range of {range}");
-            }
+            // set sprite colour
+            spriteRenderer.color = TowerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
-            lineRenderer.positionCount = Segments + 1;
+            // width (thus height) of sprite in world space units
+            var spriteSize = spriteRenderer.sprite.bounds.size.x;
 
-            float x;
-            float y;
+            // scalre required to bring sprite to size of the range
+            var scale = RangeToDraw / spriteSize;
 
-            float angle = 0;
-
-            for (int i = 0; i < Segments + 1; i++)
-            {
-                x = Mathf.Sin(Mathf.Deg2Rad * angle) * range;
-                y = Mathf.Cos(Mathf.Deg2Rad * angle) * range;
-
-                lineRenderer.SetPosition(i, new Vector3(x, y, 0));
-
-                angle += 360f / Segments;
-            }
+            transform.localScale = new Vector3(scale, scale, 1);
         }
+
+        /// <summary>
+        /// Gets the sprite colour for when the tower can be placed.
+        /// </summary>
+        private static Color CanBePlacedColour => Color.white;
+
+        /// <summary>
+        /// Gets the sprite colour for when the tower cannot be placed.
+        /// </summary>
+        private static Color CannotBePlacedColour => Color.red;
     }
 }

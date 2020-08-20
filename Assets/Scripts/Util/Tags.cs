@@ -7,5 +7,7 @@
     {
         public const string EnemyTag = "Enemy";
         public const string TowerTag = "Tower";
+        public const string TowerUpgradeTag = "TowerUpgrade";
+        public const string PathZoneTag = "PathZone";
     }
 }

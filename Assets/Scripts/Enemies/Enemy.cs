@@ -64,8 +64,17 @@ namespace Assets.Scripts.Enemies
             if (projectileComponent != null)
             {
                 health -= projectileComponent.Damage;
+                PeekHealth();
                 Destroy(otherObj);
             }
+        }
+
+        /// <summary>
+        /// Show's the enemy's health briefly.
+        /// </summary>
+        private void PeekHealth()
+        {
+            GetComponent<DrawHealth>().DoPeekHealth();
         }
     }
 }

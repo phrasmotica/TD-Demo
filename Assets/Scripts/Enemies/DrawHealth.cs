@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Util;
+﻿using System.Collections;
+using Assets.Scripts.Util;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Enemies
     /// Draws the health of an enemy.
     /// </summary>
     [ExecuteInEditMode]
-    public class DrawHealth : MonoBehaviour
+    public class DrawHealth : BaseBehaviour
     {
         /// <summary>
         /// The sprite renderer.
@@ -30,19 +31,27 @@ namespace Assets.Scripts.Enemies
         private bool ShouldDrawHealth;
 
         /// <summary>
+        /// The time in seconds to draw the enemy's health for when it's hit.
+        /// </summary>
+        [Range(0.5f, 3f)]
+        public float PeekTime;
+
+        /// <summary>
         /// The offset with which to render the health bar.
         /// </summary>
         [Range(0.1f, 0.5f)]
         public float OffsetY;
 
         /// <summary>
-        /// Get reference to line renderer.
+        /// Initialise the script.
         /// </summary>
         private void Start()
         {
             sprite = gameObject.GetComponent<SpriteRenderer>();
             line = gameObject.GetComponent<LineRenderer>();
             enemy = gameObject.GetComponent<Enemy>();
+
+            logger = new MethodLogger(nameof(DrawHealth));
         }
 
         /// <summary>
@@ -62,11 +71,8 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseEnter()
         {
-            using (var logger = new MethodLogger(nameof(DrawHealth)))
-            {
-                logger.Log("Drawing health");
-                ShouldDrawHealth = true;
-            }
+            logger.Log("Drawing health");
+            ShouldDrawHealth = true;
         }
 
         /// <summary>
@@ -74,11 +80,8 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseExit()
         {
-            using (var logger = new MethodLogger(nameof(DrawHealth)))
-            {
-                logger.Log("Not drawing health");
-                ShouldDrawHealth = false;
-            }
+            logger.Log("Not drawing health");
+            ShouldDrawHealth = false;
         }
 
         /// <summary>
@@ -94,6 +97,24 @@ namespace Assets.Scripts.Enemies
 
             line.SetPosition(0, new Vector3(start, spriteExtentY + OffsetY, 0));
             line.SetPosition(1, new Vector3(start + width, spriteExtentY + OffsetY, 0));
+        }
+
+        /// <summary>
+        /// Starts the coroutine to show the enemy's health briefly.
+        /// </summary>
+        public void DoPeekHealth()
+        {
+            StartCoroutine(PeekHealth());
+        }
+
+        /// <summary>
+        /// Show's the enemy's health briefly.
+        /// </summary>
+        private IEnumerator PeekHealth()
+        {
+            ShouldDrawHealth = true;
+            yield return new WaitForSeconds(PeekTime);
+            ShouldDrawHealth = false;
         }
     }
 }

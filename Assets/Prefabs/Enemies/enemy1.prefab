@@ -270,4 +270,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660769246b4390c45970b1aa1ed57857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PeekTime: 0.5
   OffsetY: 0.2
