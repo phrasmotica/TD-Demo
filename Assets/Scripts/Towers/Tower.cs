@@ -81,7 +81,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets whether no tower is selected.
         /// </summary>
-        private bool NoTowerSelected => TowerController.SelectedTower == null;
+        private bool TowerAlreadySelected => TowerController.SelectedTower != null;
 
         /// <summary>
         /// Delegate to run on placing the tower.
@@ -296,16 +296,15 @@ namespace Assets.Scripts.Towers
             {
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (NoTowerSelected)
+                    if (TowerAlreadySelected)
                     {
-                        logger.Log($"Selected tower");
-                        IsSelected = true;
-                        AttachToUI();
+                        logger.Log($"Deselected other tower");
+                        TowerController.SelectedTower.IsSelected = false;
                     }
-                    else
-                    {
-                        logger.Log("Another tower is already selected!");
-                    }
+
+                    logger.Log($"Selected tower");
+                    IsSelected = true;
+                    AttachToUI();
                 }
             }
         }
