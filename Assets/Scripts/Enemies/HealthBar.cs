@@ -6,9 +6,20 @@ namespace Assets.Scripts.Enemies
     /// <summary>
     /// Draws the health of an enemy.
     /// </summary>
-    [ExecuteInEditMode]
-    public class DrawHealth : BaseBehaviour
+    public class HealthBar : BaseBehaviour
     {
+        /// <summary>
+        /// The offset with which to render the health bar.
+        /// </summary>
+        [Range(0.1f, 0.5f)]
+        public float OffsetY;
+
+        /// <summary>
+        /// The time in seconds to draw the enemy's health for when it's hit.
+        /// </summary>
+        [Range(0.5f, 3f)]
+        public float PeekTime;
+
         /// <summary>
         /// The sprite renderer.
         /// </summary>
@@ -25,33 +36,34 @@ namespace Assets.Scripts.Enemies
         private bool mouseIsOverEnemy;
 
         /// <summary>
-        /// The time in seconds to draw the enemy's health for when it's hit.
-        /// </summary>
-        [Range(0.5f, 3f)]
-        public float PeekTime;
-
-        /// <summary>
         /// The time in seconds left to draw the enemy's health for.
         /// </summary>
         private float remainingPeekTime;
 
         /// <summary>
-        /// The offset with which to render the health bar.
+        /// Gets whether to draw the health bar.
         /// </summary>
-        [Range(0.1f, 0.5f)]
-        public float OffsetY;
+        private bool ShouldDrawHealthBar => remainingPeekTime > 0 || mouseIsOverEnemy;
+
+        /// <summary>
+        /// Gets the health fraction of the enemy.
+        /// </summary>
+        private float HealthFraction => GetComponentInParent<Enemy>().HealthFraction;
 
         /// <summary>
         /// Initialise the script.
         /// </summary>
         private void Start()
         {
-            sprite = GetComponent<SpriteRenderer>();
             line = GetComponent<LineRenderer>();
+            line.positionCount = 2;
+            line.useWorldSpace = false;
 
-            logger = new MethodLogger(nameof(DrawHealth));
+            sprite = GetComponentInParent<SpriteRenderer>();
 
-            DrawHealthBar(GetComponent<Enemy>().HealthFraction);
+            logger = new MethodLogger(nameof(HealthBar));
+
+            DrawHealthBar(HealthFraction);
         }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace Assets.Scripts.Enemies
             }
 
             // draw health bar if we're in the peek period or if mouse is over the enemy
-            line.forceRenderingOff = remainingPeekTime <= 0 && !mouseIsOverEnemy;
+            line.forceRenderingOff = !ShouldDrawHealthBar;
         }
 
         /// <summary>

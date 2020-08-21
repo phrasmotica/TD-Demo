@@ -74,7 +74,7 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void PeekHealth()
         {
-            GetComponent<DrawHealth>().PeekHealth(HealthFraction);
+            GetComponentInChildren<HealthBar>().PeekHealth(HealthFraction);
         }
     }
 }
