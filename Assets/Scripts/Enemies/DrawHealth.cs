@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Assets.Scripts.Util;
+﻿using Assets.Scripts.Util;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
@@ -21,20 +20,20 @@ namespace Assets.Scripts.Enemies
         private LineRenderer line;
 
         /// <summary>
-        /// The enemy.
+        /// Whether the mouse cursor is over the enemy.
         /// </summary>
-        private Enemy enemy;
-
-        /// <summary>
-        /// Whether to draw the health.
-        /// </summary>
-        private bool ShouldDrawHealth;
+        private bool mouseIsOverEnemy;
 
         /// <summary>
         /// The time in seconds to draw the enemy's health for when it's hit.
         /// </summary>
         [Range(0.5f, 3f)]
         public float PeekTime;
+
+        /// <summary>
+        /// The time in seconds left to draw the enemy's health for.
+        /// </summary>
+        private float remainingPeekTime;
 
         /// <summary>
         /// The offset with which to render the health bar.
@@ -47,11 +46,12 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void Start()
         {
-            sprite = gameObject.GetComponent<SpriteRenderer>();
-            line = gameObject.GetComponent<LineRenderer>();
-            enemy = gameObject.GetComponent<Enemy>();
+            sprite = GetComponent<SpriteRenderer>();
+            line = GetComponent<LineRenderer>();
 
             logger = new MethodLogger(nameof(DrawHealth));
+
+            DrawHealthBar(GetComponent<Enemy>().HealthFraction);
         }
 
         /// <summary>
@@ -59,11 +59,13 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void Update()
         {
-            line.forceRenderingOff = !ShouldDrawHealth;
-            if (ShouldDrawHealth)
+            if (remainingPeekTime > 0)
             {
-                DrawHealthBar();
+                remainingPeekTime -= Time.deltaTime;
             }
+
+            // draw health bar if we're in the peek period or if mouse is over the enemy
+            line.forceRenderingOff = remainingPeekTime <= 0 && !mouseIsOverEnemy;
         }
 
         /// <summary>
@@ -71,8 +73,8 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseEnter()
         {
-            logger.Log("Drawing health");
-            ShouldDrawHealth = true;
+            logger.Log("Mouse is over the enemy");
+            mouseIsOverEnemy = true;
         }
 
         /// <summary>
@@ -80,41 +82,40 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void OnMouseExit()
         {
-            logger.Log("Not drawing health");
-            ShouldDrawHealth = false;
+            logger.Log("Mouse is no longer over the enemy");
+            mouseIsOverEnemy = false;
         }
 
         /// <summary>
         /// Draws the health bar.
         /// </summary>
-        private void DrawHealthBar()
+        private void DrawHealthBar(float healthFraction)
         {
             var spriteExtentX = sprite.sprite.bounds.extents.x;
             var spriteExtentY = sprite.sprite.bounds.extents.y;
 
             var start = -spriteExtentX;
-            var width = 2 * spriteExtentX * enemy.HealthFraction;
+            var width = 2 * spriteExtentX * healthFraction;
 
             line.SetPosition(0, new Vector3(start, spriteExtentY + OffsetY, 0));
             line.SetPosition(1, new Vector3(start + width, spriteExtentY + OffsetY, 0));
         }
 
         /// <summary>
-        /// Starts the coroutine to show the enemy's health briefly.
+        /// Show the enemy's health briefly.
         /// </summary>
-        public void DoPeekHealth()
+        public void PeekHealth()
         {
-            StartCoroutine(PeekHealth());
+            remainingPeekTime = PeekTime;
         }
 
         /// <summary>
-        /// Show's the enemy's health briefly.
+        /// Show the enemy's health briefly.
         /// </summary>
-        private IEnumerator PeekHealth()
+        public void PeekHealth(float newHealthFraction)
         {
-            ShouldDrawHealth = true;
-            yield return new WaitForSeconds(PeekTime);
-            ShouldDrawHealth = false;
+            DrawHealthBar(newHealthFraction);
+            PeekHealth();
         }
     }
 }
