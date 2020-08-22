@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 603120310859346137}
   - component: {fileID: 4101114792007328005}
   - component: {fileID: 2494292608936246408}
-  - component: {fileID: 5584106508643915027}
+  - component: {fileID: 5049580195892582698}
   m_Layer: 0
   m_Name: enemy1
   m_TagString: Enemy
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 3
   Reward: 1
---- !u!114 &5584106508643915027
+--- !u!114 &5049580195892582698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,7 +299,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6789323038238934127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7443006d171c8344adbed54761aaad9, type: 3}
+  m_Script: {fileID: 11500000, guid: ce7e49be5dc108d4ca2f14a27f5e628d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialVelocity: 2
+  Waypoints: []
+  Speed: 2
+  IsCircular: 0
