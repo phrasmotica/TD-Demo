@@ -59,7 +59,7 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void Start()
         {
-            waypoints = FindObjectsOfType<Waypoint>();
+            waypoints = GetWaypoints();
 
             logger = new MethodLogger(nameof(WaypointFollower));
             logger.Log($"Found {waypoints.Length} waypoints");
@@ -158,6 +158,17 @@ namespace Assets.Scripts.Enemies
 
                 currentIndex = (!inReverse) ? currentIndex + 1 : currentIndex - 1;
             }
+        }
+
+        /// <summary>
+        /// Returns the waypoints in the scene.
+        /// </summary>
+        private static Waypoint[] GetWaypoints()
+        {
+            return GameObject.FindGameObjectWithTag(Tags.WaypointsTag)
+                             .GetComponentsInChildren<Waypoint>()
+                             .OrderBy(w => w.transform.GetSiblingIndex())
+                             .ToArray();
         }
     }
 }

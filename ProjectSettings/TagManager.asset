@@ -8,6 +8,7 @@ TagManager:
   - Tower
   - TowerUpgrade
   - PathZone
+  - Waypoints
   layers:
   - Default
   - TransparentFX
