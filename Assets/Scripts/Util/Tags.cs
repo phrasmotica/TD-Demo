@@ -9,5 +9,6 @@
         public const string TowerTag = "Tower";
         public const string TowerUpgradeTag = "TowerUpgrade";
         public const string PathZoneTag = "PathZone";
+        public const string WaypointsTag = "Waypoints";
     }
 }
