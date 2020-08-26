@@ -91,6 +91,11 @@ namespace Assets.Scripts.UI
         /// </summary>
         private void Update()
         {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                Deselect();
+            }
+
             if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
                 if (SelectedTower.IsSelected)
