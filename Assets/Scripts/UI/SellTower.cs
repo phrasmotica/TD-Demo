@@ -58,6 +58,17 @@ namespace Assets.Scripts.UI
         }
 
         /// <summary>
+        /// Listen for keypresses.
+        /// </summary>
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.Delete))
+            {
+                SellTowerObj();
+            }
+        }
+
+        /// <summary>
         /// Creates a tower.
         /// </summary>
         public void SellTowerObj()
