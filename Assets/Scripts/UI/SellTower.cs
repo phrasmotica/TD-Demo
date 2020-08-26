@@ -73,7 +73,7 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void SellTowerObj()
         {
-            if (SelectedTower != null)
+            if (CanSellTower)
             {
                 var sellPrice = (int) (SelectedTower.TotalValue * SellFraction);
                 logger.Log($"Selling tower for {sellPrice}");
