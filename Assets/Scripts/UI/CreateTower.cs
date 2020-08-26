@@ -73,6 +73,13 @@ namespace Assets.Scripts.UI
                 var newTower = newTowerObj.GetComponent<Tower>();
 
                 var towerController = GetComponentInParent<TowerController>();
+
+                // deselect if a tower is currently selected
+                if (towerController.TowerAlreadySelected)
+                {
+                    towerController.Deselect();
+                }
+
                 towerController.IsPositioningNewTower = true;
                 newTower.TowerController = towerController;
 
