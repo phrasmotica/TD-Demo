@@ -76,6 +76,7 @@ namespace Assets.Scripts.UI
                 {
                     MoneyController.AddMoney(-price);
                     newTowerObj = null;
+                    towerController.AddTower(newTower);
                     towerController.IsPositioningNewTower = false;
                 };
             }

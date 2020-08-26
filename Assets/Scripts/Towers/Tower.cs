@@ -79,11 +79,6 @@ namespace Assets.Scripts.Towers
         public TowerController TowerController { get; set; }
 
         /// <summary>
-        /// Gets whether no tower is selected.
-        /// </summary>
-        private bool TowerAlreadySelected => TowerController.SelectedTower != null;
-
-        /// <summary>
         /// Delegate to run on placing the tower.
         /// </summary>
         public Action<int> OnPlace { private get; set; }
@@ -296,10 +291,10 @@ namespace Assets.Scripts.Towers
             {
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (TowerAlreadySelected)
+                    if (TowerController.TowerAlreadySelected)
                     {
                         logger.Log($"Deselected other tower");
-                        TowerController.SelectedTower.IsSelected = false;
+                        TowerController.Deselect();
                     }
 
                     logger.Log($"Selected tower");
@@ -371,7 +366,7 @@ namespace Assets.Scripts.Towers
         {
             State = TowerState.Upgrading;
             spriteRenderer.color = ColourHelper.HalfOpacity;
-            TowerController.Refresh();
+            TowerController.RefreshChildren();
             StartCoroutine(Upgrade());
         }
 
@@ -411,7 +406,7 @@ namespace Assets.Scripts.Towers
             State = TowerState.Firing;
             UpgradeAge = 0;
 
-            TowerController.Refresh();
+            TowerController.RefreshChildren();
         }
 
         /// <summary>
@@ -419,7 +414,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         public void AttachToUI()
         {
-            TowerController.SelectedTower = this;
+            TowerController.Select(this);
         }
 
         /// <summary>
@@ -427,7 +422,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         public void DetachFromUI()
         {
-            TowerController.SelectedTower = null;
+            TowerController.Deselect();
         }
     }
 

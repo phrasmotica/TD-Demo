@@ -57,7 +57,7 @@ namespace Assets.Scripts.Controller
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
-            TowerController.SelectedTower = null;
+            TowerController.Deselect();
 
             var towers = GameObject.FindGameObjectsWithTag(Tags.TowerTag);
             foreach (var t in towers)

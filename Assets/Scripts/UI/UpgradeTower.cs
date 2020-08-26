@@ -20,7 +20,7 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// Gets whether the tower can be upgraded.
         /// </summary>
-        private bool CanUpgradeTower => SelectedTower != null && SelectedTower.CanUpgrade && MoneyController.CanAfford(TowerUpgradePrice);
+        private bool CanUpgradeTower => SelectedTower != null && SelectedTower.IsSelected && SelectedTower.CanUpgrade && MoneyController.CanAfford(TowerUpgradePrice);
 
         /// <summary>
         /// The selected tower.

@@ -14,6 +14,11 @@ namespace Assets.Scripts.UI
         public MoneyController MoneyController;
 
         /// <summary>
+        /// The tower controller.
+        /// </summary>
+        private TowerController towerController;
+
+        /// <summary>
         /// The fraction of its price that a tower should sell for.
         /// </summary>
         [Range(0.5f, 1)]
@@ -37,12 +42,18 @@ namespace Assets.Scripts.UI
         private Tower selectedTower;
 
         /// <summary>
+        /// Gets whether the tower can be sold.
+        /// </summary>
+        private bool CanSellTower => SelectedTower != null && SelectedTower.IsSelected;
+
+        /// <summary>
         /// Initialise the script.
         /// </summary>
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(SellTowerObj);
 
+            towerController = GetComponentInParent<TowerController>();
             logger = new MethodLogger(nameof(SellTower));
         }
 
@@ -59,6 +70,8 @@ namespace Assets.Scripts.UI
                 MoneyController.AddMoney(sellPrice);
                 Destroy(SelectedTower.gameObject);
                 SelectedTower.DetachFromUI();
+
+                towerController.RemoveTower(SelectedTower);
             }
             else
             {
@@ -71,7 +84,7 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void SetInteractable()
         {
-            GetComponent<Button>().interactable = SelectedTower != null;
+            GetComponent<Button>().interactable = CanSellTower;
         }
     }
 }

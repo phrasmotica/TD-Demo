@@ -30,7 +30,7 @@ namespace Assets.Scripts.Path
                 var isOverGameObject = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
                 if (!isOverGameObject)
                 {
-                    if (TowerController.SelectedTower != null)
+                    if (TowerController.TowerAlreadySelected)
                     {
                         logger.Log("Deselecting tower");
                         TowerController.Deselect();
