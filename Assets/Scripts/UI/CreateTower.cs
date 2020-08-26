@@ -34,6 +34,11 @@ namespace Assets.Scripts.UI
         private TowerController towerController;
 
         /// <summary>
+        /// Gets whether a tower can be created.
+        /// </summary>
+        private bool CanCreateTower => MoneyController.CanAfford(TowerPrice);
+
+        /// <summary>
         /// Initialise the script.
         /// </summary>
         private void Start()
@@ -61,8 +66,7 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void CreateTowerObj()
         {
-            // only create if we can afford the tower
-            if (MoneyController.CanAfford(TowerPrice))
+            if (CanCreateTower)
             {
                 logger.Log("Creating tower");
                 newTowerObj = Instantiate(TowerPrefab);
@@ -105,9 +109,9 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// Sets whether this button is interactable.
         /// </summary>
-        public void SetInteractable(int money)
+        public void SetInteractable()
         {
-            GetComponent<Button>().interactable = money >= TowerPrice;
+            GetComponent<Button>().interactable = CanCreateTower;
         }
     }
 }

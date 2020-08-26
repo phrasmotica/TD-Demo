@@ -30,7 +30,7 @@ namespace Assets.Scripts.Controller
             {
                 money = value;
                 MoneyText.text = $"Money: {money}";
-                CreateTower.SetInteractable(money);
+                CreateTower.SetInteractable();
             }
         }
         private int money;
