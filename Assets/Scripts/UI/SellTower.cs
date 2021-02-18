@@ -36,7 +36,7 @@ namespace Assets.Scripts.UI
             set
             {
                 selectedTower = value;
-                SetInteractable();
+                SetState();
             }
         }
         private Tower selectedTower;
@@ -45,6 +45,11 @@ namespace Assets.Scripts.UI
         /// Gets whether the tower can be sold.
         /// </summary>
         private bool CanSellTower => SelectedTower != null && SelectedTower.IsSelected;
+
+        /// <summary>
+        /// Gets the sell price of the selected tower.
+        /// </summary>
+        private int SellPrice => (int) (SelectedTower.TotalValue * SellFraction);
 
         /// <summary>
         /// Initialise the script.
@@ -75,10 +80,9 @@ namespace Assets.Scripts.UI
         {
             if (CanSellTower)
             {
-                var sellPrice = (int) (SelectedTower.TotalValue * SellFraction);
-                logger.Log($"Selling tower for {sellPrice}");
+                logger.Log($"Selling tower for {SellPrice}");
 
-                MoneyController.AddMoney(sellPrice);
+                MoneyController.AddMoney(SellPrice);
                 Destroy(SelectedTower.gameObject);
                 SelectedTower.DetachFromUI();
 
@@ -91,11 +95,20 @@ namespace Assets.Scripts.UI
         }
 
         /// <summary>
-        /// Sets whether this button is interactable.
+        /// Sets this button's state.
         /// </summary>
-        public void SetInteractable()
+        public void SetState()
         {
             GetComponent<Button>().interactable = CanSellTower;
+
+            if (SelectedTower != null)
+            {
+                GetComponentInChildren<Text>().text = $"Sell ({SellPrice})";
+            }
+            else
+            {
+                GetComponentInChildren<Text>().text = "Sell";
+            }
         }
     }
 }

@@ -191,7 +191,9 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void Deselect()
         {
+            // TODO: make SelectedTower null in a safe way so the child buttons can have their state reset
             SelectedTower.IsSelected = false;
+            SetChildren();
             RefreshChildren();
         }
 
@@ -209,8 +211,8 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void RefreshChildren()
         {
-            upgradeTower.SetInteractable();
-            sellTower.SetInteractable();
+            upgradeTower.SetState();
+            sellTower.SetState();
         }
     }
 }

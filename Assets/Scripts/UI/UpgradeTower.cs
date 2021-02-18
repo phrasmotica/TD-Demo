@@ -34,7 +34,7 @@ namespace Assets.Scripts.UI
             set
             {
                 selectedTower = value;
-                SetInteractable();
+                SetState();
             }
         }
         private Tower selectedTower;
@@ -68,11 +68,20 @@ namespace Assets.Scripts.UI
         }
 
         /// <summary>
-        /// Sets whether this button is interactable.
+        /// Sets this button's state.
         /// </summary>
-        public void SetInteractable()
+        public void SetState()
         {
             GetComponent<Button>().interactable = CanUpgradeTower;
+
+            if (SelectedTower != null)
+            {
+                GetComponentInChildren<Text>().text = $"Upgrade ({SelectedTower.UpgradePrice})";
+            }
+            else
+            {
+                GetComponentInChildren<Text>().text = "Upgrade";
+            }
         }
     }
 }
