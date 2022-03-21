@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     /// <summary>
     /// Script for the range sprite of a tower.
@@ -20,27 +20,28 @@ namespace Assets.Scripts.Towers
         {
             get
             {
-                return towerCanBePlaced;
+                return _towerCanBePlaced;
             }
             set
             {
-                towerCanBePlaced = value;
+                _towerCanBePlaced = value;
                 DrawRange();
             }
         }
-        private bool towerCanBePlaced = true;
+
+        private bool _towerCanBePlaced = true;
 
         /// <summary>
         /// The sprite renderer.
         /// </summary>
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         /// <summary>
         /// Initialise the script.
         /// </summary>
         private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
 
             logger = new MethodLogger(nameof(Range));
 
@@ -55,10 +56,10 @@ namespace Assets.Scripts.Towers
             logger.Log($"Drawing range of {RangeToDraw}");
 
             // set sprite colour
-            spriteRenderer.color = TowerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
+            _spriteRenderer.color = TowerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
             // width (thus height) of sprite in world space units
-            var spriteSize = spriteRenderer.sprite.bounds.size.x;
+            var spriteSize = _spriteRenderer.sprite.bounds.size.x;
 
             // scalre required to bring sprite to size of the range
             var scale = RangeToDraw / spriteSize;

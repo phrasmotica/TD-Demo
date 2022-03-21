@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemies
+namespace TDDemo.Assets.Scripts.Enemies
 {
     /// <summary>
     /// Draws the health of an enemy.

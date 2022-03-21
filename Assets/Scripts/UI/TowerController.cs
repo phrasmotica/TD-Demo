@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Towers;
 using Assets.Scripts.Util;
 using UnityEngine;
 
-namespace Assets.Scripts.UI
+namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerController : BaseBehaviour
     {
@@ -66,12 +66,12 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// The upgrade tower script.
         /// </summary>
-        private UpgradeTower upgradeTower;
+        private UpgradeTower _upgradeTower;
 
         /// <summary>
         /// The sell tower script.
         /// </summary>
-        private SellTower sellTower;
+        private SellTower _sellTower;
 
         /// <summary>
         /// Get references to child UI scripts.
@@ -211,8 +211,8 @@ namespace Assets.Scripts.UI
         /// </summary>
         public void RefreshChildren()
         {
-            upgradeTower.SetState();
-            sellTower.SetState();
+            _upgradeTower.SetState();
+            _sellTower.SetState();
         }
     }
 }

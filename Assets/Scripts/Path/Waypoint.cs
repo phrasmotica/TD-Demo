@@ -2,7 +2,7 @@
 
 // adapted from https://gist.github.com/Abban/42721b25cebba33c389a
 
-namespace Assets.Scripts.Path
+namespace TDDemo.Assets.Scripts.Path
 {
     /// <summary>
     /// Represents a waypoint.

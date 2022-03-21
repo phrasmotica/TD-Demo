@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Util
+﻿namespace TDDemo.Assets.Scripts.Util
 {
     /// <summary>
     /// Class containing tags for the game objects.

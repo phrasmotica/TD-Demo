@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Extensions
+namespace TDDemo.Assets.Scripts.Extensions
 {
     /// <summary>
     /// Extension methods for Transform components.

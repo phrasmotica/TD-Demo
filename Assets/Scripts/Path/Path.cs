@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.UI;
-using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Assets.Scripts.Path
+namespace TDDemo.Assets.Scripts.Path
 {
     public class Path : BaseBehaviour
     {

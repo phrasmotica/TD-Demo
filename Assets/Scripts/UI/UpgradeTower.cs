@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.Controller;
-using Assets.Scripts.Towers;
-using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UI
+namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradeTower : BaseBehaviour
     {
@@ -29,15 +29,16 @@ namespace Assets.Scripts.UI
         {
             get
             {
-                return selectedTower;
+                return _selectedTower;
             }
             set
             {
-                selectedTower = value;
+                _selectedTower = value;
                 SetState();
             }
         }
-        private Tower selectedTower;
+
+        private Tower _selectedTower;
 
         /// <summary>
         /// Initialise the script.

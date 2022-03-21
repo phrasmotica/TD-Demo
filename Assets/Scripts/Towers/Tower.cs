@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using Assets.Scripts.UI;
-using Assets.Scripts.Util;
+using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     public class Tower : BaseBehaviour
     {
@@ -51,22 +51,22 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The time in seconds since this tower was created.
         /// </summary>
-        private float Age;
+        private float _age;
 
         /// <summary>
         /// The time in seconds since this tower's upgrade started.
         /// </summary>
-        private float UpgradeAge;
+        private float _upgradeAge;
 
         /// <summary>
         /// Gets the progress of this tower's warmup process.
         /// </summary>
-        public float WarmupProgress => Age / WarmupTime;
+        public float WarmupProgress => _age / WarmupTime;
 
         /// <summary>
         /// Gets the progress of this tower's upgrade process.
         /// </summary>
-        public float UpgradeProgress => UpgradeAge / UpgradeTime;
+        public float UpgradeProgress => _upgradeAge / UpgradeTime;
 
         /// <summary>
         /// Gets whether the tower can fire.
@@ -86,27 +86,27 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The tower's initial Z position.
         /// </summary>
-        private float InitialZPos;
+        private float _initialZPos;
 
         /// <summary>
         /// The tower selection object.
         /// </summary>
-        private GameObject selectionObj;
+        private GameObject _selectionObj;
 
         /// <summary>
         /// The tower range object.
         /// </summary>
-        private Range range;
+        private Range _range;
 
         /// <summary>
         /// The sprite renderer.
         /// </summary>
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         /// <summary>
         /// The base shoot projectile script.
         /// </summary>
-        private ShootProjectile baseShootProjectile;
+        private ShootProjectile _baseShootProjectile;
 
         /// <summary>
         /// Gets or sets whether this tower is selected.
@@ -115,16 +115,17 @@ namespace Assets.Scripts.Towers
         {
             get
             {
-                return isSelected;
+                return _isSelected;
             }
             set
             {
-                isSelected = value;
-                selectionObj.SetActive(value);
-                range.gameObject.SetActive(value);
+                _isSelected = value;
+                _selectionObj.SetActive(value);
+                _range.gameObject.SetActive(value);
             }
         }
-        private bool isSelected;
+
+        private bool _isSelected;
 
         /// <summary>
         /// Gets or sets whether this tower is colliding with another tower.
@@ -133,15 +134,16 @@ namespace Assets.Scripts.Towers
         {
             get
             {
-                return isCollidingWithAnotherTower;
+                return _isCollidingWithAnotherTower;
             }
             set
             {
-                isCollidingWithAnotherTower = value;
-                range.TowerCanBePlaced = CanBePlaced;
+                _isCollidingWithAnotherTower = value;
+                _range.TowerCanBePlaced = CanBePlaced;
             }
         }
-        private bool isCollidingWithAnotherTower;
+
+        private bool _isCollidingWithAnotherTower;
 
         /// <summary>
         /// Gets or sets whether this tower is colliding with a path zone.
@@ -150,15 +152,16 @@ namespace Assets.Scripts.Towers
         {
             get
             {
-                return isCollidingWithPathZone;
+                return _isCollidingWithPathZone;
             }
             set
             {
-                isCollidingWithPathZone = value;
-                range.TowerCanBePlaced = CanBePlaced;
+                _isCollidingWithPathZone = value;
+                _range.TowerCanBePlaced = CanBePlaced;
             }
         }
-        private bool isCollidingWithPathZone;
+
+        private bool _isCollidingWithPathZone;
 
         /// <summary>
         /// Gets whether the tower can be upgraded.
@@ -168,7 +171,7 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The upgrade level.
         /// </summary>
-        private int UpgradeLevel;
+        private int _upgradeLevel;
 
         /// <summary>
         /// Gets the maximum upgrade level for this tower.
@@ -194,24 +197,24 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets whether the tower can be upgraded.
         /// </summary>
-        public bool CanUpgrade => State == TowerState.Firing && UpgradeLevel < MaxUpgradeLevel;
+        public bool CanUpgrade => State == TowerState.Firing && _upgradeLevel < MaxUpgradeLevel;
 
         /// <summary>
         /// Initialise the script.
         /// </summary>
         private void Start()
         {
-            InitialZPos = transform.position.z;
+            _initialZPos = transform.position.z;
             State = TowerState.Positioning;
 
-            selectionObj = transform.Find("selection").gameObject;
+            _selectionObj = transform.Find("selection").gameObject;
 
-            range = Instantiate(RangePrefab, transform).GetComponent<Range>();
+            _range = Instantiate(RangePrefab, transform).GetComponent<Range>();
 
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            baseShootProjectile = GetComponent<ShootProjectile>();
-            range.RangeToDraw = baseShootProjectile.Range;
+            _baseShootProjectile = GetComponent<ShootProjectile>();
+            _range.RangeToDraw = _baseShootProjectile.Range;
 
             logger = new MethodLogger(nameof(Tower));
         }
@@ -225,7 +228,7 @@ namespace Assets.Scripts.Towers
             {
                 var mousePosition = Input.mousePosition;
                 var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-                transform.position = new Vector3(worldPoint.x, worldPoint.y, InitialZPos);
+                transform.position = new Vector3(worldPoint.x, worldPoint.y, _initialZPos);
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
@@ -249,12 +252,12 @@ namespace Assets.Scripts.Towers
 
             if (State == TowerState.Warmup)
             {
-                Age += Time.deltaTime;
+                _age += Time.deltaTime;
             }
 
             if (State == TowerState.Upgrading)
             {
-                UpgradeAge += Time.deltaTime;
+                _upgradeAge += Time.deltaTime;
             }
         }
 
@@ -266,7 +269,7 @@ namespace Assets.Scripts.Towers
             if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
                 logger.Log("Showing range of unselected tower");
-                range.gameObject.SetActive(true);
+                _range.gameObject.SetActive(true);
             }
         }
 
@@ -278,7 +281,7 @@ namespace Assets.Scripts.Towers
             if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
                 logger.Log("Hiding range of unselected tower");
-                range.gameObject.SetActive(false);
+                _range.gameObject.SetActive(false);
             }
         }
 
@@ -342,7 +345,7 @@ namespace Assets.Scripts.Towers
         private void DoWarmup()
         {
             State = TowerState.Warmup;
-            spriteRenderer.color = ColourHelper.HalfOpacity;
+            _spriteRenderer.color = ColourHelper.HalfOpacity;
             StartCoroutine(Warmup());
         }
 
@@ -355,7 +358,7 @@ namespace Assets.Scripts.Towers
             yield return new WaitForSeconds(WarmupTime);
 
             logger.Log($"Tower ready");
-            spriteRenderer.color = ColourHelper.FullOpacity;
+            _spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
         }
 
@@ -365,7 +368,7 @@ namespace Assets.Scripts.Towers
         public void DoUpgrade()
         {
             State = TowerState.Upgrading;
-            spriteRenderer.color = ColourHelper.HalfOpacity;
+            _spriteRenderer.color = ColourHelper.HalfOpacity;
             TowerController.RefreshChildren();
             StartCoroutine(Upgrade());
         }
@@ -379,7 +382,7 @@ namespace Assets.Scripts.Towers
             yield return new WaitForSeconds(UpgradeTime);
 
             TotalValue += UpgradePrice;
-            var newUpgradeLevel = ++UpgradeLevel;
+            var newUpgradeLevel = ++_upgradeLevel;
 
             logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {TotalValue}");
 
@@ -392,19 +395,19 @@ namespace Assets.Scripts.Towers
                     child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
 
                     var childSprite = child.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = childSprite.sprite;
+                    _spriteRenderer.sprite = childSprite.sprite;
                     childSprite.enabled = false;
 
-                    range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
-                    range.DrawRange();
+                    _range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
+                    _range.DrawRange();
                 }
             }
 
-            baseShootProjectile.enabled = UpgradeLevel <= 0;
+            _baseShootProjectile.enabled = _upgradeLevel <= 0;
 
-            spriteRenderer.color = ColourHelper.FullOpacity;
+            _spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
-            UpgradeAge = 0;
+            _upgradeAge = 0;
 
             TowerController.RefreshChildren();
         }
@@ -424,16 +427,5 @@ namespace Assets.Scripts.Towers
         {
             TowerController.Deselect();
         }
-    }
-
-    /// <summary>
-    /// Possible states for a tower to occupy.
-    /// </summary>
-    public enum TowerState
-    {
-        Positioning,
-        Warmup,
-        Firing,
-        Upgrading,
     }
 }

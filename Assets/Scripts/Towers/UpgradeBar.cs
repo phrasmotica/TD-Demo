@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     public class UpgradeBar : MonoBehaviour
     {

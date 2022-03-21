@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Controller
 {
     public class LivesController : MonoBehaviour
     {
@@ -31,6 +31,7 @@ namespace Assets.Scripts.Controller
                 LivesText.text = $"Lives: {lives}";
             }
         }
+
         private int lives;
 
         /// <summary>

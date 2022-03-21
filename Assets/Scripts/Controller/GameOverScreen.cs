@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.UI;
-using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Controller
 {
     public class GameOverScreen : MonoBehaviour
     {
@@ -20,19 +20,19 @@ namespace Assets.Scripts.Controller
         /// <summary>
         /// The instantiated game over canvas.
         /// </summary>
-        private GameObject gameOverCanvas;
+        private GameObject _gameOverCanvas;
 
         /// <summary>
         /// Ends the game.
         /// </summary>
         public void EndGame()
         {
-            gameOverCanvas = Instantiate(GameOverCanvasPrefab);
+            _gameOverCanvas = Instantiate(GameOverCanvasPrefab);
 
             var moneyController = GetComponent<MoneyController>();
             var finishingMoney = moneyController.Money;
 
-            var panelTransform = gameOverCanvas.transform.Find("Panel");
+            var panelTransform = _gameOverCanvas.transform.Find("Panel");
             var moneyText = panelTransform.Find("MoneyText");
             moneyText.GetComponent<Text>().text = $"You finished with {finishingMoney} money.";
 
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Controller
                 Destroy(e);
             }
 
-            Destroy(gameOverCanvas);
+            Destroy(_gameOverCanvas);
         }
     }
 }

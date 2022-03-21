@@ -1,8 +1,8 @@
 ﻿using System;
-using Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemies
+namespace TDDemo.Assets.Scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {

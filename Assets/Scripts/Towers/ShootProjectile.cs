@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using UnityEngine;
-using Assets.Scripts.Extensions;
-using Assets.Scripts.Enemies;
-using Assets.Scripts.Util;
+using TDDemo.Assets.Scripts.Util;
+using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Extensions;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     public class ShootProjectile : BaseBehaviour
     {
@@ -34,14 +34,14 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// The tower.
         /// </summary>
-        private Tower tower;
+        private Tower _tower;
 
         /// <summary>
         /// The time in seconds since the last shot was fired, or null if the tower has not fired a
         /// shot yet. Tracking this ensures a tower can start firing immediately whenever an enemy
         /// appears instead of having to wait for a fixed cycle of its fire rate.
         /// </summary>
-        private float? timeSinceLastShot;
+        private float? _timeSinceLastShot;
 
         /// <summary>
         /// Get reference to tower script.
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Towers
         private void Start()
         {
             // upgrade objects are children of the original tower
-            tower = GetComponent<Tower>() ?? GetComponentInParent<Tower>();
+            _tower = GetComponent<Tower>() ?? GetComponentInParent<Tower>();
 
             logger = new MethodLogger(nameof(ShootProjectile));
         }
@@ -59,13 +59,13 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Update()
         {
-            if (!timeSinceLastShot.HasValue)
+            if (!_timeSinceLastShot.HasValue)
             {
-                timeSinceLastShot = Time.deltaTime;
+                _timeSinceLastShot = Time.deltaTime;
             }
             else
             {
-                timeSinceLastShot += Time.deltaTime;
+                _timeSinceLastShot += Time.deltaTime;
             }
 
             CheckForEnemies();
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void CheckForEnemies()
         {
-            if (tower.CanFire)
+            if (_tower.CanFire)
             {
                 var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag)
                                         .Where(e => transform.GetDistanceToObject(e) <= Range)
@@ -89,9 +89,9 @@ namespace Assets.Scripts.Towers
                     var distance = transform.GetDistanceToObject(nearestEnemy);
 
                     // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-                    if (!timeSinceLastShot.HasValue || timeSinceLastShot >= 1f / FireRate)
+                    if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / FireRate)
                     {
-                        timeSinceLastShot = 0;
+                        _timeSinceLastShot = 0;
                         Shoot(nearestEnemy.GetComponent<Enemy>());
                     }
                 }

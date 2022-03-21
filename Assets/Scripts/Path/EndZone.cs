@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Controller;
-using Assets.Scripts.Enemies;
+﻿using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Enemies;
 using UnityEngine;
 
-namespace Assets.Scripts.Path
+namespace TDDemo.Assets.Scripts.Path
 {
     public class EndZone : MonoBehaviour
     {

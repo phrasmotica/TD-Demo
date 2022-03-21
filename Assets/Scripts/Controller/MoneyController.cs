@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.UI;
+﻿using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Controller
 {
     public class MoneyController : MonoBehaviour
     {
@@ -33,6 +33,7 @@ namespace Assets.Scripts.Controller
                 CreateTower.SetInteractable();
             }
         }
+
         private int money;
 
         /// <summary>

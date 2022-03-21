@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.Controller;
-using Assets.Scripts.Towers;
-using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UI
+namespace TDDemo.Assets.Scripts.UI
 {
     public class CreateTower : BaseBehaviour
     {
@@ -21,7 +21,7 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// The new tower object.
         /// </summary>
-        private GameObject newTowerObj;
+        private GameObject _newTowerObj;
 
         /// <summary>
         /// The money controller.
@@ -31,7 +31,7 @@ namespace Assets.Scripts.UI
         /// <summary>
         /// The tower controller.
         /// </summary>
-        private TowerController towerController;
+        private TowerController _towerController;
 
         /// <summary>
         /// Gets whether a tower can be created.
@@ -45,7 +45,7 @@ namespace Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(CreateTowerObj);
 
-            towerController = GetComponentInParent<TowerController>();
+            _towerController = GetComponentInParent<TowerController>();
             logger = new MethodLogger(nameof(CreateTower));
         }
 
@@ -55,7 +55,7 @@ namespace Assets.Scripts.UI
         private void Update()
         {
             // escape to cancel new tower creation
-            if (towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
+            if (_towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
             {
                 Cancel();
             }
@@ -69,8 +69,8 @@ namespace Assets.Scripts.UI
             if (CanCreateTower)
             {
                 logger.Log("Creating tower");
-                newTowerObj = Instantiate(TowerPrefab);
-                var newTower = newTowerObj.GetComponent<Tower>();
+                _newTowerObj = Instantiate(TowerPrefab);
+                var newTower = _newTowerObj.GetComponent<Tower>();
 
                 var towerController = GetComponentInParent<TowerController>();
 
@@ -86,7 +86,7 @@ namespace Assets.Scripts.UI
                 newTower.OnPlace = (price) =>
                 {
                     MoneyController.AddMoney(-price);
-                    newTowerObj = null;
+                    _newTowerObj = null;
                     towerController.AddTower(newTower);
                     towerController.IsPositioningNewTower = false;
                 };
@@ -104,13 +104,13 @@ namespace Assets.Scripts.UI
         {
             logger.Log("Cancelling tower creation");
 
-            if (newTowerObj != null)
+            if (_newTowerObj != null)
             {
-                Destroy(newTowerObj);
-                newTowerObj = null;
+                Destroy(_newTowerObj);
+                _newTowerObj = null;
             }
 
-            towerController.IsPositioningNewTower = false;
+            _towerController.IsPositioningNewTower = false;
         }
 
         /// <summary>

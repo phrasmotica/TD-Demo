@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Assets.Scripts.Path;
-using Assets.Scripts.Util;
+using TDDemo.Assets.Scripts.Path;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 // adapted from https://gist.github.com/Abban/42721b25cebba33c389a
 
-namespace Assets.Scripts.Enemies
+namespace TDDemo.Assets.Scripts.Enemies
 {
     /// <summary>
     /// Script for making an object move in straight lines along a path of waypoints.
@@ -15,12 +15,12 @@ namespace Assets.Scripts.Enemies
         /// <summary>
         /// The waypoints to follow.
         /// </summary>
-        private Waypoint[] waypoints;
+        private Waypoint[] _waypoints;
 
         /// <summary>
         /// The current destination waypoint.
         /// </summary>
-        private Waypoint CurrentWaypoint => (waypoints?.Any() ?? false) ? waypoints[currentIndex] : null;
+        private Waypoint CurrentWaypoint => _waypoints?.Any() ?? false ? _waypoints[_currentIndex] : null;
 
         /// <summary>
         /// The speed with which to move towards the waypoints.
@@ -37,32 +37,32 @@ namespace Assets.Scripts.Enemies
         /// Whether we're moving in reverse. Always true at the beginning because the moving object
         /// will always move towards the first waypoint.
         /// </summary>
-        private bool inReverse = true;
+        private bool _inReverse = true;
 
         /// <summary>
         /// The index of the current destination waypoint.
         /// </summary>
-        private int currentIndex;
+        private int _currentIndex;
 
         /// <summary>
         /// Whether the movement is paused.
         /// </summary>
-        private bool isWaiting;
+        private bool _isWaiting;
 
         /// <summary>
         /// The last speed that we were moving with.
         /// </summary>
-        private float lastSpeed;
+        private float _lastSpeed;
 
         /// <summary>
         /// Finds the waypoints.
         /// </summary>
         private void Start()
         {
-            waypoints = GetWaypoints();
+            _waypoints = GetWaypoints();
 
             logger = new MethodLogger(nameof(WaypointFollower));
-            logger.Log($"Found {waypoints.Length} waypoints");
+            logger.Log($"Found {_waypoints.Length} waypoints");
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void Update()
         {
-            if (CurrentWaypoint != null && !isWaiting)
+            if (CurrentWaypoint != null && !_isWaiting)
             {
                 MoveTowardsWaypoint();
             }
@@ -81,7 +81,7 @@ namespace Assets.Scripts.Enemies
         /// </summary>
         private void Pause()
         {
-            isWaiting = !isWaiting;
+            _isWaiting = !_isWaiting;
         }
 
         /// <summary>
@@ -119,13 +119,13 @@ namespace Assets.Scripts.Enemies
                 // If the current waypoint has a speed change then change to it
                 if (CurrentWaypoint.SpeedOut > 0)
                 {
-                    lastSpeed = Speed;
+                    _lastSpeed = Speed;
                     Speed = CurrentWaypoint.SpeedOut;
                 }
-                else if (lastSpeed != 0)
+                else if (_lastSpeed != 0)
                 {
-                    Speed = lastSpeed;
-                    lastSpeed = 0;
+                    Speed = _lastSpeed;
+                    _lastSpeed = 0;
                 }
 
                 SetNextWaypoint();
@@ -139,24 +139,24 @@ namespace Assets.Scripts.Enemies
         {
             if (IsCircular)
             {
-                if (!inReverse)
+                if (!_inReverse)
                 {
-                    currentIndex = (currentIndex + 1 >= waypoints.Length) ? 0 : currentIndex + 1;
+                    _currentIndex = _currentIndex + 1 >= _waypoints.Length ? 0 : _currentIndex + 1;
                 }
                 else
                 {
-                    currentIndex = currentIndex == 0 ? waypoints.Length - 1 : currentIndex - 1;
+                    _currentIndex = _currentIndex == 0 ? _waypoints.Length - 1 : _currentIndex - 1;
                 }
             }
             else
             {
                 // if at the start or the end then reverse
-                if ((!inReverse && currentIndex + 1 >= waypoints.Length) || (inReverse && currentIndex == 0))
+                if (!_inReverse && _currentIndex + 1 >= _waypoints.Length || _inReverse && _currentIndex == 0)
                 {
-                    inReverse = !inReverse;
+                    _inReverse = !_inReverse;
                 }
 
-                currentIndex = (!inReverse) ? currentIndex + 1 : currentIndex - 1;
+                _currentIndex = !_inReverse ? _currentIndex + 1 : _currentIndex - 1;
             }
         }
 
