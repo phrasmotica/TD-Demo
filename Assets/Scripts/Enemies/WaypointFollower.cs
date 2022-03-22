@@ -165,7 +165,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private static Waypoint[] GetWaypoints()
         {
-            return GameObject.FindGameObjectWithTag(Tags.WaypointsTag)
+            return GameObject.FindGameObjectWithTag(Tags.Waypoints)
                              .GetComponentsInChildren<Waypoint>()
                              .OrderBy(w => w.transform.GetSiblingIndex())
                              .ToArray();

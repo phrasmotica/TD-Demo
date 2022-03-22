@@ -21,12 +21,12 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// <summary>
         /// The enemy's current health.
         /// </summary>
-        private int health;
+        private int _health;
 
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
         /// </summary>
-        public float HealthFraction => (float) health / StartingHealth;
+        public float HealthFraction => (float) _health / StartingHealth;
 
         /// <summary>
         /// Delegate to run on death.
@@ -38,7 +38,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void Start()
         {
-            health = StartingHealth;
+            _health = StartingHealth;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void Update()
         {
-            if (health <= 0)
+            if (_health <= 0)
             {
                 Destroy(gameObject);
                 OnKill(Reward);
@@ -63,7 +63,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             var projectileComponent = otherObj.GetComponent<Projectile>();
             if (projectileComponent != null)
             {
-                health -= projectileComponent.Damage;
+                _health -= projectileComponent.Damage;
                 PeekHealth();
                 Destroy(otherObj);
             }

@@ -7,12 +7,12 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// The line renderer.
         /// </summary>
-        private LineRenderer line;
+        private LineRenderer _line;
 
         /// <summary>
         /// The parent tower's sprite renderer.
         /// </summary>
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         /// <summary>
         /// The offset with which to render the upgrade bar.
@@ -35,11 +35,11 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void Start()
         {
-            line = GetComponent<LineRenderer>();
-            line.positionCount = 2;
-            line.useWorldSpace = false;
+            _line = GetComponent<LineRenderer>();
+            _line.positionCount = 2;
+            _line.useWorldSpace = false;
 
-            spriteRenderer = GetComponentInParent<SpriteRenderer>();
+            _spriteRenderer = GetComponentInParent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void Update()
         {
-            line.forceRenderingOff = !ShouldDrawUpgradeBar;
+            _line.forceRenderingOff = !ShouldDrawUpgradeBar;
             if (ShouldDrawUpgradeBar)
             {
                 DrawUpgradeBar();
@@ -59,13 +59,13 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void DrawUpgradeBar()
         {
-            var spriteExtentX = spriteRenderer.sprite.bounds.extents.x;
+            var spriteExtentX = _spriteRenderer.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * UpgradeProgress;
 
-            line.SetPosition(0, new Vector3(start, OffsetY, 0));
-            line.SetPosition(1, new Vector3(start + width, OffsetY, 0));
+            _line.SetPosition(0, new Vector3(start, OffsetY, 0));
+            _line.SetPosition(1, new Vector3(start + width, OffsetY, 0));
         }
     }
 }

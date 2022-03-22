@@ -78,7 +78,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             if (_tower.CanFire)
             {
-                var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag)
+                var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy)
                                         .Where(e => transform.GetDistanceToObject(e) <= Range)
                                         .OrderBy(e => transform.GetDistanceToObject(e))
                                         .ToArray();

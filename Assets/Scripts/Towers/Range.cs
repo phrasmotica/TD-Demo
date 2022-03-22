@@ -16,25 +16,17 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// Gets or sets whether the parent tower can be placed.
         /// </summary>
-        public bool TowerCanBePlaced
-        {
-            get
-            {
-                return _towerCanBePlaced;
-            }
-            set
-            {
-                _towerCanBePlaced = value;
-                DrawRange();
-            }
-        }
-
-        private bool _towerCanBePlaced = true;
+        private bool _towerCanBePlaced;
 
         /// <summary>
         /// The sprite renderer.
         /// </summary>
         private SpriteRenderer _spriteRenderer;
+
+        private void Awake()
+        {
+            logger = new MethodLogger(nameof(Range));
+        }
 
         /// <summary>
         /// Initialise the script.
@@ -43,8 +35,12 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            logger = new MethodLogger(nameof(Range));
+            SetTowerCanBePlaced(true);
+        }
 
+        public void SetTowerCanBePlaced(bool towerCanBePlaced)
+        {
+            _towerCanBePlaced = towerCanBePlaced;
             DrawRange();
         }
 
@@ -56,7 +52,7 @@ namespace TDDemo.Assets.Scripts.Towers
             logger.Log($"Drawing range of {RangeToDraw}");
 
             // set sprite colour
-            _spriteRenderer.color = TowerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
+            _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
             // width (thus height) of sprite in world space units
             var spriteSize = _spriteRenderer.sprite.bounds.size.x;

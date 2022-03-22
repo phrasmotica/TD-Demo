@@ -20,21 +20,7 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// The current money.
         /// </summary>
-        public int Money
-        {
-            get
-            {
-                return money;
-            }
-            private set
-            {
-                money = value;
-                MoneyText.text = $"Money: {money}";
-                CreateTower.SetInteractable();
-            }
-        }
-
-        private int money;
+        public int Money { get; private set; }
 
         /// <summary>
         /// The text used to display the money.
@@ -52,25 +38,23 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// Returns whether we can afford the given price.
         /// </summary>
-        public bool CanAfford(int price)
-        {
-            return price <= Money;
-        }
+        public bool CanAfford(int price) => price <= Money;
 
         /// <summary>
         /// Adds the given amount of money to the current pot.
         /// </summary>
-        public void AddMoney(int amount)
+        public void AddMoney(int amount) => SetMoney(Money + amount);
+
+        public void SetMoney(int money)
         {
-            Money += amount;
+            Money = money;
+            MoneyText.text = $"Money: {money}";
+            CreateTower.SetInteractable(price => CanAfford(price));
         }
 
         /// <summary>
         /// Resets to the starting money.
         /// </summary>
-        public void ResetMoney()
-        {
-            Money = StartingMoney;
-        }
+        public void ResetMoney() => SetMoney(StartingMoney);
     }
 }

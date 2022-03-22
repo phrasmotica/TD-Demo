@@ -22,5 +22,20 @@ namespace TDDemo.Assets.Scripts.Extensions
         {
             return t.GetDistanceToPosition(o.transform.position);
         }
+
+        public static int GetChildCountWithTag(this Transform t, string tag)
+        {
+            var count = 0;
+
+            foreach (Transform child in t)
+            {
+                if (child.CompareTag(tag))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 }

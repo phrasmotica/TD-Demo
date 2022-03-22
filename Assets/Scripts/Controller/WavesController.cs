@@ -11,20 +11,6 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// The current wave.
         /// </summary>
-        private int CurrentWave
-        {
-            get
-            {
-                return _currentWave;
-            }
-            set
-            {
-                _currentWave = value;
-                WaveText.text = $"Wave {_currentWave}";
-                SendWaveButtonText.text = $"Send wave {_currentWave + 1}";
-            }
-        }
-
         private int _currentWave;
 
         /// <summary>
@@ -58,7 +44,7 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         public void Start()
         {
-            _moneyController = gameObject.GetComponent<MoneyController>();
+            _moneyController = GetComponent<MoneyController>();
 
             logger = new MethodLogger(nameof(WavesController));
 
@@ -66,12 +52,20 @@ namespace TDDemo.Assets.Scripts.Controller
             Physics2D.gravity = Vector2.zero;
         }
 
+        public void SetCurrentWave(int currentWave)
+        {
+            _currentWave = currentWave;
+            WaveText.text = $"Wave {currentWave}";
+            SendWaveButtonText.text = $"Send wave {currentWave + 1}";
+        }
+
         /// <summary>
         /// Starts the coroutine to send the next wave.
         /// </summary>
         public void DoSendNextWave()
         {
-            StartCoroutine(SendWave(++CurrentWave));
+            SetCurrentWave(_currentWave + 1);
+            StartCoroutine(SendWave(_currentWave));
         }
 
         /// <summary>
@@ -86,7 +80,7 @@ namespace TDDemo.Assets.Scripts.Controller
             for (var i = 0; i < enemyCount; i++)
             {
                 var enemy = Instantiate(EnemyPrefab);
-                enemy.GetComponent<Enemy>().OnKill = (reward) => _moneyController.AddMoney(reward);
+                enemy.GetComponent<Enemy>().OnKill = reward => _moneyController.AddMoney(reward);
 
                 yield return new WaitForSeconds(1);
             }
@@ -95,17 +89,11 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// Returns the number of enemies to spawn for the given wave.
         /// </summary>
-        private int GetEnemyCount(int waveNumber)
-        {
-            return waveNumber;
-        }
+        private int GetEnemyCount(int waveNumber) => waveNumber;
 
         /// <summary>
         /// Resets to wave zero, ready for the start of a game.
         /// </summary>
-        public void ResetWaves()
-        {
-            CurrentWave = 0;
-        }
+        public void ResetWaves() => SetCurrentWave(0);
     }
 }

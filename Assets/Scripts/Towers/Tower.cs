@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
-using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,6 +20,10 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         public TowerState State;
 
+        public TowerController TowerController { get; set; }
+
+        public TowerManager TowerManager { get; set; }
+
         /// <summary>
         /// The tower's price.
         /// </summary>
@@ -32,11 +37,6 @@ namespace TDDemo.Assets.Scripts.Towers
         public int UpgradePrice;
 
         /// <summary>
-        /// Gets or sets this tower's value, i.e. the price it will be sold for.
-        /// </summary>
-        public int TotalValue { get; set; }
-
-        /// <summary>
         /// The time taken in seconds for this tower to warm up.
         /// </summary>
         [Range(0, 5)]
@@ -47,6 +47,13 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         [Range(0, 2)]
         public int UpgradeTime;
+
+        /// <summary>
+        /// Gets or sets this tower's value, i.e. the price it will be sold for.
+        /// </summary>
+        public int TotalValue { get; set; }
+
+        public bool IsSelected { get; private set; }
 
         /// <summary>
         /// The time in seconds since this tower was created.
@@ -74,16 +81,6 @@ namespace TDDemo.Assets.Scripts.Towers
         public bool CanFire => State == TowerState.Firing;
 
         /// <summary>
-        /// The tower controller script.
-        /// </summary>
-        public TowerController TowerController { get; set; }
-
-        /// <summary>
-        /// Delegate to run on placing the tower.
-        /// </summary>
-        public Action<int> OnPlace { private get; set; }
-
-        /// <summary>
         /// The tower's initial Z position.
         /// </summary>
         private float _initialZPos;
@@ -109,95 +106,19 @@ namespace TDDemo.Assets.Scripts.Towers
         private ShootProjectile _baseShootProjectile;
 
         /// <summary>
-        /// Gets or sets whether this tower is selected.
-        /// </summary>
-        public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                _selectionObj.SetActive(value);
-                _range.gameObject.SetActive(value);
-            }
-        }
-
-        private bool _isSelected;
-
-        /// <summary>
         /// Gets or sets whether this tower is colliding with another tower.
         /// </summary>
-        private bool IsCollidingWithAnotherTower
-        {
-            get
-            {
-                return _isCollidingWithAnotherTower;
-            }
-            set
-            {
-                _isCollidingWithAnotherTower = value;
-                _range.TowerCanBePlaced = CanBePlaced;
-            }
-        }
-
         private bool _isCollidingWithAnotherTower;
 
         /// <summary>
         /// Gets or sets whether this tower is colliding with a path zone.
         /// </summary>
-        private bool IsCollidingWithPathZone
-        {
-            get
-            {
-                return _isCollidingWithPathZone;
-            }
-            set
-            {
-                _isCollidingWithPathZone = value;
-                _range.TowerCanBePlaced = CanBePlaced;
-            }
-        }
-
         private bool _isCollidingWithPathZone;
-
-        /// <summary>
-        /// Gets whether the tower can be upgraded.
-        /// </summary>
-        public bool CanBePlaced => !IsCollidingWithAnotherTower && !IsCollidingWithPathZone;
 
         /// <summary>
         /// The upgrade level.
         /// </summary>
         private int _upgradeLevel;
-
-        /// <summary>
-        /// Gets the maximum upgrade level for this tower.
-        /// </summary>
-        private int MaxUpgradeLevel
-        {
-            get
-            {
-                var max = 0;
-
-                foreach (Transform child in transform)
-                {
-                    if (child.CompareTag(Tags.TowerUpgradeTag))
-                    {
-                        max++;
-                    }
-                }
-
-                return max;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether the tower can be upgraded.
-        /// </summary>
-        public bool CanUpgrade => State == TowerState.Firing && _upgradeLevel < MaxUpgradeLevel;
 
         /// <summary>
         /// Initialise the script.
@@ -232,18 +153,18 @@ namespace TDDemo.Assets.Scripts.Towers
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    if (IsCollidingWithAnotherTower)
+                    if (_isCollidingWithAnotherTower)
                     {
                         logger.Log("Tower collision, cannot place here");
                     }
-                    else if (IsCollidingWithPathZone)
+                    else if (_isCollidingWithPathZone)
                     {
                         logger.Log("Path collision, cannot place here");
                     }
                     else
                     {
                         logger.Log($"Placed tower at {worldPoint}");
-                        OnPlace(Price);
+                        TowerController.PlaceTower(this);
                         TotalValue += Price;
                         DoWarmup();
                     }
@@ -290,20 +211,10 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void OnMouseUp()
         {
-            if (State == TowerState.Firing)
+            if (State == TowerState.Firing && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
-                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
-                {
-                    if (TowerController.TowerAlreadySelected)
-                    {
-                        logger.Log($"Deselected other tower");
-                        TowerController.Deselect();
-                    }
-
-                    logger.Log($"Selected tower");
-                    IsSelected = true;
-                    AttachToUI();
-                }
+                logger.Log($"Selected tower");
+                TowerManager.Select(this);
             }
         }
 
@@ -312,14 +223,14 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.gameObject.CompareTag(Tags.TowerTag))
+            if (collider.gameObject.CompareTag(Tags.Tower))
             {
-                IsCollidingWithAnotherTower = true;
+                SetIsCollidingWithAnotherTower(true);
             }
 
-            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
+            if (collider.gameObject.CompareTag(Tags.PathZone))
             {
-                IsCollidingWithPathZone = true;
+                SetIsCollidingWithPathZone(true);
             }
         }
 
@@ -328,15 +239,34 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void OnTriggerExit2D(Collider2D collider)
         {
-            if (collider.gameObject.CompareTag(Tags.TowerTag))
+            if (collider.gameObject.CompareTag(Tags.Tower))
             {
-                IsCollidingWithAnotherTower = false;
+                SetIsCollidingWithAnotherTower(false);
             }
 
-            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
+            if (collider.gameObject.CompareTag(Tags.PathZone))
             {
-                IsCollidingWithPathZone = false;
+                SetIsCollidingWithPathZone(false);
             }
+        }
+
+        public void SetIsSelected(bool isSelected)
+        {
+            IsSelected = isSelected;
+            _selectionObj.SetActive(isSelected);
+            _range.gameObject.SetActive(isSelected);
+        }
+
+        public void SetIsCollidingWithAnotherTower(bool isColliding)
+        {
+            _isCollidingWithAnotherTower = isColliding;
+            _range.SetTowerCanBePlaced(CanBePlaced());
+        }
+
+        public void SetIsCollidingWithPathZone(bool isColliding)
+        {
+            _isCollidingWithPathZone = isColliding;
+            _range.SetTowerCanBePlaced(CanBePlaced());
         }
 
         /// <summary>
@@ -369,7 +299,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             State = TowerState.Upgrading;
             _spriteRenderer.color = ColourHelper.HalfOpacity;
-            TowerController.RefreshChildren();
+            TowerController.Refresh();
             StartCoroutine(Upgrade());
         }
 
@@ -389,7 +319,7 @@ namespace TDDemo.Assets.Scripts.Towers
             // enable only the relevant upgrade object
             foreach (Transform child in transform)
             {
-                if (child.CompareTag(Tags.TowerUpgradeTag))
+                if (child.CompareTag(Tags.TowerUpgrade))
                 {
                     var name = child.gameObject.name;
                     child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
@@ -409,23 +339,31 @@ namespace TDDemo.Assets.Scripts.Towers
             State = TowerState.Firing;
             _upgradeAge = 0;
 
-            TowerController.RefreshChildren();
+            TowerController.Refresh();
         }
 
         /// <summary>
-        /// Sets references to this tower in the UI.
+        /// Removes this tower from the UI.
         /// </summary>
-        public void AttachToUI()
+        public void Remove()
         {
-            TowerController.Select(this);
+            TowerManager.Remove(this);
+            Destroy(gameObject);
         }
 
         /// <summary>
-        /// Removes references to this tower from the UI.
+        /// Returns the maximum upgrade level for this tower.
         /// </summary>
-        public void DetachFromUI()
-        {
-            TowerController.Deselect();
-        }
+        private int GetMaxUpgradeLevel() => transform.GetChildCountWithTag(Tags.TowerUpgrade);
+
+        /// <summary>
+        /// Returns whether the tower can be places.
+        /// </summary>
+        private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
+
+        /// <summary>
+        /// Returns whether the tower can be upgraded.
+        /// </summary>
+        public bool CanBeUpgraded() => State == TowerState.Firing && _upgradeLevel < GetMaxUpgradeLevel();
     }
 }

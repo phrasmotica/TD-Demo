@@ -23,27 +23,27 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// <summary>
         /// The sprite renderer.
         /// </summary>
-        private SpriteRenderer sprite;
+        private SpriteRenderer _sprite;
 
         /// <summary>
         /// The line renderer.
         /// </summary>
-        private LineRenderer line;
+        private LineRenderer _line;
 
         /// <summary>
         /// Whether the mouse cursor is over the enemy.
         /// </summary>
-        private bool mouseIsOverEnemy;
+        private bool _mouseIsOverEnemy;
 
         /// <summary>
         /// The time in seconds left to draw the enemy's health for.
         /// </summary>
-        private float remainingPeekTime;
+        private float _remainingPeekTime;
 
         /// <summary>
         /// Gets whether to draw the health bar.
         /// </summary>
-        private bool ShouldDrawHealthBar => remainingPeekTime > 0 || mouseIsOverEnemy;
+        private bool ShouldDrawHealthBar => _remainingPeekTime > 0 || _mouseIsOverEnemy;
 
         /// <summary>
         /// Gets the health fraction of the enemy.
@@ -55,11 +55,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void Start()
         {
-            line = GetComponent<LineRenderer>();
-            line.positionCount = 2;
-            line.useWorldSpace = false;
+            _line = GetComponent<LineRenderer>();
+            _line.positionCount = 2;
+            _line.useWorldSpace = false;
 
-            sprite = GetComponentInParent<SpriteRenderer>();
+            _sprite = GetComponentInParent<SpriteRenderer>();
 
             logger = new MethodLogger(nameof(HealthBar));
 
@@ -71,13 +71,13 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void Update()
         {
-            if (remainingPeekTime > 0)
+            if (_remainingPeekTime > 0)
             {
-                remainingPeekTime -= Time.deltaTime;
+                _remainingPeekTime -= Time.deltaTime;
             }
 
             // draw health bar if we're in the peek period or if mouse is over the enemy
-            line.forceRenderingOff = !ShouldDrawHealthBar;
+            _line.forceRenderingOff = !ShouldDrawHealthBar;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnMouseEnter()
         {
             logger.Log("Mouse is over the enemy");
-            mouseIsOverEnemy = true;
+            _mouseIsOverEnemy = true;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnMouseExit()
         {
             logger.Log("Mouse is no longer over the enemy");
-            mouseIsOverEnemy = false;
+            _mouseIsOverEnemy = false;
         }
 
         /// <summary>
@@ -103,14 +103,14 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void DrawHealthBar(float healthFraction)
         {
-            var spriteExtentX = sprite.sprite.bounds.extents.x;
-            var spriteExtentY = sprite.sprite.bounds.extents.y;
+            var spriteExtentX = _sprite.sprite.bounds.extents.x;
+            var spriteExtentY = _sprite.sprite.bounds.extents.y;
 
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * healthFraction;
 
-            line.SetPosition(0, new Vector3(start, spriteExtentY + OffsetY, 0));
-            line.SetPosition(1, new Vector3(start + width, spriteExtentY + OffsetY, 0));
+            _line.SetPosition(0, new Vector3(start, spriteExtentY + OffsetY, 0));
+            _line.SetPosition(1, new Vector3(start + width, spriteExtentY + OffsetY, 0));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         public void PeekHealth()
         {
-            remainingPeekTime = PeekTime;
+            _remainingPeekTime = PeekTime;
         }
 
         /// <summary>

@@ -5,10 +5,10 @@
     /// </summary>
     public static class Tags
     {
-        public const string EnemyTag = "Enemy";
-        public const string TowerTag = "Tower";
-        public const string TowerUpgradeTag = "TowerUpgrade";
-        public const string PathZoneTag = "PathZone";
-        public const string WaypointsTag = "Waypoints";
+        public const string Enemy = "Enemy";
+        public const string Tower = "Tower";
+        public const string TowerUpgrade = "TowerUpgrade";
+        public const string PathZone = "PathZone";
+        public const string Waypoints = "Waypoints";
     }
 }

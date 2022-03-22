@@ -1,5 +1,4 @@
-﻿using TDDemo.Assets.Scripts.UI;
-using TDDemo.Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,14 +12,19 @@ namespace TDDemo.Assets.Scripts.Controller
         public GameObject GameOverCanvasPrefab;
 
         /// <summary>
-        /// The tower controller script.
-        /// </summary>
-        public TowerController TowerController;
-
-        /// <summary>
         /// The instantiated game over canvas.
         /// </summary>
         private GameObject _gameOverCanvas;
+
+        private TowerController _towerController;
+
+        private TowerManager _towerManager;
+
+        private void Start()
+        {
+            _towerController = GetComponent<TowerController>();
+            _towerManager = GetComponent<TowerManager>();
+        }
 
         /// <summary>
         /// Ends the game.
@@ -39,7 +43,7 @@ namespace TDDemo.Assets.Scripts.Controller
             var restartButton = panelTransform.Find("RestartButton");
             restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
 
-            TowerController.GetComponentInChildren<CreateTower>().Cancel();
+            _towerController.CancelCreateTower();
         }
 
         /// <summary>
@@ -57,15 +61,15 @@ namespace TDDemo.Assets.Scripts.Controller
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
-            TowerController.Deselect();
+            _towerManager.DeselectCurrentTower();
 
-            var towers = GameObject.FindGameObjectsWithTag(Tags.TowerTag);
+            var towers = GameObject.FindGameObjectsWithTag(Tags.Tower);
             foreach (var t in towers)
             {
                 Destroy(t);
             }
 
-            var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag);
+            var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
             foreach (var e in enemies)
             {
                 Destroy(e);
