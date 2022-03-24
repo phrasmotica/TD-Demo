@@ -24,8 +24,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private Tower _tower;
 
-        public GameObject RangePrefab;
-
         public TowerController TowerController { get; set; }
 
         public TowerManager TowerManager { get; set; }
@@ -305,5 +303,14 @@ namespace TDDemo.Assets.Scripts.Towers
         public bool IsUpgrading() => _tower.IsUpgrading();
 
         public bool IsFiring() => _tower.IsFiring();
+
+        // TODO: evaluate damage correctly based on upgrade level
+        public int GetDamage() => _tower.Damage;
+
+        // TODO: move range value into Tower class. Evaluate it correctly based on upgrade level
+        public int GetRange() => _range.RangeToDraw;
+
+        // TODO: move fire rate value into Tower class. Evaluate it correctly based on upgrade level
+        public int GetFireRate() => _baseShootProjectile.FireRate;
     }
 }

@@ -8,6 +8,8 @@
         private readonly TimeCounter _upgradeCounter;
         private readonly int _maxUpgradeLevel;
 
+        public int Damage { get; private set; }
+
         private TowerState _state;
         private int _upgradeLevel;
 
@@ -27,6 +29,8 @@
             _warmupCounter = new TimeCounter(warmupTime);
             _upgradeCounter = new TimeCounter(upgradeTime);
             _maxUpgradeLevel = maxUpgradeLevel;
+
+            Damage = 1;
 
             _state = TowerState.Positioning;
             _upgradeLevel = 0;

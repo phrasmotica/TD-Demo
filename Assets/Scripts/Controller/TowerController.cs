@@ -7,17 +7,19 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class TowerController : MonoBehaviour
     {
+        public TowerStats TowerStats;
+
         public UpgradeTower UpgradeTower;
 
         public SellTower SellTower;
-
-        private TowerManager _towerManager;
 
         /// <summary>
         /// The fraction of its price that a tower should sell for.
         /// </summary>
         [Range(0.5f, 1)]
         public float SellFraction;
+
+        private TowerManager _towerManager;
 
         private MoneyController _moneyController;
 
@@ -114,6 +116,7 @@ namespace TDDemo.Assets.Scripts.Controller
         public void Refresh()
         {
             var selectedTower = _towerManager.GetSelectedTower();
+            TowerStats.SetStats(selectedTower);
             UpgradeTower.SetState(CanUpgradeTower(selectedTower), GetUpgradePrice(selectedTower));
             SellTower.SetState(selectedTower != null, GetSellPrice(selectedTower));
         }
