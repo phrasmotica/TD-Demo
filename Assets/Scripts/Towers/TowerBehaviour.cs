@@ -84,12 +84,12 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _selectionObj = transform.Find("selection").gameObject;
 
-            _range = Instantiate(RangePrefab, transform).GetComponent<Range>();
-
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
             _baseShootProjectile = GetComponent<ShootProjectile>();
-            _range.RangeToDraw = _baseShootProjectile.Range;
+
+            _range = transform.Find("range").GetComponent<Range>();
+            _range.SetRange(_baseShootProjectile.Range);
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
@@ -283,8 +283,7 @@ namespace TDDemo.Assets.Scripts.Towers
                     _spriteRenderer.sprite = childSprite.sprite;
                     childSprite.enabled = false;
 
-                    _range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
-                    _range.DrawRange();
+                    _range.SetRange(child.GetComponent<ShootProjectile>().Range);
                 }
             }
 

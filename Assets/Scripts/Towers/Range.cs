@@ -11,7 +11,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// Gets or sets the range to draw.
         /// </summary>
-        public int RangeToDraw { get; set; }
+        private int _range;
 
         /// <summary>
         /// Gets or sets whether the parent tower can be placed.
@@ -44,12 +44,22 @@ namespace TDDemo.Assets.Scripts.Towers
             DrawRange();
         }
 
+        public void SetRange(int range)
+        {
+            _range = range;
+
+            if (_spriteRenderer != null)
+            {
+                DrawRange();
+            }
+        }
+
         /// <summary>
         /// Draws the range.
         /// </summary>
         public void DrawRange()
         {
-            logger.Log($"Drawing range of {RangeToDraw}");
+            logger.Log($"Drawing range of {_range}");
 
             // set sprite colour
             _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
@@ -57,8 +67,8 @@ namespace TDDemo.Assets.Scripts.Towers
             // width (thus height) of sprite in world space units
             var spriteSize = _spriteRenderer.sprite.bounds.size.x;
 
-            // scalre required to bring sprite to size of the range
-            var scale = RangeToDraw / spriteSize;
+            // scale required to bring sprite to size of the range
+            var scale = _range / spriteSize;
 
             transform.localScale = new Vector3(scale, scale, 1);
         }
