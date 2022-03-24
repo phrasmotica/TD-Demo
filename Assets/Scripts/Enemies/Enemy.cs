@@ -23,6 +23,9 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private int _health;
 
+        public AudioClip HurtAudio;
+        public AudioClip DeadAudio;
+
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
         /// </summary>
@@ -42,18 +45,6 @@ namespace TDDemo.Assets.Scripts.Enemies
         }
 
         /// <summary>
-        /// Destroy this object if it's dead.
-        /// </summary>
-        private void Update()
-        {
-            if (_health <= 0)
-            {
-                Destroy(gameObject);
-                OnKill(Reward);
-            }
-        }
-
-        /// <summary>
         /// If hit by a projectile, take damage and destroy the projectile.
         /// </summary>
         private void OnTriggerEnter2D(Collider2D collision)
@@ -66,6 +57,15 @@ namespace TDDemo.Assets.Scripts.Enemies
                 _health -= projectileComponent.Damage;
                 PeekHealth();
                 Destroy(otherObj);
+
+                if (_health > 0)
+                {
+                    AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
+                }
+                else
+                {
+                    Kill();
+                }
             }
         }
 
@@ -75,6 +75,17 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void PeekHealth()
         {
             GetComponentInChildren<HealthBar>().PeekHealth(HealthFraction);
+        }
+
+        /// <summary>
+        /// Destroy this object if it's dead.
+        /// </summary>
+        private void Kill()
+        {
+            AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
+
+            Destroy(gameObject);
+            OnKill(Reward);
         }
     }
 }

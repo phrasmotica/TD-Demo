@@ -43,6 +43,8 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private float? _timeSinceLastShot;
 
+        private AudioSource _audio;
+
         /// <summary>
         /// Get reference to tower script.
         /// </summary>
@@ -55,6 +57,8 @@ namespace TDDemo.Assets.Scripts.Towers
             {
                 _tower = GetComponentInParent<TowerBehaviour>();
             }
+
+            _audio = GetComponent<AudioSource>();
 
             logger = new MethodLogger(nameof(ShootProjectile));
         }
@@ -118,6 +122,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
             var rb = projectile.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(enemy.transform) * ProjectileSpeed;
+
+            _audio.Play();
         }
 
         /// <summary>

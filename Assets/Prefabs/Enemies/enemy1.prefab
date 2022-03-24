@@ -47,6 +47,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -194,6 +195,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -290,6 +292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 3
   Reward: 1
+  HurtAudio: {fileID: 8300000, guid: 5a69ab5f6edd67c44bebaa2ae5cdba4c, type: 3}
+  DeadAudio: {fileID: 8300000, guid: 622dbeba05f3a744aae3aaecbfcb2a90, type: 3}
 --- !u!114 &5049580195892582698
 MonoBehaviour:
   m_ObjectHideFlags: 0
