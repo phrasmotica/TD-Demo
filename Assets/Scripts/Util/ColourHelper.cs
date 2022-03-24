@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Util
+namespace TDDemo.Assets.Scripts.Util
 {
     /// <summary>
     /// Helper methods for colours.

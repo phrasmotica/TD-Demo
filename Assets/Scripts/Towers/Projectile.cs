@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Assets.Scripts.Extensions;
+using TDDemo.Assets.Scripts.Extensions;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     public class Projectile : MonoBehaviour
     {

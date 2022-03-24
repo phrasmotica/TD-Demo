@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.UI;
-using Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Controller
 {
     public class GameOverScreen : MonoBehaviour
     {
@@ -13,33 +12,38 @@ namespace Assets.Scripts.Controller
         public GameObject GameOverCanvasPrefab;
 
         /// <summary>
-        /// The tower controller script.
-        /// </summary>
-        public TowerController TowerController;
-
-        /// <summary>
         /// The instantiated game over canvas.
         /// </summary>
-        private GameObject gameOverCanvas;
+        private GameObject _gameOverCanvas;
+
+        private TowerController _towerController;
+
+        private TowerManager _towerManager;
+
+        private void Start()
+        {
+            _towerController = GetComponent<TowerController>();
+            _towerManager = GetComponent<TowerManager>();
+        }
 
         /// <summary>
         /// Ends the game.
         /// </summary>
         public void EndGame()
         {
-            gameOverCanvas = Instantiate(GameOverCanvasPrefab);
+            _gameOverCanvas = Instantiate(GameOverCanvasPrefab);
 
             var moneyController = GetComponent<MoneyController>();
             var finishingMoney = moneyController.Money;
 
-            var panelTransform = gameOverCanvas.transform.Find("Panel");
+            var panelTransform = _gameOverCanvas.transform.Find("Panel");
             var moneyText = panelTransform.Find("MoneyText");
             moneyText.GetComponent<Text>().text = $"You finished with {finishingMoney} money.";
 
             var restartButton = panelTransform.Find("RestartButton");
             restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
 
-            TowerController.GetComponentInChildren<CreateTower>().Cancel();
+            _towerController.CancelCreateTower();
         }
 
         /// <summary>
@@ -57,21 +61,21 @@ namespace Assets.Scripts.Controller
             var livesController = GetComponent<LivesController>();
             livesController.ResetLives();
 
-            TowerController.SelectedTower = null;
+            _towerManager.DeselectCurrentTower();
 
-            var towers = GameObject.FindGameObjectsWithTag(Tags.TowerTag);
+            var towers = GameObject.FindGameObjectsWithTag(Tags.Tower);
             foreach (var t in towers)
             {
                 Destroy(t);
             }
 
-            var enemies = GameObject.FindGameObjectsWithTag(Tags.EnemyTag);
+            var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
             foreach (var e in enemies)
             {
                 Destroy(e);
             }
 
-            Destroy(gameOverCanvas);
+            Destroy(_gameOverCanvas);
         }
     }
 }

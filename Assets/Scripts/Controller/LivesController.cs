@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Controller
 {
     public class LivesController : MonoBehaviour
     {
@@ -14,29 +14,17 @@ namespace Assets.Scripts.Controller
         /// <summary>
         /// The game over screen script.
         /// </summary>
-        private GameOverScreen gameOverScreen;
+        private GameOverScreen _gameOverScreen;
 
         /// <summary>
         /// The current number of lives.
         /// </summary>
-        private int Lives
-        {
-            get
-            {
-                return lives;
-            }
-            set
-            {
-                lives = value;
-                LivesText.text = $"Lives: {lives}";
-            }
-        }
-        private int lives;
+        private int _lives;
 
         /// <summary>
         /// Gets whether the game is over.
         /// </summary>
-        private bool GameIsOver => Lives <= 0;
+        private bool GameIsOver => _lives <= 0;
 
         /// <summary>
         /// The text used to display the lives.
@@ -48,7 +36,7 @@ namespace Assets.Scripts.Controller
         /// </summary>
         private void Start()
         {
-            gameOverScreen = gameObject.GetComponent<GameOverScreen>();
+            _gameOverScreen = gameObject.GetComponent<GameOverScreen>();
             ResetLives();
         }
 
@@ -59,18 +47,21 @@ namespace Assets.Scripts.Controller
         {
             if (!GameIsOver)
             {
-                Lives += amount;
+                SetLives(_lives + amount);
                 CheckForGameEnd();
             }
+        }
+
+        public void SetLives(int lives)
+        {
+            _lives = lives;
+            LivesText.text = $"Lives: {lives}";
         }
 
         /// <summary>
         /// Resets to the starting lives.
         /// </summary>
-        public void ResetLives()
-        {
-            Lives = StartingLives;
-        }
+        public void ResetLives() => SetLives(StartingLives);
 
         /// <summary>
         /// Checks if the game should end, and if so ends the game.
@@ -79,7 +70,7 @@ namespace Assets.Scripts.Controller
         {
             if (GameIsOver)
             {
-                gameOverScreen.EndGame();
+                _gameOverScreen.EndGame();
             }
         }
     }

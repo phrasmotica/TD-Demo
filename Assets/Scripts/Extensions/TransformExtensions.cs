@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Extensions
+namespace TDDemo.Assets.Scripts.Extensions
 {
     /// <summary>
     /// Extension methods for Transform components.
@@ -21,6 +21,21 @@ namespace Assets.Scripts.Extensions
         public static float GetDistanceToObject(this Transform t, GameObject o)
         {
             return t.GetDistanceToPosition(o.transform.position);
+        }
+
+        public static int GetChildCountWithTag(this Transform t, string tag)
+        {
+            var count = 0;
+
+            foreach (Transform child in t)
+            {
+                if (child.CompareTag(tag))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
     }
 }

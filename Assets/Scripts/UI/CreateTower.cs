@@ -1,112 +1,29 @@
-﻿using Assets.Scripts.Controller;
-using Assets.Scripts.Towers;
-using Assets.Scripts.Util;
+﻿using System;
+using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UI
+namespace TDDemo.Assets.Scripts.UI
 {
-    public class CreateTower : BaseBehaviour
+    public class CreateTower : MonoBehaviour
     {
-        /// <summary>
-        /// The tower prefab.
-        /// </summary>
         public GameObject TowerPrefab;
 
-        /// <summary>
-        /// Gets the price of the tower.
-        /// </summary>
-        private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
+        public TowerController TowerController;
 
-        /// <summary>
-        /// The new tower object.
-        /// </summary>
-        private GameObject newTowerObj;
+        private int TowerPrice => TowerPrefab.GetComponent<TowerBehaviour>().Price;
 
-        /// <summary>
-        /// The money controller.
-        /// </summary>
-        public MoneyController MoneyController;
-
-        /// <summary>
-        /// The tower controller.
-        /// </summary>
-        private TowerController towerController;
-
-        /// <summary>
-        /// Initialise the script.
-        /// </summary>
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(CreateTowerObj);
-
-            towerController = GetComponentInParent<TowerController>();
-            logger = new MethodLogger(nameof(CreateTower));
+            GetComponent<Button>().onClick.AddListener(CreateNewTower);
         }
 
-        /// <summary>
-        /// Listen for key presses.
-        /// </summary>
-        private void Update()
+        private void CreateNewTower() => TowerController.CreateNewTower(TowerPrefab, TowerPrice);
+
+        public void SetInteractable(Func<int, bool> canAfford)
         {
-            // escape to cancel new tower creation
-            if (towerController.IsPositioningNewTower && Input.GetKeyUp(KeyCode.Escape))
-            {
-                Cancel();
-            }
-        }
-
-        /// <summary>
-        /// Creates a tower.
-        /// </summary>
-        public void CreateTowerObj()
-        {
-            // only create if we can afford the tower
-            if (MoneyController.CanAfford(TowerPrice))
-            {
-                logger.Log("Creating tower");
-                newTowerObj = Instantiate(TowerPrefab);
-                var newTower = newTowerObj.GetComponent<Tower>();
-
-                var towerController = GetComponentInParent<TowerController>();
-                towerController.IsPositioningNewTower = true;
-                newTower.TowerController = towerController;
-
-                newTower.OnPlace = (price) =>
-                {
-                    MoneyController.AddMoney(-price);
-                    newTowerObj = null;
-                    towerController.IsPositioningNewTower = false;
-                };
-            }
-            else
-            {
-                logger.Log("Cannot afford tower!");
-            }
-        }
-
-        /// <summary>
-        /// Cancels tower creation.
-        /// </summary>
-        public void Cancel()
-        {
-            logger.Log("Cancelling tower creation");
-
-            if (newTowerObj != null)
-            {
-                Destroy(newTowerObj);
-                newTowerObj = null;
-            }
-
-            towerController.IsPositioningNewTower = false;
-        }
-
-        /// <summary>
-        /// Sets whether this button is interactable.
-        /// </summary>
-        public void SetInteractable(int money)
-        {
-            GetComponent<Button>().interactable = money >= TowerPrice;
+            GetComponent<Button>().interactable = canAfford(TowerPrice);
         }
     }
 }

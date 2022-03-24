@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers
 {
     public class WarmupBar : MonoBehaviour
     {
         /// <summary>
         /// The line renderer.
         /// </summary>
-        private LineRenderer line;
+        private LineRenderer _line;
 
         /// <summary>
         /// The parent tower's sprite renderer.
         /// </summary>
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         /// <summary>
         /// The offset with which to render the warmup bar.
@@ -23,23 +23,23 @@ namespace Assets.Scripts.Towers
         /// <summary>
         /// Gets whether to draw the warmup bar.
         /// </summary>
-        private bool ShouldDrawWarmupBar => GetComponentInParent<Tower>().State == TowerState.Warmup;
+        private bool ShouldDrawWarmupBar => GetComponentInParent<TowerBehaviour>().IsWarmingUp();
 
         /// <summary>
         /// Gets the warmup progress of the tower.
         /// </summary>
-        private float WarmupProgress => GetComponentInParent<Tower>().WarmupProgress;
+        private float WarmupProgress => GetComponentInParent<TowerBehaviour>().WarmupProgress;
 
         /// <summary>
         /// Get the line renderer.
         /// </summary>
         private void Start()
         {
-            line = GetComponent<LineRenderer>();
-            line.positionCount = 2;
-            line.useWorldSpace = false;
+            _line = GetComponent<LineRenderer>();
+            _line.positionCount = 2;
+            _line.useWorldSpace = false;
 
-            spriteRenderer = GetComponentInParent<SpriteRenderer>();
+            _spriteRenderer = GetComponentInParent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void Update()
         {
-            line.forceRenderingOff = !ShouldDrawWarmupBar;
+            _line.forceRenderingOff = !ShouldDrawWarmupBar;
             if (ShouldDrawWarmupBar)
             {
                 DrawWarmupBar();
@@ -59,13 +59,13 @@ namespace Assets.Scripts.Towers
         /// </summary>
         private void DrawWarmupBar()
         {
-            var spriteExtentX = spriteRenderer.sprite.bounds.extents.x;
+            var spriteExtentX = _spriteRenderer.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * WarmupProgress;
 
-            line.SetPosition(0, new Vector3(start, OffsetY, 0));
-            line.SetPosition(1, new Vector3(start + width, OffsetY, 0));
+            _line.SetPosition(0, new Vector3(start, OffsetY, 0));
+            _line.SetPosition(1, new Vector3(start + width, OffsetY, 0));
         }
     }
 }

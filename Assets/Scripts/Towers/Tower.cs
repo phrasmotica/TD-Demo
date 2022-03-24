@@ -1,444 +1,82 @@
-﻿using System;
-using System.Collections;
-using Assets.Scripts.UI;
-using Assets.Scripts.Util;
-using UnityEngine;
-using UnityEngine.UIElements;
-
-namespace Assets.Scripts.Towers
+﻿namespace TDDemo.Assets.Scripts.Towers
 {
-    public class Tower : BaseBehaviour
+    public class Tower
     {
-        /// <summary>
-        /// The range prefab.
-        /// </summary>
-        public GameObject RangePrefab;
+        private readonly int _price;
+        private readonly int _upgradePrice;
+        private readonly TimeCounter _warmupCounter;
+        private readonly TimeCounter _upgradeCounter;
+        private readonly int _maxUpgradeLevel;
 
-        /// <summary>
-        /// The tower's state.
-        /// </summary>
-        public TowerState State;
+        private TowerState _state;
+        private int _upgradeLevel;
 
-        /// <summary>
-        /// The tower's price.
-        /// </summary>
-        [Range(0, 5)]
-        public int Price;
+        public float WarmupProgress => _warmupCounter.Progress;
 
-        /// <summary>
-        /// The tower's price.
-        /// </summary>
-        [Range(0, 3)]
-        public int UpgradePrice;
+        public float UpgradeProgress => _upgradeCounter.Progress;
 
-        /// <summary>
-        /// Gets or sets this tower's value, i.e. the price it will be sold for.
-        /// </summary>
-        public int TotalValue { get; set; }
-
-        /// <summary>
-        /// The time taken in seconds for this tower to warm up.
-        /// </summary>
-        [Range(0, 5)]
-        public int WarmupTime;
-
-        /// <summary>
-        /// The time taken in seconds for this tower to upgrade.
-        /// </summary>
-        [Range(0, 2)]
-        public int UpgradeTime;
-
-        /// <summary>
-        /// The time in seconds since this tower was created.
-        /// </summary>
-        private float Age;
-
-        /// <summary>
-        /// The time in seconds since this tower's upgrade started.
-        /// </summary>
-        private float UpgradeAge;
-
-        /// <summary>
-        /// Gets the progress of this tower's warmup process.
-        /// </summary>
-        public float WarmupProgress => Age / WarmupTime;
-
-        /// <summary>
-        /// Gets the progress of this tower's upgrade process.
-        /// </summary>
-        public float UpgradeProgress => UpgradeAge / UpgradeTime;
-
-        /// <summary>
-        /// Gets whether the tower can fire.
-        /// </summary>
-        public bool CanFire => State == TowerState.Firing;
-
-        /// <summary>
-        /// The tower controller script.
-        /// </summary>
-        public TowerController TowerController { get; set; }
-
-        /// <summary>
-        /// Gets whether no tower is selected.
-        /// </summary>
-        private bool TowerAlreadySelected => TowerController.SelectedTower != null;
-
-        /// <summary>
-        /// Delegate to run on placing the tower.
-        /// </summary>
-        public Action<int> OnPlace { private get; set; }
-
-        /// <summary>
-        /// The tower's initial Z position.
-        /// </summary>
-        private float InitialZPos;
-
-        /// <summary>
-        /// The tower selection object.
-        /// </summary>
-        private GameObject selectionObj;
-
-        /// <summary>
-        /// The tower range object.
-        /// </summary>
-        private Range range;
-
-        /// <summary>
-        /// The sprite renderer.
-        /// </summary>
-        private SpriteRenderer spriteRenderer;
-
-        /// <summary>
-        /// The base shoot projectile script.
-        /// </summary>
-        private ShootProjectile baseShootProjectile;
-
-        /// <summary>
-        /// Gets or sets whether this tower is selected.
-        /// </summary>
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                selectionObj.SetActive(value);
-                range.gameObject.SetActive(value);
-            }
-        }
-        private bool isSelected;
-
-        /// <summary>
-        /// Gets or sets whether this tower is colliding with another tower.
-        /// </summary>
-        private bool IsCollidingWithAnotherTower
-        {
-            get
-            {
-                return isCollidingWithAnotherTower;
-            }
-            set
-            {
-                isCollidingWithAnotherTower = value;
-                range.TowerCanBePlaced = CanBePlaced;
-            }
-        }
-        private bool isCollidingWithAnotherTower;
-
-        /// <summary>
-        /// Gets or sets whether this tower is colliding with a path zone.
-        /// </summary>
-        private bool IsCollidingWithPathZone
-        {
-            get
-            {
-                return isCollidingWithPathZone;
-            }
-            set
-            {
-                isCollidingWithPathZone = value;
-                range.TowerCanBePlaced = CanBePlaced;
-            }
-        }
-        private bool isCollidingWithPathZone;
-
-        /// <summary>
-        /// Gets whether the tower can be upgraded.
-        /// </summary>
-        public bool CanBePlaced => !IsCollidingWithAnotherTower && !IsCollidingWithPathZone;
-
-        /// <summary>
-        /// The upgrade level.
-        /// </summary>
-        private int UpgradeLevel;
-
-        /// <summary>
-        /// Gets the maximum upgrade level for this tower.
-        /// </summary>
-        private int MaxUpgradeLevel
-        {
-            get
-            {
-                var max = 0;
-
-                foreach (Transform child in transform)
-                {
-                    if (child.CompareTag(Tags.TowerUpgradeTag))
-                    {
-                        max++;
-                    }
-                }
-
-                return max;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether the tower can be upgraded.
-        /// </summary>
-        public bool CanUpgrade => State == TowerState.Firing && UpgradeLevel < MaxUpgradeLevel;
+        public int TotalValue { get; private set; }
 
         /// <summary>
         /// Initialise the script.
         /// </summary>
-        private void Start()
+        public Tower(int price, int upgradePrice, float warmupTime, float upgradeTime, int maxUpgradeLevel)
         {
-            InitialZPos = transform.position.z;
-            State = TowerState.Positioning;
+            _price = price;
+            _upgradePrice = upgradePrice;
+            _warmupCounter = new TimeCounter(warmupTime);
+            _upgradeCounter = new TimeCounter(upgradeTime);
+            _maxUpgradeLevel = maxUpgradeLevel;
 
-            selectionObj = transform.Find("selection").gameObject;
-
-            range = Instantiate(RangePrefab, transform).GetComponent<Range>();
-
-            spriteRenderer = GetComponent<SpriteRenderer>();
-
-            baseShootProjectile = GetComponent<ShootProjectile>();
-            range.RangeToDraw = baseShootProjectile.Range;
-
-            logger = new MethodLogger(nameof(Tower));
+            _state = TowerState.Positioning;
+            _upgradeLevel = 0;
         }
 
-        /// <summary>
-        /// Update is called once per frame.
-        /// </summary>
-        private void Update()
+        public void StartWarmingUp()
         {
-            if (State == TowerState.Positioning)
-            {
-                var mousePosition = Input.mousePosition;
-                var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-                transform.position = new Vector3(worldPoint.x, worldPoint.y, InitialZPos);
-
-                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
-                {
-                    if (IsCollidingWithAnotherTower)
-                    {
-                        logger.Log("Tower collision, cannot place here");
-                    }
-                    else if (IsCollidingWithPathZone)
-                    {
-                        logger.Log("Path collision, cannot place here");
-                    }
-                    else
-                    {
-                        logger.Log($"Placed tower at {worldPoint}");
-                        OnPlace(Price);
-                        TotalValue += Price;
-                        DoWarmup();
-                    }
-                }
-            }
-
-            if (State == TowerState.Warmup)
-            {
-                Age += Time.deltaTime;
-            }
-
-            if (State == TowerState.Upgrading)
-            {
-                UpgradeAge += Time.deltaTime;
-            }
+            TotalValue += _price;
+            _state = TowerState.Warmup;
         }
 
-        /// <summary>
-        /// Mouse is over the tower so draw the range.
-        /// </summary>
-        private void OnMouseEnter()
+        public void Warmup(float time)
         {
-            if (!TowerController.IsPositioningNewTower && !IsSelected)
-            {
-                logger.Log("Showing range of unselected tower");
-                range.gameObject.SetActive(true);
-            }
+            _warmupCounter.Increment(time);
         }
 
-        /// <summary>
-        /// Mouse is no longer over the tower so hide the range.
-        /// </summary>
-        private void OnMouseExit()
+        public void FinishWarmingUp()
         {
-            if (!TowerController.IsPositioningNewTower && !IsSelected)
-            {
-                logger.Log("Hiding range of unselected tower");
-                range.gameObject.SetActive(false);
-            }
+            _warmupCounter.Reset();
+            _state = TowerState.Firing;
         }
 
-        /// <summary>
-        /// Set this as the selected tower when clicked.
-        /// </summary>
-        private void OnMouseUp()
+        public void StartUpgrading()
         {
-            if (State == TowerState.Firing)
-            {
-                if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
-                {
-                    if (TowerAlreadySelected)
-                    {
-                        logger.Log($"Deselected other tower");
-                        TowerController.SelectedTower.IsSelected = false;
-                    }
-
-                    logger.Log($"Selected tower");
-                    IsSelected = true;
-                    AttachToUI();
-                }
-            }
+            _state = TowerState.Upgrading;
         }
 
-        /// <summary>
-        /// Set tower collision flag if necessary.
-        /// </summary>
-        private void OnTriggerEnter2D(Collider2D collider)
+        public void Upgrade(float time)
         {
-            if (collider.gameObject.CompareTag(Tags.TowerTag))
-            {
-                IsCollidingWithAnotherTower = true;
-            }
-
-            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
-            {
-                IsCollidingWithPathZone = true;
-            }
+            _upgradeCounter.Increment(time);
         }
 
-        /// <summary>
-        /// Clear tower collision flag if necessary.
-        /// </summary>
-        private void OnTriggerExit2D(Collider2D collider)
+        public int FinishUpgrading()
         {
-            if (collider.gameObject.CompareTag(Tags.TowerTag))
-            {
-                IsCollidingWithAnotherTower = false;
-            }
-
-            if (collider.gameObject.CompareTag(Tags.PathZoneTag))
-            {
-                IsCollidingWithPathZone = false;
-            }
+            TotalValue += _upgradePrice;
+            _state = TowerState.Firing;
+            _upgradeCounter.Reset();
+            return ++_upgradeLevel;
         }
 
-        /// <summary>
-        /// Starts the coroutine to make the tower warm up.
-        /// </summary>
-        private void DoWarmup()
-        {
-            State = TowerState.Warmup;
-            spriteRenderer.color = ColourHelper.HalfOpacity;
-            StartCoroutine(Warmup());
-        }
+        public bool IsPositioning() => _state == TowerState.Positioning;
 
-        /// <summary>
-        /// Make the tower warm up before being ready to fire.
-        /// </summary>
-        private IEnumerator Warmup()
-        {
-            logger.Log($"Tower warming up for {WarmupTime} seconds");
-            yield return new WaitForSeconds(WarmupTime);
+        public bool IsWarmingUp() => _state == TowerState.Warmup;
 
-            logger.Log($"Tower ready");
-            spriteRenderer.color = ColourHelper.FullOpacity;
-            State = TowerState.Firing;
-        }
+        public bool IsUpgrading() => _state == TowerState.Upgrading;
 
-        /// <summary>
-        /// Starts the coroutine to upgrade the tower.
-        /// </summary>
-        public void DoUpgrade()
-        {
-            State = TowerState.Upgrading;
-            spriteRenderer.color = ColourHelper.HalfOpacity;
-            TowerController.Refresh();
-            StartCoroutine(Upgrade());
-        }
+        public bool IsFiring() => _state == TowerState.Firing;
 
-        /// <summary>
-        /// Upgrades the tower to the next level.
-        /// </summary>
-        private IEnumerator Upgrade()
-        {
-            logger.Log($"Tower upgrading for {UpgradeTime} seconds");
-            yield return new WaitForSeconds(UpgradeTime);
+        public bool CanBeUpgraded() => IsFiring() && _upgradeLevel < _maxUpgradeLevel;
 
-            TotalValue += UpgradePrice;
-            var newUpgradeLevel = ++UpgradeLevel;
-
-            logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {TotalValue}");
-
-            // enable only the relevant upgrade object
-            foreach (Transform child in transform)
-            {
-                if (child.CompareTag(Tags.TowerUpgradeTag))
-                {
-                    var name = child.gameObject.name;
-                    child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
-
-                    var childSprite = child.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = childSprite.sprite;
-                    childSprite.enabled = false;
-
-                    range.RangeToDraw = child.GetComponent<ShootProjectile>().Range;
-                    range.DrawRange();
-                }
-            }
-
-            baseShootProjectile.enabled = UpgradeLevel <= 0;
-
-            spriteRenderer.color = ColourHelper.FullOpacity;
-            State = TowerState.Firing;
-            UpgradeAge = 0;
-
-            TowerController.Refresh();
-        }
-
-        /// <summary>
-        /// Sets references to this tower in the UI.
-        /// </summary>
-        public void AttachToUI()
-        {
-            TowerController.SelectedTower = this;
-        }
-
-        /// <summary>
-        /// Removes references to this tower from the UI.
-        /// </summary>
-        public void DetachFromUI()
-        {
-            TowerController.SelectedTower = null;
-        }
-    }
-
-    /// <summary>
-    /// Possible states for a tower to occupy.
-    /// </summary>
-    public enum TowerState
-    {
-        Positioning,
-        Warmup,
-        Firing,
-        Upgrading,
+        public bool IsBaseLevel() => _upgradeLevel <= 0;
     }
 }

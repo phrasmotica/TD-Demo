@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Assets.Scripts.Util
+namespace TDDemo.Assets.Scripts.Util
 {
     /// <summary>
     /// Logger that includes a class and calling method name in its messages.
@@ -11,34 +11,26 @@ namespace Assets.Scripts.Util
         /// <summary>
         /// The class name.
         /// </summary>
-        private readonly string ClassName;
+        private readonly string _className;
 
-        /// <summary>
-        /// The method name.
-        /// </summary>
-        private readonly string MethodName;
-
-        public MethodLogger(
-            string callerClassName,
-            [CallerMemberName] string callerMethodName = "")
+        public MethodLogger(string callerClassName)
         {
-            ClassName = callerClassName;
-            MethodName = callerMethodName;
+            _className = callerClassName;
         }
 
-        public void Log(string message)
+        public void Log(string message, [CallerMemberName] string callerMethodName = "")
         {
-            Debug.Log($"{ClassName}.{MethodName}(): {message}");
+            Debug.Log($"{_className}.{callerMethodName}(): {message}");
         }
 
-        public void LogWarning(string message)
+        public void LogWarning(string message, [CallerMemberName] string callerMethodName = "")
         {
-            Debug.LogWarning($"{ClassName}.{MethodName}(): {message}");
+            Debug.LogWarning($"{_className}.{callerMethodName}(): {message}");
         }
 
-        public void LogError(string message)
+        public void LogError(string message, [CallerMemberName] string callerMethodName = "")
         {
-            Debug.LogError($"{ClassName}.{MethodName}(): {message}");
+            Debug.LogError($"{_className}.{callerMethodName}(): {message}");
         }
     }
 }

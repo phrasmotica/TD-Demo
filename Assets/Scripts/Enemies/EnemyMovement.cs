@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Enemies
+namespace TDDemo.Assets.Scripts.Enemies
 {
     public class EnemyMovement : MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace Assets.Scripts.Enemies
         /// <summary>
         /// Give the enemy some velocity.
         /// </summary>
-        void Start()
+        private void Start()
         {
             var rb = gameObject.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(InitialVelocity, 0);
