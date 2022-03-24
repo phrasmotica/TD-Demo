@@ -40,13 +40,13 @@ namespace TDDemo.Assets.Scripts.Towers
         /// The time taken in seconds for this tower to warm up.
         /// </summary>
         [Range(0, 5)]
-        public int WarmupTime;
+        public float WarmupTime;
 
         /// <summary>
         /// The time taken in seconds for this tower to upgrade.
         /// </summary>
         [Range(0, 2)]
-        public int UpgradeTime;
+        public float UpgradeTime;
 
         /// <summary>
         /// Gets or sets this tower's value, i.e. the price it will be sold for.
@@ -55,25 +55,13 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsSelected { get; private set; }
 
-        /// <summary>
-        /// The time in seconds since this tower was created.
-        /// </summary>
-        private float _age;
+        private TimeCounter _warmupCounter;
 
-        /// <summary>
-        /// The time in seconds since this tower's upgrade started.
-        /// </summary>
-        private float _upgradeAge;
+        public float WarmupProgress => _warmupCounter.Progress;
 
-        /// <summary>
-        /// Gets the progress of this tower's warmup process.
-        /// </summary>
-        public float WarmupProgress => _age / WarmupTime;
+        private TimeCounter _upgradeCounter;
 
-        /// <summary>
-        /// Gets the progress of this tower's upgrade process.
-        /// </summary>
-        public float UpgradeProgress => _upgradeAge / UpgradeTime;
+        public float UpgradeProgress => _upgradeCounter.Progress;
 
         /// <summary>
         /// Gets whether the tower can fire.
@@ -128,6 +116,9 @@ namespace TDDemo.Assets.Scripts.Towers
             _initialZPos = transform.position.z;
             State = TowerState.Positioning;
 
+            _warmupCounter = new TimeCounter(WarmupTime);
+            _upgradeCounter = new TimeCounter(UpgradeTime);
+
             _selectionObj = transform.Find("selection").gameObject;
 
             _range = Instantiate(RangePrefab, transform).GetComponent<Range>();
@@ -173,12 +164,12 @@ namespace TDDemo.Assets.Scripts.Towers
 
             if (State == TowerState.Warmup)
             {
-                _age += Time.deltaTime;
+                _warmupCounter.Increment(Time.deltaTime);
             }
 
             if (State == TowerState.Upgrading)
             {
-                _upgradeAge += Time.deltaTime;
+                _upgradeCounter.Increment(Time.deltaTime);
             }
         }
 
@@ -337,7 +328,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer.color = ColourHelper.FullOpacity;
             State = TowerState.Firing;
-            _upgradeAge = 0;
+            _upgradeCounter.Reset();
 
             TowerController.Refresh();
         }
