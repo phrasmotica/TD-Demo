@@ -66,12 +66,12 @@ namespace TDDemo.Assets.Scripts.Controller
                 IsPositioningNewTower = true;
 
                 _newTowerObj = Instantiate(towerPrefab);
-                var newTower = _newTowerObj.GetComponent<Tower>();
+                var newTower = _newTowerObj.GetComponent<TowerBehaviour>();
                 newTower.TowerController = this;
             }
         }
 
-        public void PlaceTower(Tower newTower)
+        public void PlaceTower(TowerBehaviour newTower)
         {
             _moneyController.AddMoney(-newTower.Price);
 
@@ -132,18 +132,18 @@ namespace TDDemo.Assets.Scripts.Controller
             IsPositioningNewTower = false;
         }
 
-        private bool CanUpgradeTower(Tower tower)
+        private bool CanUpgradeTower(TowerBehaviour tower)
         {
             var canUpgrade = tower != null && tower.CanBeUpgraded();
             return canUpgrade && _moneyController.CanAfford(tower.UpgradePrice);
         }
 
-        private int? GetUpgradePrice(Tower tower)
+        private int? GetUpgradePrice(TowerBehaviour tower)
         {
             return tower != null ? tower.UpgradePrice : (int?) null;
         }
 
-        private int? GetSellPrice(Tower tower)
+        private int? GetSellPrice(TowerBehaviour tower)
         {
             if (tower == null)
             {

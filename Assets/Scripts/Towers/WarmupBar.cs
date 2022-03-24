@@ -23,12 +23,12 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// Gets whether to draw the warmup bar.
         /// </summary>
-        private bool ShouldDrawWarmupBar => GetComponentInParent<Tower>().State == TowerState.Warmup;
+        private bool ShouldDrawWarmupBar => GetComponentInParent<TowerBehaviour>().IsWarmingUp();
 
         /// <summary>
         /// Gets the warmup progress of the tower.
         /// </summary>
-        private float WarmupProgress => GetComponentInParent<Tower>().WarmupProgress;
+        private float WarmupProgress => GetComponentInParent<TowerBehaviour>().WarmupProgress;
 
         /// <summary>
         /// Get the line renderer.

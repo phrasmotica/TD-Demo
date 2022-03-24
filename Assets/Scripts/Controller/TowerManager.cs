@@ -9,7 +9,7 @@ namespace TDDemo.Assets.Scripts.Controller
     {
         private TowerController _towerController;
 
-        private List<Tower> _towers;
+        private List<TowerBehaviour> _towers;
 
         private int _selectedTowerIndex;
 
@@ -17,7 +17,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _towerController = GetComponent<TowerController>();
 
-            _towers = new List<Tower>();
+            _towers = new List<TowerBehaviour>();
         }
 
         private void Update()
@@ -52,18 +52,18 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        public void Add(Tower tower)
+        public void Add(TowerBehaviour tower)
         {
             _towers.Add(tower);
         }
 
-        public void Remove(Tower tower)
+        public void Remove(TowerBehaviour tower)
         {
             _towers.Remove(tower);
             Destroy(tower.gameObject);
         }
 
-        public void Select(Tower tower)
+        public void Select(TowerBehaviour tower)
         {
             if (tower != null)
             {
@@ -137,13 +137,13 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// Gets the selected tower.
         /// </summary>
-        public Tower GetSelectedTower()
+        public TowerBehaviour GetSelectedTower()
         {
             var tower = GetCurrentTower();
             return tower != null && tower.IsSelected ? tower : null;
         }
 
-        private Tower GetCurrentTower()
+        private TowerBehaviour GetCurrentTower()
         {
             if (!_towers.Any())
             {

@@ -34,7 +34,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// The tower.
         /// </summary>
-        private Tower _tower;
+        private TowerBehaviour _tower;
 
         /// <summary>
         /// The time in seconds since the last shot was fired, or null if the tower has not fired a
@@ -49,7 +49,12 @@ namespace TDDemo.Assets.Scripts.Towers
         private void Start()
         {
             // upgrade objects are children of the original tower
-            _tower = GetComponent<Tower>() ?? GetComponentInParent<Tower>();
+            _tower = GetComponent<TowerBehaviour>();
+
+            if (_tower == null)
+            {
+                _tower = GetComponentInParent<TowerBehaviour>();
+            }
 
             logger = new MethodLogger(nameof(ShootProjectile));
         }
@@ -76,7 +81,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void CheckForEnemies()
         {
-            if (_tower.CanFire)
+            if (_tower.IsFiring())
             {
                 var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy)
                                         .Where(e => transform.GetDistanceToObject(e) <= Range)

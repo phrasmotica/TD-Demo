@@ -12,7 +12,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TowerController TowerController;
 
-        private int TowerPrice => TowerPrefab.GetComponent<Tower>().Price;
+        private int TowerPrice => TowerPrefab.GetComponent<TowerBehaviour>().Price;
 
         private void Start()
         {

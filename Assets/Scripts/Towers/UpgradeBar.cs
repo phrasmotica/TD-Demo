@@ -23,12 +23,12 @@ namespace TDDemo.Assets.Scripts.Towers
         /// <summary>
         /// Gets whether to draw the upgrade bar.
         /// </summary>
-        private bool ShouldDrawUpgradeBar => GetComponentInParent<Tower>().State == TowerState.Upgrading;
+        private bool ShouldDrawUpgradeBar => GetComponentInParent<TowerBehaviour>().IsUpgrading();
 
         /// <summary>
         /// Gets the upgrade progress of the tower.
         /// </summary>
-        private float UpgradeProgress => GetComponentInParent<Tower>().UpgradeProgress;
+        private float UpgradeProgress => GetComponentInParent<TowerBehaviour>().UpgradeProgress;
 
         /// <summary>
         /// Get the line renderer.
