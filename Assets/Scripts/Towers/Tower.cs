@@ -334,15 +334,6 @@ namespace TDDemo.Assets.Scripts.Towers
         }
 
         /// <summary>
-        /// Removes this tower from the UI.
-        /// </summary>
-        public void Remove()
-        {
-            TowerManager.Remove(this);
-            Destroy(gameObject);
-        }
-
-        /// <summary>
         /// Returns the maximum upgrade level for this tower.
         /// </summary>
         private int GetMaxUpgradeLevel() => transform.GetChildCountWithTag(Tags.TowerUpgrade);

@@ -59,8 +59,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void Remove(Tower tower)
         {
-            tower.Remove();
             _towers.Remove(tower);
+            Destroy(tower.gameObject);
         }
 
         public void Select(Tower tower)
