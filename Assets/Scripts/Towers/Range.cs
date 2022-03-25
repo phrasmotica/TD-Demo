@@ -64,10 +64,10 @@ namespace TDDemo.Assets.Scripts.Towers
             // set sprite colour
             _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
-            // width (thus height) of sprite in world space units
-            var spriteSize = _spriteRenderer.sprite.bounds.size.x;
+            // radius of range sprite in world space units
+            var spriteSize = _spriteRenderer.sprite.bounds.size.x / 2;
 
-            // scale required to bring sprite to size of the range
+            // scale required to bring sprite to size of the range.
             var scale = RangeToDraw / spriteSize;
 
             transform.localScale = new Vector3(scale, scale, 1);
