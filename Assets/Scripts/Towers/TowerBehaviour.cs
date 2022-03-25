@@ -25,7 +25,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsSelected { get; private set; }
 
-        public int Price => _tower != null ? _tower.BasePrice : 0;
+        public int Price => _tower != null ? _tower.GetPrice() : 0;
 
         public float WarmupProgress => _tower.WarmupProgress;
 
@@ -87,7 +87,7 @@ namespace TDDemo.Assets.Scripts.Towers
                     {
                         logger.Log($"Placed tower at {worldPoint}");
                         TowerController.PlaceTower(this);
-                        DoWarmup();
+                        StartCoroutine(Warmup());
                     }
                 }
             }
@@ -184,20 +184,13 @@ namespace TDDemo.Assets.Scripts.Towers
         }
 
         /// <summary>
-        /// Starts the coroutine to make the tower warm up.
-        /// </summary>
-        private void DoWarmup()
-        {
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
-            StartCoroutine(Warmup());
-        }
-
-        /// <summary>
         /// Make the tower warm up before being ready to fire.
         /// </summary>
         private IEnumerator Warmup()
         {
             var warmupTime = _tower.StartWarmingUp();
+
+            _spriteRenderer.color = ColourHelper.HalfOpacity;
 
             logger.Log($"Tower warming up for {warmupTime} seconds");
             yield return new WaitForSeconds(warmupTime);
@@ -205,18 +198,12 @@ namespace TDDemo.Assets.Scripts.Towers
             _tower.FinishWarmingUp();
             AllowFire();
 
-            logger.Log("Tower ready");
             _spriteRenderer.color = ColourHelper.FullOpacity;
+
+            logger.Log("Tower ready");
         }
 
-        /// <summary>
-        /// Starts the coroutine to upgrade the tower.
-        /// </summary>
-        public void DoUpgrade()
-        {
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
-            StartCoroutine(Upgrade());
-        }
+        public void DoUpgrade() => StartCoroutine(Upgrade());
 
         /// <summary>
         /// Upgrades the tower to the next level.
@@ -225,6 +212,8 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             var upgradeTime = _tower.StartUpgrading();
             PreventFire();
+
+            _spriteRenderer.color = ColourHelper.HalfOpacity;
 
             TowerController.Refresh();
 
@@ -252,8 +241,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsUpgrading() => _tower.IsUpgrading();
 
-        public TowerLevel GetLevel() => _tower.GetLevel();
-
         public int GetUpgradeCost() => _tower.GetUpgradeCost();
 
         private void AllowFire()
@@ -276,12 +263,22 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _actions = GetComponentsInChildren<ITowerAction>();
 
-            Range.SetRange(ComputeRange());
+            Range.SetRange(GetRange());
         }
 
-        private int ComputeRange()
+        public int GetDamage()
+        {
+            return GetShootingActions().Select(a => a.Specs.Damage).Max();
+        }
+
+        public int GetRange()
         {
             return GetShootingActions().Select(a => a.Specs.Range).Max();
+        }
+
+        public int GetFireRate()
+        {
+            return GetShootingActions().Select(a => a.Specs.FireRate).Max();
         }
 
         private IEnumerable<ShootNearestEnemy> GetShootingActions()

@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cost: 2
+  Price: 2
   Time: 3
 --- !u!114 &9181127172246194813
 MonoBehaviour:
@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cost: 2
+  Price: 2
   Time: 3
 --- !u!114 &2641400417889185778
 MonoBehaviour:
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cost: 2
+  Price: 2
   Time: 3
 --- !u!114 &5915820985257462655
 MonoBehaviour:

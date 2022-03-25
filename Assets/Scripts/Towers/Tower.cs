@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TDDemo.Assets.Scripts.Util;
-using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -13,10 +11,6 @@ namespace TDDemo.Assets.Scripts.Towers
         private TimeCounter _warmupCounter;
         private int _upgradeLevel;
         private TimeCounter _upgradeCounter;
-
-        public int BasePrice => _levels.First().Cost;
-
-        public float BaseWarmupTime => _levels.First().Time;
 
         public float WarmupProgress => _warmupCounter.Progress;
 
@@ -33,11 +27,11 @@ namespace TDDemo.Assets.Scripts.Towers
         public float StartWarmingUp()
         {
             _state = TowerState.Warmup;
-            _warmupCounter = new TimeCounter(BaseWarmupTime);
 
-            _levels.First().GetComponent<SpriteRenderer>().color = ColourHelper.HalfOpacity;
+            var baseLevel = GetBaseLevel();
+            _warmupCounter = new TimeCounter(baseLevel.Time);
 
-            return BaseWarmupTime;
+            return baseLevel.Time;
         }
 
         public void Warmup(float time)
@@ -47,10 +41,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void FinishWarmingUp()
         {
-            _warmupCounter.Reset();
             _state = TowerState.Firing;
 
-            _levels.First().GetComponent<SpriteRenderer>().color = ColourHelper.FullOpacity;
+            _warmupCounter.Reset();
         }
 
         public float StartUpgrading()
@@ -59,8 +52,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
             var upgradeTime = GetUpgradeTime();
             _upgradeCounter = new TimeCounter(upgradeTime);
-
-            GetLevel().GetComponent<SpriteRenderer>().color = ColourHelper.HalfOpacity;
 
             return upgradeTime;
         }
@@ -72,8 +63,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public TowerLevel FinishUpgrading()
         {
-            _upgradeCounter.Reset();
             _state = TowerState.Firing;
+
+            _upgradeCounter.Reset();
             _upgradeLevel++;
 
             // make sure only the current level object is active
@@ -83,9 +75,7 @@ namespace TDDemo.Assets.Scripts.Towers
                 level.gameObject.SetActive(i == _upgradeLevel);
             }
 
-            GetLevel().GetComponent<SpriteRenderer>().color = ColourHelper.FullOpacity;
-
-            return _levels[_upgradeLevel];
+            return GetLevel();
         }
 
         public bool IsPositioning() => _state == TowerState.Positioning;
@@ -98,9 +88,16 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool CanBeUpgraded() => IsFiring() && _upgradeLevel < _levels.Count - 1;
 
-        public TowerLevel GetLevel()
+        private TowerLevel GetBaseLevel() => _levels.First();
+
+        public int GetPrice() => GetBaseLevel().Price;
+
+        private TowerLevel GetLevel() => _levels[_upgradeLevel];
+
+        private float GetUpgradeTime()
         {
-            return _levels[_upgradeLevel];
+            var nextLevel = _levels[_upgradeLevel + 1];
+            return nextLevel.Time;
         }
 
         public int GetUpgradeCost()
@@ -111,18 +108,12 @@ namespace TDDemo.Assets.Scripts.Towers
             }
 
             var nextLevel = _levels[_upgradeLevel + 1];
-            return nextLevel.Cost;
+            return nextLevel.Price;
         }
 
         public int GetTotalValue()
         {
-            return _levels.Take(_upgradeLevel + 1).Sum(l => l.Cost);
-        }
-
-        private float GetUpgradeTime()
-        {
-            var nextLevel = _levels[_upgradeLevel + 1];
-            return nextLevel.Time;
+            return _levels.Take(_upgradeLevel + 1).Sum(l => l.Price);
         }
     }
 }
