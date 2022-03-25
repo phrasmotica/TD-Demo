@@ -21,14 +21,16 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (tower != null)
             {
+                var towerLevel = tower.GetLevel();
+
                 _damageText.gameObject.SetActive(true);
-                _damageText.text = $"Damage: {tower.GetDamage()}";
+                _damageText.text = $"Damage: {towerLevel.Damage}";
 
                 _rangeText.gameObject.SetActive(true);
-                _rangeText.text = $"Range: {tower.GetRange()}";
+                _rangeText.text = $"Range: {towerLevel.Range}";
 
                 _fireRateText.gameObject.SetActive(true);
-                _fireRateText.text = $"Fire rate: {tower.GetFireRate()}";
+                _fireRateText.text = $"Fire rate: {towerLevel.FireRate}";
             }
             else
             {

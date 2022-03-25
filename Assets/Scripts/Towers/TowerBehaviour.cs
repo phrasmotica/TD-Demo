@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Linq;
 using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,14 +12,8 @@ namespace TDDemo.Assets.Scripts.Towers
         [Range(0, 5)]
         public int Price;
 
-        [Range(0, 3)]
-        public int UpgradePrice;
-
         [Range(0, 5)]
         public float WarmupTime;
-
-        [Range(0, 2)]
-        public float UpgradeTime;
 
         private Tower _tower;
 
@@ -34,7 +27,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public float UpgradeProgress => _tower.UpgradeProgress;
 
-        public int TotalValue => _tower.TotalValue;
+        public int TotalValue => _tower.GetTotalValue();
 
         /// <summary>
         /// The tower's initial Z position.
@@ -56,10 +49,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private SpriteRenderer _spriteRenderer;
 
-        /// <summary>
-        /// The base shoot projectile script.
-        /// </summary>
-        private ShootProjectile _baseShootProjectile;
+        private ShootProjectile _shootProjectile;
 
         /// <summary>
         /// Gets or sets whether this tower is colliding with another tower.
@@ -76,7 +66,8 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private void Start()
         {
-            _tower = new Tower(Price, UpgradePrice, WarmupTime, UpgradeTime, GetMaxUpgradeLevel());
+            var levels = transform.GetComponentsInChildren<TowerLevel>().ToList();
+            _tower = new Tower(Price, WarmupTime, levels);
 
             _initialZPos = transform.position.z;
 
@@ -84,10 +75,13 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            _baseShootProjectile = GetComponent<ShootProjectile>();
+            var baseLevel = levels.First();
+
+            _shootProjectile = GetComponent<ShootProjectile>();
+            _shootProjectile.Level = baseLevel;
 
             _range = transform.Find("range").GetComponent<Range>();
-            _range.SetRange(_baseShootProjectile.Range);
+            _range.SetRange(baseLevel.Range);
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
@@ -235,13 +229,15 @@ namespace TDDemo.Assets.Scripts.Towers
         private IEnumerator Warmup()
         {
             _tower.StartWarmingUp();
+            _shootProjectile.CanFire = false;
 
             logger.Log($"Tower warming up for {WarmupTime} seconds");
             yield return new WaitForSeconds(WarmupTime);
 
             _tower.FinishWarmingUp();
+            _shootProjectile.CanFire = true;
 
-            logger.Log($"Tower ready");
+            logger.Log("Tower ready");
             _spriteRenderer.color = ColourHelper.FullOpacity;
         }
 
@@ -259,40 +255,27 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private IEnumerator Upgrade()
         {
-            _tower.StartUpgrading();
+            var upgradeTime = _tower.StartUpgrading();
+            _shootProjectile.CanFire = false;
+
             TowerController.Refresh();
 
-            logger.Log($"Tower upgrading for {UpgradeTime} seconds");
-            yield return new WaitForSeconds(UpgradeTime);
+            logger.Log($"Tower upgrading for {upgradeTime} seconds");
+            yield return new WaitForSeconds(upgradeTime);
 
-            var newUpgradeLevel = _tower.FinishUpgrading();
+            var newLevel = _tower.FinishUpgrading();
+            _shootProjectile.CanFire = true;
 
-            logger.Log($"Tower upgraded to level {newUpgradeLevel}, total value {_tower.TotalValue}");
+            _shootProjectile.Level = newLevel;
+            _range.SetRange(newLevel.Range);
 
-            // enable only the relevant upgrade object
-            foreach (Transform child in transform)
-            {
-                if (child.CompareTag(Tags.TowerUpgrade))
-                {
-                    var name = child.gameObject.name;
-                    child.gameObject.SetActive(name.EndsWith($"{newUpgradeLevel}", StringComparison.OrdinalIgnoreCase));
-
-                    var childSprite = child.GetComponent<SpriteRenderer>();
-                    _spriteRenderer.sprite = childSprite.sprite;
-                    childSprite.enabled = false;
-
-                    _range.SetRange(child.GetComponent<ShootProjectile>().Range);
-                }
-            }
-
-            _baseShootProjectile.enabled = _tower.IsBaseLevel();
-
+            _spriteRenderer.sprite = newLevel.GetComponent<SpriteRenderer>().sprite;
             _spriteRenderer.color = ColourHelper.FullOpacity;
+
+            logger.Log($"Tower upgraded, total value {TotalValue}");
 
             TowerController.Refresh();
         }
-
-        private int GetMaxUpgradeLevel() => transform.GetChildCountWithTag(Tags.TowerUpgrade);
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
 
@@ -302,15 +285,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsUpgrading() => _tower.IsUpgrading();
 
-        public bool IsFiring() => _tower.IsFiring();
+        public TowerLevel GetLevel() => _tower.GetLevel();
 
-        // TODO: evaluate damage correctly based on upgrade level
-        public int GetDamage() => _tower.Damage;
-
-        // TODO: move range value into Tower class. Evaluate it correctly based on upgrade level
-        public int GetRange() => _range.RangeToDraw;
-
-        // TODO: move fire rate value into Tower class. Evaluate it correctly based on upgrade level
-        public int GetFireRate() => _baseShootProjectile.FireRate;
+        public int GetUpgradeCost() => _tower.GetUpgradeCost();
     }
 }

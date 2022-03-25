@@ -89,7 +89,7 @@ namespace TDDemo.Assets.Scripts.Controller
             var selectedTower = _towerManager.GetSelectedTower();
             if (CanUpgradeTower(selectedTower))
             {
-                _moneyController.AddMoney(-selectedTower.UpgradePrice);
+                _moneyController.AddMoney(-selectedTower.GetUpgradeCost());
                 selectedTower.DoUpgrade();
 
                 Refresh();
@@ -117,7 +117,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             var selectedTower = _towerManager.GetSelectedTower();
             TowerStats.SetStats(selectedTower);
-            UpgradeTower.SetState(CanUpgradeTower(selectedTower), GetUpgradePrice(selectedTower));
+            UpgradeTower.SetState(CanUpgradeTower(selectedTower), GetUpgradeCost(selectedTower));
             SellTower.SetState(selectedTower != null, GetSellPrice(selectedTower));
         }
 
@@ -138,12 +138,12 @@ namespace TDDemo.Assets.Scripts.Controller
         private bool CanUpgradeTower(TowerBehaviour tower)
         {
             var canUpgrade = tower != null && tower.CanBeUpgraded();
-            return canUpgrade && _moneyController.CanAfford(tower.UpgradePrice);
+            return canUpgrade && _moneyController.CanAfford(GetUpgradeCost(tower).Value);
         }
 
-        private int? GetUpgradePrice(TowerBehaviour tower)
+        private int? GetUpgradeCost(TowerBehaviour tower)
         {
-            return tower != null ? tower.UpgradePrice : (int?) null;
+            return tower != null ? tower.GetUpgradeCost() : (int?) null;
         }
 
         private int? GetSellPrice(TowerBehaviour tower)
