@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 1421022782}
   - component: {fileID: 1421022781}
   m_Layer: 5
-  m_Name: CreateTowerButton
+  m_Name: CreateGunTowerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1967,7 +1967,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 5, y: -5}
-  m_SizeDelta: {x: 90, y: 90}
+  m_SizeDelta: {x: 90, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1421022781
 MonoBehaviour:
@@ -2498,10 +2498,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 178
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2509,7 +2509,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Create tower
+  m_Text: Gun tower
 --- !u!222 &1792539450
 CanvasRenderer:
   m_ObjectHideFlags: 0
