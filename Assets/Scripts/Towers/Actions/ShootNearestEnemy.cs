@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using UnityEngine;
-using TDDemo.Assets.Scripts.Util;
+using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Extensions;
+using TDDemo.Assets.Scripts.Util;
+using UnityEngine;
 
-namespace TDDemo.Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class ShootProjectile : BaseBehaviour
+    public class ShootNearestEnemy : BaseBehaviour, ITowerAction
     {
-        public TowerLevel Level { get; set; }
-
-        public bool CanFire { get; set; }
+        public ProjectileSpecs Specs;
 
         /// <summary>
         /// The time in seconds since the last shot was fired, or null if the tower has not fired a
@@ -21,20 +20,16 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private AudioSource _audio;
 
-        /// <summary>
-        /// Get reference to tower script.
-        /// </summary>
+        public bool CanShoot { get; set; }
+
         private void Start()
         {
             _audio = GetComponent<AudioSource>();
 
-            logger = new MethodLogger(nameof(ShootProjectile));
+            logger = new MethodLogger(nameof(ShootNearestEnemy));
         }
 
-        /// <summary>
-        /// Update time since last shot and check for enemies.
-        /// </summary>
-        private void Update()
+        public void Act(IEnumerable<GameObject> enemies)
         {
             if (!_timeSinceLastShot.HasValue)
             {
@@ -45,33 +40,30 @@ namespace TDDemo.Assets.Scripts.Towers
                 _timeSinceLastShot += Time.deltaTime;
             }
 
-            CheckForEnemies();
+            if (CanShoot)
+            {
+                CheckForEnemiesInRange(enemies);
+            }
         }
 
         /// <summary>
         /// Checks for enemies in this tower's range.
         /// </summary>
-        private void CheckForEnemies()
+        private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
-            if (CanFire)
-            {
-                // TODO: avoid having to compute this in every Update
-                var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy)
-                                        .Where(e => transform.GetDistanceToObject(e) <= Level.Range)
+            var orderedEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Specs.Range)
                                         .OrderBy(e => transform.GetDistanceToObject(e))
                                         .ToArray();
 
-                if (enemies.Any())
-                {
-                    var nearestEnemy = enemies[0];
-                    var distance = transform.GetDistanceToObject(nearestEnemy);
+            if (orderedEnemies.Any())
+            {
+                var nearestEnemy = orderedEnemies.First();
 
-                    // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-                    if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / Level.FireRate)
-                    {
-                        _timeSinceLastShot = 0;
-                        Shoot(nearestEnemy.GetComponent<Enemy>());
-                    }
+                // if there is an enemy in range and enough time has passed since the last shot, fire a shot
+                if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / Specs.FireRate)
+                {
+                    _timeSinceLastShot = 0;
+                    Shoot(nearestEnemy.GetComponent<Enemy>());
                 }
             }
         }
@@ -83,15 +75,15 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             logger.Log($"Shoot {enemy.gameObject.name}, position {enemy.transform.position}");
 
-            var projectileObj = Instantiate(Level.ProjectilePrefab, gameObject.transform);
+            var projectileObj = Instantiate(Specs.ProjectilePrefab, gameObject.transform);
 
             var projectile = projectileObj.GetComponent<Projectile>();
             projectile.StartPosition = transform.position;
-            projectile.Damage = Level.Damage;
-            projectile.Range = Level.Range;
+            projectile.Damage = Specs.Damage;
+            projectile.Range = Specs.Range;
 
             var rb = projectileObj.GetComponent<Rigidbody2D>();
-            rb.velocity = GetDirectionToTransform(enemy.transform) * Level.ProjectileSpeed;
+            rb.velocity = GetDirectionToTransform(enemy.transform) * Specs.ProjectileSpeed;
 
             _audio.Play();
         }

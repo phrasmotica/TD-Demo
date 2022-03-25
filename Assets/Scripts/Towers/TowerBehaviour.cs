@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,11 +11,11 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class TowerBehaviour : BaseBehaviour
     {
-        [Range(0, 5)]
-        public int Price;
+        public List<TowerLevel> Levels;
 
-        [Range(0, 5)]
-        public float WarmupTime;
+        public GameObject SelectionObj;
+
+        public Range Range;
 
         private Tower _tower;
 
@@ -22,6 +24,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public TowerManager TowerManager { get; set; }
 
         public bool IsSelected { get; private set; }
+
+        public int Price => _tower != null ? _tower.BasePrice : 0;
 
         public float WarmupProgress => _tower.WarmupProgress;
 
@@ -34,61 +38,33 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private float _initialZPos;
 
-        /// <summary>
-        /// The tower selection object.
-        /// </summary>
-        private GameObject _selectionObj;
-
-        /// <summary>
-        /// The tower range object.
-        /// </summary>
-        private Range _range;
-
-        /// <summary>
-        /// The sprite renderer.
-        /// </summary>
         private SpriteRenderer _spriteRenderer;
 
-        private ShootProjectile _shootProjectile;
+        private ITowerAction[] _actions;
 
         /// <summary>
-        /// Gets or sets whether this tower is colliding with another tower.
+        /// Whether this tower is colliding with another tower.
         /// </summary>
         private bool _isCollidingWithAnotherTower;
 
         /// <summary>
-        /// Gets or sets whether this tower is colliding with a path zone.
+        /// Whether this tower is colliding with a path zone.
         /// </summary>
         private bool _isCollidingWithPathZone;
 
-        /// <summary>
-        /// Initialise the script.
-        /// </summary>
         private void Start()
         {
-            var levels = transform.GetComponentsInChildren<TowerLevel>().ToList();
-            _tower = new Tower(Price, WarmupTime, levels);
+            _tower = new Tower(Levels);
 
             _initialZPos = transform.position.z;
 
-            _selectionObj = transform.Find("selection").gameObject;
-
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            var baseLevel = levels.First();
-
-            _shootProjectile = GetComponent<ShootProjectile>();
-            _shootProjectile.Level = baseLevel;
-
-            _range = transform.Find("range").GetComponent<Range>();
-            _range.SetRange(baseLevel.Range);
+            AccumulateActions();
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
 
-        /// <summary>
-        /// Update is called once per frame.
-        /// </summary>
         private void Update()
         {
             if (_tower.IsPositioning())
@@ -125,35 +101,34 @@ namespace TDDemo.Assets.Scripts.Towers
             {
                 _tower.Upgrade(Time.deltaTime);
             }
+
+            if (_tower.IsFiring())
+            {
+                var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
+
+                foreach (var action in _actions)
+                {
+                    action.Act(enemies);
+                }
+            }
         }
 
-        /// <summary>
-        /// Mouse is over the tower so draw the range.
-        /// </summary>
         private void OnMouseEnter()
         {
             if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
-                logger.Log("Showing range of unselected tower");
-                _range.gameObject.SetActive(true);
+                Range.gameObject.SetActive(true);
             }
         }
 
-        /// <summary>
-        /// Mouse is no longer over the tower so hide the range.
-        /// </summary>
         private void OnMouseExit()
         {
             if (!TowerController.IsPositioningNewTower && !IsSelected)
             {
-                logger.Log("Hiding range of unselected tower");
-                _range.gameObject.SetActive(false);
+                Range.gameObject.SetActive(false);
             }
         }
 
-        /// <summary>
-        /// Set this as the selected tower when clicked.
-        /// </summary>
         private void OnMouseUp()
         {
             if (_tower.IsFiring() && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
@@ -163,9 +138,6 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        /// <summary>
-        /// Set tower collision flag if necessary.
-        /// </summary>
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.gameObject.CompareTag(Tags.Tower))
@@ -179,9 +151,6 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        /// <summary>
-        /// Clear tower collision flag if necessary.
-        /// </summary>
         private void OnTriggerExit2D(Collider2D collider)
         {
             if (collider.gameObject.CompareTag(Tags.Tower))
@@ -198,20 +167,20 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;
-            _selectionObj.SetActive(isSelected);
-            _range.gameObject.SetActive(isSelected);
+            SelectionObj.SetActive(isSelected);
+            Range.gameObject.SetActive(isSelected);
         }
 
         public void SetIsCollidingWithAnotherTower(bool isColliding)
         {
             _isCollidingWithAnotherTower = isColliding;
-            _range.SetTowerCanBePlaced(CanBePlaced());
+            Range.SetTowerCanBePlaced(CanBePlaced());
         }
 
         public void SetIsCollidingWithPathZone(bool isColliding)
         {
             _isCollidingWithPathZone = isColliding;
-            _range.SetTowerCanBePlaced(CanBePlaced());
+            Range.SetTowerCanBePlaced(CanBePlaced());
         }
 
         /// <summary>
@@ -228,14 +197,13 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private IEnumerator Warmup()
         {
-            _tower.StartWarmingUp();
-            _shootProjectile.CanFire = false;
+            var warmupTime = _tower.StartWarmingUp();
 
-            logger.Log($"Tower warming up for {WarmupTime} seconds");
-            yield return new WaitForSeconds(WarmupTime);
+            logger.Log($"Tower warming up for {warmupTime} seconds");
+            yield return new WaitForSeconds(warmupTime);
 
             _tower.FinishWarmingUp();
-            _shootProjectile.CanFire = true;
+            AllowFire();
 
             logger.Log("Tower ready");
             _spriteRenderer.color = ColourHelper.FullOpacity;
@@ -256,7 +224,7 @@ namespace TDDemo.Assets.Scripts.Towers
         private IEnumerator Upgrade()
         {
             var upgradeTime = _tower.StartUpgrading();
-            _shootProjectile.CanFire = false;
+            PreventFire();
 
             TowerController.Refresh();
 
@@ -264,10 +232,9 @@ namespace TDDemo.Assets.Scripts.Towers
             yield return new WaitForSeconds(upgradeTime);
 
             var newLevel = _tower.FinishUpgrading();
-            _shootProjectile.CanFire = true;
 
-            _shootProjectile.Level = newLevel;
-            _range.SetRange(newLevel.Range);
+            AccumulateActions();
+            AllowFire();
 
             _spriteRenderer.sprite = newLevel.GetComponent<SpriteRenderer>().sprite;
             _spriteRenderer.color = ColourHelper.FullOpacity;
@@ -288,5 +255,38 @@ namespace TDDemo.Assets.Scripts.Towers
         public TowerLevel GetLevel() => _tower.GetLevel();
 
         public int GetUpgradeCost() => _tower.GetUpgradeCost();
+
+        private void AllowFire()
+        {
+            foreach (var a in GetShootingActions())
+            {
+                a.CanShoot = true;
+            }
+        }
+
+        private void PreventFire()
+        {
+            foreach (var a in GetShootingActions())
+            {
+                a.CanShoot = false;
+            }
+        }
+
+        private void AccumulateActions()
+        {
+            _actions = GetComponentsInChildren<ITowerAction>();
+
+            Range.SetRange(ComputeRange());
+        }
+
+        private int ComputeRange()
+        {
+            return GetShootingActions().Select(a => a.Specs.Range).Max();
+        }
+
+        private IEnumerable<ShootNearestEnemy> GetShootingActions()
+        {
+            return _actions.OfType<ShootNearestEnemy>().Cast<ShootNearestEnemy>();
+        }
     }
 }
