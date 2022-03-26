@@ -245,7 +245,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void AllowFire()
         {
-            foreach (var a in GetShootingActions())
+            foreach (var a in GetActions<IHasShooting>())
             {
                 a.CanShoot = true;
             }
@@ -253,7 +253,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void PreventFire()
         {
-            foreach (var a in GetShootingActions())
+            foreach (var a in GetActions<IHasShooting>())
             {
                 a.CanShoot = false;
             }
@@ -268,22 +268,22 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetDamage()
         {
-            return GetShootingActions().Select(a => a.Specs.Damage).Max();
+            var actionsWithDamage = GetActions<IHasDamage>();
+            return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Damage) : 0;
         }
 
         public int GetRange()
         {
-            return GetShootingActions().Select(a => a.Specs.Range).Max();
+            var actionsWithRange = GetActions<IHasRange>();
+            return actionsWithRange.Any() ? actionsWithRange.Max(a => a.Range) : 0;
         }
 
         public int GetFireRate()
         {
-            return GetShootingActions().Select(a => a.Specs.FireRate).Max();
+            var actionsWithFireRate = GetActions<IHasFireRate>();
+            return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;
         }
 
-        private IEnumerable<ShootNearestEnemy> GetShootingActions()
-        {
-            return _actions.OfType<ShootNearestEnemy>().Cast<ShootNearestEnemy>();
-        }
+        private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class ShootNearestEnemy : BaseBehaviour, ITowerAction
+    public class ShootNearestEnemy : BaseBehaviour, ITowerAction, IHasDamage, IHasFireRate, IHasRange, IHasShooting
     {
         public ProjectileSpecs Specs;
 
@@ -19,6 +19,12 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private float? _timeSinceLastShot;
 
         private AudioSource _audio;
+
+        public int Damage => Specs.Damage;
+
+        public int FireRate => Specs.FireRate;
+
+        public int Range => Specs.Range;
 
         public bool CanShoot { get; set; }
 
