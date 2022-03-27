@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private int _health;
 
-        private HashSet<Effect> _effects;
+        private HashSet<IEffect> _effects;
 
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
@@ -45,7 +46,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void Start()
         {
             _health = StartingHealth;
-            _effects = new HashSet<Effect>();
+            _effects = new HashSet<IEffect>();
         }
 
         /// <summary>
@@ -73,11 +74,19 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        public void AddEffect(Effect effect) => _effects.Add(effect);
+        public void AddEffect(IEffect effect)
+        {
+            _effects.Add(effect);
+            effect.Apply(this);
+        }
 
-        public bool HasEffect(Effect effect) => _effects.Contains(effect);
+        public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
 
-        public void RemoveEffect(Effect effect) => _effects.Remove(effect);
+        public void RemoveEffect(IEffect effect)
+        {
+            effect.Remove(this);
+            _effects.Remove(effect);
+        }
 
         /// <summary>
         /// Show's the enemy's health briefly.

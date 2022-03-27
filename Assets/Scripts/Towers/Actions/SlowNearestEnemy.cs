@@ -31,6 +31,11 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public bool CanShoot { get; set; }
 
+        private void Start()
+        {
+            logger = new MethodLogger(nameof(SlowNearestEnemy));
+        }
+
         public void Act(IEnumerable<GameObject> enemies)
         {
             if (!_timeSinceLastShot.HasValue)
@@ -69,20 +74,18 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private IEnumerator Slow(Enemy enemy)
         {
-            if (!enemy.HasEffect(Effect.Slow))
+            if (!enemy.HasEffectCategory(EffectCategory.Slow))
             {
-                enemy.AddEffect(Effect.Slow);
+                logger.Log($"Slowing enemy by factor {Factor}");
 
-                var movement = enemy.GetComponent<WaypointFollower>();
-                var oldSpeed = movement.Speed;
-
-                movement.Speed = oldSpeed * Factor;
+                var effect = new SlowMovementSpeed(Factor);
+                enemy.AddEffect(effect);
 
                 yield return new WaitForSeconds(Duration);
 
-                movement.Speed = oldSpeed;
+                logger.Log($"Slowing enemy ended");
 
-                enemy.RemoveEffect(Effect.Slow);
+                enemy.RemoveEffect(effect);
             }
         }
     }
