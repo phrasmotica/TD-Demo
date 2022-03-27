@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 
@@ -18,13 +19,15 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int Reward;
 
+        public AudioClip HurtAudio;
+        public AudioClip DeadAudio;
+
         /// <summary>
         /// The enemy's current health.
         /// </summary>
         private int _health;
 
-        public AudioClip HurtAudio;
-        public AudioClip DeadAudio;
+        private HashSet<Effect> _effects;
 
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
@@ -42,6 +45,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void Start()
         {
             _health = StartingHealth;
+            _effects = new HashSet<Effect>();
         }
 
         /// <summary>
@@ -68,6 +72,12 @@ namespace TDDemo.Assets.Scripts.Enemies
                 }
             }
         }
+
+        public void AddEffect(Effect effect) => _effects.Add(effect);
+
+        public bool HasEffect(Effect effect) => _effects.Contains(effect);
+
+        public void RemoveEffect(Effect effect) => _effects.Remove(effect);
 
         /// <summary>
         /// Show's the enemy's health briefly.

@@ -474,6 +474,8 @@ GameObject:
   - component: {fileID: 4068696647381643280}
   - component: {fileID: 5158111377879684091}
   - component: {fileID: 6339331099896013953}
+  - component: {fileID: 1305869969212194372}
+  - component: {fileID: 4604413855902104355}
   m_Layer: 0
   m_Name: level0
   m_TagString: TowerUpgrade
@@ -560,6 +562,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Price: 3
   Time: 3
+--- !u!114 &1305869969212194372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889544214916897720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded7c7f55c1908849ac3d2daf5f5489a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Specs: {fileID: 4604413855902104355}
+  Factor: 0.5
+  Duration: 1
+--- !u!114 &4604413855902104355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889544214916897720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce2bae3994d7b740b9e0877f1b17316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireRate: 1
+  Range: 2
 --- !u!1 &8278936702669702381
 GameObject:
   m_ObjectHideFlags: 0
