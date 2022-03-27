@@ -576,7 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Specs: {fileID: 4604413855902104355}
   Factor: 0.5
-  Duration: 1
+  Duration: 2
 --- !u!114 &4604413855902104355
 MonoBehaviour:
   m_ObjectHideFlags: 0

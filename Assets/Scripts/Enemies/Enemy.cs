@@ -28,7 +28,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private int _health;
 
-        private HashSet<IEffect> _effects;
+        private List<IEffect> _effects;
 
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
@@ -46,7 +46,23 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void Start()
         {
             _health = StartingHealth;
-            _effects = new HashSet<IEffect>();
+            _effects = new List<IEffect>();
+        }
+
+        private void Update()
+        {
+            foreach (var e in _effects)
+            {
+                e.Update(this, Time.deltaTime);
+
+                if (e.IsFinished)
+                {
+                    e.End(this);
+                }
+            }
+
+            // clean up finished effects
+            _effects = _effects.Where(e => !e.IsFinished).ToList();
         }
 
         /// <summary>
@@ -77,16 +93,10 @@ namespace TDDemo.Assets.Scripts.Enemies
         public void AddEffect(IEffect effect)
         {
             _effects.Add(effect);
-            effect.Apply(this);
+            effect.Start(this);
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
-
-        public void RemoveEffect(IEffect effect)
-        {
-            effect.Remove(this);
-            _effects.Remove(effect);
-        }
 
         /// <summary>
         /// Show's the enemy's health briefly.

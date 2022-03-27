@@ -6,9 +6,13 @@ namespace TDDemo.Assets.Scripts.Towers
     {
         EffectCategory Category { get; }
 
-        void Apply(Enemy enemy);
+        bool IsFinished { get; }
 
-        void Remove(Enemy enemy);
+        void Start(Enemy enemy);
+
+        void Update(Enemy enemy, float time);
+
+        void End(Enemy enemy);
     }
 
     public enum EffectCategory

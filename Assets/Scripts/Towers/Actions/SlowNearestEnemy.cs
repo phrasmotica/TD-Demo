@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
@@ -67,25 +66,19 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / FireRate)
                 {
                     _timeSinceLastShot = 0;
-                    StartCoroutine(Slow(nearestEnemy.GetComponent<Enemy>()));
+
+                    // if the enemy is already slowed, tough luck!
+                    var enemy = nearestEnemy.GetComponent<Enemy>();
+                    if (!enemy.HasEffectCategory(EffectCategory.Slow))
+                    {
+                        logger.Log($"Slowing enemy by {Factor} for {Duration} seconds.");
+                        enemy.AddEffect(new SlowMovementSpeed(Factor, Duration));
+                    }
+                    else
+                    {
+                        logger.Log("Enemy is already slowed!");
+                    }
                 }
-            }
-        }
-
-        private IEnumerator Slow(Enemy enemy)
-        {
-            if (!enemy.HasEffectCategory(EffectCategory.Slow))
-            {
-                logger.Log($"Slowing enemy by factor {Factor}");
-
-                var effect = new SlowMovementSpeed(Factor);
-                enemy.AddEffect(effect);
-
-                yield return new WaitForSeconds(Duration);
-
-                logger.Log($"Slowing enemy ended");
-
-                enemy.RemoveEffect(effect);
             }
         }
     }
