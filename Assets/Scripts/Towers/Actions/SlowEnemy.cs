@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class SlowEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange, IHasShooting
+    public class SlowEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange
     {
         public EffectSpecs Specs;
 
@@ -31,7 +31,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public int Range => Specs.Range;
 
-        public bool CanShoot { get; set; }
+        public bool CanAct { get; set; }
 
         private void Start()
         {
@@ -49,7 +49,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 _timeSinceLastShot += Time.deltaTime;
             }
 
-            if (CanShoot)
+            if (CanAct)
             {
                 CheckForEnemiesInRange(enemies);
             }

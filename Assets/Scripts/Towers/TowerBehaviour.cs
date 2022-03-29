@@ -243,29 +243,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetUpgradeCost() => _tower.GetUpgradeCost();
 
-        private void AllowFire()
-        {
-            foreach (var a in GetActions<IHasShooting>())
-            {
-                a.CanShoot = true;
-            }
-        }
-
-        private void PreventFire()
-        {
-            foreach (var a in GetActions<IHasShooting>())
-            {
-                a.CanShoot = false;
-            }
-        }
-
-        private void AccumulateActions()
-        {
-            _actions = GetComponentsInChildren<ITowerAction>();
-
-            Range.SetRange(GetRange());
-        }
-
         public int GetDamage()
         {
             var actionsWithDamage = GetActions<IHasDamage>();
@@ -284,6 +261,31 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;
         }
 
+        private void AllowFire()
+        {
+            foreach (var a in GetActions())
+            {
+                a.CanAct = true;
+            }
+        }
+
+        private void PreventFire()
+        {
+            foreach (var a in GetActions())
+            {
+                a.CanAct = false;
+            }
+        }
+
+        private void AccumulateActions()
+        {
+            _actions = GetComponentsInChildren<ITowerAction>();
+
+            Range.SetRange(GetRange());
+        }
+
         private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
+
+        private IEnumerable<ITowerAction> GetActions() => GetActions<ITowerAction>();
     }
 }
