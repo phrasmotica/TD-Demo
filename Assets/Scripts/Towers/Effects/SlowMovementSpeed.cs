@@ -1,6 +1,6 @@
 ﻿using TDDemo.Assets.Scripts.Enemies;
 
-namespace TDDemo.Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers.Effects
 {
     public class SlowMovementSpeed : IEffect
     {

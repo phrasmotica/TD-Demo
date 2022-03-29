@@ -1,6 +1,6 @@
-using TDDemo.Assets.Scripts.Enemies;
+﻿using TDDemo.Assets.Scripts.Enemies;
 
-namespace TDDemo.Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers.Effects
 {
     public interface IEffect
     {
@@ -15,10 +15,5 @@ namespace TDDemo.Assets.Scripts.Towers
         void Update(Enemy enemy, float time);
 
         void End(Enemy enemy);
-    }
-
-    public enum EffectCategory
-    {
-        Slow,
     }
 }
