@@ -1,4 +1,4 @@
-using TDDemo.Assets.Scripts.Towers.Effects;
+﻿using TDDemo.Assets.Scripts.Towers.Effects;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
@@ -54,6 +54,7 @@ namespace TDDemo.Assets.Scripts.Towers
         private Color GetColour() => Effect.Category switch
         {
             EffectCategory.Slow => ColourHelper.SlowEffect,
+            EffectCategory.Paralyse => ColourHelper.ParalyseEffect,
             _ => Color.cyan,
         };
     }

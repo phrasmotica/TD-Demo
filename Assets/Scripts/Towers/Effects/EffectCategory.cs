@@ -1,7 +1,8 @@
-namespace TDDemo.Assets.Scripts.Towers.Effects
+﻿namespace TDDemo.Assets.Scripts.Towers.Effects
 {
     public enum EffectCategory
     {
         Slow,
+        Paralyse,
     }
 }

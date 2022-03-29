@@ -27,6 +27,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         public float Speed;
 
+        public bool IsParalysed;
+
         /// <summary>
         /// Whether the path is circular, i.e. whether we should move towards the first waypoint
         /// after reaching the last one.
@@ -70,7 +72,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private void Update()
         {
-            if (CurrentWaypoint != null && !_isWaiting)
+            if (!IsParalysed && !_isWaiting && CurrentWaypoint != null)
             {
                 MoveTowardsWaypoint();
             }

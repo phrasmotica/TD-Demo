@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Util
 {
@@ -18,5 +18,7 @@ namespace TDDemo.Assets.Scripts.Util
         public static Color HalfOpacity => new Color(1, 1, 1, 0.5f);
 
         public static Color SlowEffect => new Color(0, 127, 255);
+
+        public static Color ParalyseEffect => Color.yellow;
     }
 }
