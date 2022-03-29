@@ -1,10 +1,12 @@
-﻿using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Enemies;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
     public interface IEffect
     {
         EffectCategory Category { get; }
+
+        float Progress { get; }
 
         bool IsFinished { get; }
 

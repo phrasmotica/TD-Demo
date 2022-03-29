@@ -12,6 +12,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public EffectCategory Category => EffectCategory.Slow;
 
+        public float Progress => _counter.Progress;
+
         public bool IsFinished => _counter.IsFinished;
 
         public SlowMovementSpeed(float factor, float duration)
