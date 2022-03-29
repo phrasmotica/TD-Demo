@@ -428,10 +428,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4943128654439657085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c638157bc019e4289f27600eeb17d1, type: 3}
+  m_Script: {fileID: 11500000, guid: b9e6d093eb9030e4491275a87b093756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Specs: {fileID: 1039246141814937596}
+  TargetMethod: 0
   Duration: 1
 --- !u!114 &1039246141814937596
 MonoBehaviour:
@@ -702,6 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Specs: {fileID: 4604413855902104355}
+  TargetMethod: 0
   Factor: 0.5
   Duration: 2
 --- !u!114 &4604413855902104355

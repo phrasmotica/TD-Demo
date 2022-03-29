@@ -8,9 +8,14 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class ParalyseNearestEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange, IHasShooting
+    public class SlowEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange, IHasShooting
     {
         public EffectSpecs Specs;
+
+        public TargetMethod TargetMethod;
+
+        [Range(0.5f, 1f)]
+        public float Factor;
 
         [Range(0.5f, 3f)]
         public float Duration;
@@ -30,7 +35,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
-            logger = new MethodLogger(nameof(ParalyseNearestEnemy));
+            logger = new MethodLogger(nameof(SlowEnemy));
         }
 
         public void Act(IEnumerable<GameObject> enemies)
@@ -52,9 +57,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
-            var orderedEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range)
-                                        .OrderBy(e => transform.GetDistanceToObject(e))
-                                        .ToArray();
+            var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
+            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())
             {
@@ -65,16 +69,16 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 {
                     _timeSinceLastShot = 0;
 
-                    // if the enemy is already paralysed, tough luck!
+                    // if the enemy is already slowed, tough luck!
                     var enemy = nearestEnemy.GetComponent<Enemy>();
-                    if (!enemy.HasEffectCategory(EffectCategory.Paralyse))
+                    if (!enemy.HasEffectCategory(EffectCategory.Slow))
                     {
-                        logger.Log($"Paralysing enemy for {Duration} seconds.");
-                        enemy.AddEffect(new Paralyse(Duration));
+                        logger.Log($"Slowing enemy by {Factor} for {Duration} seconds.");
+                        enemy.AddEffect(new SlowMovementSpeed(Factor, Duration));
                     }
                     else
                     {
-                        logger.Log("Enemy is already paralysed!");
+                        logger.Log("Enemy is already slowed!");
                     }
                 }
             }

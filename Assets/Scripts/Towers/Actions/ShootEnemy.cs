@@ -7,9 +7,11 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class ShootNearestEnemy : BaseBehaviour, ITowerAction, IHasDamage, IHasFireRate, IHasRange, IHasShooting
+    public class ShootEnemy : BaseBehaviour, ITowerAction, IHasDamage, IHasFireRate, IHasRange, IHasShooting
     {
         public ProjectileSpecs Specs;
+
+        public TargetMethod TargetMethod;
 
         /// <summary>
         /// The time in seconds since the last shot was fired, or null if the tower has not fired a
@@ -32,7 +34,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             _audio = GetComponent<AudioSource>();
 
-            logger = new MethodLogger(nameof(ShootNearestEnemy));
+            logger = new MethodLogger(nameof(ShootEnemy));
         }
 
         public void Act(IEnumerable<GameObject> enemies)
@@ -57,9 +59,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         /// </summary>
         private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
-            var orderedEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Specs.Range)
-                                        .OrderBy(e => transform.GetDistanceToObject(e))
-                                        .ToArray();
+            var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
+            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())
             {
