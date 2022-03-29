@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
@@ -28,6 +28,9 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private int _health;
 
+        /// <summary>
+        /// The effects present on this enemy.
+        /// </summary>
         private List<IEffect> _effects;
 
         /// <summary>
@@ -36,9 +39,14 @@ namespace TDDemo.Assets.Scripts.Enemies
         public float HealthFraction => (float) _health / StartingHealth;
 
         /// <summary>
+        /// Delegate to run on receiving damage.
+        /// </summary>
+        public event Action<float> OnHurt;
+
+        /// <summary>
         /// Delegate to run on death.
         /// </summary>
-        public Action<int> OnKill { private get; set; }
+        public event Action<int> OnKill;
 
         /// <summary>
         /// Set the enemy's health.
@@ -76,7 +84,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             if (projectileComponent != null)
             {
                 _health -= projectileComponent.Damage;
-                PeekHealth();
+                OnHurt(HealthFraction);
                 Destroy(otherObj);
 
                 if (_health > 0)
@@ -85,7 +93,10 @@ namespace TDDemo.Assets.Scripts.Enemies
                 }
                 else
                 {
-                    Kill();
+                    AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
+
+                    OnKill(Reward);
+                    Destroy(gameObject);
                 }
             }
         }
@@ -97,24 +108,5 @@ namespace TDDemo.Assets.Scripts.Enemies
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
-
-        /// <summary>
-        /// Show's the enemy's health briefly.
-        /// </summary>
-        private void PeekHealth()
-        {
-            GetComponentInChildren<HealthBar>().PeekHealth(HealthFraction);
-        }
-
-        /// <summary>
-        /// Destroy this object if it's dead.
-        /// </summary>
-        private void Kill()
-        {
-            AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
-
-            Destroy(gameObject);
-            OnKill(Reward);
-        }
     }
 }

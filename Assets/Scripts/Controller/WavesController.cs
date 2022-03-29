@@ -80,7 +80,7 @@ namespace TDDemo.Assets.Scripts.Controller
             for (var i = 0; i < enemyCount; i++)
             {
                 var enemy = Instantiate(EnemyPrefab);
-                enemy.GetComponent<Enemy>().OnKill = reward => _moneyController.AddMoney(reward);
+                enemy.GetComponent<Enemy>().OnKill += _moneyController.AddMoney;
 
                 yield return new WaitForSeconds(1);
             }
