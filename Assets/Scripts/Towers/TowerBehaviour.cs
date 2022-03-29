@@ -278,7 +278,7 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithRange.Any() ? actionsWithRange.Max(a => a.Range) : 0;
         }
 
-        public int GetFireRate()
+        public float GetFireRate()
         {
             var actionsWithFireRate = GetActions<IHasFireRate>();
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;

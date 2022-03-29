@@ -22,7 +22,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public int Damage => Specs.Damage;
 
-        public int FireRate => Specs.FireRate;
+        public float FireRate => Specs.FireRate;
 
         public int Range => Specs.Range;
 

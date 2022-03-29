@@ -27,9 +27,6 @@ namespace TDDemo.Assets.Scripts.Towers
             _line.endColor = colour;
         }
 
-        /// <summary>
-        /// Draw the warmup bar if necessary.
-        /// </summary>
         private void Update()
         {
             var shouldDraw = ShouldDrawBar();

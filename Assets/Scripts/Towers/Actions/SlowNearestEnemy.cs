@@ -25,7 +25,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         /// </summary>
         private float? _timeSinceLastShot;
 
-        public int FireRate => Specs.FireRate;
+        public float FireRate => Specs.FireRate;
 
         public int Range => Specs.Range;
 
