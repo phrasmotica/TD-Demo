@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
@@ -42,6 +42,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// Delegate to run on receiving damage.
         /// </summary>
         public event Action<float> OnHurt;
+
+        /// <summary>
+        /// Delegate to run on an effect being inflicted.
+        /// </summary>
+        public event Action<IEffect> OnEffect;
 
         /// <summary>
         /// Delegate to run on death.
@@ -105,6 +110,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             _effects.Add(effect);
             effect.Start(this);
+            OnEffect(effect);
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
