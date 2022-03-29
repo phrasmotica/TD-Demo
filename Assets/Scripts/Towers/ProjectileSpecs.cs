@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TDDemo.Assets.Scripts.Towers.Actions;
+using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -32,5 +33,7 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         [Range(1, 10)]
         public int Range;
+
+        public TargetMethod TargetMethod;
     }
 }

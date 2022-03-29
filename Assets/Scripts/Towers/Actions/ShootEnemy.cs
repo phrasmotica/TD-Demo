@@ -11,8 +11,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
     {
         public ProjectileSpecs Specs;
 
-        public TargetMethod TargetMethod;
-
         /// <summary>
         /// The time in seconds since the last shot was fired, or null if the tower has not fired a
         /// shot yet. Tracking this ensures a tower can start firing immediately whenever an enemy
@@ -60,7 +58,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
-            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
+            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, Specs.TargetMethod);
 
             if (orderedEnemies.Any())
             {
