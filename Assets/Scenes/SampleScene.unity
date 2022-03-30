@@ -664,8 +664,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingMoney: 10
-  CreateTower: {fileID: 1421022781}
-  MoneyText: {fileID: 1640738270}
 --- !u!114 &438958076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1513,6 +1511,7 @@ MonoBehaviour:
   TowerPrefab: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
     type: 3}
   TowerController: {fileID: 438958074}
+  MoneyController: {fileID: 438958075}
 --- !u!114 &1012688284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2201,6 +2200,7 @@ MonoBehaviour:
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
   TowerController: {fileID: 438958074}
+  MoneyController: {fileID: 438958075}
 --- !u!114 &1421022782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2455,6 +2455,7 @@ GameObject:
   - component: {fileID: 1640738269}
   - component: {fileID: 1640738271}
   - component: {fileID: 1640738270}
+  - component: {fileID: 1640738272}
   m_Layer: 5
   m_Name: MoneyText
   m_TagString: Untagged
@@ -2523,6 +2524,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640738268}
   m_CullTransparentMesh: 0
+--- !u!114 &1640738272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640738268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ba8f60b6effa04eb0d7ed9dab5924b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoneyController: {fileID: 438958075}
 --- !u!1 &1775969657
 GameObject:
   m_ObjectHideFlags: 0
