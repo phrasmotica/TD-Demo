@@ -1,33 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
     public class WavesController : BaseBehaviour
     {
-        /// <summary>
-        /// The current wave.
-        /// </summary>
-        private int _currentWave;
-
-        /// <summary>
-        /// The text used to display the waves.
-        /// </summary>
-        public Text WaveText;
-
-        /// <summary>
-        /// The text on the button used for sending the next wave.
-        /// </summary>
-        public Text SendWaveButtonText;
-
-        /// <summary>
-        /// The number of waves.
-        /// </summary>
-        [Range(1, 5)]
-        public int NumberOfWaves;
+        public MoneyController MoneyController;
 
         /// <summary>
         /// The enemy prefab.
@@ -35,43 +16,36 @@ namespace TDDemo.Assets.Scripts.Controller
         public GameObject EnemyPrefab;
 
         /// <summary>
-        /// The money controller.
+        /// The current wave.
         /// </summary>
-        private MoneyController _moneyController;
+        private int _currentWave;
 
         /// <summary>
-        /// Start is called before the first frame update.
+        /// Delegate to fire when the wave number changes.
         /// </summary>
+        public event Action<int> OnWaveChange;
+
         public void Start()
         {
-            _moneyController = GetComponent<MoneyController>();
-
             logger = new MethodLogger(nameof(WavesController));
 
             ResetWaves();
             Physics2D.gravity = Vector2.zero;
         }
 
-        public void SetCurrentWave(int currentWave)
+        private void SetCurrentWave(int currentWave)
         {
             _currentWave = currentWave;
-            WaveText.text = $"Wave {currentWave}";
-            SendWaveButtonText.text = $"Send wave {currentWave + 1}";
+            OnWaveChange?.Invoke(currentWave);
         }
 
-        /// <summary>
-        /// Starts the coroutine to send the next wave.
-        /// </summary>
         public void DoSendNextWave()
         {
             SetCurrentWave(_currentWave + 1);
             StartCoroutine(SendWave(_currentWave));
         }
 
-        /// <summary>
-        /// Sends the given wave.
-        /// </summary>
-        public IEnumerator SendWave(int waveNumber)
+        private IEnumerator SendWave(int waveNumber)
         {
             logger.Log($"SendWave({waveNumber})");
 
@@ -80,7 +54,7 @@ namespace TDDemo.Assets.Scripts.Controller
             for (var i = 0; i < enemyCount; i++)
             {
                 var enemy = Instantiate(EnemyPrefab);
-                enemy.GetComponent<Enemy>().OnKill += _moneyController.AddMoney;
+                enemy.GetComponent<Enemy>().OnKill += MoneyController.AddMoney;
 
                 yield return new WaitForSeconds(1);
             }

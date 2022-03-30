@@ -90,7 +90,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             if (projectileComponent != null)
             {
                 _health -= projectileComponent.Damage;
-                OnHurt(HealthFraction);
+                OnHurt?.Invoke(HealthFraction);
                 Destroy(otherObj);
 
                 if (_health > 0)
@@ -101,7 +101,7 @@ namespace TDDemo.Assets.Scripts.Enemies
                 {
                     AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
 
-                    OnKill(Reward);
+                    OnKill?.Invoke(Reward);
                     Destroy(gameObject);
                 }
             }
@@ -111,7 +111,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             _effects.Add(effect);
             effect.Start(this);
-            OnEffect(effect);
+            OnEffect?.Invoke(effect);
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);

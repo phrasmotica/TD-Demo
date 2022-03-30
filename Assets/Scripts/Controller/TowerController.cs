@@ -1,27 +1,20 @@
-﻿using TDDemo.Assets.Scripts.Towers;
-using TDDemo.Assets.Scripts.UI;
+﻿using System;
+using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
     public class TowerController : MonoBehaviour
     {
-        public TowerStats TowerStats;
+        public TowerManager TowerManager;
 
-        public UpgradeTower UpgradeTower;
-
-        public SellTower SellTower;
+        public MoneyController MoneyController;
 
         /// <summary>
         /// The fraction of its price that a tower should sell for.
         /// </summary>
         [Range(0.5f, 1)]
         public float SellFraction;
-
-        private TowerManager _towerManager;
-
-        private MoneyController _moneyController;
 
         /// <summary>
         /// The new tower object.
@@ -34,16 +27,19 @@ namespace TDDemo.Assets.Scripts.Controller
         public bool IsPositioningNewTower { get; set; }
 
         /// <summary>
-        /// Get references to child UI scripts.
+        /// Delegate to fire when the selected tower starts upgrading.
         /// </summary>
-        private void Start()
-        {
-            _towerManager = GetComponent<TowerManager>();
-            _moneyController = GetComponent<MoneyController>();
+        public event Action<TowerBehaviour> OnStartUpgradeSelectedTower;
 
-            SellTower.GetComponent<Button>().onClick.AddListener(SellSelectedTower);
-            UpgradeTower.GetComponent<Button>().onClick.AddListener(UpgradeSelectedTower);
-        }
+        /// <summary>
+        /// Delegate to fire when the selected tower finishes upgrading.
+        /// </summary>
+        public event Action<TowerBehaviour> OnFinishUpgradeSelectedTower;
+
+        /// <summary>
+        /// Delegate to fire when the selected tower is sold.
+        /// </summary>
+        public event Action<TowerBehaviour> OnSellSelectedTower;
 
         private void Update()
         {
@@ -61,9 +57,9 @@ namespace TDDemo.Assets.Scripts.Controller
         public void CreateNewTower(GameObject towerPrefab, int price)
         {
             // only create if we can afford the tower
-            if (_moneyController.CanAfford(price))
+            if (MoneyController.CanAfford(price))
             {
-                _towerManager.DeselectCurrentTower();
+                TowerManager.DeselectCurrentTower();
 
                 IsPositioningNewTower = true;
 
@@ -75,10 +71,12 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void PlaceTower(TowerBehaviour newTower)
         {
-            _moneyController.AddMoney(-newTower.Price);
+            MoneyController.AddMoney(-newTower.Price);
 
-            _towerManager.Add(newTower);
-            newTower.TowerManager = _towerManager;
+            TowerManager.Add(newTower);
+            newTower.TowerManager = TowerManager;
+            newTower.OnStartUpgrade += OnStartUpgradeSelectedTower;
+            newTower.OnFinishUpgrade += OnFinishUpgradeSelectedTower;
 
             _newTowerObj = null;
             IsPositioningNewTower = false;
@@ -86,39 +84,26 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void UpgradeSelectedTower()
         {
-            var selectedTower = _towerManager.GetSelectedTower();
+            var selectedTower = TowerManager.GetSelectedTower();
             if (CanUpgradeTower(selectedTower))
             {
-                _moneyController.AddMoney(-selectedTower.GetUpgradeCost());
+                MoneyController.AddMoney(-selectedTower.GetUpgradeCost());
                 selectedTower.DoUpgrade();
-
-                Refresh();
             }
         }
 
         public void SellSelectedTower()
         {
-            var selectedTower = _towerManager.GetSelectedTower();
+            var selectedTower = TowerManager.GetSelectedTower();
             if (selectedTower != null)
             {
                 var sellPrice = GetSellPrice(selectedTower);
-                _moneyController.AddMoney(sellPrice.Value);
+                MoneyController.AddMoney(sellPrice.Value);
 
-                _towerManager.Remove(selectedTower);
+                TowerManager.Remove(selectedTower);
 
-                Refresh();
+                OnSellSelectedTower?.Invoke(selectedTower);
             }
-        }
-
-        /// <summary>
-        /// Refreshes the child UI scripts.
-        /// </summary>
-        public void Refresh()
-        {
-            var selectedTower = _towerManager.GetSelectedTower();
-            TowerStats.SetStats(selectedTower);
-            UpgradeTower.SetState(CanUpgradeTower(selectedTower), GetUpgradeCost(selectedTower));
-            SellTower.SetState(selectedTower != null, GetSellPrice(selectedTower));
         }
 
         /// <summary>
@@ -138,7 +123,7 @@ namespace TDDemo.Assets.Scripts.Controller
         private bool CanUpgradeTower(TowerBehaviour tower)
         {
             var canUpgrade = tower != null && tower.CanBeUpgraded();
-            return canUpgrade && _moneyController.CanAfford(GetUpgradeCost(tower).Value);
+            return canUpgrade && MoneyController.CanAfford(GetUpgradeCost(tower).Value);
         }
 
         private int? GetUpgradeCost(TowerBehaviour tower)
@@ -146,7 +131,7 @@ namespace TDDemo.Assets.Scripts.Controller
             return tower != null ? tower.GetUpgradeCost() : (int?) null;
         }
 
-        private int? GetSellPrice(TowerBehaviour tower)
+        public int? GetSellPrice(TowerBehaviour tower)
         {
             if (tower == null)
             {

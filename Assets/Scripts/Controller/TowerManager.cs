@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
@@ -7,16 +8,14 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class TowerManager : MonoBehaviour
     {
-        private TowerController _towerController;
-
         private List<TowerBehaviour> _towers;
 
         private int _selectedTowerIndex;
 
+        public event Action<TowerBehaviour> OnSelectedTowerChange;
+
         private void Start()
         {
-            _towerController = GetComponent<TowerController>();
-
             _towers = new List<TowerBehaviour>();
         }
 
@@ -109,15 +108,15 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// Selects the current tower.
         /// </summary>
-        public void SelectCurrentTower()
+        private void SelectCurrentTower()
         {
             var selectedTower = GetCurrentTower();
             if (selectedTower != null)
             {
                 selectedTower.SetIsSelected(true);
-
-                _towerController.Refresh();
             }
+
+            OnSelectedTowerChange?.Invoke(selectedTower);
         }
 
         /// <summary>
@@ -129,9 +128,9 @@ namespace TDDemo.Assets.Scripts.Controller
             if (selectedTower != null)
             {
                 selectedTower.SetIsSelected(false);
-
-                _towerController.Refresh();
             }
+
+            OnSelectedTowerChange?.Invoke(null);
         }
 
         /// <summary>

@@ -19,13 +19,14 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(CreateNewTower);
 
-            MoneyController.OnMoneyChange += money => SetInteractable(money >= TowerPrice);
+            MoneyController.OnMoneyChange += SetInteractable;
         }
 
         private void CreateNewTower() => TowerController.CreateNewTower(TowerPrefab, TowerPrice);
 
-        private void SetInteractable(bool canAfford)
+        private void SetInteractable(int money)
         {
+            var canAfford = money >= TowerPrice;
             GetComponent<Button>().interactable = canAfford;
         }
     }

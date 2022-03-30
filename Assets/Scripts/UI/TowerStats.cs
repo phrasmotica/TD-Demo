@@ -1,3 +1,4 @@
+using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,10 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerStats : MonoBehaviour
     {
+        public TowerController TowerController;
+
+        public TowerManager TowerManager;
+
         private Text _damageText;
         private Text _rangeText;
         private Text _fireRateText;
@@ -15,6 +20,12 @@ namespace TDDemo.Assets.Scripts.UI
             _damageText = transform.Find("DamageText").GetComponent<Text>();
             _rangeText = transform.Find("RangeText").GetComponent<Text>();
             _fireRateText = transform.Find("FireRateText").GetComponent<Text>();
+
+            TowerController.OnStartUpgradeSelectedTower += SetStats;
+            TowerController.OnFinishUpgradeSelectedTower += SetStats;
+            TowerController.OnSellSelectedTower += tower => ClearStats();
+
+            TowerManager.OnSelectedTowerChange += SetStats;
         }
 
         public void SetStats(TowerBehaviour tower)
@@ -32,10 +43,15 @@ namespace TDDemo.Assets.Scripts.UI
             }
             else
             {
-                _damageText.gameObject.SetActive(false);
-                _rangeText.gameObject.SetActive(false);
-                _fireRateText.gameObject.SetActive(false);
+                ClearStats();
             }
+        }
+
+        private void ClearStats()
+        {
+            _damageText.gameObject.SetActive(false);
+            _rangeText.gameObject.SetActive(false);
+            _fireRateText.gameObject.SetActive(false);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TDDemo.Assets.Scripts.Controller
         public void SetMoney(int money)
         {
             Money = money;
-            OnMoneyChange(money);
+            OnMoneyChange?.Invoke(money);
         }
 
         public void ResetMoney() => SetMoney(StartingMoney);

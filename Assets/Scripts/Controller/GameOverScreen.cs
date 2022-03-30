@@ -6,6 +6,16 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class GameOverScreen : MonoBehaviour
     {
+        public TowerController TowerController;
+
+        public TowerManager TowerManager;
+
+        public LivesController LivesController;
+
+        public MoneyController MoneyController;
+
+        public WavesController WavesController;
+
         /// <summary>
         /// The game over canvas prefab.
         /// </summary>
@@ -16,25 +26,18 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         private GameObject _gameOverCanvas;
 
-        private TowerController _towerController;
-
-        private TowerManager _towerManager;
+        // TODO: add OnGameOver event
 
         private void Start()
         {
-            _towerController = GetComponent<TowerController>();
-            _towerManager = GetComponent<TowerManager>();
+            LivesController.OnEndGame += EndGame;
         }
 
-        /// <summary>
-        /// Ends the game.
-        /// </summary>
         public void EndGame()
         {
             _gameOverCanvas = Instantiate(GameOverCanvasPrefab);
 
-            var moneyController = GetComponent<MoneyController>();
-            var finishingMoney = moneyController.Money;
+            var finishingMoney = MoneyController.Money;
 
             var panelTransform = _gameOverCanvas.transform.Find("Panel");
             var moneyText = panelTransform.Find("MoneyText");
@@ -43,7 +46,7 @@ namespace TDDemo.Assets.Scripts.Controller
             var restartButton = panelTransform.Find("RestartButton");
             restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
 
-            _towerController.CancelCreateTower();
+            TowerController.CancelCreateTower();
         }
 
         /// <summary>
@@ -51,17 +54,14 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         private void RestartGame()
         {
-            var wavesController = GetComponent<WavesController>();
-            wavesController.StopAllCoroutines();
-            wavesController.ResetWaves();
+            WavesController.StopAllCoroutines();
+            WavesController.ResetWaves();
 
-            var moneyController = GetComponent<MoneyController>();
-            moneyController.ResetMoney();
+            MoneyController.ResetMoney();
 
-            var livesController = GetComponent<LivesController>();
-            livesController.ResetLives();
+            LivesController.ResetLives();
 
-            _towerManager.DeselectCurrentTower();
+            TowerManager.DeselectCurrentTower();
 
             var towers = GameObject.FindGameObjectsWithTag(Tags.Tower);
             foreach (var t in towers)

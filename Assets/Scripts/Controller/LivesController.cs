@@ -1,20 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
     public class LivesController : MonoBehaviour
     {
-        /// <summary>
-        /// The number of starting lives.
-        /// </summary>
         [Range(1, 50)]
         public int StartingLives;
-
-        /// <summary>
-        /// The game over screen script.
-        /// </summary>
-        private GameOverScreen _gameOverScreen;
 
         /// <summary>
         /// The current number of lives.
@@ -22,56 +14,41 @@ namespace TDDemo.Assets.Scripts.Controller
         private int _lives;
 
         /// <summary>
-        /// Gets whether the game is over.
+        /// Delegate to fire when the current amount of lives changes.
         /// </summary>
-        private bool GameIsOver => _lives <= 0;
+        public event Action<int> OnLivesChange;
 
         /// <summary>
-        /// The text used to display the lives.
+        /// Delegate to fire when the number of lives reaches zero.
         /// </summary>
-        public Text LivesText;
+        public event Action OnEndGame;
 
-        /// <summary>
-        /// Start is called before the first frame update.
-        /// </summary>
         private void Start()
         {
-            _gameOverScreen = gameObject.GetComponent<GameOverScreen>();
             ResetLives();
         }
 
-        /// <summary>
-        /// Adds the given amount of lives to the current count.
-        /// </summary>
         public void AddLives(int amount)
         {
-            if (!GameIsOver)
+            if (!GameIsOver())
             {
                 SetLives(_lives + amount);
-                CheckForGameEnd();
+
+                if (GameIsOver())
+                {
+                    OnEndGame?.Invoke();
+                }
             }
         }
 
-        public void SetLives(int lives)
+        private void SetLives(int lives)
         {
             _lives = lives;
-            LivesText.text = $"Lives: {lives}";
+            OnLivesChange?.Invoke(lives);
         }
 
-        /// <summary>
-        /// Resets to the starting lives.
-        /// </summary>
         public void ResetLives() => SetLives(StartingLives);
 
-        /// <summary>
-        /// Checks if the game should end, and if so ends the game.
-        /// </summary>
-        private void CheckForGameEnd()
-        {
-            if (GameIsOver)
-            {
-                _gameOverScreen.EndGame();
-            }
-        }
+        private bool GameIsOver() => _lives <= 0;
     }
 }

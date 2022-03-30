@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 149377254}
   - component: {fileID: 149377256}
   - component: {fileID: 149377255}
+  - component: {fileID: 149377257}
   m_Layer: 5
   m_Name: LivesText
   m_TagString: Untagged
@@ -202,6 +203,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149377253}
   m_CullTransparentMesh: 0
+--- !u!114 &149377257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149377253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b83a845174efa241a671a50c665b333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LivesController: {fileID: 438958076}
 --- !u!1 &268013312
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,9 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42258e1e8c4fff54da07f65c2cb32217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaveText: {fileID: 834971719}
-  SendWaveButtonText: {fileID: 268013314}
-  NumberOfWaves: 5
+  MoneyController: {fileID: 438958075}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
 --- !u!4 &438958073
@@ -647,9 +659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dec26db8b112a47bcda8ab14e2e57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerStats: {fileID: 1039594392}
-  UpgradeTower: {fileID: 1274034837}
-  SellTower: {fileID: 1250217732}
+  TowerManager: {fileID: 438958078}
+  MoneyController: {fileID: 438958075}
   SellFraction: 0.5
 --- !u!114 &438958075
 MonoBehaviour:
@@ -677,7 +688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingLives: 50
-  LivesText: {fileID: 149377255}
 --- !u!114 &438958077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,6 +700,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a353f578fceb54f90611723830ce33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerController: {fileID: 438958074}
+  TowerManager: {fileID: 438958078}
+  LivesController: {fileID: 438958076}
+  MoneyController: {fileID: 438958075}
+  WavesController: {fileID: 438958072}
   GameOverCanvasPrefab: {fileID: 9070692962457196100, guid: f8e9012a77948f848b5964ca1d9cf8f3,
     type: 3}
 --- !u!114 &438958078
@@ -1309,6 +1324,7 @@ GameObject:
   - component: {fileID: 834971718}
   - component: {fileID: 834971720}
   - component: {fileID: 834971719}
+  - component: {fileID: 834971721}
   m_Layer: 5
   m_Name: WaveText
   m_TagString: Untagged
@@ -1377,6 +1393,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834971717}
   m_CullTransparentMesh: 0
+--- !u!114 &834971721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834971717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519df3d41af351c4dab97de1111fa47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WavesController: {fileID: 438958072}
 --- !u!1 &939094663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a312f40da3a877d42a6313b8c16af0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerController: {fileID: 438958074}
+  TowerManager: {fileID: 438958078}
 --- !u!1 &1250217727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,6 +1810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a43cb0ba10a3e439d7e3b0f2e7fdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerController: {fileID: 438958074}
+  TowerManager: {fileID: 438958078}
 --- !u!1 &1274034835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1864,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221b605e15691d640859562736445c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoneyController: {fileID: 438958075}
+  TowerController: {fileID: 438958074}
+  TowerManager: {fileID: 438958078}
 --- !u!114 &1274034838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2533,7 +2569,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1640738268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ba8f60b6effa04eb0d7ed9dab5924b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8003f10082028ac49a7a79ebea00eeb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoneyController: {fileID: 438958075}
@@ -2549,6 +2585,7 @@ GameObject:
   - component: {fileID: 1775969661}
   - component: {fileID: 1775969660}
   - component: {fileID: 1775969659}
+  - component: {fileID: 1775969662}
   m_Layer: 5
   m_Name: SendWaveButton
   m_TagString: Untagged
@@ -2619,19 +2656,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1775969660}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 438958072}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: DoSendNextWave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1775969660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2670,6 +2695,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775969657}
   m_CullTransparentMesh: 0
+--- !u!114 &1775969662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775969657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7876ace0a6a91894797fd3b55ef07137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WavesController: {fileID: 438958072}
 --- !u!1 &1792539447
 GameObject:
   m_ObjectHideFlags: 0

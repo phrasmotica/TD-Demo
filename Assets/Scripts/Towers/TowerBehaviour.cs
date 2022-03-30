@@ -51,7 +51,11 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event Action<float> OnWarmupProgress;
 
+        public event Action<TowerBehaviour> OnStartUpgrade;
+
         public event Action<float> OnUpgradeProgress;
+
+        public event Action<TowerBehaviour> OnFinishUpgrade;
 
         private void Start()
         {
@@ -96,13 +100,13 @@ namespace TDDemo.Assets.Scripts.Towers
             if (_tower.IsWarmingUp())
             {
                 var progress = _tower.Warmup(Time.deltaTime);
-                OnWarmupProgress(progress);
+                OnWarmupProgress?.Invoke(progress);
             }
 
             if (_tower.IsUpgrading())
             {
                 var progress = _tower.Upgrade(Time.deltaTime);
-                OnUpgradeProgress(progress);
+                OnUpgradeProgress?.Invoke(progress);
             }
 
             if (_tower.IsFiring())
@@ -218,7 +222,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer.color = ColourHelper.HalfOpacity;
 
-            TowerController.Refresh();
+            OnStartUpgrade?.Invoke(this);
 
             logger.Log($"Tower upgrading for {upgradeTime} seconds");
             yield return new WaitForSeconds(upgradeTime);
@@ -233,7 +237,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             logger.Log($"Tower upgraded, total value {TotalValue}");
 
-            TowerController.Refresh();
+            OnFinishUpgrade?.Invoke(this);
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
