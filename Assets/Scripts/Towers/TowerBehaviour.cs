@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Controller;
@@ -263,7 +263,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void AllowFire()
         {
-            foreach (var a in GetActions())
+            foreach (var a in _actions)
             {
                 a.CanAct = true;
             }
@@ -271,7 +271,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void PreventFire()
         {
-            foreach (var a in GetActions())
+            foreach (var a in _actions)
             {
                 a.CanAct = false;
             }
@@ -285,7 +285,5 @@ namespace TDDemo.Assets.Scripts.Towers
         }
 
         private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
-
-        private IEnumerable<ITowerAction> GetActions() => GetActions<ITowerAction>();
     }
 }
