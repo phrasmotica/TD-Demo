@@ -69,5 +69,14 @@ namespace TDDemo.Assets.Scripts.Controller
         /// Resets to wave zero, ready for the start of a game.
         /// </summary>
         public void ResetWaves() => SetCurrentWave(0);
+
+        public void ResetEnemies()
+        {
+            var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
+            foreach (var e in enemies)
+            {
+                Destroy(e);
+            }
+        }
     }
 }

@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 9070692961441687708}
   - component: {fileID: 9070692961441687711}
   - component: {fileID: 9070692961441687710}
+  - component: {fileID: 3320475379983247863}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -200,6 +201,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3320475379983247863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070692961441687704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce108168d8754a941aebc4c4580e0a00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOver: {fileID: 1372971327905576788}
 --- !u!1 &9070692961989776864
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,8 +382,9 @@ GameObject:
   - component: {fileID: 9070692962188650151}
   - component: {fileID: 9070692962188650149}
   - component: {fileID: 9070692962188650148}
+  - component: {fileID: 7344767832560646516}
   m_Layer: 5
-  m_Name: MoneyText
+  m_Name: FinalMoneyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -435,7 +450,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You finished with 0 money
+  m_Text: You finished with 0 money.
+--- !u!114 &7344767832560646516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070692962188650150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01fabd76a6d2b54ba620a3e82ce7bb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOver: {fileID: 1372971327905576788}
 --- !u!1 &9070692962457196100
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +476,7 @@ GameObject:
   - component: {fileID: 9070692962457196155}
   - component: {fileID: 9070692962457196154}
   - component: {fileID: 9070692962457196101}
+  - component: {fileID: 1372971327905576788}
   m_Layer: 5
   m_Name: GameOverCanvas
   m_TagString: Untagged
@@ -536,3 +565,15 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1372971327905576788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070692962457196100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9d55dcde13f2e41aab4668e5a2e8db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
