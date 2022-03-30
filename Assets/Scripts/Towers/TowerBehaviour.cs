@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +28,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int Price => _tower != null ? _tower.GetPrice() : 0;
 
-        public float WarmupProgress => _tower.WarmupProgress;
-
-        public float UpgradeProgress => _tower.UpgradeProgress;
-
         public int TotalValue => _tower.GetTotalValue();
 
         /// <summary>
@@ -51,6 +48,10 @@ namespace TDDemo.Assets.Scripts.Towers
         /// Whether this tower is colliding with a path zone.
         /// </summary>
         private bool _isCollidingWithPathZone;
+
+        public event Action<float> OnWarmupProgress;
+
+        public event Action<float> OnUpgradeProgress;
 
         private void Start()
         {
@@ -94,12 +95,14 @@ namespace TDDemo.Assets.Scripts.Towers
 
             if (_tower.IsWarmingUp())
             {
-                _tower.Warmup(Time.deltaTime);
+                var progress = _tower.Warmup(Time.deltaTime);
+                OnWarmupProgress(progress);
             }
 
             if (_tower.IsUpgrading())
             {
-                _tower.Upgrade(Time.deltaTime);
+                var progress = _tower.Upgrade(Time.deltaTime);
+                OnUpgradeProgress(progress);
             }
 
             if (_tower.IsFiring())

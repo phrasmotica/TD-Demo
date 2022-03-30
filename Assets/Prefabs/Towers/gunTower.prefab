@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423853613815778029}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2635238056331392155}
@@ -168,8 +168,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -0.32, y: -0.5, z: 0}
-  - {x: 0.32, y: -0.5, z: 0}
+  - {x: -0.32, y: 0, z: 0}
+  - {x: 0.32, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645a02b6f662827458803b995f793968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OffsetY: -0.5
+  Tower: {fileID: 7631867566107524507}
 --- !u!1 &1409095009617655794
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4821971724821386494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2635238056331392155}
@@ -393,8 +393,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -0.32, y: -0.5, z: 0}
-  - {x: 0.32, y: -0.5, z: 0}
+  - {x: -0.32, y: 0, z: 0}
+  - {x: 0.32, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ed516e3af87c94295f01e5f50d376e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OffsetY: -0.5
+  Tower: {fileID: 7631867566107524507}
 --- !u!1 &7605472417552173125
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +594,7 @@ MonoBehaviour:
   ProjectileSpeed: 4
   FireRate: 4
   Range: 3
+  TargetMethod: 0
 --- !u!82 &5009809676124491293
 AudioSource:
   m_ObjectHideFlags: 0
@@ -821,6 +822,7 @@ MonoBehaviour:
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
+  TargetMethod: 0
 --- !u!82 &6718605576518355556
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1205,6 +1207,7 @@ MonoBehaviour:
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
+  TargetMethod: 0
 --- !u!82 &487567890041266364
 AudioSource:
   m_ObjectHideFlags: 0

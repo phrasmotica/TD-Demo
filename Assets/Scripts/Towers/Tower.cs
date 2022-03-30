@@ -12,10 +12,6 @@ namespace TDDemo.Assets.Scripts.Towers
         private int _upgradeLevel;
         private TimeCounter _upgradeCounter;
 
-        public float WarmupProgress => _warmupCounter.Progress;
-
-        public float UpgradeProgress => _upgradeCounter.Progress;
-
         public Tower(List<TowerLevel> levels)
         {
             _levels = levels;
@@ -34,9 +30,10 @@ namespace TDDemo.Assets.Scripts.Towers
             return baseLevel.Time;
         }
 
-        public void Warmup(float time)
+        public float Warmup(float time)
         {
             _warmupCounter.Increment(time);
+            return _warmupCounter.Progress;
         }
 
         public void FinishWarmingUp()
@@ -56,9 +53,10 @@ namespace TDDemo.Assets.Scripts.Towers
             return upgradeTime;
         }
 
-        public void Upgrade(float time)
+        public float Upgrade(float time)
         {
             _upgradeCounter.Increment(time);
+            return _upgradeCounter.Progress;
         }
 
         public TowerLevel FinishUpgrading()
