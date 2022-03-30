@@ -1,39 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
-    public class WarmupBar : MonoBehaviour
+    public class WarmupBar : TowerProgressBar
     {
-        public TowerBehaviour Tower;
-
-        private LineRenderer _line;
-
-        private void Start()
+        protected override void SetEventHandler(Action<float> handler)
         {
-            _line = GetComponent<LineRenderer>();
-            _line.positionCount = 2;
-            _line.useWorldSpace = false;
-
-            Tower.OnWarmupProgress += DrawWarmupBar;
+            Tower.OnWarmupProgress += handler;
         }
 
-        private void Update()
-        {
-            _line.forceRenderingOff = !ShouldDrawWarmupBar();
-        }
-
-        private void DrawWarmupBar(float progress)
-        {
-            var sprite = Tower.GetComponent<SpriteRenderer>();
-            var spriteExtentX = sprite.sprite.bounds.extents.x;
-
-            var start = -spriteExtentX;
-            var width = 2 * spriteExtentX * progress;
-
-            _line.SetPosition(0, new Vector3(start, 0, 0));
-            _line.SetPosition(1, new Vector3(start + width, 0, 0));
-        }
-
-        private bool ShouldDrawWarmupBar() => Tower.IsWarmingUp();
+        protected override bool ShouldDraw() => Tower.IsWarmingUp();
     }
 }

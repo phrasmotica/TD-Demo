@@ -1,39 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
-    public class UpgradeBar : MonoBehaviour
+    public class UpgradeBar : TowerProgressBar
     {
-        public TowerBehaviour Tower;
-
-        private LineRenderer _line;
-
-        private void Start()
+        protected override void SetEventHandler(Action<float> handler)
         {
-            _line = GetComponent<LineRenderer>();
-            _line.positionCount = 2;
-            _line.useWorldSpace = false;
-
-            Tower.OnUpgradeProgress += DrawUpgradeBar;
+            Tower.OnUpgradeProgress += handler;
         }
 
-        private void Update()
-        {
-            _line.forceRenderingOff = !ShouldDrawUpgradeBar();
-        }
-
-        private void DrawUpgradeBar(float progress)
-        {
-            var sprite = Tower.GetComponent<SpriteRenderer>();
-            var spriteExtentX = sprite.sprite.bounds.extents.x;
-
-            var start = -spriteExtentX;
-            var width = 2 * spriteExtentX * progress;
-
-            _line.SetPosition(0, new Vector3(start, 0, 0));
-            _line.SetPosition(1, new Vector3(start + width, 0, 0));
-        }
-
-        private bool ShouldDrawUpgradeBar() => Tower.IsUpgrading();
+        protected override bool ShouldDraw() => Tower.IsUpgrading();
     }
 }
