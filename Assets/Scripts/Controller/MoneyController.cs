@@ -18,7 +18,7 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         public event Action<int> OnMoneyChange;
 
-        public void Start()
+        private void Start()
         {
             ResetMoney();
         }
@@ -27,7 +27,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void AddMoney(int amount) => SetMoney(Money + amount);
 
-        public void SetMoney(int money)
+        private void SetMoney(int money)
         {
             Money = money;
             OnMoneyChange?.Invoke(money);

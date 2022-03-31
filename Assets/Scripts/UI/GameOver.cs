@@ -1,23 +1,42 @@
 using TDDemo.Assets.Scripts.Controller;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
     public class GameOver : MonoBehaviour
     {
-        public TowerController TowerController { get; set; }
+        public TowerController TowerController;
 
-        public TowerManager TowerManager { get; set; }
+        public TowerManager TowerManager;
 
-        public LivesController LivesController { get; set; }
+        public LivesController LivesController;
 
-        public MoneyController MoneyController { get; set; }
+        public MoneyController MoneyController;
 
-        public WavesController WavesController { get; set; }
+        public WavesController WavesController;
 
-        public GameOverController GameOverController { get; set; }
+        public GameObject GameOverScreen;
 
-        public int GetFinalMoney() => MoneyController.Money;
+        public Text FinalMoneyText;
+
+        public Button RestartButton;
+
+        private void Start()
+        {
+            LivesController.OnEndGame += EndGame;
+        }
+
+        public void EndGame()
+        {
+            TowerController.CancelCreateTower();
+
+            GameOverScreen.SetActive(true);
+
+            FinalMoneyText.text = $"You finished with {MoneyController.Money} money.";
+
+            RestartButton.onClick.AddListener(Restart);
+        }
 
         public void Restart()
         {
@@ -33,7 +52,7 @@ namespace TDDemo.Assets.Scripts.UI
 
             TowerManager.DeselectCurrentTower();
 
-            GameOverController.RestartGame();
+            GameOverScreen.SetActive(false);
         }
     }
 }
