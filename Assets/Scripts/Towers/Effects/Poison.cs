@@ -9,7 +9,7 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
 
         private TimeCounter _counter;
 
-        public EffectCategory Category => EffectCategory.Paralyse;
+        public EffectCategory Category => EffectCategory.Poison;
 
         public float Progress => _counter.Progress;
 
