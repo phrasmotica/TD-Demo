@@ -66,10 +66,8 @@ namespace TDDemo.Assets.Scripts.Enemies
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * healthFraction;
 
-            var posY = transform.position.y;
-
-            _line.SetPosition(0, new Vector3(start, posY, 0));
-            _line.SetPosition(1, new Vector3(start + width, posY, 0));
+            _line.SetPosition(0, new Vector3(start, 0, 0));
+            _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }
 
         private void PeekHealth()
