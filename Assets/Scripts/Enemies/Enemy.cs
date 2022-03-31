@@ -65,6 +65,15 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Update()
         {
+            if (_health <= 0)
+            {
+                AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
+
+                OnKill?.Invoke(Reward);
+                Destroy(gameObject);
+                return;
+            }
+
             foreach (var e in _effects)
             {
                 e.Update(this, Time.deltaTime);
@@ -96,12 +105,6 @@ namespace TDDemo.Assets.Scripts.Enemies
                 {
                     AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
                 }
-                else
-                {
-                    AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
-
-                    OnKill?.Invoke(Reward);
-                    Destroy(gameObject);
             }
         }
 
