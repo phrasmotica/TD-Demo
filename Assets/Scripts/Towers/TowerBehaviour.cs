@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
@@ -30,11 +31,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int TotalValue => _tower.GetTotalValue();
 
-        /// <summary>
-        /// The tower's initial Z position.
-        /// </summary>
-        private float _initialZPos;
-
         private SpriteRenderer _spriteRenderer;
 
         private ITowerAction[] _actions;
@@ -61,8 +57,6 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _tower = new Tower(Levels);
 
-            _initialZPos = transform.position.z;
-
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
             AccumulateActions();
@@ -74,9 +68,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             if (_tower.IsPositioning())
             {
-                var mousePosition = Input.mousePosition;
-                var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-                transform.position = new Vector3(worldPoint.x, worldPoint.y, _initialZPos);
+                transform.FollowMouse();
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
@@ -90,7 +82,10 @@ namespace TDDemo.Assets.Scripts.Towers
                     }
                     else
                     {
+                        var mousePosition = Input.mousePosition;
+                        var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
                         logger.Log($"Placed tower at {worldPoint}");
+
                         TowerController.PlaceTower(this);
                         StartCoroutine(Warmup());
                     }

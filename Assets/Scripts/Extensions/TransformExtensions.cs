@@ -8,6 +8,16 @@ namespace TDDemo.Assets.Scripts.Extensions
     public static class TransformExtensions
     {
         /// <summary>
+        /// Sets this transform's position to that of the mouse.
+        /// </summary>
+        public static void FollowMouse(this Transform t)
+        {
+            var mousePosition = Input.mousePosition;
+            var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+            t.position = new Vector3(worldPoint.x, worldPoint.y, t.position.z);
+        }
+
+        /// <summary>
         /// Returns the distance from this Transform to the given position.
         /// </summary>
         public static float GetDistanceToPosition(this Transform t, Vector3 v)
