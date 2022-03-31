@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// The enemy's starting health.
         /// </summary>
         [Range(1, 5)]
-        public int StartingHealth;
+        public float StartingHealth;
 
         /// <summary>
         /// The money reward for killing this enemy.
@@ -27,7 +27,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// <summary>
         /// The enemy's current health.
         /// </summary>
-        private int _health;
+        private float _health;
 
         /// <summary>
         /// The effects present on this enemy.
@@ -89,8 +89,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             var projectileComponent = otherObj.GetComponent<Projectile>();
             if (projectileComponent != null)
             {
-                _health -= projectileComponent.Damage;
-                OnHurt?.Invoke(HealthFraction);
+                TakeDamage(projectileComponent.Damage);
                 Destroy(otherObj);
 
                 if (_health > 0)
@@ -103,8 +102,13 @@ namespace TDDemo.Assets.Scripts.Enemies
 
                     OnKill?.Invoke(Reward);
                     Destroy(gameObject);
-                }
             }
+        }
+
+        public void TakeDamage(float damage)
+        {
+            _health -= damage;
+            OnHurt?.Invoke(HealthFraction);
         }
 
         public void AddEffect(IEffect effect)

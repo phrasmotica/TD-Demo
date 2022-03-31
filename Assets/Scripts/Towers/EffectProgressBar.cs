@@ -52,6 +52,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             EffectCategory.Slow => ColourHelper.SlowEffect,
             EffectCategory.Paralyse => ColourHelper.ParalyseEffect,
+            EffectCategory.Poison => ColourHelper.PoisonEffect,
             _ => Color.cyan,
         };
     }

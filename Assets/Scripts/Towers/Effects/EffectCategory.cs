@@ -4,5 +4,6 @@
     {
         Slow,
         Paralyse,
+        Poison,
     }
 }

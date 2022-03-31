@@ -20,5 +20,7 @@ namespace TDDemo.Assets.Scripts.Util
         public static Color SlowEffect => new Color(0, 127, 255);
 
         public static Color ParalyseEffect => Color.yellow;
+
+        public static Color PoisonEffect => Color.green;
     }
 }
