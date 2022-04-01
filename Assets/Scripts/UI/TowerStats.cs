@@ -11,16 +11,14 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TowerManager TowerManager;
 
-        private Text _damageText;
-        private Text _rangeText;
-        private Text _fireRateText;
+        public Text DamageText;
+
+        public Text RangeText;
+
+        public Text FireRateText;
 
         private void Awake()
         {
-            _damageText = transform.Find("DamageText").GetComponent<Text>();
-            _rangeText = transform.Find("RangeText").GetComponent<Text>();
-            _fireRateText = transform.Find("FireRateText").GetComponent<Text>();
-
             TowerController.OnStartUpgradeSelectedTower += SetStats;
             TowerController.OnFinishUpgradeSelectedTower += SetStats;
             TowerController.OnSellSelectedTower += tower => ClearStats();
@@ -32,14 +30,14 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (tower != null)
             {
-                _damageText.gameObject.SetActive(true);
-                _damageText.text = $"Damage: {tower.GetDamage()}";
+                DamageText.gameObject.SetActive(true);
+                DamageText.text = $"Damage: {tower.GetDamage()}";
 
-                _rangeText.gameObject.SetActive(true);
-                _rangeText.text = $"Range: {tower.GetRange()}";
+                RangeText.gameObject.SetActive(true);
+                RangeText.text = $"Range: {tower.GetRange()}";
 
-                _fireRateText.gameObject.SetActive(true);
-                _fireRateText.text = $"Fire rate: {tower.GetFireRate()}";
+                FireRateText.gameObject.SetActive(true);
+                FireRateText.text = $"Fire rate: {tower.GetFireRate()}";
             }
             else
             {
@@ -49,9 +47,9 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void ClearStats()
         {
-            _damageText.gameObject.SetActive(false);
-            _rangeText.gameObject.SetActive(false);
-            _fireRateText.gameObject.SetActive(false);
+            DamageText.gameObject.SetActive(false);
+            RangeText.gameObject.SetActive(false);
+            FireRateText.gameObject.SetActive(false);
         }
     }
 }
