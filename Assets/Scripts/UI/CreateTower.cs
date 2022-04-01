@@ -13,8 +13,6 @@ namespace TDDemo.Assets.Scripts.UI
 
         public MoneyController MoneyController;
 
-        private int TowerPrice => TowerPrefab.GetComponent<TowerBehaviour>().Price;
-
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(CreateNewTower);
@@ -22,12 +20,14 @@ namespace TDDemo.Assets.Scripts.UI
             MoneyController.OnMoneyChange += SetInteractable;
         }
 
-        private void CreateNewTower() => TowerController.CreateNewTower(TowerPrefab, TowerPrice);
+        private void CreateNewTower() => TowerController.CreateNewTower(TowerPrefab);
 
         private void SetInteractable(int money)
         {
-            var canAfford = money >= TowerPrice;
+            var canAfford = money >= GetTowerPrice();
             GetComponent<Button>().interactable = canAfford;
         }
+
+        private int GetTowerPrice() => TowerPrefab.GetComponent<TowerBehaviour>().GetPrice();
     }
 }

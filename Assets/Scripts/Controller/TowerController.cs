@@ -55,10 +55,11 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        public void CreateNewTower(GameObject towerPrefab, int price)
+        public void CreateNewTower(GameObject towerPrefab)
         {
             // only create if we can afford the tower
-            if (MoneyController.CanAfford(price))
+            var tower = towerPrefab.GetComponent<TowerBehaviour>();
+            if (MoneyController.CanAfford(tower.GetPrice()))
             {
                 TowerManager.DeselectCurrentTower();
 
@@ -72,7 +73,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void PlaceTower(TowerBehaviour newTower)
         {
-            MoneyController.AddMoney(-newTower.Price);
+            MoneyController.AddMoney(-newTower.GetPrice());
 
             TowerManager.Add(newTower);
             newTower.TowerManager = TowerManager;

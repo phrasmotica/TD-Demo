@@ -27,8 +27,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsSelected { get; private set; }
 
-        public int Price => _tower != null ? _tower.GetPrice() : 0;
-
         public int TotalValue => _tower.GetTotalValue();
 
         private SpriteRenderer _spriteRenderer;
@@ -242,6 +240,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public bool IsWarmingUp() => _tower.IsWarmingUp();
 
         public bool IsUpgrading() => _tower.IsUpgrading();
+
+        public int GetPrice() => Levels.First().Price;
 
         public int GetUpgradeCost() => _tower.GetUpgradeCost();
 
