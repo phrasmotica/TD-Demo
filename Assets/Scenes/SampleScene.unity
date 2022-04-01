@@ -1453,6 +1453,7 @@ GameObject:
   - component: {fileID: 1012688285}
   - component: {fileID: 1012688284}
   - component: {fileID: 1012688283}
+  - component: {fileID: 1012688287}
   m_Layer: 5
   m_Name: CreateSlowTowerButton
   m_TagString: Untagged
@@ -1578,6 +1579,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012688281}
   m_CullTransparentMesh: 0
+--- !u!114 &1012688287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012688281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a5047079e7137468548cf623c758a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiCanvas: {fileID: 709282967}
+  TooltipPrefab: {fileID: 8804419208012671564, guid: 7265a4f7b9fb6f645abbfdba1af27374,
+    type: 3}
+  Tower: {fileID: 7861188637160861286, guid: db3c41d4c7d46534bace9984365bd334, type: 3}
 --- !u!1 &1039594390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,6 +2386,7 @@ MonoBehaviour:
   UiCanvas: {fileID: 709282967}
   TooltipPrefab: {fileID: 8804419208012671564, guid: 7265a4f7b9fb6f645abbfdba1af27374,
     type: 3}
+  Tower: {fileID: 7631867566107524507, guid: 981d681464ba4a447b23baad8b0e6b6b, type: 3}
 --- !u!1 &1549701625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2850,6 +2868,7 @@ GameObject:
   - component: {fileID: 1841666783}
   - component: {fileID: 1841666782}
   - component: {fileID: 1841666781}
+  - component: {fileID: 1841666785}
   m_Layer: 5
   m_Name: CreatePoisonTowerButton
   m_TagString: Untagged
@@ -2975,6 +2994,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841666779}
   m_CullTransparentMesh: 0
+--- !u!114 &1841666785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841666779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a5047079e7137468548cf623c758a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiCanvas: {fileID: 709282967}
+  TooltipPrefab: {fileID: 8804419208012671564, guid: 7265a4f7b9fb6f645abbfdba1af27374,
+    type: 3}
+  Tower: {fileID: 2476264691738361395, guid: d57af3cb6b2068a4ba976f3da614e08c, type: 3}
 --- !u!1 &1958374534
 GameObject:
   m_ObjectHideFlags: 0

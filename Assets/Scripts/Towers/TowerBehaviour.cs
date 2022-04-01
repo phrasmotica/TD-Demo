@@ -13,6 +13,8 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class TowerBehaviour : BaseBehaviour
     {
+        public string Name;
+
         public List<TowerLevel> Levels;
 
         public GameObject SelectionObj;

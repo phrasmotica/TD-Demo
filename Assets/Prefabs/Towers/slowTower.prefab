@@ -851,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f722f932e00f16e4b883d1513d0807aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Slow Tower
   Levels:
   - {fileID: 6339331099896013953}
   - {fileID: 8586152713800763059}
