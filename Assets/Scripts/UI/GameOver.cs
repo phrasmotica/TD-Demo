@@ -48,9 +48,8 @@ namespace TDDemo.Assets.Scripts.UI
 
             LivesController.ResetLives();
 
-            TowerController.ResetTowers();
-
             TowerManager.DeselectCurrentTower();
+            TowerManager.ClearTowers();
 
             GameOverScreen.SetActive(false);
         }

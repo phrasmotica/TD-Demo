@@ -1,6 +1,5 @@
 ﻿using System;
 using TDDemo.Assets.Scripts.Towers;
-using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Controller
@@ -120,15 +119,6 @@ namespace TDDemo.Assets.Scripts.Controller
             }
 
             IsPositioningNewTower = false;
-        }
-
-        public void ResetTowers()
-        {
-            var towers = GameObject.FindGameObjectsWithTag(Tags.Tower);
-            foreach (var t in towers)
-            {
-                Destroy(t);
-            }
         }
 
         public bool CanUpgradeTower(TowerBehaviour tower)

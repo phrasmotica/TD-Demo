@@ -156,5 +156,13 @@ namespace TDDemo.Assets.Scripts.Controller
 
             return _towers[_selectedTowerIndex];
         }
+
+        public void ClearTowers()
+        {
+            foreach (var t in _towers)
+            {
+                Destroy(t.gameObject);
+            }
+        }
     }
 }
