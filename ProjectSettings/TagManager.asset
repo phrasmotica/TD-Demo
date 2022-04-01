@@ -46,3 +46,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Towers
+    uniqueID: 4271352957
+    locked: 0
+  - name: Enemies
+    uniqueID: 4188683803
+    locked: 0
+  - name: Main UI
+    uniqueID: 754568445
+    locked: 0
+  - name: Game Over UI
+    uniqueID: 1078763103
+    locked: 0
