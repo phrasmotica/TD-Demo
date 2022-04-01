@@ -8,7 +8,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public WavesController WavesController;
 
-        private void Start()
+        private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(WavesController.DoSendNextWave);
 

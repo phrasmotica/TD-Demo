@@ -22,7 +22,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Button RestartButton;
 
-        private void Start()
+        private void Awake()
         {
             LivesController.OnEndGame += EndGame;
         }

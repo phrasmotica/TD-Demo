@@ -8,7 +8,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public LivesController LivesController;
 
-        private void Start()
+        private void Awake()
         {
             LivesController.OnLivesChange += lives =>
             {

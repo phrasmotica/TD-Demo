@@ -15,7 +15,7 @@ namespace TDDemo.Assets.Scripts.UI
         private Text _rangeText;
         private Text _fireRateText;
 
-        private void Start()
+        private void Awake()
         {
             _damageText = transform.Find("DamageText").GetComponent<Text>();
             _rangeText = transform.Find("RangeText").GetComponent<Text>();

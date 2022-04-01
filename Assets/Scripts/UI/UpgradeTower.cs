@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TowerManager TowerManager;
 
-        private void Start()
+        private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(Upgrade);
 

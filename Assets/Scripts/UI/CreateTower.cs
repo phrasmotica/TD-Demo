@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public MoneyController MoneyController;
 
-        private void Start()
+        private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(CreateNewTower);
 
