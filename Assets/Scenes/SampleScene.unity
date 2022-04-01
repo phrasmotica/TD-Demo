@@ -633,6 +633,7 @@ MonoBehaviour:
   MoneyController: {fileID: 438958075}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
+  FirstWaypoint: {fileID: 1958374535}
 --- !u!4 &438958073
 Transform:
   m_ObjectHideFlags: 0

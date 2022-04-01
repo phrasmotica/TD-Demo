@@ -10,10 +10,9 @@ namespace TDDemo.Assets.Scripts.Controller
     {
         public MoneyController MoneyController;
 
-        /// <summary>
-        /// The enemy prefab.
-        /// </summary>
         public GameObject EnemyPrefab;
+
+        public Transform FirstWaypoint;
 
         /// <summary>
         /// The current wave.
@@ -53,7 +52,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
             for (var i = 0; i < enemyCount; i++)
             {
-                var enemy = Instantiate(EnemyPrefab);
+                var enemy = Instantiate(EnemyPrefab, FirstWaypoint.position, Quaternion.identity);
                 enemy.GetComponent<Enemy>().OnKill += MoneyController.AddMoney;
 
                 yield return new WaitForSeconds(1);
