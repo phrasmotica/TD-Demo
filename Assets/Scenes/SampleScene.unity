@@ -2366,6 +2366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a5047079e7137468548cf623c758a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UiCanvas: {fileID: 709282967}
   TooltipPrefab: {fileID: 8804419208012671564, guid: 7265a4f7b9fb6f645abbfdba1af27374,
     type: 3}
 --- !u!1 &1549701625
