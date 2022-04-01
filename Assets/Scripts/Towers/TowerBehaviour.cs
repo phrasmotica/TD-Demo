@@ -245,7 +245,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetPrice() => Levels.First().Price;
 
-        public int GetUpgradeCost() => _tower.GetUpgradeCost();
+        public int? GetUpgradeCost() => _tower.GetUpgradeCost();
 
         public int GetDamage()
         {

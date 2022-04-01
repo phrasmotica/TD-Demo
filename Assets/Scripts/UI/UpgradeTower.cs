@@ -28,23 +28,13 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void SetState(TowerBehaviour tower)
         {
-            var canUpgradeTower = CanUpgradeTower(tower);
-            GetComponent<Button>().interactable = canUpgradeTower;
+            var canUpgrade = TowerController.CanUpgradeTower(tower);
+            var canAfford = TowerController.CanAffordToUpgradeTower(tower);
+            GetComponent<Button>().interactable = canUpgrade && canAfford;
 
-            var upgradeCost = GetUpgradeCost(tower);
-            var text = canUpgradeTower && upgradeCost.HasValue ? $"Upgrade ({upgradeCost.Value})" : "Upgrade";
+            var upgradeCost = TowerController.GetUpgradeCost(tower);
+            var text = canUpgrade && upgradeCost.HasValue ? $"Upgrade ({upgradeCost.Value})" : "Upgrade";
             GetComponentInChildren<Text>().text = text;
-        }
-
-        private bool CanUpgradeTower(TowerBehaviour tower)
-        {
-            var canUpgrade = tower != null && tower.CanBeUpgraded();
-            return canUpgrade && MoneyController.CanAfford(GetUpgradeCost(tower).Value);
-        }
-
-        private int? GetUpgradeCost(TowerBehaviour tower)
-        {
-            return tower != null ? tower.GetUpgradeCost() : (int?) null;
         }
     }
 }

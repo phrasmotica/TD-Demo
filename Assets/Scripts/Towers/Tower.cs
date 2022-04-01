@@ -98,11 +98,11 @@ namespace TDDemo.Assets.Scripts.Towers
             return nextLevel.Time;
         }
 
-        public int GetUpgradeCost()
+        public int? GetUpgradeCost()
         {
-            if (_upgradeLevel >= _levels.Count - 1)
+            if (!CanBeUpgraded())
             {
-                return 0;
+                return null;
             }
 
             var nextLevel = _levels[_upgradeLevel + 1];

@@ -29,7 +29,7 @@ namespace TDDemo.Assets.Scripts.UI
             GetComponent<Button>().interactable = canSellTower;
 
             var sellPrice = TowerController.GetSellPrice(tower);
-            var text = canSellTower && sellPrice.HasValue ? $"Sell ({sellPrice.Value})" : "Sell";
+            var text = sellPrice.HasValue ? $"Sell ({sellPrice.Value})" : "Sell";
             GetComponentInChildren<Text>().text = text;
         }
     }
