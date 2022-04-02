@@ -1,15 +1,15 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Path
 {
     public class EndZone : MonoBehaviour
     {
-        /// <summary>
-        /// The lives controller.
-        /// </summary>
         public LivesController LivesController;
+
+        public WavesController WavesController;
 
         /// <summary>
         /// When an enemy collides, deduct a life and destroy the enemy.
@@ -18,11 +18,10 @@ namespace TDDemo.Assets.Scripts.Path
         {
             var otherObj = collision.gameObject;
 
-            var enemyComponent = otherObj.GetComponent<Enemy>();
-            if (enemyComponent != null)
+            if (otherObj.CompareTag(Tags.Enemy))
             {
                 LivesController.AddLives(-1);
-                Destroy(otherObj);
+                WavesController.RemoveEnemy(otherObj.GetComponent<Enemy>());
             }
         }
     }

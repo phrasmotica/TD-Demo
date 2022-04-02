@@ -27,6 +27,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public TowerManager TowerManager { get; set; }
 
+        public WavesController WavesController { get; set; }
+
         public bool IsSelected { get; private set; }
 
         public int TotalValue => _tower.GetTotalValue();
@@ -106,7 +108,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             if (_tower.IsFiring())
             {
-                var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
+                var enemies = WavesController.GetEnemies();
 
                 foreach (var action in _actions)
                 {

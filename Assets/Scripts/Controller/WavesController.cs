@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Path;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
@@ -12,12 +15,14 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public GameObject EnemyPrefab;
 
-        public Transform FirstWaypoint;
+        public Waypoint[] Waypoints;
 
         /// <summary>
         /// The current wave.
         /// </summary>
         private int _currentWave;
+
+        private List<Enemy> _enemies;
 
         /// <summary>
         /// Delegate to fire when the wave number changes.
@@ -26,6 +31,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void Start()
         {
+            _enemies = new List<Enemy>();
+
             logger = new MethodLogger(nameof(WavesController));
 
             ResetWaves();
@@ -52,8 +59,20 @@ namespace TDDemo.Assets.Scripts.Controller
 
             for (var i = 0; i < enemyCount; i++)
             {
-                var enemy = Instantiate(EnemyPrefab, FirstWaypoint.position, Quaternion.identity);
-                enemy.GetComponent<Enemy>().OnKill += MoneyController.AddMoney;
+                var firstWaypointPos = Waypoints.First().transform.position;
+                var enemyObj = Instantiate(EnemyPrefab, firstWaypointPos, Quaternion.identity);
+
+                var waypointFollower = enemyObj.GetComponent<WaypointFollower>();
+                waypointFollower.Waypoints = Waypoints;
+
+                var enemy = enemyObj.GetComponent<Enemy>();
+                enemy.OnKill += e =>
+                {
+                    MoneyController.AddMoney(e.Reward);
+                    RemoveEnemy(e);
+                };
+
+                _enemies.Add(enemy);
 
                 yield return new WaitForSeconds(1);
             }
@@ -64,17 +83,24 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         private int GetEnemyCount(int waveNumber) => waveNumber;
 
+        public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
+
+        public void RemoveEnemy(Enemy enemy)
+        {
+            _enemies.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
+
         /// <summary>
         /// Resets to wave zero, ready for the start of a game.
         /// </summary>
         public void ResetWaves() => SetCurrentWave(0);
 
-        public void ResetEnemies()
+        public void ClearEnemies()
         {
-            var enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
-            foreach (var e in enemies)
+            foreach (var e in _enemies)
             {
-                Destroy(e);
+                Destroy(e.gameObject);
             }
         }
     }

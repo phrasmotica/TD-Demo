@@ -10,6 +10,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public MoneyController MoneyController;
 
+        public WavesController WavesController;
+
         /// <summary>
         /// The fraction of its price that a tower should sell for.
         /// </summary>
@@ -67,6 +69,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 _newTowerObj = Instantiate(towerPrefab);
                 var newTower = _newTowerObj.GetComponent<TowerBehaviour>();
                 newTower.TowerController = this;
+                newTower.WavesController = WavesController;
             }
         }
 

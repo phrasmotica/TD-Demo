@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using TDDemo.Assets.Scripts.Path;
-using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 // adapted from https://gist.github.com/Abban/42721b25cebba33c389a
@@ -10,17 +9,9 @@ namespace TDDemo.Assets.Scripts.Enemies
     /// <summary>
     /// Script for making an object move in straight lines along a path of waypoints.
     /// </summary>
-    public class WaypointFollower : BaseBehaviour
+    public class WaypointFollower : MonoBehaviour
     {
-        /// <summary>
-        /// The waypoints to follow.
-        /// </summary>
-        private Waypoint[] _waypoints;
-
-        /// <summary>
-        /// The current destination waypoint.
-        /// </summary>
-        private Waypoint CurrentWaypoint => _waypoints?.Any() ?? false ? _waypoints[_currentIndex] : null;
+        public Waypoint[] Waypoints { get; set; }
 
         /// <summary>
         /// The speed with which to move towards the waypoints.
@@ -57,22 +48,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         private float _lastSpeed;
 
         /// <summary>
-        /// Finds the waypoints.
-        /// </summary>
-        private void Start()
-        {
-            _waypoints = GetWaypoints();
-
-            logger = new MethodLogger(nameof(WaypointFollower));
-            logger.Log($"Found {_waypoints.Length} waypoints");
-        }
-
-        /// <summary>
         /// Move towards the current waypoint.
         /// </summary>
         private void Update()
         {
-            if (!IsParalysed && !_isWaiting && CurrentWaypoint != null)
+            if (!IsParalysed && !_isWaiting && GetCurrentWaypoint() != null)
             {
                 MoveTowardsWaypoint();
             }
@@ -92,7 +72,9 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void MoveTowardsWaypoint()
         {
             var currentPosition = transform.position;
-            var targetPosition = CurrentWaypoint.transform.position;
+
+            var targetWaypoint = GetCurrentWaypoint();
+            var targetPosition = targetWaypoint.transform.position;
 
             // if the moving object isn't that close to the waypoint
             if (Vector3.Distance(currentPosition, targetPosition) > .1f)
@@ -112,17 +94,17 @@ namespace TDDemo.Assets.Scripts.Enemies
             else
             {
                 // If the waypoint has a pause amount then wait a bit
-                if (CurrentWaypoint.WaitSeconds > 0)
+                if (targetWaypoint.WaitSeconds > 0)
                 {
                     Pause();
-                    Invoke(nameof(Pause), CurrentWaypoint.WaitSeconds);
+                    Invoke(nameof(Pause), targetWaypoint.WaitSeconds);
                 }
 
                 // If the current waypoint has a speed change then change to it
-                if (CurrentWaypoint.SpeedOut > 0)
+                if (targetWaypoint.SpeedOut > 0)
                 {
                     _lastSpeed = Speed;
-                    Speed = CurrentWaypoint.SpeedOut;
+                    Speed = targetWaypoint.SpeedOut;
                 }
                 else if (_lastSpeed != 0)
                 {
@@ -143,17 +125,17 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 if (!_inReverse)
                 {
-                    _currentIndex = _currentIndex + 1 >= _waypoints.Length ? 0 : _currentIndex + 1;
+                    _currentIndex = _currentIndex + 1 >= Waypoints.Length ? 0 : _currentIndex + 1;
                 }
                 else
                 {
-                    _currentIndex = _currentIndex == 0 ? _waypoints.Length - 1 : _currentIndex - 1;
+                    _currentIndex = _currentIndex == 0 ? Waypoints.Length - 1 : _currentIndex - 1;
                 }
             }
             else
             {
                 // if at the start or the end then reverse
-                if (!_inReverse && _currentIndex + 1 >= _waypoints.Length || _inReverse && _currentIndex == 0)
+                if (!_inReverse && _currentIndex + 1 >= Waypoints.Length || _inReverse && _currentIndex == 0)
                 {
                     _inReverse = !_inReverse;
                 }
@@ -163,14 +145,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         }
 
         /// <summary>
-        /// Returns the waypoints in the scene.
+        /// Returns the current destination waypoint.
         /// </summary>
-        private static Waypoint[] GetWaypoints()
-        {
-            return GameObject.FindGameObjectWithTag(Tags.Waypoints)
-                             .GetComponentsInChildren<Waypoint>()
-                             .OrderBy(w => w.transform.GetSiblingIndex())
-                             .ToArray();
-        }
+        private Waypoint GetCurrentWaypoint() => Waypoints.Any() ? Waypoints[_currentIndex] : null;
     }
 }

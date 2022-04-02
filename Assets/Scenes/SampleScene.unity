@@ -861,8 +861,8 @@ GameObject:
   - component: {fileID: 438958073}
   - component: {fileID: 438958076}
   - component: {fileID: 438958075}
-  - component: {fileID: 438958074}
   - component: {fileID: 438958078}
+  - component: {fileID: 438958074}
   - component: {fileID: 438958072}
   m_Layer: 0
   m_Name: controller
@@ -886,7 +886,9 @@ MonoBehaviour:
   MoneyController: {fileID: 438958075}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
-  FirstWaypoint: {fileID: 1958374535}
+  Waypoints:
+  - {fileID: 1958374536}
+  - {fileID: 1549701627}
 --- !u!4 &438958073
 Transform:
   m_ObjectHideFlags: 0
@@ -915,6 +917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerManager: {fileID: 438958078}
   MoneyController: {fileID: 438958075}
+  WavesController: {fileID: 438958072}
   SellFraction: 0.5
 --- !u!114 &438958075
 MonoBehaviour:
@@ -1461,6 +1464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LivesController: {fileID: 438958076}
+  WavesController: {fileID: 438958072}
 --- !u!50 &576263753
 Rigidbody2D:
   serializedVersion: 4

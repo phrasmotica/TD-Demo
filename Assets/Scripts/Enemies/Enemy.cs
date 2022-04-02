@@ -52,7 +52,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// <summary>
         /// Delegate to run on death.
         /// </summary>
-        public event Action<int> OnKill;
+        public event Action<Enemy> OnKill;
 
         /// <summary>
         /// Set the enemy's health.
@@ -69,8 +69,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
 
-                OnKill?.Invoke(Reward);
-                Destroy(gameObject);
+                OnKill?.Invoke(this);
                 return;
             }
 

@@ -42,7 +42,7 @@ namespace TDDemo.Assets.Scripts.UI
         {
             WavesController.StopAllCoroutines();
             WavesController.ResetWaves();
-            WavesController.ResetEnemies();
+            WavesController.ClearEnemies();
 
             MoneyController.ResetMoney();
 
