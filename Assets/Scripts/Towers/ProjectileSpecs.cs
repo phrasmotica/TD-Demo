@@ -11,12 +11,6 @@ namespace TDDemo.Assets.Scripts.Towers
         public GameObject ProjectilePrefab;
 
         /// <summary>
-        /// The damage of shot projectiles.
-        /// </summary>
-        [Range(1, 10)]
-        public int Damage;
-
-        /// <summary>
         /// The initial velocity of shot projectiles.
         /// </summary>
         [Range(1, 10)]

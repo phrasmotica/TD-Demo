@@ -7,8 +7,10 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class ShootEnemy : BaseBehaviour, ITowerAction, IHasDamage, IHasFireRate, IHasRange
+    public class ShootEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange
     {
+        public StrikeProvider StrikeProvider;
+
         public ProjectileSpecs Specs;
 
         /// <summary>
@@ -19,8 +21,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private float? _timeSinceLastShot;
 
         private AudioSource _audio;
-
-        public int Damage => Specs.Damage;
 
         public float FireRate => Specs.FireRate;
 
@@ -73,9 +73,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             }
         }
 
-        /// <summary>
-        /// Shoots a projectile at an enemy.
-        /// </summary>
         private void Shoot(Enemy enemy)
         {
             logger.Log($"Shoot {enemy.gameObject.name}, position {enemy.transform.position}");
@@ -83,8 +80,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var projectileObj = Instantiate(Specs.ProjectilePrefab, gameObject.transform);
 
             var projectile = projectileObj.GetComponent<Projectile>();
+            projectile.StrikeProvider = StrikeProvider;
             projectile.StartPosition = transform.position;
-            projectile.Damage = Specs.Damage;
             projectile.Range = Specs.Range;
 
             var rb = projectileObj.GetComponent<Rigidbody2D>();

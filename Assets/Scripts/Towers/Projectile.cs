@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using TDDemo.Assets.Scripts.Extensions;
+using TDDemo.Assets.Scripts.Towers.Actions;
+using TDDemo.Assets.Scripts.Towers.Strikes;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
     public class Projectile : MonoBehaviour
     {
-        /// <summary>
-        /// The damage the projectile deals to an enemy.
-        /// </summary>
-        [Range(0, 3)]
-        public int Damage;
+        public StrikeProvider StrikeProvider;
 
         /// <summary>
         /// The position where the projectile was fired from.
@@ -29,5 +27,7 @@ namespace TDDemo.Assets.Scripts.Towers
                 Destroy(gameObject);
             }
         }
+
+        public IStrike CreateStrike() => StrikeProvider.CreateStrike();
     }
 }

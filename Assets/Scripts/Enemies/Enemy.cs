@@ -37,7 +37,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// <summary>
         /// Returns the enemy's current health as a decimal value between 0 and 1.
         /// </summary>
-        public float HealthFraction => (float) _health / StartingHealth;
+        public float HealthFraction => _health / StartingHealth;
 
         /// <summary>
         /// Delegate to run on receiving damage.
@@ -97,7 +97,9 @@ namespace TDDemo.Assets.Scripts.Enemies
             var projectileComponent = otherObj.GetComponent<Projectile>();
             if (projectileComponent != null)
             {
-                TakeDamage(projectileComponent.Damage);
+                var strike = projectileComponent.CreateStrike();
+                strike.Apply(this);
+
                 Destroy(otherObj);
 
                 if (_health > 0)
