@@ -1,4 +1,7 @@
-﻿using TDDemo.Assets.Scripts.Util;
+﻿using System.Linq;
+using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers.Actions;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers
@@ -8,6 +11,8 @@ namespace TDDemo.Assets.Scripts.Towers
     /// </summary>
     public class Range : BaseBehaviour
     {
+        public TowerBehaviour TowerBehaviour;
+
         /// <summary>
         /// Gets or sets the range.
         /// </summary>
@@ -25,15 +30,36 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void Awake()
         {
-            logger = new MethodLogger(nameof(Towers.Range));
-        }
-
-        /// <summary>
-        /// Initialise the script.
-        /// </summary>
-        private void Start()
-        {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            TowerBehaviour.OnSelected += SetShowRange;
+
+            TowerBehaviour.OnCanBePlaced += SetTowerCanBePlaced;
+
+            TowerBehaviour.OnAccumulateActions += actions =>
+            {
+                var actionsWithRange = actions.OfType<IHasRange>();
+                var range = actionsWithRange.Any() ? actionsWithRange.Max(a => a.Range) : 0;
+                SetRange(range);
+            };
+
+            TowerBehaviour.OnMouseEnterEvent += () =>
+            {
+                if (!TowerBehaviour.TowerController.IsPositioningNewTower)
+                {
+                    SetShowRange(true);
+                }
+            };
+
+            TowerBehaviour.OnMouseExitEvent += () =>
+            {
+                if (!TowerBehaviour.TowerController.IsPositioningNewTower && !TowerBehaviour.IsSelected)
+                {
+                    SetShowRange(false);
+                }
+            };
+
+            logger = new MethodLogger(nameof(Range));
 
             SetTowerCanBePlaced(true);
         }
@@ -41,7 +67,11 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetTowerCanBePlaced(bool towerCanBePlaced)
         {
             _towerCanBePlaced = towerCanBePlaced;
-            DrawRange();
+
+            if (_spriteRenderer != null)
+            {
+                DrawRange();
+            }
         }
 
         public void SetRange(int range)
@@ -71,6 +101,11 @@ namespace TDDemo.Assets.Scripts.Towers
             var scale = RangeToDraw / spriteSize;
 
             transform.localScale = new Vector3(scale, scale, 1);
+        }
+
+        private void SetShowRange(bool isSelected)
+        {
+            _spriteRenderer.enabled = isSelected;
         }
 
         /// <summary>

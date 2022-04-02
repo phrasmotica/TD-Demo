@@ -19,10 +19,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public List<TowerLevel> Levels;
 
-        public GameObject SelectionObj;
-
-        public Range Range;
-
         private Tower _tower;
 
         public TowerController TowerController { get; set; }
@@ -48,6 +44,16 @@ namespace TDDemo.Assets.Scripts.Towers
         /// Whether this tower is colliding with a path zone.
         /// </summary>
         private bool _isCollidingWithPathZone;
+
+        public event Action OnMouseEnterEvent;
+
+        public event Action OnMouseExitEvent;
+
+        public event Action<bool> OnSelected;
+
+        public event Action<bool> OnCanBePlaced;
+
+        public event Action<ITowerAction[]> OnAccumulateActions;
 
         public event Action<float> OnWarmupProgress;
 
@@ -119,21 +125,9 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        private void OnMouseEnter()
-        {
-            if (!TowerController.IsPositioningNewTower && !IsSelected)
-            {
-                Range.gameObject.SetActive(true);
-            }
-        }
+        private void OnMouseEnter() => OnMouseEnterEvent?.Invoke();
 
-        private void OnMouseExit()
-        {
-            if (!TowerController.IsPositioningNewTower && !IsSelected)
-            {
-                Range.gameObject.SetActive(false);
-            }
-        }
+        private void OnMouseExit() => OnMouseExitEvent?.Invoke();
 
         private void OnMouseUp()
         {
@@ -173,20 +167,19 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;
-            SelectionObj.SetActive(isSelected);
-            Range.gameObject.SetActive(isSelected);
+            OnSelected?.Invoke(isSelected);
         }
 
         public void SetIsCollidingWithAnotherTower(bool isColliding)
         {
             _isCollidingWithAnotherTower = isColliding;
-            Range.SetTowerCanBePlaced(CanBePlaced());
+            OnCanBePlaced?.Invoke(CanBePlaced());
         }
 
         public void SetIsCollidingWithPathZone(bool isColliding)
         {
             _isCollidingWithPathZone = isColliding;
-            Range.SetTowerCanBePlaced(CanBePlaced());
+            OnCanBePlaced?.Invoke(CanBePlaced());
         }
 
         /// <summary>
@@ -257,6 +250,7 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Damage) : 0;
         }
 
+        // TODO: remove this method as its functionality is duplicated in Range.cs
         public int GetRange()
         {
             var actionsWithRange = GetActions<IHasRange>();
@@ -288,8 +282,7 @@ namespace TDDemo.Assets.Scripts.Towers
         private void AccumulateActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
-
-            Range.SetRange(GetRange());
+            OnAccumulateActions?.Invoke(_actions);
         }
 
         private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
