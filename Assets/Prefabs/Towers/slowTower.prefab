@@ -852,6 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Slow Tower
+  Description: Slows an enemy for a period of time.
   Levels:
   - {fileID: 6339331099896013953}
   - {fileID: 8586152713800763059}

@@ -15,6 +15,8 @@ namespace TDDemo.Assets.Scripts.Towers
     {
         public string Name;
 
+        public string Description;
+
         public List<TowerLevel> Levels;
 
         public GameObject SelectionObj;

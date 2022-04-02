@@ -389,6 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Poison Tower
+  Description: Inflicts poison, which drains health over time.
   Levels:
   - {fileID: 1782348996669617364}
   SelectionObj: {fileID: 6357603769324729434}
