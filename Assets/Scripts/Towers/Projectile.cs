@@ -7,7 +7,7 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class Projectile : MonoBehaviour
     {
-        public StrikeProvider StrikeProvider;
+        public StrikeProvider StrikeProvider { get; set; }
 
         /// <summary>
         /// The position where the projectile was fired from.
