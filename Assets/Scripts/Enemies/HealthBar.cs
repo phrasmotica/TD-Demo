@@ -30,11 +30,8 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.positionCount = 2;
             _line.useWorldSpace = false;
 
-            Enemy.OnHurt += newHealthFraction =>
-            {
-                DrawHealthBar(newHealthFraction);
-                PeekHealth();
-            };
+            Enemy.OnHurt += DrawAndPeek;
+            Enemy.OnHeal += DrawAndPeek;
         }
 
         private void Update()
@@ -56,6 +53,12 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnMouseExit()
         {
             _mouseIsOverEnemy = false;
+        }
+
+        private void DrawAndPeek(float healthFraction)
+        {
+            DrawHealthBar(healthFraction);
+            PeekHealth();
         }
 
         private void DrawHealthBar(float healthFraction)

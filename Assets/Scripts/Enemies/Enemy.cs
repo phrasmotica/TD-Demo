@@ -45,6 +45,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         public event Action<float> OnHurt;
 
         /// <summary>
+        /// Delegate to run on healing damage.
+        /// </summary>
+        public event Action<float> OnHeal;
+
+        /// <summary>
         /// Delegate to run on an effect being inflicted.
         /// </summary>
         public event Action<IEffect> OnEffect;
@@ -109,10 +114,16 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float amount)
         {
-            _health -= damage;
+            _health -= amount;
             OnHurt?.Invoke(HealthFraction);
+        }
+
+        public void Heal(float amount)
+        {
+            _health += amount;
+            OnHeal?.Invoke(HealthFraction);
         }
 
         public void AddEffect(IEffect effect)
