@@ -22,6 +22,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         public int Reward;
 
         public AudioClip HurtAudio;
+        public AudioClip HealAudio;
         public AudioClip DeadAudio;
 
         /// <summary>
@@ -106,23 +107,30 @@ namespace TDDemo.Assets.Scripts.Enemies
                 strike.Apply(this);
 
                 Destroy(otherObj);
-
-                if (_health > 0)
-                {
-                    AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
-                }
             }
         }
 
         public void TakeDamage(float amount)
         {
             _health -= amount;
+
+            if (_health > 0)
+            {
+                AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
+            }
+
             OnHurt?.Invoke(HealthFraction);
         }
 
         public void Heal(float amount)
         {
             _health += amount;
+
+            if (_health > 0)
+            {
+                AudioSource.PlayClipAtPoint(HealAudio, Vector3.zero);
+            }
+
             OnHeal?.Invoke(HealthFraction);
         }
 

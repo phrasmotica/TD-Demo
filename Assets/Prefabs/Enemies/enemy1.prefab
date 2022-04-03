@@ -318,6 +318,7 @@ MonoBehaviour:
   StartingHealth: 3
   Reward: 1
   HurtAudio: {fileID: 8300000, guid: 5a69ab5f6edd67c44bebaa2ae5cdba4c, type: 3}
+  HealAudio: {fileID: 8300000, guid: d669d377679f7a74880e94435d68275f, type: 3}
   DeadAudio: {fileID: 8300000, guid: 622dbeba05f3a744aae3aaecbfcb2a90, type: 3}
 --- !u!114 &5049580195892582698
 MonoBehaviour:

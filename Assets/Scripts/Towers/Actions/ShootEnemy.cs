@@ -87,7 +87,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var rb = projectileObj.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(enemy.transform) * Specs.ProjectileSpeed;
 
-            _audio.Play();
+            if (_audio != null)
+            {
+                _audio.Play();
+            }
         }
 
         /// <summary>
