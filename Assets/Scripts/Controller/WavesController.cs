@@ -29,6 +29,11 @@ namespace TDDemo.Assets.Scripts.Controller
         /// </summary>
         public event Action<int> OnWaveChange;
 
+        /// <summary>
+        /// Delegate to fire when the stage number changes.
+        /// </summary>
+        public event Action<int> OnStageChange;
+
         public void Start()
         {
             _enemies = new List<Enemy>();
@@ -43,7 +48,17 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _currentWave = currentWave;
             OnWaveChange?.Invoke(currentWave);
+
+            if (IsStartOfStage(currentWave))
+            {
+                var stageNumber = GetStageNumber(currentWave);
+                OnStageChange?.Invoke(stageNumber);
+            }
         }
+
+        private static bool IsStartOfStage(int currentWave) => currentWave % 5 == 1;
+
+        private static int GetStageNumber(int currentWave) => currentWave / 5 + 1;
 
         public void DoSendNextWave()
         {

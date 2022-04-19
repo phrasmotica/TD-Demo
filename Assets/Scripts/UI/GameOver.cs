@@ -1,4 +1,5 @@
 using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Music;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ namespace TDDemo.Assets.Scripts.UI
         public LivesController LivesController;
 
         public MoneyController MoneyController;
+
+        public MusicController MusicController;
 
         public WavesController WavesController;
 
@@ -47,6 +50,8 @@ namespace TDDemo.Assets.Scripts.UI
             MoneyController.ResetMoney();
 
             LivesController.ResetLives();
+
+            MusicController.StartMusic();
 
             TowerManager.DeselectCurrentTower();
             TowerManager.ClearTowers();
