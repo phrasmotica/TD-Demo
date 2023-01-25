@@ -1,11 +1,13 @@
 using System;
 using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Music
 {
     public class MusicController : MonoBehaviour
     {
+        public GameOver GameOver;
         public LivesController LivesController;
         public WavesController WavesController;
 
@@ -14,6 +16,8 @@ namespace TDDemo.Assets.Scripts.Music
 
         private void Awake()
         {
+            GameOver.OnRestart += StartMusic;
+
             LivesController.OnEndGame += StopMusic;
 
             WavesController.OnStageChange += SetMusic;

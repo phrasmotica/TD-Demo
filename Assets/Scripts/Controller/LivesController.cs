@@ -1,10 +1,17 @@
 ﻿using System;
+using TDDemo.Assets.Scripts.Path;
+using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
     public class LivesController : MonoBehaviour
     {
+        public EndZone EndZone;
+
+        public GameOver GameOver;
+
         [Range(1, 50)]
         public int StartingLives;
 
@@ -16,39 +23,36 @@ namespace TDDemo.Assets.Scripts.Controller
         /// <summary>
         /// Delegate to fire when the current amount of lives changes.
         /// </summary>
-        public event Action<int> OnLivesChange;
+        public event UnityAction<int> OnLivesChange;
 
         /// <summary>
         /// Delegate to fire when the number of lives reaches zero.
         /// </summary>
-        public event Action OnEndGame;
+        public event UnityAction OnEndGame;
 
         private void Start()
         {
-            ResetLives();
-        }
-
-        public void AddLives(int amount)
-        {
-            if (!GameIsOver())
+            OnLivesChange += lives =>
             {
-                SetLives(_lives + amount);
+                _lives = lives;
 
-                if (GameIsOver())
+                if (lives <= 0)
                 {
                     OnEndGame?.Invoke();
                 }
-            }
+            };
+
+            EndZone.OnEnemyCollide += obj => AddLives(-1);
+
+            GameOver.OnRestart += ResetLives;
+
+            ResetLives();
         }
 
-        private void SetLives(int lives)
-        {
-            _lives = lives;
-            OnLivesChange?.Invoke(lives);
-        }
+        public void AddLives(int amount) => SetLives(_lives + amount);
 
         public void ResetLives() => SetLives(StartingLives);
 
-        private bool GameIsOver() => _lives <= 0;
+        private void SetLives(int lives) => OnLivesChange(lives);
     }
 }

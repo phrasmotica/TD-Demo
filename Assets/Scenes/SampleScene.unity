@@ -152,6 +152,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1999072883}
   m_RootOrder: 5
@@ -244,6 +245,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1815899697}
   - {fileID: 578104167}
@@ -344,6 +346,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 397655920}
   m_RootOrder: 1
@@ -423,6 +426,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1841666780}
   m_RootOrder: 0
@@ -498,6 +502,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1775969658}
   m_RootOrder: 0
@@ -577,6 +582,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 12.8, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 554270184}
   m_RootOrder: 0
@@ -643,6 +649,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1250217728}
   m_RootOrder: 0
@@ -722,6 +729,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1927107207}
   - {fileID: 261563880}
@@ -821,6 +829,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1421022780}
   - {fileID: 1012688282}
@@ -997,6 +1006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552af3b024013f44b211aa95598a84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOver: {fileID: 9070692961417390778}
   LivesController: {fileID: 438958076}
   WavesController: {fileID: 438958072}
   FirstStageMusic: {fileID: 8300000, guid: 3091b28700bc1564da8d5b98245535af, type: 3}
@@ -1011,6 +1021,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1043,6 +1054,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1039594391}
   m_RootOrder: 0
@@ -1105,7 +1117,6 @@ GameObject:
   - component: {fileID: 438958073}
   - component: {fileID: 438958076}
   - component: {fileID: 438958075}
-  - component: {fileID: 438958078}
   - component: {fileID: 438958074}
   - component: {fileID: 438958072}
   m_Layer: 0
@@ -1128,6 +1139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoneyController: {fileID: 438958075}
+  EndZone: {fileID: 576263752}
+  GameOver: {fileID: 9070692961417390778}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
   Waypoints:
@@ -1143,6 +1156,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1159,10 +1173,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dec26db8b112a47bcda8ab14e2e57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerManager: {fileID: 438958078}
+  LivesController: {fileID: 438958076}
   MoneyController: {fileID: 438958075}
   WavesController: {fileID: 438958072}
-  SellFraction: 0.5
+  CreateTowers:
+  - {fileID: 1421022781}
+  - {fileID: 1012688283}
+  - {fileID: 1841666781}
+  UpgradeTower: {fileID: 1274034837}
+  SellTower: {fileID: 1250217732}
+  GameOver: {fileID: 9070692961417390778}
 --- !u!114 &438958075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1175,7 +1195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109a10b7cd025ee488a10faa364a925f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameOver: {fileID: 9070692961417390778}
+  TowerController: {fileID: 438958074}
   StartingMoney: 10
+  SellFraction: 0.5
 --- !u!114 &438958076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,19 +1211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c22454557d492c40a225e2980fc7c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EndZone: {fileID: 576263752}
+  GameOver: {fileID: 9070692961417390778}
   StartingLives: 50
---- !u!114 &438958078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438958071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b39cacdba8d42844e92585c0b10b1e67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1293,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1312,6 +1326,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1012688282}
   m_RootOrder: 0
@@ -1387,6 +1402,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1437,6 +1453,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 333918210}
   - {fileID: 576263748}
@@ -1472,6 +1489,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1927107207}
   m_RootOrder: 0
@@ -1549,6 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1581,6 +1600,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -1616,6 +1636,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.41, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 554270184}
   m_RootOrder: 1
@@ -1657,6 +1678,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1707,8 +1729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eee215412f1b34b98bfff6b0300c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LivesController: {fileID: 438958076}
-  WavesController: {fileID: 438958072}
 --- !u!50 &576263753
 Rigidbody2D:
   serializedVersion: 4
@@ -1758,6 +1778,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 158927980}
   m_RootOrder: 1
@@ -1835,6 +1856,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1958374535}
   - {fileID: 1549701626}
@@ -1931,6 +1953,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1615902125}
   m_Father: {fileID: 0}
@@ -1970,6 +1993,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1999072883}
   m_RootOrder: 3
@@ -2062,6 +2086,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1039594391}
   m_RootOrder: 1
@@ -2144,6 +2169,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 531501295}
   m_Father: {fileID: 419905730}
@@ -2168,7 +2194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
     type: 3}
-  TowerController: {fileID: 438958074}
   MoneyController: {fileID: 438958075}
 --- !u!114 &1012688284
 MonoBehaviour:
@@ -2295,6 +2320,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 435811144}
   - {fileID: 939094664}
@@ -2320,7 +2346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerController: {fileID: 438958074}
-  TowerManager: {fileID: 438958078}
   DamageText: {fileID: 435811145}
   RangeText: {fileID: 939094665}
   FireRateText: {fileID: 1596256428}
@@ -2354,6 +2379,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 339303889}
   m_Father: {fileID: 1406460861}
@@ -2458,8 +2484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a43cb0ba10a3e439d7e3b0f2e7fdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoneyController: {fileID: 438958075}
   TowerController: {fileID: 438958074}
-  TowerManager: {fileID: 438958078}
 --- !u!1 &1274034835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,6 +2516,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1365697966}
   m_Father: {fileID: 1406460861}
@@ -2514,7 +2541,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoneyController: {fileID: 438958075}
   TowerController: {fileID: 438958074}
-  TowerManager: {fileID: 438958078}
 --- !u!114 &1274034838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2625,6 +2651,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1274034836}
   m_RootOrder: 0
@@ -2704,6 +2731,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1039594391}
   - {fileID: 1274034836}
@@ -2785,6 +2813,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1494208590}
   m_Father: {fileID: 419905730}
@@ -2809,7 +2838,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
-  TowerController: {fileID: 438958074}
   MoneyController: {fileID: 438958075}
 --- !u!114 &1421022782
 MonoBehaviour:
@@ -2937,6 +2965,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1421022780}
   m_RootOrder: 0
@@ -3011,6 +3040,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 666823576}
   m_RootOrder: 1
@@ -3055,6 +3085,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1039594391}
   m_RootOrder: 2
@@ -3132,6 +3163,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1999072883}
   - {fileID: 419905730}
@@ -3173,6 +3205,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1999072883}
   m_RootOrder: 4
@@ -3267,6 +3300,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 268013313}
   m_Father: {fileID: 1999072883}
@@ -3400,6 +3434,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2044573004}
   m_Father: {fileID: 158927980}
@@ -3479,6 +3514,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 264503441}
   m_Father: {fileID: 419905730}
@@ -3503,7 +3539,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
     type: 3}
-  TowerController: {fileID: 438958074}
   MoneyController: {fileID: 438958075}
 --- !u!114 &1841666782
 MonoBehaviour:
@@ -3631,6 +3666,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 554458813}
   m_Father: {fileID: 397655920}
@@ -3706,6 +3742,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 666823576}
   m_RootOrder: 0
@@ -3750,6 +3787,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1775969658}
   - {fileID: 397655920}
@@ -3810,7 +3848,7 @@ LightingSettings:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Settings.lighting
-  serializedVersion: 3
+  serializedVersion: 4
   m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 0
   m_EnableRealtimeLightmaps: 0
@@ -3823,7 +3861,7 @@ LightingSettings:
   m_LightmapMaxSize: 1024
   m_BakeResolution: 40
   m_Padding: 2
-  m_TextureCompression: 1
+  m_LightmapCompression: 3
   m_AO: 0
   m_AOMaxDistance: 1
   m_CompAOExponent: 1
@@ -3864,6 +3902,7 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+  m_PVRTiledBaking: 0
 --- !u!1 &2044573003
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,6 +3931,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1815899697}
   m_RootOrder: 0
@@ -3991,6 +4031,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9070692962548110436}
   m_RootOrder: 0
@@ -4070,6 +4111,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9070692963029854492}
   m_RootOrder: 1
@@ -4107,6 +4149,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9070692963029854492}
   m_Father: {fileID: 0}
@@ -4210,12 +4253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9d55dcde13f2e41aab4668e5a2e8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerController: {fileID: 438958074}
-  TowerManager: {fileID: 438958078}
   LivesController: {fileID: 438958076}
   MoneyController: {fileID: 438958075}
-  MusicController: {fileID: 421968476}
-  WavesController: {fileID: 438958072}
   GameOverScreen: {fileID: 9070692963029854493}
   FinalMoneyText: {fileID: 9070692961149065817}
   RestartButton: {fileID: 9070692962548110435}
@@ -4271,6 +4310,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9070692963029854492}
   m_RootOrder: 0
@@ -4390,6 +4430,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9070692961046921252}
   m_Father: {fileID: 9070692963029854492}
@@ -4467,6 +4508,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9070692962463794156}
   - {fileID: 9070692961149065818}

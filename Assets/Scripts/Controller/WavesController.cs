@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Path;
+using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
@@ -13,32 +15,41 @@ namespace TDDemo.Assets.Scripts.Controller
     {
         public MoneyController MoneyController;
 
+        public EndZone EndZone;
+
+        public GameOver GameOver;
+
         public GameObject EnemyPrefab;
 
         public Waypoint[] Waypoints;
 
-        /// <summary>
-        /// The current wave.
-        /// </summary>
         private int _currentWave;
 
         private List<Enemy> _enemies;
 
-        /// <summary>
-        /// Delegate to fire when the wave number changes.
-        /// </summary>
-        public event Action<int> OnWaveChange;
+        public event UnityAction<int> OnWaveChange;
 
-        /// <summary>
-        /// Delegate to fire when the stage number changes.
-        /// </summary>
-        public event Action<int> OnStageChange;
+        public event UnityAction<int> OnStageChange;
+
+        public event UnityAction<List<GameObject>> OnEnemiesChange;
 
         public void Start()
         {
             _enemies = new List<Enemy>();
+            OnEnemiesChange?.Invoke(GetEnemies());
 
             logger = new MethodLogger(nameof(WavesController));
+
+            OnWaveChange += currentWave => _currentWave = currentWave;
+
+            EndZone.OnEnemyCollide += obj => RemoveEnemy(obj.GetComponent<Enemy>());
+
+            GameOver.OnRestart += () =>
+            {
+                StopAllCoroutines();
+                ResetWaves();
+                ClearEnemies();
+            };
 
             ResetWaves();
             Physics2D.gravity = Vector2.zero;
@@ -46,8 +57,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void SetCurrentWave(int currentWave)
         {
-            _currentWave = currentWave;
-            OnWaveChange?.Invoke(currentWave);
+            OnWaveChange(currentWave);
 
             if (IsStartOfStage(currentWave))
             {
@@ -88,6 +98,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 };
 
                 _enemies.Add(enemy);
+                OnEnemiesChange?.Invoke(GetEnemies());
 
                 yield return new WaitForSeconds(1);
             }
@@ -103,6 +114,8 @@ namespace TDDemo.Assets.Scripts.Controller
         public void RemoveEnemy(Enemy enemy)
         {
             _enemies.Remove(enemy);
+            OnEnemiesChange?.Invoke(GetEnemies());
+
             Destroy(enemy.gameObject);
         }
 

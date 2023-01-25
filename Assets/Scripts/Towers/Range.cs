@@ -2,6 +2,7 @@
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -12,24 +13,25 @@ namespace TDDemo.Assets.Scripts.Towers
     {
         public TowerBehaviour TowerBehaviour;
 
-        /// <summary>
-        /// Gets or sets the range.
-        /// </summary>
         public int RangeToDraw { get; private set; }
 
-        /// <summary>
-        /// Gets or sets whether the parent tower can be placed.
-        /// </summary>
         private bool _towerCanBePlaced;
 
-        /// <summary>
-        /// The sprite renderer.
-        /// </summary>
         private SpriteRenderer _spriteRenderer;
+
+        public event UnityAction OnRedraw;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            OnRedraw += () =>
+            {
+                if (_spriteRenderer != null)
+                {
+                    DrawRange();
+                }
+            };
 
             TowerBehaviour.OnSelected += SetShowRange;
 
@@ -44,7 +46,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnMouseEnterEvent += () =>
             {
-                if (!TowerBehaviour.TowerController.IsPositioningNewTower)
+                if (!TowerBehaviour.IsPositioning)
                 {
                     SetShowRange(true);
                 }
@@ -52,7 +54,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnMouseExitEvent += () =>
             {
-                if (!TowerBehaviour.TowerController.IsPositioningNewTower && !TowerBehaviour.IsSelected)
+                if (!TowerBehaviour.IsPositioning && !TowerBehaviour.IsSelected)
                 {
                     SetShowRange(false);
                 }
@@ -66,21 +68,13 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetTowerCanBePlaced(bool towerCanBePlaced)
         {
             _towerCanBePlaced = towerCanBePlaced;
-
-            if (_spriteRenderer != null)
-            {
-                DrawRange();
-            }
+            OnRedraw();
         }
 
         public void SetRange(int range)
         {
             RangeToDraw = range;
-
-            if (_spriteRenderer != null)
-            {
-                DrawRange();
-            }
+            OnRedraw();
         }
 
         /// <summary>

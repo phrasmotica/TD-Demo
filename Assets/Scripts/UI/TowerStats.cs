@@ -21,9 +21,8 @@ namespace TDDemo.Assets.Scripts.UI
         {
             TowerController.OnStartUpgradeSelectedTower += SetStats;
             TowerController.OnFinishUpgradeSelectedTower += SetStats;
+            TowerController.OnChangeSelectedTower += SetStats;
             TowerController.OnSellSelectedTower += tower => ClearStats();
-
-            TowerManager.OnSelectedTowerChange += SetStats;
         }
 
         public void SetStats(TowerBehaviour tower)

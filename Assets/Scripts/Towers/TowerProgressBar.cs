@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -38,7 +38,7 @@ namespace TDDemo.Assets.Scripts.Towers
             _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }
 
-        protected abstract void SetEventHandler(Action<float> handler);
+        protected abstract void SetEventHandler(UnityAction<float> handler);
 
         protected abstract bool ShouldDraw();
     }

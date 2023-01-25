@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace TDDemo.Assets.Scripts.Towers
@@ -21,15 +20,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private Tower _tower;
 
-        public TowerController TowerController { get; set; }
-
-        public TowerManager TowerManager { get; set; }
-
-        public WavesController WavesController { get; set; }
+        private List<GameObject> _enemies;
 
         public bool IsSelected { get; private set; }
-
-        public int TotalValue => _tower.GetTotalValue();
 
         private SpriteRenderer _spriteRenderer;
 
@@ -45,27 +38,35 @@ namespace TDDemo.Assets.Scripts.Towers
         /// </summary>
         private bool _isCollidingWithPathZone;
 
-        public event Action OnMouseEnterEvent;
+        public int TotalValue => _tower.GetTotalValue();
 
-        public event Action OnMouseExitEvent;
+        public bool IsPositioning => _tower.IsPositioning();
 
-        public event Action<bool> OnSelected;
+        public event UnityAction OnMouseEnterEvent;
 
-        public event Action<bool> OnCanBePlaced;
+        public event UnityAction OnMouseExitEvent;
 
-        public event Action<ITowerAction[]> OnAccumulateActions;
+        public event UnityAction<bool> OnSelected;
 
-        public event Action<float> OnWarmupProgress;
+        public event UnityAction OnClicked;
 
-        public event Action<TowerBehaviour> OnStartUpgrade;
+        public event UnityAction<bool> OnCanBePlaced;
 
-        public event Action<float> OnUpgradeProgress;
+        public event UnityAction OnPlace;
 
-        public event Action<TowerBehaviour> OnFinishUpgrade;
+        public event UnityAction<ITowerAction[]> OnAccumulateActions;
+
+        public event UnityAction<float> OnWarmupProgress;
+
+        public event UnityAction<float> OnUpgradeProgress;
+
+        public event UnityAction OnFinishUpgrade;
 
         private void Start()
         {
             _tower = new Tower(Levels);
+
+            _enemies = new();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -96,7 +97,8 @@ namespace TDDemo.Assets.Scripts.Towers
                         var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
                         logger.Log($"Placed tower at {worldPoint}");
 
-                        TowerController.PlaceTower(this);
+                        OnPlace?.Invoke();
+
                         StartCoroutine(Warmup());
                     }
                 }
@@ -116,11 +118,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
             if (_tower.IsFiring())
             {
-                var enemies = WavesController.GetEnemies();
-
                 foreach (var action in _actions)
                 {
-                    action.Act(enemies);
+                    action.Act(_enemies);
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace TDDemo.Assets.Scripts.Towers
             if (_tower.IsFiring() && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
                 logger.Log("Selected tower");
-                TowerManager.Select(this);
+                OnClicked?.Invoke();
             }
         }
 
@@ -214,8 +214,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer.color = ColourHelper.HalfOpacity;
 
-            OnStartUpgrade?.Invoke(this);
-
             logger.Log($"Tower upgrading for {upgradeTime} seconds");
             yield return new WaitForSeconds(upgradeTime);
 
@@ -229,7 +227,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             logger.Log($"Tower upgraded, total value {TotalValue}");
 
-            OnFinishUpgrade?.Invoke(this);
+            OnFinishUpgrade?.Invoke();
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
@@ -239,6 +237,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public bool IsWarmingUp() => _tower.IsWarmingUp();
 
         public bool IsUpgrading() => _tower.IsUpgrading();
+
+        public void SetEnemies(List<GameObject> enemies) => _enemies = enemies;
 
         public int GetPrice() => Levels.First().Price;
 

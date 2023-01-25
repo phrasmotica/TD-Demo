@@ -53,26 +53,22 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, Specs.TargetMethod);
 
-            if (orderedEnemies.Any())
+            // if there is an enemy in range and enough time has passed since the last shot, fire a shot
+            if (orderedEnemies.Any() && (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / FireRate))
             {
-                var nearestEnemy = orderedEnemies.First();
+                _timeSinceLastShot = 0;
 
-                // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-                if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / FireRate)
+                var enemy = orderedEnemies.First().GetComponent<Enemy>();
+
+                if (!enemy.HasEffectCategory(EffectProvider.Category))
                 {
-                    _timeSinceLastShot = 0;
-
+                    logger.Log(EffectProvider.ApplyingEffect);
+                    enemy.AddEffect(EffectProvider.CreateEffect());
+                }
+                else
+                {
                     // if the enemy is already affected, tough luck!
-                    var enemy = nearestEnemy.GetComponent<Enemy>();
-                    if (!enemy.HasEffectCategory(EffectProvider.Category))
-                    {
-                        logger.Log(EffectProvider.ApplyingEffect);
-                        enemy.AddEffect(EffectProvider.CreateEffect());
-                    }
-                    else
-                    {
-                        logger.Log(EffectProvider.EffectAlreadyApplied);
-                    }
+                    logger.Log(EffectProvider.EffectAlreadyApplied);
                 }
             }
         }

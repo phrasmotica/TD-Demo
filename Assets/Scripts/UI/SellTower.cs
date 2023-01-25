@@ -1,15 +1,18 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
     public class SellTower : MonoBehaviour
     {
+        public MoneyController MoneyController;
+
         public TowerController TowerController;
 
-        public TowerManager TowerManager;
+        public event UnityAction OnSell;
 
         private void Awake()
         {
@@ -17,20 +20,25 @@ namespace TDDemo.Assets.Scripts.UI
 
             TowerController.OnStartUpgradeSelectedTower += SetState;
             TowerController.OnFinishUpgradeSelectedTower += SetState;
-
-            TowerManager.OnSelectedTowerChange += SetState;
+            TowerController.OnChangeSelectedTower += SetState;
         }
 
-        private void Sell() => TowerController.SellSelectedTower();
+        private void Sell() => OnSell?.Invoke();
 
         private void SetState(TowerBehaviour tower)
         {
             var canSellTower = tower != null;
             GetComponent<Button>().interactable = canSellTower;
 
-            var sellPrice = TowerController.GetSellPrice(tower);
-            var text = sellPrice.HasValue ? $"Sell ({sellPrice.Value})" : "Sell";
-            GetComponentInChildren<Text>().text = text;
+            if (canSellTower)
+            {
+                var sellPrice = MoneyController.GetSellPrice(tower);
+                GetComponentInChildren<Text>().text = $"Sell ({sellPrice})";
+            }
+            else
+            {
+                GetComponentInChildren<Text>().text = "Sell";
+            }
         }
     }
 }

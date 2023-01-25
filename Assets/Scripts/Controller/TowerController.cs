@@ -1,53 +1,109 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
     public class TowerController : MonoBehaviour
     {
-        public TowerManager TowerManager;
+        public LivesController LivesController;
 
         public MoneyController MoneyController;
 
         public WavesController WavesController;
 
-        /// <summary>
-        /// The fraction of its price that a tower should sell for.
-        /// </summary>
-        [Range(0.5f, 1)]
-        public float SellFraction;
+        public List<CreateTower> CreateTowers;
 
-        /// <summary>
-        /// The new tower object.
-        /// </summary>
-        private GameObject _newTowerObj;
+        public UpgradeTower UpgradeTower;
 
-        /// <summary>
-        /// Gets or sets whether we're positioning a newly-created tower.
-        /// </summary>
-        public bool IsPositioningNewTower { get; set; }
+        public SellTower SellTower;
 
-        /// <summary>
-        /// Delegate to fire when the selected tower starts upgrading.
-        /// </summary>
-        public event Action<TowerBehaviour> OnStartUpgradeSelectedTower;
+        public GameOver GameOver;
 
-        /// <summary>
-        /// Delegate to fire when the selected tower finishes upgrading.
-        /// </summary>
-        public event Action<TowerBehaviour> OnFinishUpgradeSelectedTower;
+        private TowerManager _towerManager;
 
-        /// <summary>
-        /// Delegate to fire when the selected tower is sold.
-        /// </summary>
-        public event Action<TowerBehaviour> OnSellSelectedTower;
+        private TowerBehaviour _newTower;
+
+        public event UnityAction OnCreateNewTower;
+
+        public event UnityAction<TowerBehaviour> OnPlaceTower;
+
+        public event UnityAction<TowerBehaviour> OnStartUpgradeSelectedTower;
+
+        public event UnityAction<TowerBehaviour> OnFinishUpgradeSelectedTower;
+
+        public event UnityAction<TowerBehaviour> OnChangeSelectedTower;
+
+        public event UnityAction<TowerBehaviour> OnSellSelectedTower;
+
+        private void Start()
+        {
+            _towerManager = new TowerManager();
+
+            OnCreateNewTower += () =>
+            {
+                _towerManager.DeselectCurrentTower();
+                OnChangeSelectedTower?.Invoke(null);
+            };
+
+            OnPlaceTower += _towerManager.Add;
+
+            OnSellSelectedTower += tower =>
+            {
+                _towerManager.Remove(tower);
+                Destroy(tower.gameObject);
+            };
+
+            LivesController.OnEndGame += CancelCreateTower;
+
+            foreach (var createTower in CreateTowers)
+            {
+                createTower.OnCreate += CreateNewTower;
+            }
+
+            UpgradeTower.OnUpgrade += UpgradeSelectedTower;
+
+            SellTower.OnSell += SellSelectedTower;
+
+            GameOver.OnRestart += () =>
+            {
+                _towerManager.DeselectCurrentTower();
+                OnChangeSelectedTower?.Invoke(null);
+
+                foreach (var t in _towerManager.Towers)
+                {
+                    Destroy(t.gameObject);
+                }
+
+                _towerManager.Towers.Clear();
+            };
+        }
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Escape) && IsPositioningNewTower)
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
-                CancelCreateTower();
+                _towerManager.DeselectCurrentTower();
+                OnChangeSelectedTower?.Invoke(null);
+
+                if (_newTower != null && _newTower.IsPositioning)
+                {
+                    CancelCreateTower();
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                var tower = _towerManager.WakeOrSelectPrevious();
+                OnChangeSelectedTower?.Invoke(tower);
+            }
+
+            if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                var tower = _towerManager.WakeOrSelectNext();
+                OnChangeSelectedTower?.Invoke(tower);
             }
 
             if (Input.GetKeyUp(KeyCode.Delete))
@@ -56,99 +112,66 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        public void CreateNewTower(GameObject towerPrefab)
+        private void CreateNewTower(GameObject towerPrefab)
         {
             // only create if we can afford the tower
             var tower = towerPrefab.GetComponent<TowerBehaviour>();
-            if (MoneyController.CanAfford(tower.GetPrice()))
+            if (MoneyController.CanAffordToBuy(tower))
             {
-                TowerManager.DeselectCurrentTower();
+                OnCreateNewTower();
 
-                IsPositioningNewTower = true;
+                var newTowerObj = Instantiate(towerPrefab);
 
-                _newTowerObj = Instantiate(towerPrefab);
-                var newTower = _newTowerObj.GetComponent<TowerBehaviour>();
-                newTower.TowerController = this;
-                newTower.WavesController = WavesController;
+                _newTower = newTowerObj.GetComponent<TowerBehaviour>();
+                _newTower.OnPlace += () => PlaceTower(_newTower);
             }
         }
 
-        public void PlaceTower(TowerBehaviour newTower)
+        private void PlaceTower(TowerBehaviour newTower)
         {
-            MoneyController.AddMoney(-newTower.GetPrice());
+            OnPlaceTower(newTower);
 
-            TowerManager.Add(newTower);
-            newTower.TowerManager = TowerManager;
-            newTower.OnStartUpgrade += OnStartUpgradeSelectedTower;
-            newTower.OnFinishUpgrade += OnFinishUpgradeSelectedTower;
+            WavesController.OnEnemiesChange += newTower.SetEnemies;
 
-            _newTowerObj = null;
-            IsPositioningNewTower = false;
+            newTower.OnClicked += () =>
+            {
+                _towerManager.Select(newTower);
+                OnChangeSelectedTower?.Invoke(newTower);
+            };
+
+            newTower.OnFinishUpgrade += () => OnFinishUpgradeSelectedTower(newTower);
+
+            _newTower = null;
         }
 
-        public void UpgradeSelectedTower()
+        private void UpgradeSelectedTower()
         {
-            var selectedTower = TowerManager.GetSelectedTower();
-            if (CanUpgradeTower(selectedTower) && CanAffordToUpgradeTower(selectedTower))
+            var selectedTower = _towerManager.GetSelectedTower();
+            if (selectedTower != null && selectedTower.CanBeUpgraded() && MoneyController.CanAffordToUpgrade(selectedTower))
             {
-                MoneyController.AddMoney(-selectedTower.GetUpgradeCost().Value);
-                selectedTower.DoUpgrade();
+                OnStartUpgradeSelectedTower?.Invoke(selectedTower);
             }
         }
 
-        public void SellSelectedTower()
+        private void SellSelectedTower()
         {
-            var selectedTower = TowerManager.GetSelectedTower();
+            var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
             {
-                var sellPrice = GetSellPrice(selectedTower);
-                MoneyController.AddMoney(sellPrice.Value);
+                _towerManager.DeselectCurrentTower();
+                OnChangeSelectedTower?.Invoke(null);
 
-                TowerManager.Remove(selectedTower);
-
-                OnSellSelectedTower?.Invoke(selectedTower);
+                OnSellSelectedTower(selectedTower);
             }
         }
 
-        /// <summary>
-        /// Cancels tower creation.
-        /// </summary>
-        public void CancelCreateTower()
+        private void CancelCreateTower()
         {
-            if (_newTowerObj != null)
+            if (_newTower != null)
             {
-                Destroy(_newTowerObj);
-                _newTowerObj = null;
+                Destroy(_newTower.gameObject);
+                _newTower = null;
             }
-
-            IsPositioningNewTower = false;
-        }
-
-        public bool CanUpgradeTower(TowerBehaviour tower)
-        {
-            return tower != null && tower.CanBeUpgraded();
-        }
-
-        public bool CanAffordToUpgradeTower(TowerBehaviour tower)
-        {
-            var cost = GetUpgradeCost(tower);
-            return cost.HasValue && MoneyController.CanAfford(cost.Value);
-        }
-
-        public int? GetUpgradeCost(TowerBehaviour tower)
-        {
-            return tower != null ? tower.GetUpgradeCost() : null;
-        }
-
-        public int? GetSellPrice(TowerBehaviour tower)
-        {
-            if (tower == null)
-            {
-                return null;
-            }
-
-            var adjustedSellPrice = (int) (tower.TotalValue * SellFraction);
-            return Mathf.Max(adjustedSellPrice, 1);
         }
     }
 }

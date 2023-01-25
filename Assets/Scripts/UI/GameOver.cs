@@ -1,23 +1,15 @@
 using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Music;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
     public class GameOver : MonoBehaviour
     {
-        public TowerController TowerController;
-
-        public TowerManager TowerManager;
-
         public LivesController LivesController;
 
         public MoneyController MoneyController;
-
-        public MusicController MusicController;
-
-        public WavesController WavesController;
 
         public GameObject GameOverScreen;
 
@@ -25,38 +17,20 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Button RestartButton;
 
+        public event UnityAction OnRestart;
+
         private void Awake()
         {
-            LivesController.OnEndGame += EndGame;
-        }
+            LivesController.OnEndGame += () =>
+            {
+                GameOverScreen.SetActive(true);
 
-        public void EndGame()
-        {
-            TowerController.CancelCreateTower();
+                FinalMoneyText.text = $"You finished with {MoneyController.Money} money.";
 
-            GameOverScreen.SetActive(true);
+                RestartButton.onClick.AddListener(OnRestart);
+            };
 
-            FinalMoneyText.text = $"You finished with {MoneyController.Money} money.";
-
-            RestartButton.onClick.AddListener(Restart);
-        }
-
-        public void Restart()
-        {
-            WavesController.StopAllCoroutines();
-            WavesController.ResetWaves();
-            WavesController.ClearEnemies();
-
-            MoneyController.ResetMoney();
-
-            LivesController.ResetLives();
-
-            MusicController.StartMusic();
-
-            TowerManager.DeselectCurrentTower();
-            TowerManager.ClearTowers();
-
-            GameOverScreen.SetActive(false);
+            OnRestart += () => GameOverScreen.SetActive(false);
         }
     }
 }
