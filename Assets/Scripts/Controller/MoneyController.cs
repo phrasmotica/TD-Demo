@@ -14,20 +14,11 @@ namespace TDDemo.Assets.Scripts.Controller
         [Range(10, 100)]
         public int StartingMoney;
 
-        /// <summary>
-        /// The fraction of its price that a tower should sell for.
-        /// </summary>
         [Range(0.5f, 1)]
         public float SellFraction;
 
-        /// <summary>
-        /// The current money.
-        /// </summary>
         public int Money { get; private set; }
 
-        /// <summary>
-        /// Delegate to fire when the current amount of money changes.
-        /// </summary>
         public event Action<int> OnMoneyChange;
 
         private void Start()
