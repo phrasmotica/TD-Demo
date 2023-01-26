@@ -42,7 +42,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
             OnWaveChange += currentWave => _currentWave = currentWave;
 
-            EndZone.OnEnemyCollide += obj => RemoveEnemy(obj.GetComponent<Enemy>());
+            EndZone.OnEnemyCollide += RemoveEnemy;
 
             GameOver.OnRestart += () =>
             {

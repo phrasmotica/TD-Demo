@@ -25,15 +25,13 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             OnLivesChange += lives =>
             {
-                _lives = lives;
-
                 if (lives <= 0)
                 {
                     OnEndGame?.Invoke();
                 }
             };
 
-            EndZone.OnEnemyCollide += obj => AddLives(-1);
+            EndZone.OnEnemyCollide += e => AddLives(-e.Strength);
 
             GameOver.OnRestart += ResetLives;
 
@@ -44,6 +42,10 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void ResetLives() => SetLives(StartingLives);
 
-        private void SetLives(int lives) => OnLivesChange(lives);
+        private void SetLives(int lives)
+        {
+            _lives = lives;
+            OnLivesChange(lives);
+        }
     }
 }

@@ -9,60 +9,33 @@ namespace TDDemo.Assets.Scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
-        /// <summary>
-        /// The enemy's starting health.
-        /// </summary>
         [Range(1, 5)]
         public float StartingHealth;
 
-        /// <summary>
-        /// The money reward for killing this enemy.
-        /// </summary>
         [Range(1, 10)]
         public int Reward;
+
+        [Range(1, 10)]
+        public int Strength;
 
         public AudioClip HurtAudio;
         public AudioClip HealAudio;
         public AudioClip DeadAudio;
 
-        /// <summary>
-        /// The enemy's current health.
-        /// </summary>
         private float _health;
 
-        /// <summary>
-        /// The effects present on this enemy.
-        /// </summary>
         private List<IEffect> _effects;
 
-        /// <summary>
-        /// Returns the enemy's current health as a decimal value between 0 and 1.
-        /// </summary>
         public float HealthFraction => _health / StartingHealth;
 
-        /// <summary>
-        /// Delegate to run on receiving damage.
-        /// </summary>
         public event Action<float> OnHurt;
 
-        /// <summary>
-        /// Delegate to run on healing damage.
-        /// </summary>
         public event Action<float> OnHeal;
 
-        /// <summary>
-        /// Delegate to run on an effect being inflicted.
-        /// </summary>
         public event Action<IEffect> OnEffect;
 
-        /// <summary>
-        /// Delegate to run on death.
-        /// </summary>
         public event Action<Enemy> OnKill;
 
-        /// <summary>
-        /// Set the enemy's health.
-        /// </summary>
         private void Start()
         {
             _health = StartingHealth;
@@ -93,15 +66,10 @@ namespace TDDemo.Assets.Scripts.Enemies
             _effects = _effects.Where(e => !e.IsFinished).ToList();
         }
 
-        /// <summary>
-        /// If hit by a projectile, take damage and destroy the projectile.
-        /// </summary>
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var otherObj = collision.gameObject;
-
-            var projectileComponent = otherObj.GetComponent<Projectile>();
-            if (projectileComponent != null)
+            if (otherObj.TryGetComponent<Projectile>(out var projectileComponent))
             {
                 var strike = projectileComponent.CreateStrike();
                 strike.Apply(this);

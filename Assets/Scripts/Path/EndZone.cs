@@ -1,4 +1,5 @@
-﻿using TDDemo.Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,7 +7,7 @@ namespace TDDemo.Assets.Scripts.Path
 {
     public class EndZone : MonoBehaviour
     {
-        public event UnityAction<GameObject> OnEnemyCollide;
+        public event UnityAction<Enemy> OnEnemyCollide;
 
         /// <summary>
         /// When an enemy collides, deduct a life and destroy the enemy.
@@ -17,7 +18,7 @@ namespace TDDemo.Assets.Scripts.Path
 
             if (otherObj.CompareTag(Tags.Enemy))
             {
-                OnEnemyCollide?.Invoke(otherObj);
+                OnEnemyCollide?.Invoke(otherObj.GetComponent<Enemy>());
             }
         }
     }
