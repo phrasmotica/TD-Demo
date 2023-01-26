@@ -23,7 +23,7 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
 
         public void Start(Enemy enemy)
         {
-            _counter = new TimeCounter(_duration);
+            _counter = new(_duration);
         }
 
         public void Update(Enemy enemy, float time)

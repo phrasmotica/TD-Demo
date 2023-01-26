@@ -13,12 +13,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public ProjectileSpecs Specs;
 
-        /// <summary>
-        /// The time in seconds since the last shot was fired, or null if the tower has not fired a
-        /// shot yet. Tracking this ensures a tower can start firing immediately whenever an enemy
-        /// appears instead of having to wait for a fixed cycle of its fire rate.
-        /// </summary>
-        private float? _timeSinceLastShot;
+        private TimeCounter _lastShotCounter;
 
         private AudioSource _audio;
 
@@ -30,6 +25,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
+            _lastShotCounter = new(1f / FireRate);
+
             _audio = GetComponent<AudioSource>();
 
             logger = new MethodLogger(nameof(ShootEnemy));
@@ -37,14 +34,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public void Act(IEnumerable<GameObject> enemies)
         {
-            if (!_timeSinceLastShot.HasValue)
-            {
-                _timeSinceLastShot = Time.deltaTime;
-            }
-            else
-            {
-                _timeSinceLastShot += Time.deltaTime;
-            }
+            _lastShotCounter.Increment(Time.deltaTime);
 
             if (CanAct)
             {
@@ -52,9 +42,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             }
         }
 
-        /// <summary>
-        /// Checks for enemies in this tower's range.
-        /// </summary>
         private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
@@ -65,9 +52,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 var nearestEnemy = orderedEnemies.First();
 
                 // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-                if (!_timeSinceLastShot.HasValue || _timeSinceLastShot >= 1f / Specs.FireRate)
+                if (!_lastShotCounter.IsStarted || _lastShotCounter.IsFinished)
                 {
-                    _timeSinceLastShot = 0;
+                    _lastShotCounter.Reset();
                     Shoot(nearestEnemy.GetComponent<Enemy>());
                 }
             }

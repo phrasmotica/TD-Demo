@@ -1,28 +1,20 @@
-﻿using UnityEngine;
+﻿using TDDemo.Assets.Scripts.Towers;
+using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Enemies
 {
-    /// <summary>
-    /// Draws the health of an enemy.
-    /// </summary>
     public class HealthBar : MonoBehaviour
     {
         public Enemy Enemy;
 
-        /// <summary>
-        /// The time in seconds to draw the enemy's health for when it's hit.
-        /// </summary>
         [Range(0.5f, 3f)]
-        public float PeekTime;
+        public float HealthPeekTime;
 
         private LineRenderer _line;
 
         private bool _mouseIsOverEnemy;
 
-        /// <summary>
-        /// The time in seconds left to draw the enemy's health for.
-        /// </summary>
-        private float _remainingPeekTime;
+        private TimeCounter _healthPeekCounter;
 
         private void Start()
         {
@@ -30,15 +22,17 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.positionCount = 2;
             _line.useWorldSpace = false;
 
+            _healthPeekCounter = new(HealthPeekTime);
+
             Enemy.OnHurt += DrawAndPeek;
             Enemy.OnHeal += DrawAndPeek;
         }
 
         private void Update()
         {
-            if (_remainingPeekTime > 0)
+            if (!_healthPeekCounter.IsFinished)
             {
-                _remainingPeekTime -= Time.deltaTime;
+                _healthPeekCounter.Increment(Time.deltaTime);
             }
 
             // show health bar if we're in the peek period or if mouse is over the enemy
@@ -73,11 +67,8 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }
 
-        private void PeekHealth()
-        {
-            _remainingPeekTime = PeekTime;
-        }
+        private void PeekHealth() => _healthPeekCounter.Reset();
 
-        private bool ShouldDrawHealthBar() => _remainingPeekTime > 0 || _mouseIsOverEnemy;
+        private bool ShouldDrawHealthBar() => !_healthPeekCounter.IsFinished || _mouseIsOverEnemy;
     }
 }

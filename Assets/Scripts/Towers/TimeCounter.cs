@@ -5,33 +5,31 @@
     /// </summary>
     public class TimeCounter
     {
-        /// <summary>
-        /// The time taken in seconds for this counter to finish.
-        /// </summary>
-        private readonly float _totalTime;
+        private readonly float _totalTimeSeconds;
 
-        /// <summary>
-        /// The time that has elapsed in seconds.
-        /// </summary>
-        private float _elapsed;
+        private float _elapsedSeconds;
 
-        public float Progress => _elapsed / _totalTime;
+        public float Progress => _elapsedSeconds / _totalTimeSeconds;
 
-        public bool IsFinished => Progress >= 1;
+        public bool IsStarted { get; private set; }
 
-        public TimeCounter(float totalTime)
+        public bool IsFinished => _elapsedSeconds >= _totalTimeSeconds;
+
+        public TimeCounter(float totalTimeSeconds)
         {
-            _totalTime = totalTime;
+            _totalTimeSeconds = totalTimeSeconds;
         }
 
-        public void Increment(float inc)
+        public void Increment(float timeSeconds)
         {
-            _elapsed += inc;
+            if (!IsStarted)
+            {
+                IsStarted = true;
+            }
+
+            _elapsedSeconds += timeSeconds;
         }
 
-        public void Reset()
-        {
-            _elapsed = 0;
-        }
+        public void Reset() => _elapsedSeconds = 0;
     }
 }

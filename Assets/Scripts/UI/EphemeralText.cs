@@ -11,19 +11,19 @@ namespace TDDemo.Assets.Scripts.UI
         [Range(0.5f, 2f)]
         public float Velocity;
 
-        private TimeCounter _timeCounter;
+        private TimeCounter _counter;
 
         private void Start()
         {
-            _timeCounter = new TimeCounter(LifeTimeSeconds);
+            _counter = new(LifeTimeSeconds);
         }
 
         private void Update()
         {
             transform.Translate(new Vector3(0, Velocity * Time.deltaTime));
-            _timeCounter.Increment(Time.deltaTime);
+            _counter.Increment(Time.deltaTime);
 
-            if (_timeCounter.IsFinished)
+            if (_counter.IsFinished)
             {
                 Destroy(gameObject);
             }
