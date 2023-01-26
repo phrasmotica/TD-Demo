@@ -30,6 +30,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Update()
         {
+            // TODO: don't draw health bar from the start
             if (!_healthPeekCounter.IsFinished)
             {
                 _healthPeekCounter.Increment(Time.deltaTime);
