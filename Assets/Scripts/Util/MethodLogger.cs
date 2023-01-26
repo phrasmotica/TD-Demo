@@ -8,9 +8,6 @@ namespace TDDemo.Assets.Scripts.Util
     /// </summary>
     public class MethodLogger
     {
-        /// <summary>
-        /// The class name.
-        /// </summary>
         private readonly string _className;
 
         public MethodLogger(string callerClassName)

@@ -30,14 +30,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private StrikeProvider[] _strikes;
 
-        /// <summary>
-        /// Whether this tower is colliding with another tower.
-        /// </summary>
         private bool _isCollidingWithAnotherTower;
 
-        /// <summary>
-        /// Whether this tower is colliding with a path zone.
-        /// </summary>
         private bool _isCollidingWithPathZone;
 
         public int TotalValue => _tower.GetTotalValue();
@@ -209,9 +203,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void DoUpgrade() => StartCoroutine(Upgrade());
 
-        /// <summary>
-        /// Upgrades the tower to the next level.
-        /// </summary>
         private IEnumerator Upgrade()
         {
             var upgradeTime = _tower.StartUpgrading();
@@ -256,7 +247,6 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Amount) : 0;
         }
 
-        // TODO: remove this method as its functionality is duplicated in Range.cs
         public int GetRange()
         {
             var actionsWithRange = GetActions<IHasRange>();

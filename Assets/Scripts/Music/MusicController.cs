@@ -57,14 +57,11 @@ namespace TDDemo.Assets.Scripts.Music
             }
         }
 
-        private AudioClip ComputeNewClip(int stageNumber)
+        private AudioClip ComputeNewClip(int stageNumber) => (stageNumber % 2) switch
         {
-            return (stageNumber % 2) switch
-            {
-                1 => FirstStageMusic,
-                0 => SecondStageMusic,
-                _ => throw new InvalidOperationException("This should never happen!"),
-            };
-        }
+            1 => FirstStageMusic,
+            0 => SecondStageMusic,
+            _ => throw new InvalidOperationException("This should never happen!"),
+        };
     }
 }

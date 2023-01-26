@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using TDDemo.Assets.Scripts.Towers.Actions;
-using TDDemo.Assets.Scripts.Util;
+﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,8 +34,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnAccumulateActions += actions =>
             {
-                var actionsWithRange = actions.OfType<IHasRange>();
-                var range = actionsWithRange.Any() ? actionsWithRange.Max(a => a.Range) : 0;
+                var range = TowerBehaviour.GetRange();
                 SetRange(range);
             };
 

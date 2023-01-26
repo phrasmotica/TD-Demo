@@ -9,14 +9,8 @@ namespace TDDemo.Assets.Scripts.Towers
     {
         public StrikeProvider StrikeProvider { get; set; }
 
-        /// <summary>
-        /// The position where the projectile was fired from.
-        /// </summary>
         public Vector3 StartPosition { get; set; }
 
-        /// <summary>
-        /// The range of this projectile.
-        /// </summary>
         public int Range { get; set; }
 
         private void Update()

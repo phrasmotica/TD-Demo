@@ -13,9 +13,6 @@ namespace TDDemo.Assets.Scripts.Enemies
     {
         public Waypoint[] Waypoints { get; set; }
 
-        /// <summary>
-        /// The speed with which to move towards the waypoints.
-        /// </summary>
         public float Speed;
 
         public bool IsParalysed;
@@ -47,9 +44,6 @@ namespace TDDemo.Assets.Scripts.Enemies
         /// </summary>
         private float _lastSpeed;
 
-        /// <summary>
-        /// Move towards the current waypoint.
-        /// </summary>
         private void Update()
         {
             if (!IsParalysed && !_isWaiting && GetCurrentWaypoint() != null)
@@ -58,17 +52,11 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        /// <summary>
-        /// Pause movement.
-        /// </summary>
         private void Pause()
         {
             _isWaiting = !_isWaiting;
         }
 
-        /// <summary>
-        /// Move towards the current destination waypoint.
-        /// </summary>
         private void MoveTowardsWaypoint()
         {
             var currentPosition = transform.position;
@@ -116,9 +104,6 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        /// <summary>
-        /// Compute what the next waypoint is going to be.
-        /// </summary>
         private void SetNextWaypoint()
         {
             if (IsCircular)
@@ -144,9 +129,6 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        /// <summary>
-        /// Returns the current destination waypoint.
-        /// </summary>
         private Waypoint GetCurrentWaypoint() => Waypoints.Any() ? Waypoints[_currentIndex] : null;
     }
 }

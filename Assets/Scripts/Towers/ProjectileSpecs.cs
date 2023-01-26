@@ -5,9 +5,6 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class ProjectileSpecs : MonoBehaviour
     {
-        /// <summary>
-        /// The projectile prefab.
-        /// </summary>
         public GameObject ProjectilePrefab;
 
         /// <summary>
@@ -22,9 +19,6 @@ namespace TDDemo.Assets.Scripts.Towers
         [Range(1, 10)]
         public int FireRate;
 
-        /// <summary>
-        /// The range of the projectile.
-        /// </summary>
         [Range(1, 10)]
         public int Range;
 

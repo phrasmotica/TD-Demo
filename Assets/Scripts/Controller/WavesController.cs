@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
@@ -105,9 +104,6 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        /// <summary>
-        /// Returns the number of enemies to spawn for the given wave.
-        /// </summary>
         private int GetEnemyCount(int waveNumber) => waveNumber;
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
@@ -120,9 +116,6 @@ namespace TDDemo.Assets.Scripts.Controller
             Destroy(enemy.gameObject);
         }
 
-        /// <summary>
-        /// Resets to wave zero, ready for the start of a game.
-        /// </summary>
         public void ResetWaves() => SetCurrentWave(0);
 
         public void ClearEnemies()

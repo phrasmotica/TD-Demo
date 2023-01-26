@@ -25,7 +25,7 @@ namespace TDDemo.Assets.Scripts.Towers
             _state = TowerState.Warmup;
 
             var baseLevel = GetBaseLevel();
-            _warmupCounter = new TimeCounter(baseLevel.Time);
+            _warmupCounter = new(baseLevel.Time);
 
             return baseLevel.Time;
         }
@@ -48,7 +48,7 @@ namespace TDDemo.Assets.Scripts.Towers
             _state = TowerState.Upgrading;
 
             var upgradeTime = GetUpgradeTime();
-            _upgradeCounter = new TimeCounter(upgradeTime);
+            _upgradeCounter = new(upgradeTime);
 
             return upgradeTime;
         }
@@ -113,5 +113,13 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             return _levels.Take(_upgradeLevel + 1).Sum(l => l.Price);
         }
+    }
+
+    public enum TowerState
+    {
+        Positioning,
+        Warmup,
+        Firing,
+        Upgrading,
     }
 }

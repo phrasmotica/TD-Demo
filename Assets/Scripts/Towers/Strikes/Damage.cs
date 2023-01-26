@@ -11,9 +11,6 @@ namespace TDDemo.Assets.Scripts.Towers.Strikes
             _amount = amount;
         }
 
-        public void Apply(Enemy enemy)
-        {
-            enemy.TakeDamage(_amount);
-        }
+        public void Apply(Enemy enemy) => enemy.TakeDamage(_amount);
     }
 }

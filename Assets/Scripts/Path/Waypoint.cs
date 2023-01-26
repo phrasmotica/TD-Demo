@@ -4,9 +4,6 @@
 
 namespace TDDemo.Assets.Scripts.Path
 {
-    /// <summary>
-    /// Represents a waypoint.
-    /// </summary>
     public class Waypoint : MonoBehaviour
     {
         /// <summary>

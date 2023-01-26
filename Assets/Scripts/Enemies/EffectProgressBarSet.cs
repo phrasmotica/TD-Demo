@@ -58,7 +58,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 _progressBars = _progressBars.Where(e => !e.IsFinished).ToList();
 
-                // refresh progress bar positions
+                // refresh progress bar positions so they're not hovering in mid-air
                 for (var i = 0; i < _progressBars.Count; i++)
                 {
                     var bar = _progressBars[i];
