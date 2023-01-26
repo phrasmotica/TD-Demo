@@ -15,19 +15,10 @@ namespace TDDemo.Assets.Scripts.Controller
         [Range(1, 50)]
         public int StartingLives;
 
-        /// <summary>
-        /// The current number of lives.
-        /// </summary>
         private int _lives;
 
-        /// <summary>
-        /// Delegate to fire when the current amount of lives changes.
-        /// </summary>
         public event UnityAction<int> OnLivesChange;
 
-        /// <summary>
-        /// Delegate to fire when the number of lives reaches zero.
-        /// </summary>
         public event UnityAction OnEndGame;
 
         private void Start()
@@ -49,7 +40,7 @@ namespace TDDemo.Assets.Scripts.Controller
             ResetLives();
         }
 
-        public void AddLives(int amount) => SetLives(_lives + amount);
+        public void AddLives(int amount) => SetLives(Math.Max(0, _lives + amount));
 
         public void ResetLives() => SetLives(StartingLives);
 
