@@ -28,6 +28,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private ITowerAction[] _actions;
 
+        private StrikeProvider[] _strikes;
+
         /// <summary>
         /// Whether this tower is colliding with another tower.
         /// </summary>
@@ -56,6 +58,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event UnityAction<ITowerAction[]> OnAccumulateActions;
 
+        public event UnityAction<StrikeProvider[]> OnAccumulateStrikes;
+
         public event UnityAction<float> OnWarmupProgress;
 
         public event UnityAction<float> OnUpgradeProgress;
@@ -71,6 +75,7 @@ namespace TDDemo.Assets.Scripts.Towers
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
             AccumulateActions();
+            AccumulateStrikes();
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
@@ -220,6 +225,7 @@ namespace TDDemo.Assets.Scripts.Towers
             var newLevel = _tower.FinishUpgrading();
 
             AccumulateActions();
+            AccumulateStrikes();
             AllowFire();
 
             _spriteRenderer.sprite = newLevel.GetComponent<SpriteRenderer>().sprite;
@@ -244,10 +250,10 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int? GetUpgradeCost() => _tower.GetUpgradeCost();
 
-        public int GetDamage()
+        public float GetDamage()
         {
-            var actionsWithDamage = GetActions<IHasDamage>();
-            return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Damage) : 0;
+            var actionsWithDamage = GetStrikes<DamageEnemy>();
+            return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Amount) : 0;
         }
 
         // TODO: remove this method as its functionality is duplicated in Range.cs
@@ -286,5 +292,13 @@ namespace TDDemo.Assets.Scripts.Towers
         }
 
         private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
+
+        private void AccumulateStrikes()
+        {
+            _strikes = GetComponentsInChildren<StrikeProvider>();
+            OnAccumulateStrikes?.Invoke(_strikes);
+        }
+
+        private IEnumerable<T> GetStrikes<T>() => _strikes.OfType<T>().Cast<T>();
     }
 }
