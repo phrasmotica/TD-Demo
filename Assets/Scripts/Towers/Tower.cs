@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Towers.Experience;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -12,12 +13,21 @@ namespace TDDemo.Assets.Scripts.Towers
         private int _upgradeLevel;
         private TimeCounter _upgradeCounter;
 
+        private readonly Experience.Experience _experience;
+
+        public int Level => _experience.Level;
+
+        public int CurrentXp => _experience.CurrentXp;
+
+        public int NextLevelXp => _experience.NextLevelXp;
+
         public Tower(List<TowerLevel> levels)
         {
             _levels = levels;
 
             _state = TowerState.Positioning;
             _upgradeLevel = 0;
+            _experience = new(new PokemonExperienceCurve());
         }
 
         public float StartWarmingUp()
@@ -113,6 +123,10 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             return _levels.Take(_upgradeLevel + 1).Sum(l => l.Price);
         }
+
+        public int AddXp(int amount) => _experience.Add(amount);
+
+        public bool TryLevelUp() => _experience.TryLevelUp();
     }
 
     public enum TowerState

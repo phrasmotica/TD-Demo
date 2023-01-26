@@ -36,6 +36,10 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public event UnityAction<TowerBehaviour> OnChangeSelectedTower;
 
+        public event UnityAction<TowerBehaviour> OnLevelChangeSelectedTower;
+
+        public event UnityAction<TowerBehaviour> OnXpChangeSelectedTower;
+
         public event UnityAction<TowerBehaviour> OnSellSelectedTower;
 
         private void Start()
@@ -140,6 +144,8 @@ namespace TDDemo.Assets.Scripts.Controller
             };
 
             newTower.OnFinishUpgrade += () => OnFinishUpgradeSelectedTower(newTower);
+            newTower.OnLevelChange += () => OnLevelChangeSelectedTower(newTower);
+            newTower.OnXpChange += () => OnXpChangeSelectedTower(newTower);
 
             _newTower = null;
         }

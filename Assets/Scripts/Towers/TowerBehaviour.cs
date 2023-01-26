@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Extensions;
@@ -34,6 +35,12 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private bool _isCollidingWithPathZone;
 
+        public int Level => _tower.Level;
+
+        public int CurrentXp => _tower.CurrentXp;
+
+        public int NextLevelXp => _tower.NextLevelXp;
+
         public int TotalValue => _tower.GetTotalValue();
 
         public bool IsPositioning => _tower.IsPositioning();
@@ -60,6 +67,10 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event UnityAction OnFinishUpgrade;
 
+        public event UnityAction OnLevelChange;
+
+        public event UnityAction OnXpChange;
+
         private void Start()
         {
             _tower = new Tower(Levels);
@@ -67,6 +78,14 @@ namespace TDDemo.Assets.Scripts.Towers
             _enemies = new();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            OnXpChange += () =>
+            {
+                if (_tower.TryLevelUp())
+                {
+                    OnLevelChange?.Invoke();
+                }
+            };
 
             AccumulateActions();
             AccumulateStrikes();
@@ -181,9 +200,6 @@ namespace TDDemo.Assets.Scripts.Towers
             OnCanBePlaced?.Invoke(CanBePlaced());
         }
 
-        /// <summary>
-        /// Make the tower warm up before being ready to fire.
-        /// </summary>
         private IEnumerator Warmup()
         {
             var warmupTime = _tower.StartWarmingUp();
@@ -257,6 +273,12 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             var actionsWithFireRate = GetActions<IHasFireRate>();
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;
+        }
+
+        public void GainXp(int xp)
+        {
+            _tower.AddXp(xp);
+            OnXpChange();
         }
 
         private void AllowFire()
