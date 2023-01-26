@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         public float StartingHealth;
 
         [Range(1, 10)]
-        public int Reward;
+        public int BaseGoldReward;
 
         [Range(1, 10)]
         public int Strength;

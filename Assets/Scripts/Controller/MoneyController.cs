@@ -82,7 +82,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             var textPos = e.transform.position + new Vector3(0, 0.2f);
             var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
-            text.GetComponent<TextMeshProUGUI>().text = $"+{e.Reward}";
+            text.GetComponent<TextMeshProUGUI>().text = $"+{e.BaseGoldReward}";
         }
     }
 }

@@ -92,7 +92,8 @@ namespace TDDemo.Assets.Scripts.Controller
                 var enemy = enemyObj.GetComponent<Enemy>();
                 enemy.OnKill += e =>
                 {
-                    MoneyController.AddMoney(e.Reward);
+                    // TODO: adjust actual reward based on some conditions/tower upgrades?
+                    MoneyController.AddMoney(e.BaseGoldReward);
                     MoneyController.CreateRewardText(e);
                     RemoveEnemy(e);
                 };
