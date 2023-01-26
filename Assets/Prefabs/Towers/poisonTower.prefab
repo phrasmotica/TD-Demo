@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d65b8960c6efa46b2d117aabbd9ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 2476264691738361395}
   AmountPerSecond: 1
   Duration: 2
 --- !u!114 &8116562907342908278

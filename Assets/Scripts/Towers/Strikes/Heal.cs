@@ -6,6 +6,8 @@ namespace TDDemo.Assets.Scripts.Towers.Strikes
     {
         private readonly float _amount;
 
+        public TowerBehaviour SourceTower { get; set; }
+
         public Heal(float amount)
         {
             _amount = amount;

@@ -8,6 +8,8 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
 
         private TimeCounter _counter;
 
+        public TowerBehaviour SourceTower { get; set; }
+
         public EffectCategory Category => EffectCategory.Paralyse;
 
         public float Progress => _counter.Progress;

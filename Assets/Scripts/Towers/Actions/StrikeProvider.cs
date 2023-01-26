@@ -5,6 +5,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 {
     public abstract class StrikeProvider : MonoBehaviour
     {
+        public TowerBehaviour SourceTower;
+
         public abstract IStrike CreateStrike();
     }
 }

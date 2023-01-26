@@ -17,6 +17,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public override string EffectAlreadyApplied => "Enemy is already slowed!";
 
-        public override IEffect CreateEffect() => new SlowMovementSpeed(Factor, Duration);
+        public override IEffect CreateEffect() => new SlowMovementSpeed(Factor, Duration)
+        {
+            SourceTower = SourceTower,
+        };
     }
 }

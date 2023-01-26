@@ -6,11 +6,17 @@ namespace TDDemo.Assets.Scripts.Towers.Strikes
     {
         private readonly float _amount;
 
+        public TowerBehaviour SourceTower { get; set; }
+
         public Damage(float amount)
         {
             _amount = amount;
         }
 
-        public void Apply(Enemy enemy) => enemy.TakeDamage(_amount);
+        public void Apply(Enemy enemy)
+        {
+            enemy.TakeDamage(_amount);
+            enemy.LastDamagingTower = SourceTower;
+        }
     }
 }

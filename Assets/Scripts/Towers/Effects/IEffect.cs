@@ -4,6 +4,8 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
 {
     public interface IEffect
     {
+        TowerBehaviour SourceTower { get; set; }
+
         EffectCategory Category { get; }
 
         float Progress { get; }

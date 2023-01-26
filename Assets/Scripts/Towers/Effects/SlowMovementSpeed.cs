@@ -10,6 +10,8 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
         private float _initialSpeed;
         private TimeCounter _counter;
 
+        public TowerBehaviour SourceTower { get; set; }
+
         public EffectCategory Category => EffectCategory.Slow;
 
         public float Progress => _counter.Progress;

@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519f85c7eb392c640a1f56d6164f3526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   Amount: 1
 --- !u!114 &2248998314104429719
 MonoBehaviour:
@@ -859,6 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519f85c7eb392c640a1f56d6164f3526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   Amount: 2
 --- !u!114 &5117549713799867526
 MonoBehaviour:
@@ -1262,6 +1264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519f85c7eb392c640a1f56d6164f3526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   Amount: 1
 --- !u!114 &4433859778656440486
 MonoBehaviour:

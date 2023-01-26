@@ -469,6 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e6d093eb9030e4491275a87b093756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7861188637160861286}
   Duration: 1
 --- !u!114 &1039246141814937596
 MonoBehaviour:
@@ -758,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded7c7f55c1908849ac3d2daf5f5489a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7861188637160861286}
   Factor: 0.5
   Duration: 2
 --- !u!114 &4604413855902104355

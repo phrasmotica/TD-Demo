@@ -15,6 +15,9 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int BaseGoldReward;
 
+        [Range(1, 5)]
+        public int BaseXpReward;
+
         [Range(1, 10)]
         public int Strength;
 
@@ -25,6 +28,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         private float _health;
 
         private List<IEffect> _effects;
+
+        public TowerBehaviour LastDamagingTower { get; set; }
 
         public float HealthFraction => _health / StartingHealth;
 
@@ -40,6 +45,12 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             _health = StartingHealth;
             _effects = new List<IEffect>();
+
+            OnKill += e =>
+            {
+                // TODO: adjust actual reward based on some conditions/tower upgrades?
+                LastDamagingTower.GainXp(e.BaseXpReward);
+            };
         }
 
         private void Update()
@@ -48,7 +59,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
 
-                OnKill?.Invoke(this);
+                OnKill(this);
                 return;
             }
 

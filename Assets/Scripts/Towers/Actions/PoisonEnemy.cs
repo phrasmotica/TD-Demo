@@ -17,6 +17,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public override string EffectAlreadyApplied => "Enemy is already poisoned!";
 
-        public override IEffect CreateEffect() => new Poison(AmountPerSecond, Duration);
+        public override IEffect CreateEffect() => new Poison(AmountPerSecond, Duration)
+        {
+            SourceTower = SourceTower,
+        };
     }
 }

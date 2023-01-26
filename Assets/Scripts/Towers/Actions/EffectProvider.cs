@@ -5,6 +5,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 {
     public abstract class EffectProvider : MonoBehaviour
     {
+        public TowerBehaviour SourceTower;
+
         public abstract string ApplyingEffect { get; }
 
         public abstract string EffectAlreadyApplied { get; }

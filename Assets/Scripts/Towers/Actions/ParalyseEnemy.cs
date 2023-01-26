@@ -14,6 +14,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public override string EffectAlreadyApplied => "Enemy is already paralysed!";
 
-        public override IEffect CreateEffect() => new Paralyse(Duration);
+        public override IEffect CreateEffect() => new Paralyse(Duration)
+        {
+            SourceTower = SourceTower,
+        };
     }
 }

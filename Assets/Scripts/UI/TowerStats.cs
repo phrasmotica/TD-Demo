@@ -17,11 +17,17 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Text FireRateText;
 
+        public Text LevelText;
+
+        public Text XpText;
+
         private void Awake()
         {
             TowerController.OnStartUpgradeSelectedTower += SetStats;
             TowerController.OnFinishUpgradeSelectedTower += SetStats;
             TowerController.OnChangeSelectedTower += SetStats;
+            TowerController.OnLevelChangeSelectedTower += SetStats;
+            TowerController.OnXpChangeSelectedTower += SetStats;
             TowerController.OnSellSelectedTower += tower => ClearStats();
         }
 
@@ -37,6 +43,12 @@ namespace TDDemo.Assets.Scripts.UI
 
                 FireRateText.gameObject.SetActive(true);
                 FireRateText.text = $"Fire rate: {tower.GetFireRate()}";
+
+                LevelText.gameObject.SetActive(true);
+                LevelText.text = $"Level: {tower.Level}";
+
+                XpText.gameObject.SetActive(true);
+                XpText.text = $"XP: {tower.CurrentXp}/{tower.NextLevelXp}";
             }
             else
             {
@@ -49,6 +61,8 @@ namespace TDDemo.Assets.Scripts.UI
             DamageText.gameObject.SetActive(false);
             RangeText.gameObject.SetActive(false);
             FireRateText.gameObject.SetActive(false);
+            LevelText.gameObject.SetActive(false);
+            XpText.gameObject.SetActive(false);
         }
     }
 }
