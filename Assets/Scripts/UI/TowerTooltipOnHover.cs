@@ -16,19 +16,25 @@ namespace TDDemo.Assets.Scripts.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _currentTooltip = Instantiate(TooltipPrefab, UiCanvas.transform);
+            if (_currentTooltip == null)
+            {
+                _currentTooltip = Instantiate(TooltipPrefab, UiCanvas.transform);
 
-            var tooltip = _currentTooltip.GetComponent<TowerTooltip>();
+                var tooltip = _currentTooltip.GetComponent<TowerTooltip>();
 
-            // by this point the Awake() methods of any children of _currentTooltip
-            // have been called, so it is safe to do this
-            tooltip.SetTower(Tower);
+                // by this point the Awake() methods of any children of _currentTooltip
+                // have been called, so it is safe to do this
+                tooltip.SetTower(Tower);
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Destroy(_currentTooltip);
-            _currentTooltip = null;
+            if (_currentTooltip != null)
+            {
+                Destroy(_currentTooltip);
+                _currentTooltip = null;
+            }
         }
     }
 }
