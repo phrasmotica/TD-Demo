@@ -320,10 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673c9bc7564b29e4e98dbc8e68f9c624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyGainTextPrefab: {fileID: 5349574088421517419, guid: 5cccfc99b502a17469790d2d973e89dc,
-    type: 3}
-  StartingHealth: 3
-  Reward: 1
+  StartingHealth: 5
+  Reward: 2
   Strength: 1
   HurtAudio: {fileID: 8300000, guid: 5a69ab5f6edd67c44bebaa2ae5cdba4c, type: 3}
   HealAudio: {fileID: 8300000, guid: d669d377679f7a74880e94435d68275f, type: 3}

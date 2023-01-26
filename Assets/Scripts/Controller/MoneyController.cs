@@ -2,6 +2,7 @@
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.UI;
+using TMPro;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Controller
@@ -79,9 +80,9 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void CreateRewardText(Enemy e)
         {
-            // TODO: set the reward value in the reward text
             var textPos = e.transform.position + new Vector3(0, 0.2f);
-            Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+            var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+            text.GetComponent<TextMeshProUGUI>().text = $"+{e.Reward}";
         }
     }
 }
