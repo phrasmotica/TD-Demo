@@ -94,6 +94,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 enemy.OnKill += e =>
                 {
                     MoneyController.AddMoney(e.Reward);
+                    MoneyController.CreateRewardText(e);
                     RemoveEnemy(e);
                 };
 

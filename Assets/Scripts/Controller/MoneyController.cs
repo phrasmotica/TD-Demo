@@ -1,4 +1,5 @@
 ﻿using System;
+using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
@@ -7,6 +8,10 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class MoneyController : MonoBehaviour
     {
+        public GameObject Canvas;
+
+        public GameObject RewardTextPrefab;
+
         public GameOver GameOver;
 
         public TowerController TowerController;
@@ -70,6 +75,13 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             var cost = tower.GetUpgradeCost();
             return cost.HasValue && CanAfford(cost.Value);
+        }
+
+        public void CreateRewardText(Enemy e)
+        {
+            // TODO: set the reward value in the reward text
+            var textPos = e.transform.position + new Vector3(0, 0.2f);
+            Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
         }
     }
 }
