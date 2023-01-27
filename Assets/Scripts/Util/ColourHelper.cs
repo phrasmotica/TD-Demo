@@ -13,5 +13,9 @@ namespace TDDemo.Assets.Scripts.Util
         public static Color ParalyseEffect => Color.yellow;
 
         public static Color PoisonEffect => Color.green;
+
+        public static Color Xp => Color.cyan;
+
+        public static Color XpLoss => Color.blue;
     }
 }

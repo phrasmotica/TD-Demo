@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers.Experience;
+using TDDemo.Assets.Scripts.Towers.Gold;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -15,15 +16,22 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private readonly Experience.Experience _experience;
 
+        private readonly IGoldRewardCalculator<Tower> _goldRewardCalculator;
+
+        private readonly IXpCalculator _xpCalculator;
+
         public int Level => _experience.Level;
 
         public int CurrentXp => _experience.CurrentXp;
 
         public int NextLevelXp => _experience.NextLevelXp;
 
-        public Tower(List<TowerLevel> levels)
+        public Tower(List<TowerLevel> levels, GoldCalculator goldCalculator, XpCalculator xpCalculator)
         {
             _levels = levels;
+
+            _goldRewardCalculator = CreateGoldCalculator(goldCalculator);
+            _xpCalculator = CreateXpCalculator(xpCalculator);
 
             _state = TowerState.Positioning;
             _upgradeLevel = 0;
@@ -126,9 +134,28 @@ namespace TDDemo.Assets.Scripts.Towers
             return _levels.Take(_upgradeLevel + 1).Sum(l => l.Price);
         }
 
-        public int AddXp(int amount) => _experience.Add(amount);
+        public int AddXp(int amount)
+        {
+            var xp = _xpCalculator.Compute(this, amount);
+            _experience.Add(xp);
+            return xp;
+        }
 
         public bool TryLevelUp() => _experience.TryLevelUp();
+
+        public int ComputeGoldReward(int baseGoldReward) => _goldRewardCalculator.Compute(this, baseGoldReward);
+
+        private IGoldRewardCalculator<Tower> CreateGoldCalculator(GoldCalculator goldCalculator) => goldCalculator switch
+        {
+            GoldCalculator.LevelLinear => new LevelLinearGoldRewardCalculator(),
+            _ => new DefaultGoldRewardCalculator<Tower>(),
+        };
+
+        private IXpCalculator CreateXpCalculator(XpCalculator goldCalculator) => goldCalculator switch
+        {
+            XpCalculator.LevelLinear => new LevelLinearXpCalculator(),
+            _ => new DefaultXpCalculator(),
+        };
     }
 
     public enum TowerState

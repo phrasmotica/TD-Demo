@@ -66,6 +66,13 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void SetMoney(int money) => OnMoneyChange(money);
 
+        public void AddReward(Enemy e, TowerBehaviour tower)
+        {
+            var reward = tower.ComputeGoldReward(e.BaseGoldReward);
+            AddMoney(reward);
+            CreateRewardText(e, reward);
+        }
+
         public int GetSellPrice(TowerBehaviour tower)
         {
             var adjustedSellPrice = (int) (tower.TotalValue * SellFraction);
@@ -78,11 +85,11 @@ namespace TDDemo.Assets.Scripts.Controller
             return cost.HasValue && CanAfford(cost.Value);
         }
 
-        public void CreateRewardText(Enemy e)
+        public void CreateRewardText(Enemy e, int reward)
         {
             var textPos = e.transform.position + new Vector3(0, 0.2f);
             var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
-            text.GetComponent<TextMeshProUGUI>().text = $"+{e.BaseGoldReward}";
+            text.GetComponent<TextMeshProUGUI>().text = $"+{reward}";
         }
     }
 }

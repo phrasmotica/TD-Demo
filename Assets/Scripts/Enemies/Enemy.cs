@@ -44,17 +44,16 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public event Action<IEffect> OnEffect;
 
-        public event Action<Enemy> OnKill;
+        public event Action<Enemy, TowerBehaviour> OnKill;
 
         private void Start()
         {
             _health = StartingHealth;
             _effects = new List<IEffect>();
 
-            OnKill += e =>
+            OnKill += (e, tower) =>
             {
-                // TODO: adjust actual reward based on some conditions/tower upgrades?
-                LastDamagingTower.GainXp(e.BaseXpReward);
+                tower.GainXp(e.BaseXpReward);
             };
         }
 
@@ -64,7 +63,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
 
-                OnKill(this);
+                OnKill(this, LastDamagingTower);
                 return;
             }
 

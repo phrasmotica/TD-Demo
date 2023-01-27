@@ -1083,7 +1083,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Gun Tower
-  Description: Shoots bullets, nothing special!
+  Description: Shoots bullets! Increased gold and XP yield as it levels up.
+  GoldCalculator: 1
+  XpCalculator: 1
   Levels:
   - {fileID: 5983188766679234428}
   - {fileID: 192136218426829519}

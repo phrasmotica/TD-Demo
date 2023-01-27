@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Extensions;
@@ -16,6 +15,10 @@ namespace TDDemo.Assets.Scripts.Towers
         public string Name;
 
         public string Description;
+
+        public GoldCalculator GoldCalculator;
+
+        public XpCalculator XpCalculator;
 
         public List<TowerLevel> Levels;
 
@@ -69,17 +72,17 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event UnityAction OnLevelChange;
 
-        public event UnityAction OnXpChange;
+        public event UnityAction<int> OnXpChange;
 
         private void Start()
         {
-            _tower = new Tower(Levels);
+            _tower = new Tower(Levels, GoldCalculator, XpCalculator);
 
             _enemies = new();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            OnXpChange += () =>
+            OnXpChange += amount =>
             {
                 if (_tower.TryLevelUp())
                 {
@@ -275,11 +278,13 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;
         }
 
-        public void GainXp(int xp)
+        public void GainXp(int baseXp)
         {
-            _tower.AddXp(xp);
-            OnXpChange();
+            var xp = _tower.AddXp(baseXp);
+            OnXpChange(xp);
         }
+
+        public int ComputeGoldReward(int baseGoldReward) => _tower.ComputeGoldReward(baseGoldReward);
 
         private void AllowFire()
         {
@@ -312,5 +317,17 @@ namespace TDDemo.Assets.Scripts.Towers
         }
 
         private IEnumerable<T> GetStrikes<T>() => _strikes.OfType<T>().Cast<T>();
+    }
+
+    public enum GoldCalculator
+    {
+        Default,
+        LevelLinear,
+    }
+
+    public enum XpCalculator
+    {
+        Default,
+        LevelLinear,
     }
 }

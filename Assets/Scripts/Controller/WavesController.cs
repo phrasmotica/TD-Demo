@@ -90,11 +90,9 @@ namespace TDDemo.Assets.Scripts.Controller
                 waypointFollower.Waypoints = Waypoints;
 
                 var enemy = enemyObj.GetComponent<Enemy>();
-                enemy.OnKill += e =>
+                enemy.OnKill += (e, tower) =>
                 {
-                    // TODO: adjust actual reward based on some conditions/tower upgrades?
-                    MoneyController.AddMoney(e.BaseGoldReward);
-                    MoneyController.CreateRewardText(e);
+                    MoneyController.AddReward(e, tower);
                     RemoveEnemy(e);
                 };
 

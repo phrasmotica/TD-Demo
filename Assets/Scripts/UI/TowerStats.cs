@@ -27,13 +27,13 @@ namespace TDDemo.Assets.Scripts.UI
             TowerController.OnFinishUpgradeSelectedTower += SetStats;
             TowerController.OnChangeSelectedTower += SetStats;
             TowerController.OnLevelChangeSelectedTower += SetStats;
-            TowerController.OnXpChangeSelectedTower += SetStats;
+            TowerController.OnXpChangeSelectedTower += (tower, amount) => SetStats(tower);
             TowerController.OnSellSelectedTower += tower => ClearStats();
         }
 
         public void SetStats(TowerBehaviour tower)
         {
-            if (tower != null)
+            if (tower != null && tower.IsSelected)
             {
                 DamageText.gameObject.SetActive(true);
                 DamageText.text = $"Damage: {tower.GetDamage()}";

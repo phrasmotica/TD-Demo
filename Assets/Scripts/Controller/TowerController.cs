@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Util;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +10,10 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class TowerController : MonoBehaviour
     {
+        public GameObject Canvas;
+
+        public GameObject RewardTextPrefab;
+
         public LivesController LivesController;
 
         public MoneyController MoneyController;
@@ -38,7 +44,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public event UnityAction<TowerBehaviour> OnLevelChangeSelectedTower;
 
-        public event UnityAction<TowerBehaviour> OnXpChangeSelectedTower;
+        public event UnityAction<TowerBehaviour, int> OnXpChangeSelectedTower;
 
         public event UnityAction<TowerBehaviour> OnSellSelectedTower;
 
@@ -53,6 +59,19 @@ namespace TDDemo.Assets.Scripts.Controller
             };
 
             OnPlaceTower += _towerManager.Add;
+
+            OnXpChangeSelectedTower += (tower, amount) =>
+            {
+                if (amount != 0)
+                {
+                    var textPos = tower.transform.position + new Vector3(0, 0.2f);
+                    var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+                    var textComponent = text.GetComponent<TextMeshProUGUI>();
+
+                    textComponent.text = amount < 0 ? $"{amount}" : $"+{amount}";
+                    textComponent.color = amount < 0 ? ColourHelper.XpLoss : ColourHelper.Xp;
+                }
+            };
 
             OnSellSelectedTower += tower =>
             {
@@ -145,7 +164,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
             newTower.OnFinishUpgrade += () => OnFinishUpgradeSelectedTower(newTower);
             newTower.OnLevelChange += () => OnLevelChangeSelectedTower(newTower);
-            newTower.OnXpChange += () => OnXpChangeSelectedTower(newTower);
+            newTower.OnXpChange += amount => OnXpChangeSelectedTower(newTower, amount);
 
             _newTower = null;
         }
