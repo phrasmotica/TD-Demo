@@ -9,7 +9,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public TowerController TowerController;
 
-        public TowerManager TowerManager;
+        public Text DefaultText;
 
         public Text DamageText;
 
@@ -35,6 +35,8 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (tower != null && tower.IsSelected)
             {
+                DefaultText.enabled = false;
+
                 DamageText.gameObject.SetActive(true);
                 DamageText.text = $"Damage: {tower.GetDamage()}";
 
@@ -52,6 +54,8 @@ namespace TDDemo.Assets.Scripts.UI
             }
             else
             {
+                DefaultText.enabled = true;
+
                 ClearStats();
             }
         }
