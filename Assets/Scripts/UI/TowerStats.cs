@@ -11,6 +11,8 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Text DefaultText;
 
+        public Text NameText;
+
         public Text DamageText;
 
         public Text RangeText;
@@ -37,6 +39,9 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 DefaultText.enabled = false;
 
+                NameText.gameObject.SetActive(true);
+                NameText.text = tower.Name;
+
                 DamageText.gameObject.SetActive(true);
                 DamageText.text = $"Damage: {tower.GetDamage()}";
 
@@ -62,6 +67,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void ClearStats()
         {
+            NameText.gameObject.SetActive(false);
             DamageText.gameObject.SetActive(false);
             RangeText.gameObject.SetActive(false);
             FireRateText.gameObject.SetActive(false);
