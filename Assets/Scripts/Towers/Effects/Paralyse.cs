@@ -27,6 +27,7 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
             movement.IsParalysed = true;
 
             _counter = new(_duration);
+            _counter.Start();
         }
 
         public void Update(Enemy enemy, float time)

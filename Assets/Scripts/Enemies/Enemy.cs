@@ -4,6 +4,7 @@ using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Effects;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Enemies
 {
@@ -32,6 +33,10 @@ namespace TDDemo.Assets.Scripts.Enemies
         public TowerBehaviour LastDamagingTower { get; set; }
 
         public float HealthFraction => _health / StartingHealth;
+
+        public event UnityAction OnMouseEnterEvent;
+
+        public event UnityAction OnMouseExitEvent;
 
         public event Action<float> OnHurt;
 
@@ -76,6 +81,10 @@ namespace TDDemo.Assets.Scripts.Enemies
             // clean up finished effects
             _effects = _effects.Where(e => !e.IsFinished).ToList();
         }
+
+        private void OnMouseEnter() => OnMouseEnterEvent?.Invoke();
+
+        private void OnMouseExit() => OnMouseExitEvent?.Invoke();
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

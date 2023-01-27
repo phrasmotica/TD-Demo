@@ -32,6 +32,7 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
             movement.Speed = _initialSpeed * _factor;
 
             _counter = new(_duration);
+            _counter.Start();
         }
 
         public void Update(Enemy enemy, float time)

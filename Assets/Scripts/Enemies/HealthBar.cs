@@ -24,30 +24,25 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             _healthPeekCounter = new(HealthPeekTime);
 
+            Enemy.OnMouseEnterEvent += () => _mouseIsOverEnemy = true;
+            Enemy.OnMouseExitEvent += () => _mouseIsOverEnemy = false;
+
             Enemy.OnHurt += DrawAndPeek;
             Enemy.OnHeal += DrawAndPeek;
         }
 
         private void Update()
         {
-            // TODO: don't draw health bar from the start
-            if (!_healthPeekCounter.IsFinished)
+            if (_healthPeekCounter.IsFinished)
+            {
+                _healthPeekCounter.Reset();
+            }
+            else
             {
                 _healthPeekCounter.Increment(Time.deltaTime);
             }
 
-            // show health bar if we're in the peek period or if mouse is over the enemy
             _line.forceRenderingOff = !ShouldDrawHealthBar();
-        }
-
-        private void OnMouseEnter()
-        {
-            _mouseIsOverEnemy = true;
-        }
-
-        private void OnMouseExit()
-        {
-            _mouseIsOverEnemy = false;
         }
 
         private void DrawAndPeek(float healthFraction)
@@ -68,8 +63,12 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }
 
-        private void PeekHealth() => _healthPeekCounter.Reset();
+        private void PeekHealth() => _healthPeekCounter.Start();
 
-        private bool ShouldDrawHealthBar() => !_healthPeekCounter.IsFinished || _mouseIsOverEnemy;
+        private bool ShouldDrawHealthBar()
+        {
+            var inPeekPeriod = _healthPeekCounter.IsRunning && !_healthPeekCounter.IsFinished;
+            return inPeekPeriod || _mouseIsOverEnemy;
+        }
     }
 }

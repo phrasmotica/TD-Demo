@@ -26,6 +26,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private void Start()
         {
             _lastShotCounter = new(1f / FireRate);
+            _lastShotCounter.Start();
 
             _audio = GetComponent<AudioSource>();
 
@@ -52,7 +53,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 var nearestEnemy = orderedEnemies.First();
 
                 // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-                if (!_lastShotCounter.IsStarted || _lastShotCounter.IsFinished)
+                if (!_lastShotCounter.IsRunning || _lastShotCounter.IsFinished)
                 {
                     _lastShotCounter.Reset();
                     Shoot(nearestEnemy.GetComponent<Enemy>());

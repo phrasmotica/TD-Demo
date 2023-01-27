@@ -11,7 +11,7 @@
 
         public float Progress => _elapsedSeconds / _totalTimeSeconds;
 
-        public bool IsStarted { get; private set; }
+        public bool IsRunning { get; private set; }
 
         public bool IsFinished => _elapsedSeconds >= _totalTimeSeconds;
 
@@ -22,14 +22,18 @@
 
         public void Increment(float timeSeconds)
         {
-            if (!IsStarted)
+            if (IsRunning)
             {
-                IsStarted = true;
+                _elapsedSeconds += timeSeconds;
             }
-
-            _elapsedSeconds += timeSeconds;
         }
 
-        public void Reset() => _elapsedSeconds = 0;
+        public void Start() => IsRunning = true;
+
+        public void Reset()
+        {
+            IsRunning = false;
+            _elapsedSeconds = 0;
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             var baseLevel = GetBaseLevel();
             _warmupCounter = new(baseLevel.Time);
+            _warmupCounter.Start();
 
             return baseLevel.Time;
         }
@@ -59,6 +60,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             var upgradeTime = GetUpgradeTime();
             _upgradeCounter = new(upgradeTime);
+            _upgradeCounter.Start();
 
             return upgradeTime;
         }

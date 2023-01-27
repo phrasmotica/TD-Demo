@@ -16,6 +16,7 @@ namespace TDDemo.Assets.Scripts.UI
         private void Start()
         {
             _counter = new(LifeTimeSeconds);
+            _counter.Start();
         }
 
         private void Update()

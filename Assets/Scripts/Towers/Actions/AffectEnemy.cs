@@ -24,6 +24,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private void Start()
         {
             _lastEffectCounter = new(1f / FireRate);
+            _lastEffectCounter.Start();
 
             logger = new MethodLogger(nameof(AffectEnemy));
         }
@@ -44,7 +45,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, Specs.TargetMethod);
 
             // if there is an enemy in range and enough time has passed since the last effect, trigger an effect
-            if (orderedEnemies.Any() && (!_lastEffectCounter.IsStarted || _lastEffectCounter.IsFinished))
+            if (orderedEnemies.Any() && (!_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished))
             {
                 _lastEffectCounter.Reset();
 
