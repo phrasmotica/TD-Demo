@@ -30,10 +30,16 @@
 
         public void Start() => IsRunning = true;
 
-        public void Reset()
+        public void Stop()
         {
             IsRunning = false;
             _elapsedSeconds = 0;
+        }
+
+        public void Restart()
+        {
+            Stop();
+            Start();
         }
     }
 }

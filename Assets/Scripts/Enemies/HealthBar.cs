@@ -35,7 +35,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             if (_healthPeekCounter.IsFinished)
             {
-                _healthPeekCounter.Reset();
+                _healthPeekCounter.Stop();
             }
             else
             {

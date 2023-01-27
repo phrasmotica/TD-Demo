@@ -55,7 +55,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 // if there is an enemy in range and enough time has passed since the last shot, fire a shot
                 if (!_lastShotCounter.IsRunning || _lastShotCounter.IsFinished)
                 {
-                    _lastShotCounter.Reset();
+                    _lastShotCounter.Restart();
                     Shoot(nearestEnemy.GetComponent<Enemy>());
                 }
             }

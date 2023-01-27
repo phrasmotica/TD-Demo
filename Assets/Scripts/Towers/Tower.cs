@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers.Experience;
 
@@ -51,7 +51,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _state = TowerState.Firing;
 
-            _warmupCounter.Reset();
+            _warmupCounter.Stop();
         }
 
         public float StartUpgrading()
@@ -75,7 +75,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _state = TowerState.Firing;
 
-            _upgradeCounter.Reset();
+            _upgradeCounter.Stop();
             _upgradeLevel++;
 
             // make sure only the current level object is active

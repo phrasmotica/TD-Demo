@@ -47,7 +47,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             // if there is an enemy in range and enough time has passed since the last effect, trigger an effect
             if (orderedEnemies.Any() && (!_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished))
             {
-                _lastEffectCounter.Reset();
+                _lastEffectCounter.Restart();
 
                 var enemy = orderedEnemies.First().GetComponent<Enemy>();
 
