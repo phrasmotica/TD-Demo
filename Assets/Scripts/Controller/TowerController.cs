@@ -44,7 +44,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public event UnityAction<TowerBehaviour> OnLevelChangeSelectedTower;
 
-        public event UnityAction<TowerBehaviour, int> OnXpChangeSelectedTower;
+        public event UnityAction<TowerBehaviour, int> OnXpChangeTower;
 
         public event UnityAction<TowerBehaviour> OnSellSelectedTower;
 
@@ -60,7 +60,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
             OnPlaceTower += _towerManager.Add;
 
-            OnXpChangeSelectedTower += (tower, amount) =>
+            OnXpChangeTower += (tower, amount) =>
             {
                 if (amount != 0)
                 {
@@ -75,8 +75,11 @@ namespace TDDemo.Assets.Scripts.Controller
 
             OnSellSelectedTower += tower =>
             {
-                _towerManager.Remove(tower);
-                Destroy(tower.gameObject);
+                if (tower != null)
+                {
+                    _towerManager.Remove(tower);
+                    Destroy(tower.gameObject);
+                }
             };
 
             LivesController.OnEndGame += CancelCreateTower;
@@ -162,9 +165,23 @@ namespace TDDemo.Assets.Scripts.Controller
                 OnChangeSelectedTower?.Invoke(newTower);
             };
 
-            newTower.OnFinishUpgrade += () => OnFinishUpgradeSelectedTower(newTower);
-            newTower.OnLevelChange += () => OnLevelChangeSelectedTower(newTower);
-            newTower.OnXpChange += amount => OnXpChangeSelectedTower(newTower, amount);
+            newTower.OnFinishUpgrade += () =>
+            {
+                if (newTower.IsSelected)
+                {
+                    OnFinishUpgradeSelectedTower(newTower);
+                }
+            };
+
+            newTower.OnLevelChange += () =>
+            {
+                if (newTower.IsSelected)
+                {
+                    OnLevelChangeSelectedTower(newTower);
+                }
+            };
+
+            newTower.OnXpChange += amount => OnXpChangeTower(newTower, amount);
 
             _newTower = null;
         }

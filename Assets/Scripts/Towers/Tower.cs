@@ -14,17 +14,13 @@ namespace TDDemo.Assets.Scripts.Towers
         private int _upgradeLevel;
         private TimeCounter _upgradeCounter;
 
-        private readonly Experience.Experience _experience;
-
         private readonly IGoldRewardCalculator<Tower> _goldRewardCalculator;
 
         private readonly IXpCalculator _xpCalculator;
 
-        public int Level => _experience.Level;
+        public Experience.Experience Experience { get; }
 
-        public int CurrentXp => _experience.CurrentXp;
-
-        public int NextLevelXp => _experience.NextLevelXp;
+        public int Level => Experience.Level;
 
         public Tower(List<TowerLevel> levels, GoldCalculator goldCalculator, XpCalculator xpCalculator)
         {
@@ -35,7 +31,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _state = TowerState.Positioning;
             _upgradeLevel = 0;
-            _experience = new(new PokemonExperienceCurve());
+            Experience = new(new PokemonExperienceCurve());
         }
 
         public float StartWarmingUp()
@@ -137,11 +133,11 @@ namespace TDDemo.Assets.Scripts.Towers
         public int AddXp(int amount)
         {
             var xp = _xpCalculator.Compute(this, amount);
-            _experience.Add(xp);
+            Experience.Add(xp);
             return xp;
         }
 
-        public bool TryLevelUp() => _experience.TryLevelUp();
+        public bool TryLevelUp() => Experience.TryLevelUp();
 
         public int ComputeGoldReward(int baseGoldReward) => _goldRewardCalculator.Compute(this, baseGoldReward);
 

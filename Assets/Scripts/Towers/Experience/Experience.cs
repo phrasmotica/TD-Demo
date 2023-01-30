@@ -33,5 +33,12 @@
 
             return false;
         }
+
+        public float GetProgressToNextLevel()
+        {
+            var currentLevelXp = _experienceCurve.GetRequiredXpForLevel(Level);
+            var xpGap = NextLevelXp - currentLevelXp;
+            return (float) (CurrentXp - currentLevelXp) / xpGap;
+        }
     }
 }

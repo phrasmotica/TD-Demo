@@ -1,5 +1,6 @@
 using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Experience;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,18 +20,42 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Text FireRateText;
 
-        public Text LevelText;
-
         public Text XpText;
+
+        public ExperienceBar XpBar;
 
         private void Awake()
         {
             TowerController.OnStartUpgradeSelectedTower += SetStats;
             TowerController.OnFinishUpgradeSelectedTower += SetStats;
-            TowerController.OnChangeSelectedTower += SetStats;
             TowerController.OnLevelChangeSelectedTower += SetStats;
-            TowerController.OnXpChangeSelectedTower += (tower, amount) => SetStats(tower);
+
             TowerController.OnSellSelectedTower += tower => ClearStats();
+
+            TowerController.OnChangeSelectedTower += tower =>
+            {
+                SetStats(tower);
+
+                if (tower != null)
+                {
+                    XpBar.UpdateProgressBar(tower.Experience);
+                }
+            };
+
+            TowerController.OnXpChangeTower += (tower, _) =>
+            {
+                if (tower != null && tower.IsSelected)
+                {
+                    XpBar.UpdateProgressBar(tower.Experience);
+                }
+            };
+        }
+
+        private void Start()
+        {
+            DefaultText.enabled = true;
+
+            ClearStats();
         }
 
         public void SetStats(TowerBehaviour tower)
@@ -51,11 +76,7 @@ namespace TDDemo.Assets.Scripts.UI
                 FireRateText.gameObject.SetActive(true);
                 FireRateText.text = $"Fire rate: {tower.GetFireRate()}";
 
-                LevelText.gameObject.SetActive(true);
-                LevelText.text = $"Level: {tower.Level}";
-
-                XpText.gameObject.SetActive(true);
-                XpText.text = $"XP: {tower.CurrentXp}/{tower.NextLevelXp}";
+                XpBar.gameObject.SetActive(true);
             }
             else
             {
@@ -71,8 +92,7 @@ namespace TDDemo.Assets.Scripts.UI
             DamageText.gameObject.SetActive(false);
             RangeText.gameObject.SetActive(false);
             FireRateText.gameObject.SetActive(false);
-            LevelText.gameObject.SetActive(false);
-            XpText.gameObject.SetActive(false);
+            XpBar.gameObject.SetActive(false);
         }
     }
 }

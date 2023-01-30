@@ -38,11 +38,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private bool _isCollidingWithPathZone;
 
-        public int Level => _tower.Level;
-
-        public int CurrentXp => _tower.CurrentXp;
-
-        public int NextLevelXp => _tower.NextLevelXp;
+        public Experience.Experience Experience => _tower.Experience;
 
         public int TotalValue => _tower.GetTotalValue();
 
