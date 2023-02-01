@@ -96,9 +96,6 @@ namespace TDDemo.Assets.Scripts.Towers
                 AccumulateStrikes();
             };
 
-            AccumulateActions();
-            AccumulateStrikes();
-
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
 
@@ -219,6 +216,9 @@ namespace TDDemo.Assets.Scripts.Towers
             yield return new WaitForSeconds(warmupTime);
 
             _tower.FinishWarmingUp();
+
+            AccumulateActions();
+            AccumulateStrikes();
             AllowFire();
 
             _spriteRenderer.color = ColourHelper.FullOpacity;
@@ -321,6 +321,7 @@ namespace TDDemo.Assets.Scripts.Towers
             foreach (var a in _actions)
             {
                 a.TargetMethod = TargetMethod;
+                (a as MonoBehaviour).enabled = true;
             }
 
             OnAccumulateActions?.Invoke(_actions);

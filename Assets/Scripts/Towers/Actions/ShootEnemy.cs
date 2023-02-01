@@ -13,6 +13,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public ProjectileSpecs Specs;
 
+        public LineRenderer TargetLine;
+
+        public bool ShowTargetLine;
+
         private TimeCounter _lastShotCounter;
 
         private AudioSource _audio;
@@ -27,6 +31,13 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
+            // TODO: add target line to AffectEnemy
+            if (TargetLine != null)
+            {
+                TargetLine.enabled = false;
+                TargetLine.SetPosition(0, transform.position);
+            }
+
             _lastShotCounter = new(1f / FireRate);
             _lastShotCounter.Start();
 
@@ -52,14 +63,24 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
             if (orderedEnemies.Any())
             {
-                var nearestEnemy = orderedEnemies.First();
+                var target = orderedEnemies.First();
+
+                if (ShowTargetLine && TargetLine != null)
+                {
+                    TargetLine.enabled = true;
+                    TargetLine.SetPosition(1, target.transform.position);
+                }
 
                 // if there is an enemy in range and enough time has passed since the last shot, fire a shot
                 if (!_lastShotCounter.IsRunning || _lastShotCounter.IsFinished)
                 {
                     _lastShotCounter.Restart();
-                    Shoot(nearestEnemy.GetComponent<Enemy>());
+                    Shoot(target.GetComponent<Enemy>());
                 }
+            }
+            else
+            {
+                TargetLine.enabled = false;
             }
         }
 
