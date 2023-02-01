@@ -354,7 +354,6 @@ GameObject:
   - component: {fileID: 8586152713800763059}
   - component: {fileID: 7257497590404841095}
   - component: {fileID: 7063431615754082267}
-  - component: {fileID: 1039246141814937596}
   m_Layer: 0
   m_Name: level1
   m_TagString: TowerUpgrade
@@ -450,13 +449,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4943128654439657085}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50734fb2232737b4db97a67dfa7518f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EffectProvider: {fileID: 7063431615754082267}
-  Specs: {fileID: 1039246141814937596}
+  FireRate: 0.5
+  Range: 2
 --- !u!114 &7063431615754082267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,21 +471,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SourceTower: {fileID: 7861188637160861286}
   Duration: 1
---- !u!114 &1039246141814937596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4943128654439657085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce2bae3994d7b740b9e0877f1b17316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FireRate: 0.5
-  Range: 2
-  TargetMethod: 0
 --- !u!1 &5051437668199712515
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +629,6 @@ GameObject:
   - component: {fileID: 6339331099896013953}
   - component: {fileID: 5835456185551732828}
   - component: {fileID: 1305869969212194372}
-  - component: {fileID: 4604413855902104355}
   m_Layer: 0
   m_Name: level0
   m_TagString: TowerUpgrade
@@ -740,13 +724,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7889544214916897720}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50734fb2232737b4db97a67dfa7518f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EffectProvider: {fileID: 1305869969212194372}
-  Specs: {fileID: 4604413855902104355}
+  FireRate: 1
+  Range: 2
 --- !u!114 &1305869969212194372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,21 +747,6 @@ MonoBehaviour:
   SourceTower: {fileID: 7861188637160861286}
   Factor: 0.5
   Duration: 2
---- !u!114 &4604413855902104355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7889544214916897720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce2bae3994d7b740b9e0877f1b17316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FireRate: 1
-  Range: 2
-  TargetMethod: 0
 --- !u!1 &8278936702669702381
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +854,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Slow Tower
   Description: Slows an enemy for a period of time.
+  TargetMethod: 0
+  GoldCalculator: 0
+  XpCalculator: 0
   Levels:
   - {fileID: 6339331099896013953}
   - {fileID: 8586152713800763059}

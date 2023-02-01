@@ -96,6 +96,10 @@ namespace TDDemo.Assets.Scripts.Towers
                 AccumulateStrikes();
             };
 
+            // TODO: accumulate actions (or do something else) to establish
+            // the tower's range here, so that the range is drawn correctly
+            // before the tower has finished warming up
+
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
 
@@ -281,13 +285,13 @@ namespace TDDemo.Assets.Scripts.Towers
         public int GetRange()
         {
             var actionsWithRange = GetActions<IHasRange>();
-            return actionsWithRange.Any() ? actionsWithRange.Max(a => a.Range) : 0;
+            return actionsWithRange.Any() ? actionsWithRange.Max(a => a.GetRange()) : 0;
         }
 
         public float GetFireRate()
         {
             var actionsWithFireRate = GetActions<IHasFireRate>();
-            return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.FireRate) : 0;
+            return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.GetFireRate()) : 0;
         }
 
         public void GainXp(int baseXp)

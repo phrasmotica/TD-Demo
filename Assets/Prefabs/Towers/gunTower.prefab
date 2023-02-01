@@ -630,7 +630,6 @@ GameObject:
   - component: {fileID: 5983188766679234428}
   - component: {fileID: 9181127172246194813}
   - component: {fileID: 6181368074440403425}
-  - component: {fileID: 2248998314104429719}
   - component: {fileID: 5009809676124491293}
   m_Layer: 0
   m_Name: level0
@@ -733,7 +732,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StrikeProvider: {fileID: 6181368074440403425}
-  Specs: {fileID: 2248998314104429719}
+  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
+    type: 3}
+  ProjectileSpeed: 4
+  FireRate: 4
+  Range: 3
   TargetLine: {fileID: 3295782485528660272}
   ShowTargetLine: 1
 --- !u!114 &6181368074440403425
@@ -750,23 +753,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SourceTower: {fileID: 7631867566107524507}
   Amount: 1
---- !u!114 &2248998314104429719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7605472417552173125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a42734c785c64e488ff7f77779460cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
-    type: 3}
-  ProjectileSpeed: 4
-  FireRate: 4
-  Range: 3
 --- !u!82 &5009809676124491293
 AudioSource:
   m_ObjectHideFlags: 0
@@ -876,7 +862,6 @@ GameObject:
   - component: {fileID: 6429797936828976526}
   - component: {fileID: 2641400417889185778}
   - component: {fileID: 8312642539277265291}
-  - component: {fileID: 5117549713799867526}
   - component: {fileID: 6718605576518355556}
   m_Layer: 0
   m_Name: level2
@@ -979,7 +964,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StrikeProvider: {fileID: 8312642539277265291}
-  Specs: {fileID: 5117549713799867526}
+  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
+    type: 3}
+  ProjectileSpeed: 5
+  FireRate: 5
+  Range: 4
   TargetLine: {fileID: 3295782485528660272}
   ShowTargetLine: 1
 --- !u!114 &8312642539277265291
@@ -996,23 +985,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SourceTower: {fileID: 7631867566107524507}
   Amount: 2
---- !u!114 &5117549713799867526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8334016613487375963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a42734c785c64e488ff7f77779460cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
-    type: 3}
-  ProjectileSpeed: 5
-  FireRate: 5
-  Range: 4
 --- !u!82 &6718605576518355556
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1285,7 +1257,6 @@ GameObject:
   - component: {fileID: 192136218426829519}
   - component: {fileID: 5915820985257462655}
   - component: {fileID: 8855862668166078070}
-  - component: {fileID: 4433859778656440486}
   - component: {fileID: 487567890041266364}
   m_Layer: 0
   m_Name: level1
@@ -1388,7 +1359,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StrikeProvider: {fileID: 8855862668166078070}
-  Specs: {fileID: 4433859778656440486}
+  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
+    type: 3}
+  ProjectileSpeed: 5
+  FireRate: 5
+  Range: 4
   TargetLine: {fileID: 3295782485528660272}
   ShowTargetLine: 1
 --- !u!114 &8855862668166078070
@@ -1405,23 +1380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SourceTower: {fileID: 7631867566107524507}
   Amount: 1
---- !u!114 &4433859778656440486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8806496068603671578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a42734c785c64e488ff7f77779460cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
-    type: 3}
-  ProjectileSpeed: 5
-  FireRate: 5
-  Range: 4
 --- !u!82 &487567890041266364
 AudioSource:
   m_ObjectHideFlags: 0

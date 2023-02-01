@@ -2,6 +2,6 @@
 {
     public interface IHasRange
     {
-        int Range { get; }
+        int GetRange();
     }
 }

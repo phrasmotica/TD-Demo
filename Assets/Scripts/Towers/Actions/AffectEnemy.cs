@@ -11,13 +11,13 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
     {
         public EffectProvider EffectProvider;
 
-        public EffectSpecs Specs;
+        [Range(0.5f, 10f)]
+        public float FireRate;
+
+        [Range(1, 10)]
+        public int Range;
 
         private TimeCounter _lastEffectCounter;
-
-        public float FireRate => Specs.FireRate;
-
-        public int Range => Specs.Range;
 
         public TargetMethod TargetMethod { get; set; }
 
@@ -30,6 +30,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
             logger = new MethodLogger(nameof(AffectEnemy));
         }
+
+        public float GetFireRate() => FireRate;
+
+        public int GetRange() => Range;
 
         public void Act(IEnumerable<GameObject> enemies)
         {
@@ -51,12 +55,12 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             {
                 _lastEffectCounter.Restart();
 
-                var enemy = orderedEnemies.First().GetComponent<Enemy>();
+                var target = orderedEnemies.First().GetComponent<Enemy>();
 
-                if (!enemy.HasEffectCategory(EffectProvider.Category))
+                if (!target.HasEffectCategory(EffectProvider.Category))
                 {
                     logger.Log(EffectProvider.ApplyingEffect);
-                    enemy.AddEffect(EffectProvider.CreateEffect());
+                    target.AddEffect(EffectProvider.CreateEffect());
                 }
                 else
                 {

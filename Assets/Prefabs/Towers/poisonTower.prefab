@@ -158,7 +158,6 @@ GameObject:
   - component: {fileID: 1782348996669617364}
   - component: {fileID: 2287349842051960841}
   - component: {fileID: 4482429117503565492}
-  - component: {fileID: 8116562907342908278}
   m_Layer: 0
   m_Name: level0
   m_TagString: TowerUpgrade
@@ -254,13 +253,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2465916912773319661}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50734fb2232737b4db97a67dfa7518f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EffectProvider: {fileID: 4482429117503565492}
-  Specs: {fileID: 8116562907342908278}
+  FireRate: 0.5
+  Range: 2
 --- !u!114 &4482429117503565492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,21 +276,6 @@ MonoBehaviour:
   SourceTower: {fileID: 2476264691738361395}
   AmountPerSecond: 1
   Duration: 2
---- !u!114 &8116562907342908278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2465916912773319661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce2bae3994d7b740b9e0877f1b17316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FireRate: 0.5
-  Range: 2
-  TargetMethod: 0
 --- !u!1 &4440911955698717880
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +382,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Poison Tower
   Description: Inflicts poison, which drains health over time.
+  TargetMethod: 0
+  GoldCalculator: 0
+  XpCalculator: 0
   Levels:
   - {fileID: 1782348996669617364}
 --- !u!50 &3367208665240202030

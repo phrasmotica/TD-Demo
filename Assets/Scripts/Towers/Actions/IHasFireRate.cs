@@ -2,6 +2,6 @@
 {
     public interface IHasFireRate
     {
-        float FireRate { get; }
+        float GetFireRate();
     }
 }

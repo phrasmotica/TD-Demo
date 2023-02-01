@@ -11,7 +11,16 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
     {
         public StrikeProvider StrikeProvider;
 
-        public ProjectileSpecs Specs;
+        public GameObject ProjectilePrefab;
+
+        [Range(1, 10)]
+        public int ProjectileSpeed;
+
+        [Range(1, 10)]
+        public int FireRate;
+
+        [Range(1, 10)]
+        public int Range;
 
         public LineRenderer TargetLine;
 
@@ -20,10 +29,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private TimeCounter _lastShotCounter;
 
         private AudioSource _audio;
-
-        public float FireRate => Specs.FireRate;
-
-        public int Range => Specs.Range;
 
         public TargetMethod TargetMethod { get; set; }
 
@@ -45,6 +50,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
             logger = new MethodLogger(nameof(ShootEnemy));
         }
+
+        public float GetFireRate() => FireRate;
+
+        public int GetRange() => Range;
 
         public void Act(IEnumerable<GameObject> enemies)
         {
@@ -88,15 +97,15 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             logger.Log($"Shoot {enemy.gameObject.name}, position {enemy.transform.position}");
 
-            var projectileObj = Instantiate(Specs.ProjectilePrefab, gameObject.transform);
+            var projectileObj = Instantiate(ProjectilePrefab, gameObject.transform);
 
             var projectile = projectileObj.GetComponent<Projectile>();
             projectile.StrikeProvider = StrikeProvider;
             projectile.StartPosition = transform.position;
-            projectile.Range = Specs.Range;
+            projectile.Range = Range;
 
             var rb = projectileObj.GetComponent<Rigidbody2D>();
-            rb.velocity = GetDirectionToTransform(enemy.transform) * Specs.ProjectileSpeed;
+            rb.velocity = GetDirectionToTransform(enemy.transform) * ProjectileSpeed;
 
             if (_audio != null)
             {
