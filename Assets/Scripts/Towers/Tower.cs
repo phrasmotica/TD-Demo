@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Experience;
 using TDDemo.Assets.Scripts.Towers.Experience;
 using TDDemo.Assets.Scripts.Towers.Gold;
 
@@ -19,7 +20,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private readonly IXpCalculator _xpCalculator;
 
-        public Experience.Experience Experience { get; }
+        public Scripts.Experience.Experience Experience { get; }
 
         public int Level => Experience.Level;
 

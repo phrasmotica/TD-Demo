@@ -40,7 +40,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private bool _isCollidingWithPathZone;
 
-        public Experience.Experience Experience => _tower.Experience;
+        public Scripts.Experience.Experience Experience => _tower.Experience;
 
         public int TotalValue => _tower.GetTotalValue();
 

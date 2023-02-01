@@ -1,5 +1,6 @@
-﻿namespace TDDemo.Assets.Scripts.Towers.Experience
+﻿namespace TDDemo.Assets.Scripts.Experience
 {
+    // TODO: come up with a better name
     public class Experience
     {
         private readonly IExperienceCurve _experienceCurve;

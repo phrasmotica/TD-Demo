@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TDDemo.Assets.Scripts.Towers.Experience
+namespace TDDemo.Assets.Scripts.Experience
 {
     public class ExponentialExperienceCurve : IExperienceCurve
     {

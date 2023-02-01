@@ -1,4 +1,4 @@
-﻿namespace TDDemo.Assets.Scripts.Towers.Experience
+﻿namespace TDDemo.Assets.Scripts.Experience
 {
     public interface IExperienceCurve
     {

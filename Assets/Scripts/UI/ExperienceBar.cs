@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace TDDemo.Assets.Scripts.Towers.Experience
+namespace TDDemo.Assets.Scripts.UI
 {
-    // TODO: move out of tower-specific namespace
     public class ExperienceBar : MonoBehaviour
     {
         public Text LevelText;
@@ -31,7 +30,7 @@ namespace TDDemo.Assets.Scripts.Towers.Experience
             MaxWidth = LineShadow.GetPosition(1).x - StartPosX;
         }
 
-        public void UpdateProgressBar(Experience experience)
+        public void UpdateProgressBar(Experience.Experience experience)
         {
             LevelText.text = $"{experience.Level}";
             NextLevelText.text = $"{experience.Level + 1}";
