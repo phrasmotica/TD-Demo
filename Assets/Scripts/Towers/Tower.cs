@@ -7,6 +7,7 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class Tower
     {
+        // TODO: move this up to TowerBehaviour, since TowerLevel is a MonoBehaviour
         private readonly List<TowerLevel> _levels;
 
         private TowerState _state;

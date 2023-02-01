@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TDDemo.Assets.Scripts.Towers;
+﻿using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
@@ -21,19 +20,11 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public WavesController WavesController;
 
-        public List<CreateTower> CreateTowers;
-
-        public UpgradeTower UpgradeTower;
-
-        public SellTower SellTower;
-
         public GameOver GameOver;
 
         private TowerManager _towerManager;
 
         private TowerBehaviour _newTower;
-
-        public event UnityAction OnCreateNewTower;
 
         public event UnityAction<TowerBehaviour> OnPlaceTower;
 
@@ -55,46 +46,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _towerManager = new TowerManager();
 
-            OnCreateNewTower += () =>
-            {
-                _towerManager.DeselectCurrentTower();
-                OnChangeSelectedTower?.Invoke(null);
-            };
-
-            OnPlaceTower += _towerManager.Add;
-
-            OnXpChangeTower += (tower, amount) =>
-            {
-                if (amount != 0)
-                {
-                    var textPos = tower.transform.position + new Vector3(0, 0.2f);
-                    var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
-                    var textComponent = text.GetComponent<TextMeshProUGUI>();
-
-                    textComponent.text = amount < 0 ? $"{amount}" : $"+{amount}";
-                    textComponent.color = amount < 0 ? ColourHelper.XpLoss : ColourHelper.Xp;
-                }
-            };
-
-            OnSellSelectedTower += tower =>
-            {
-                if (tower != null)
-                {
-                    _towerManager.Remove(tower);
-                    Destroy(tower.gameObject);
-                }
-            };
-
             LivesController.OnEndGame += CancelCreateTower;
-
-            foreach (var createTower in CreateTowers)
-            {
-                createTower.OnCreate += CreateNewTower;
-            }
-
-            UpgradeTower.OnUpgrade += UpgradeSelectedTower;
-
-            SellTower.OnSell += SellSelectedTower;
 
             GameOver.OnRestart += () =>
             {
@@ -141,13 +93,14 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        private void CreateNewTower(GameObject towerPrefab)
+        public void CreateNewTower(GameObject towerPrefab)
         {
             // only create if we can afford the tower
             var tower = towerPrefab.GetComponent<TowerBehaviour>();
             if (MoneyController.CanAffordToBuy(tower))
             {
-                OnCreateNewTower();
+                _towerManager.DeselectCurrentTower();
+                OnChangeSelectedTower?.Invoke(null);
 
                 var newTowerObj = Instantiate(towerPrefab);
 
@@ -158,7 +111,9 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void PlaceTower(TowerBehaviour newTower)
         {
-            OnPlaceTower(newTower);
+            _towerManager.Add(newTower);
+
+            OnPlaceTower?.Invoke(newTower);
 
             WavesController.OnEnemiesChange += newTower.SetEnemies;
 
@@ -172,7 +127,7 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (newTower.IsSelected)
                 {
-                    OnFinishUpgradeSelectedTower(newTower);
+                    OnFinishUpgradeSelectedTower?.Invoke(newTower);
                 }
             };
 
@@ -180,7 +135,7 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (newTower.IsSelected)
                 {
-                    OnLevelChangeSelectedTower(newTower);
+                    OnLevelChangeSelectedTower?.Invoke(newTower);
                 }
             };
 
@@ -192,7 +147,11 @@ namespace TDDemo.Assets.Scripts.Controller
                 }
             };
 
-            newTower.OnXpChange += amount => OnXpChangeTower(newTower, amount);
+            newTower.OnXpChange += amount =>
+            {
+                CreateEphemeralXpText(newTower, amount);
+                OnXpChangeTower?.Invoke(newTower, amount);
+            };
 
             _newTower = null;
         }
@@ -206,8 +165,7 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        // TODO: make this public and remove UpgradeTower as a dependency, similar to SetTargetingSelectedTower
-        private void UpgradeSelectedTower()
+        public void UpgradeSelectedTower()
         {
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null && selectedTower.CanBeUpgraded() && MoneyController.CanAffordToUpgrade(selectedTower))
@@ -216,8 +174,7 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        // TODO: make this public and remove SellTower as a dependency, similar to SetTargetingSelectedTower
-        private void SellSelectedTower()
+        public void SellSelectedTower()
         {
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
@@ -225,7 +182,26 @@ namespace TDDemo.Assets.Scripts.Controller
                 _towerManager.DeselectCurrentTower();
                 OnChangeSelectedTower?.Invoke(null);
 
-                OnSellSelectedTower(selectedTower);
+                if (selectedTower != null)
+                {
+                    _towerManager.Remove(selectedTower);
+                    Destroy(selectedTower.gameObject);
+                }
+
+                OnSellSelectedTower?.Invoke(selectedTower);
+            }
+        }
+
+        private void CreateEphemeralXpText(TowerBehaviour tower, int amount)
+        {
+            if (amount != 0)
+            {
+                var textPos = tower.transform.position + new Vector3(0, 0.2f);
+                var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+                var textComponent = text.GetComponent<TextMeshProUGUI>();
+
+                textComponent.text = amount < 0 ? $"{amount}" : $"+{amount}";
+                textComponent.color = amount < 0 ? ColourHelper.XpLoss : ColourHelper.Xp;
             }
         }
 
