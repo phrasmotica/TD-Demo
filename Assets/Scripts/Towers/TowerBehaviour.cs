@@ -16,6 +16,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public string Description;
 
+        public TargetMethod TargetMethod;
+
         public GoldCalculator GoldCalculator;
 
         public XpCalculator XpCalculator;
@@ -70,6 +72,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event UnityAction<int> OnXpChange;
 
+        public event UnityAction<TargetMethod> OnSetTargetMethod;
+
         private void Start()
         {
             _tower = new Tower(Levels, GoldCalculator, XpCalculator);
@@ -84,6 +88,12 @@ namespace TDDemo.Assets.Scripts.Towers
                 {
                     OnLevelChange?.Invoke();
                 }
+            };
+
+            OnSetTargetMethod += _ =>
+            {
+                AccumulateActions();
+                AccumulateStrikes();
             };
 
             AccumulateActions();
@@ -252,6 +262,12 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void SetEnemies(List<GameObject> enemies) => _enemies = enemies;
 
+        public void SetTargetMethod(TargetMethod method)
+        {
+            TargetMethod = method;
+            OnSetTargetMethod(method);
+        }
+
         public int GetPrice() => Levels.First().Price;
 
         public int? GetUpgradeCost() => _tower.GetUpgradeCost();
@@ -301,6 +317,12 @@ namespace TDDemo.Assets.Scripts.Towers
         private void AccumulateActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
+
+            foreach (var a in _actions)
+            {
+                a.TargetMethod = TargetMethod;
+            }
+
             OnAccumulateActions?.Invoke(_actions);
         }
 
@@ -309,6 +331,12 @@ namespace TDDemo.Assets.Scripts.Towers
         private void AccumulateStrikes()
         {
             _strikes = GetComponentsInChildren<StrikeProvider>();
+
+            foreach (var s in _strikes)
+            {
+                s.TargetMethod = TargetMethod;
+            }
+
             OnAccumulateStrikes?.Invoke(_strikes);
         }
 

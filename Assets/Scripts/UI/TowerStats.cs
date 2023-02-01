@@ -24,6 +24,8 @@ namespace TDDemo.Assets.Scripts.UI
 
         public ExperienceBar XpBar;
 
+        public TargetingButtons TargetingButtons;
+
         private void Awake()
         {
             TowerController.OnStartUpgradeSelectedTower += SetStats;
@@ -77,6 +79,8 @@ namespace TDDemo.Assets.Scripts.UI
                 FireRateText.text = $"Fire rate: {tower.GetFireRate()}";
 
                 XpBar.gameObject.SetActive(true);
+
+                TargetingButtons.gameObject.SetActive(true);
             }
             else
             {
@@ -93,6 +97,7 @@ namespace TDDemo.Assets.Scripts.UI
             RangeText.gameObject.SetActive(false);
             FireRateText.gameObject.SetActive(false);
             XpBar.gameObject.SetActive(false);
+            TargetingButtons.gameObject.SetActive(false);
         }
     }
 }

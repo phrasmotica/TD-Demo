@@ -1,8 +1,8 @@
-﻿using TDDemo.Assets.Scripts.Towers.Actions;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
+    // TODO: absorb this into AffectEnemy script
     public class EffectSpecs : MonoBehaviour
     {
         [Range(0.5f, 10f)]
@@ -10,7 +10,5 @@ namespace TDDemo.Assets.Scripts.Towers
 
         [Range(1, 10)]
         public int Range;
-
-        public TargetMethod TargetMethod;
     }
 }

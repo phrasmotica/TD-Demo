@@ -7,6 +7,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
     {
         bool CanAct { get; set; }
 
+        TargetMethod TargetMethod { get; set; }
+
         void Act(IEnumerable<GameObject> enemies);
     }
 }

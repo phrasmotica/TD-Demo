@@ -21,6 +21,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public int Range => Specs.Range;
 
+        public TargetMethod TargetMethod { get; set; }
+
         public bool CanAct { get; set; }
 
         private void Start()
@@ -46,7 +48,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
         {
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
-            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, Specs.TargetMethod);
+            var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())
             {

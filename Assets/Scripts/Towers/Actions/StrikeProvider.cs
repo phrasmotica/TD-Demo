@@ -7,6 +7,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
     {
         public TowerBehaviour SourceTower;
 
+        public TargetMethod TargetMethod { get; set; }
+
         public abstract IStrike CreateStrike();
     }
 }

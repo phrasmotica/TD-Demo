@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
 using TMPro;
@@ -43,6 +44,8 @@ namespace TDDemo.Assets.Scripts.Controller
         public event UnityAction<TowerBehaviour> OnChangeSelectedTower;
 
         public event UnityAction<TowerBehaviour> OnLevelChangeSelectedTower;
+
+        public event UnityAction<TowerBehaviour> OnSetTargetMethodTower;
 
         public event UnityAction<TowerBehaviour, int> OnXpChangeTower;
 
@@ -181,11 +184,29 @@ namespace TDDemo.Assets.Scripts.Controller
                 }
             };
 
+            newTower.OnSetTargetMethod += method =>
+            {
+                if (newTower.IsSelected)
+                {
+                    OnSetTargetMethodTower?.Invoke(newTower);
+                }
+            };
+
             newTower.OnXpChange += amount => OnXpChangeTower(newTower, amount);
 
             _newTower = null;
         }
 
+        public void SetTargetingSelectedTower(TargetMethod method)
+        {
+            var selectedTower = _towerManager.GetSelectedTower();
+            if (selectedTower != null)
+            {
+                selectedTower.SetTargetMethod(method);
+            }
+        }
+
+        // TODO: make this public and remove UpgradeTower as a dependency, similar to SetTargetingSelectedTower
         private void UpgradeSelectedTower()
         {
             var selectedTower = _towerManager.GetSelectedTower();
@@ -195,6 +216,7 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
+        // TODO: make this public and remove SellTower as a dependency, similar to SetTargetingSelectedTower
         private void SellSelectedTower()
         {
             var selectedTower = _towerManager.GetSelectedTower();
