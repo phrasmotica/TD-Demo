@@ -28,8 +28,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private List<GameObject> _enemies;
 
-        public bool IsSelected { get; private set; }
-
         private SpriteRenderer _spriteRenderer;
 
         private ITowerAction[] _actions;
@@ -40,9 +38,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private bool _isCollidingWithPathZone;
 
-        public Scripts.Experience.Experience Experience => _tower.Experience;
+        public bool IsSelected { get; private set; }
 
-        public int TotalValue => _tower.GetTotalValue();
+        public Scripts.Experience.Experience Experience => _tower.Experience;
 
         public bool IsPositioning => _tower.IsPositioning();
 
@@ -76,7 +74,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void Start()
         {
-            _tower = new Tower(Levels, GoldCalculator, XpCalculator);
+            _tower = new Tower(GoldCalculator, XpCalculator);
             _enemies = new();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -197,7 +195,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private IEnumerator Warmup()
         {
-            var warmupTime = _tower.StartWarmingUp();
+            var warmupTime = GetWarmupTime();
+            _tower.StartWarmingUp(warmupTime);
 
             _spriteRenderer.color = ColourHelper.HalfOpacity;
 
@@ -219,7 +218,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private IEnumerator Upgrade()
         {
-            var upgradeTime = _tower.StartUpgrading();
+            var upgradeTime = GetUpgradeTime();
+            _tower.StartUpgrading(upgradeTime);
+
             PreventFire();
 
             _spriteRenderer.color = ColourHelper.HalfOpacity;
@@ -229,25 +230,42 @@ namespace TDDemo.Assets.Scripts.Towers
 
             var newLevel = _tower.FinishUpgrading();
 
+            // make sure only the current level object is active
+            for (var i = 0; i < Levels.Count; i++)
+            {
+                var level = Levels[i];
+                level.gameObject.SetActive(i == newLevel);
+            }
+
             AccumulateActions();
             AccumulateStrikes();
             AllowFire();
 
-            _spriteRenderer.sprite = newLevel.GetComponent<SpriteRenderer>().sprite;
+            _spriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
             _spriteRenderer.color = ColourHelper.FullOpacity;
 
-            logger.Log($"Tower upgraded, total value {TotalValue}");
+            logger.Log($"Tower upgraded, total value {GetTotalValue()}");
 
             OnFinishUpgrade?.Invoke();
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
 
-        public bool CanBeUpgraded() => _tower.CanBeUpgraded();
+        public bool CanBeUpgraded() => _tower.IsFiring() && _tower.UpgradeLevel < Levels.Count - 1;
 
         public bool IsWarmingUp() => _tower.IsWarmingUp();
 
         public bool IsUpgrading() => _tower.IsUpgrading();
+
+        public int GetTotalValue() => Levels.Take(_tower.UpgradeLevel + 1).Sum(l => l.Price);
+
+        private float GetWarmupTime() => Levels.First().Time;
+
+        private float GetUpgradeTime()
+        {
+            var nextLevel = Levels[_tower.UpgradeLevel + 1];
+            return nextLevel.Time;
+        }
 
         public void SetEnemies(List<GameObject> enemies) => _enemies = enemies;
 
@@ -263,7 +281,16 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetPrice() => Levels.First().Price;
 
-        public int? GetUpgradeCost() => _tower.GetUpgradeCost();
+        public int? GetUpgradeCost()
+        {
+            if (!CanBeUpgraded())
+            {
+                return null;
+            }
+
+            var nextLevel = Levels[_tower.UpgradeLevel + 1];
+            return nextLevel.Price;
+        }
 
         public float GetDamage()
         {

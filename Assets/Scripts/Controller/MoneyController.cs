@@ -77,7 +77,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public int GetSellPrice(TowerBehaviour tower)
         {
-            var adjustedSellPrice = (int) (tower.TotalValue * SellFraction);
+            var adjustedSellPrice = (int) (tower.GetTotalValue() * SellFraction);
             return Mathf.Max(adjustedSellPrice, 1);
         }
 
