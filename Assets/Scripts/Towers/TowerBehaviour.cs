@@ -80,9 +80,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            // TODO: accumulate actions (or do something else) to establish
-            // the tower's range here, so that the range is drawn correctly
-            // before the tower has finished warming up
+            AccumulateActions();
+            AccumulateStrikes();
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
@@ -205,6 +204,8 @@ namespace TDDemo.Assets.Scripts.Towers
             yield return new WaitForSeconds(warmupTime);
 
             _tower.FinishWarmingUp();
+
+            ReadyActions();
 
             AccumulateActions();
             AccumulateStrikes();
@@ -340,6 +341,17 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
+        private void ReadyActions()
+        {
+            _actions = GetComponentsInChildren<ITowerAction>();
+
+            foreach (var a in _actions)
+            {
+                a.Ready();
+            }
+        }
+
+        // TODO: rename to RefreshActions() or similar
         private void AccumulateActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
@@ -347,7 +359,6 @@ namespace TDDemo.Assets.Scripts.Towers
             foreach (var a in _actions)
             {
                 a.TargetMethod = TargetMethod;
-                (a as MonoBehaviour).enabled = true;
             }
 
             OnAccumulateActions?.Invoke(_actions);

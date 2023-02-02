@@ -9,6 +9,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         TargetMethod TargetMethod { get; set; }
 
+        void Ready();
+
         void Act(IEnumerable<GameObject> enemies);
     }
 }

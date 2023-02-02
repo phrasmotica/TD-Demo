@@ -15,6 +15,8 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
 
+            // TODO: set state on money change
+
             TowerController.OnStartUpgradeSelectedTower += SetState;
             TowerController.OnFinishUpgradeSelectedTower += SetState;
             TowerController.OnChangeSelectedTower += SetState;

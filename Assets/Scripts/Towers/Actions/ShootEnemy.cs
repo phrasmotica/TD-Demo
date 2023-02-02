@@ -39,7 +39,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             if (TargetLine != null)
             {
                 TargetLine.enabled = false;
-                TargetLine.SetPosition(0, transform.position);
             }
 
             _lastShotCounter = new(1f / FireRate);
@@ -53,6 +52,16 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public float GetFireRate() => FireRate;
 
         public int GetRange() => Range;
+
+        public void Ready()
+        {
+            // need to execute this AFTER the parent tower has been placed
+            // to get the correct position for the start of the line
+            if (TargetLine != null)
+            {
+                TargetLine.SetPosition(0, transform.position);
+            }
+        }
 
         public void Act(IEnumerable<GameObject> enemies)
         {
