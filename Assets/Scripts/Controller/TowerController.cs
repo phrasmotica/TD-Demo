@@ -163,9 +163,13 @@ namespace TDDemo.Assets.Scripts.Controller
         public void UpgradeSelectedTower()
         {
             var selectedTower = _towerManager.GetSelectedTower();
-            if (selectedTower != null && selectedTower.CanBeUpgraded() && MoneyController.CanAffordToUpgrade(selectedTower))
+            if (selectedTower != null)
             {
-                OnStartUpgradeSelectedTower?.Invoke(selectedTower);
+                var (canUpgrade, cost) = selectedTower.GetUpgradeInfo();
+                if (canUpgrade && MoneyController.CanAfford(cost))
+                {
+                    OnStartUpgradeSelectedTower?.Invoke(selectedTower);
+                }
             }
         }
 

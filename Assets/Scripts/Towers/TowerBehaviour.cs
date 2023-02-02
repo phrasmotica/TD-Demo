@@ -283,16 +283,16 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetPrice() => Levels.First().Price;
 
-        public int? GetUpgradeCost()
+        public (bool, int) GetUpgradeInfo()
         {
-            // TODO: remove this check and make the method return int
-            if (!CanBeUpgraded())
+            var isMaxLevel = _tower.UpgradeLevel >= Levels.Count - 1;
+            if (isMaxLevel)
             {
-                return null;
+                return (false, 0);
             }
 
             var nextLevel = Levels[_tower.UpgradeLevel + 1];
-            return nextLevel.Price;
+            return (_tower.IsFiring(), nextLevel.Price);
         }
 
         public float GetDamage()

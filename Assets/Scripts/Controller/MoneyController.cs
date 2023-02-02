@@ -37,9 +37,12 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (tower != null)
                 {
-                    AddMoney(-tower.GetUpgradeCost().Value);
-
-                    tower.DoUpgrade();
+                    var (canUpgrade, cost) = tower.GetUpgradeInfo();
+                    if (canUpgrade)
+                    {
+                        AddMoney(-cost);
+                        tower.DoUpgrade();
+                    }
                 }
             };
 
@@ -79,12 +82,6 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             var adjustedSellPrice = (int) (tower.GetTotalValue() * SellFraction);
             return Mathf.Max(adjustedSellPrice, 1);
-        }
-
-        public bool CanAffordToUpgrade(TowerBehaviour tower)
-        {
-            var cost = tower.GetUpgradeCost();
-            return cost.HasValue && CanAfford(cost.Value);
         }
 
         public void CreateRewardText(Enemy e, int reward)

@@ -31,13 +31,10 @@ namespace TDDemo.Assets.Scripts.UI
 
             if (_tower != null)
             {
-                var canUpgrade = _tower.CanBeUpgraded();
-                var canAfford = MoneyController.CanAffordToUpgrade(_tower);
-                GetComponent<Button>().interactable = canUpgrade && canAfford;
+                var (canUpgrade, cost) = _tower.GetUpgradeInfo();
 
-                var upgradeCost = _tower.GetUpgradeCost();
-                var text = canUpgrade && upgradeCost.HasValue ? $"Upgrade ({upgradeCost.Value})" : "Upgrade";
-                GetComponentInChildren<Text>().text = text;
+                GetComponent<Button>().interactable = canUpgrade && MoneyController.CanAfford(cost);
+                GetComponentInChildren<Text>().text = canUpgrade ? $"Upgrade ({cost})" : "Upgrade";
             }
             else
             {
@@ -48,8 +45,15 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void SetInteractable(int money)
         {
-            var canAfford = _tower != null && money >= _tower.GetUpgradeCost();
-            GetComponent<Button>().interactable = canAfford;
+            if (_tower != null)
+            {
+                var (_, cost) = _tower.GetUpgradeInfo();
+                GetComponent<Button>().interactable = money >= cost;
+            }
+            else
+            {
+                GetComponent<Button>().interactable = false;
+            }
         }
     }
 }
