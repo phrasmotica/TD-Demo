@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Experience;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
@@ -40,7 +41,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsSelected { get; private set; }
 
-        public Scripts.Experience.Experience Experience => _tower.Experience;
+        public ExperienceContainer Experience => _tower.Experience;
 
         public bool IsPositioning => _tower.IsPositioning();
 

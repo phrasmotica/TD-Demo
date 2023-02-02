@@ -16,7 +16,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int UpgradeLevel { get; private set; }
 
-        public Scripts.Experience.Experience Experience { get; }
+        public ExperienceContainer Experience { get; }
 
         public int Level => Experience.Level;
 

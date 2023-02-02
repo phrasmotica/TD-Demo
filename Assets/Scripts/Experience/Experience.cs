@@ -1,7 +1,6 @@
 ﻿namespace TDDemo.Assets.Scripts.Experience
 {
-    // TODO: come up with a better name
-    public class Experience
+    public class ExperienceContainer
     {
         private readonly IExperienceCurve _experienceCurve;
 
@@ -11,7 +10,7 @@
 
         public int NextLevelXp => _experienceCurve.GetRequiredXpForLevel(Level + 1);
 
-        public Experience(IExperienceCurve experienceCurve)
+        public ExperienceContainer(IExperienceCurve experienceCurve)
         {
             _experienceCurve = experienceCurve;
 
