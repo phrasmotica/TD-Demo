@@ -11,11 +11,13 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TowerController TowerController;
 
+        private TowerBehaviour _tower;
+
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
 
-            // TODO: set state on money change
+            MoneyController.OnMoneyChange += SetInteractable;
 
             TowerController.OnStartUpgradeSelectedTower += SetState;
             TowerController.OnFinishUpgradeSelectedTower += SetState;
@@ -25,13 +27,15 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void SetState(TowerBehaviour tower)
         {
-            if (tower != null)
+            _tower = tower;
+
+            if (_tower != null)
             {
-                var canUpgrade = tower.CanBeUpgraded();
-                var canAfford = MoneyController.CanAffordToUpgrade(tower);
+                var canUpgrade = _tower.CanBeUpgraded();
+                var canAfford = MoneyController.CanAffordToUpgrade(_tower);
                 GetComponent<Button>().interactable = canUpgrade && canAfford;
 
-                var upgradeCost = tower.GetUpgradeCost();
+                var upgradeCost = _tower.GetUpgradeCost();
                 var text = canUpgrade && upgradeCost.HasValue ? $"Upgrade ({upgradeCost.Value})" : "Upgrade";
                 GetComponentInChildren<Text>().text = text;
             }
@@ -40,6 +44,12 @@ namespace TDDemo.Assets.Scripts.UI
                 GetComponent<Button>().interactable = false;
                 GetComponentInChildren<Text>().text = "Upgrade";
             }
+        }
+
+        private void SetInteractable(int money)
+        {
+            var canAfford = _tower != null && money >= _tower.GetUpgradeCost();
+            GetComponent<Button>().interactable = canAfford;
         }
     }
 }

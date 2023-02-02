@@ -285,6 +285,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int? GetUpgradeCost()
         {
+            // TODO: remove this check and make the method return int
             if (!CanBeUpgraded())
             {
                 return null;
