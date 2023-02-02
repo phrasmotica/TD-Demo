@@ -36,7 +36,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
-            // TODO: add target line to AffectEnemy
             if (TargetLine != null)
             {
                 TargetLine.enabled = false;

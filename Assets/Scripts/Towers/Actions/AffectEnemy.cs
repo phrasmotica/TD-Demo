@@ -17,6 +17,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int Range;
 
+        public LineRenderer TargetLine;
+
+        public bool ShowTargetLine;
+
         private TimeCounter _lastEffectCounter;
 
         public TargetMethod TargetMethod { get; set; }
@@ -25,6 +29,12 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
+            if (TargetLine != null)
+            {
+                TargetLine.enabled = false;
+                TargetLine.SetPosition(0, transform.position);
+            }
+
             _lastEffectCounter = new(1f / FireRate);
             _lastEffectCounter.Start();
 
@@ -50,23 +60,36 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
-            // if there is an enemy in range and enough time has passed since the last effect, trigger an effect
-            if (orderedEnemies.Any() && (!_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished))
+            if (orderedEnemies.Any())
             {
-                _lastEffectCounter.Restart();
-
                 var target = orderedEnemies.First().GetComponent<Enemy>();
 
-                if (!target.HasEffectCategory(EffectProvider.Category))
+                if (ShowTargetLine && TargetLine != null)
                 {
-                    logger.Log(EffectProvider.ApplyingEffect);
-                    target.AddEffect(EffectProvider.CreateEffect());
+                    TargetLine.enabled = true;
+                    TargetLine.SetPosition(1, target.transform.position);
                 }
-                else
+
+                // if enough time has passed since the last effect, trigger an effect
+                if (!_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished)
                 {
-                    // if the enemy is already affected, tough luck!
-                    logger.Log(EffectProvider.EffectAlreadyApplied);
+                    _lastEffectCounter.Restart();
+
+                    if (!target.HasEffectCategory(EffectProvider.Category))
+                    {
+                        logger.Log(EffectProvider.ApplyingEffect);
+                        target.AddEffect(EffectProvider.CreateEffect());
+                    }
+                    else
+                    {
+                        // if the enemy is already affected, tough luck!
+                        logger.Log(EffectProvider.EffectAlreadyApplied);
+                    }
                 }
+            }
+            else
+            {
+                TargetLine.enabled = false;
             }
         }
     }
