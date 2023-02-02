@@ -39,8 +39,6 @@ namespace TDDemo.Assets.Scripts.Controller
 
             logger = new MethodLogger(nameof(WavesController));
 
-            OnWaveChange += currentWave => _currentWave = currentWave;
-
             EndZone.OnEnemyCollide += RemoveEnemy;
 
             GameOver.OnRestart += () =>
@@ -56,7 +54,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void SetCurrentWave(int currentWave)
         {
-            OnWaveChange(currentWave);
+            _currentWave = currentWave;
+            OnWaveChange?.Invoke(currentWave);
 
             if (IsStartOfStage(currentWave))
             {

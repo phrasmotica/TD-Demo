@@ -77,24 +77,9 @@ namespace TDDemo.Assets.Scripts.Towers
         private void Start()
         {
             _tower = new Tower(Levels, GoldCalculator, XpCalculator);
-
             _enemies = new();
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            OnXpChange += amount =>
-            {
-                if (_tower.TryLevelUp())
-                {
-                    OnLevelChange?.Invoke();
-                }
-            };
-
-            OnSetTargetMethod += _ =>
-            {
-                AccumulateActions();
-                AccumulateStrikes();
-            };
 
             // TODO: accumulate actions (or do something else) to establish
             // the tower's range here, so that the range is drawn correctly
@@ -269,7 +254,11 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetTargetMethod(TargetMethod method)
         {
             TargetMethod = method;
-            OnSetTargetMethod(method);
+
+            AccumulateActions();
+            AccumulateStrikes();
+
+            OnSetTargetMethod?.Invoke(method);
         }
 
         public int GetPrice() => Levels.First().Price;
@@ -297,7 +286,12 @@ namespace TDDemo.Assets.Scripts.Towers
         public void GainXp(int baseXp)
         {
             var xp = _tower.AddXp(baseXp);
-            OnXpChange(xp);
+            OnXpChange?.Invoke(xp);
+
+            if (_tower.TryLevelUp())
+            {
+                OnLevelChange?.Invoke();
+            }
         }
 
         public int ComputeGoldReward(int baseGoldReward) => _tower.ComputeGoldReward(baseGoldReward);

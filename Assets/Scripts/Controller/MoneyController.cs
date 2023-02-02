@@ -29,8 +29,6 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void Start()
         {
-            OnMoneyChange += money => Money = money;
-
             GameOver.OnRestart += ResetMoney;
 
             TowerController.OnPlaceTower += tower => AddMoney(-tower.GetPrice());
@@ -64,7 +62,11 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void ResetMoney() => SetMoney(StartingMoney);
 
-        private void SetMoney(int money) => OnMoneyChange(money);
+        private void SetMoney(int money)
+        {
+            Money = money;
+            OnMoneyChange?.Invoke(money);
+        }
 
         public void AddReward(Enemy e, TowerBehaviour tower)
         {

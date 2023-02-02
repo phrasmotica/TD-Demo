@@ -38,23 +38,18 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public event UnityAction OnMouseExitEvent;
 
-        public event Action<float> OnHurt;
+        public event UnityAction<float> OnHurt;
 
-        public event Action<float> OnHeal;
+        public event UnityAction<float> OnHeal;
 
-        public event Action<IEffect> OnEffect;
+        public event UnityAction<IEffect> OnEffect;
 
-        public event Action<Enemy, TowerBehaviour> OnKill;
+        public event UnityAction<Enemy, TowerBehaviour> OnKill;
 
         private void Start()
         {
             _health = StartingHealth;
             _effects = new List<IEffect>();
-
-            OnKill += (e, tower) =>
-            {
-                tower.GainXp(e.BaseXpReward);
-            };
         }
 
         private void Update()
@@ -62,8 +57,9 @@ namespace TDDemo.Assets.Scripts.Enemies
             if (_health <= 0)
             {
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
+                LastDamagingTower.GainXp(BaseXpReward);
 
-                OnKill(this, LastDamagingTower);
+                OnKill?.Invoke(this, LastDamagingTower);
                 return;
             }
 

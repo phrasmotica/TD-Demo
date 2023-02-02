@@ -1,6 +1,5 @@
 ﻿using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -14,19 +13,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private SpriteRenderer _spriteRenderer;
 
-        public event UnityAction OnRedraw;
-
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            OnRedraw += () =>
-            {
-                if (_spriteRenderer != null)
-                {
-                    DrawRange();
-                }
-            };
 
             TowerBehaviour.OnSelected += SetShowRange;
 
@@ -62,28 +51,31 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetTowerCanBePlaced(bool towerCanBePlaced)
         {
             _towerCanBePlaced = towerCanBePlaced;
-            OnRedraw();
+            DrawRange();
         }
 
         public void SetRange(int range)
         {
             RangeToDraw = range;
-            OnRedraw();
+            DrawRange();
         }
 
         public void DrawRange()
         {
-            logger.Log($"Drawing range of {RangeToDraw}");
+            if (_spriteRenderer != null)
+            {
+                logger.Log($"Drawing range of {RangeToDraw}");
 
-            _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
+                _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
-            // radius of range sprite in world space units
-            var spriteSize = _spriteRenderer.sprite.bounds.size.x / 2;
+                // radius of range sprite in world space units
+                var spriteSize = _spriteRenderer.sprite.bounds.size.x / 2;
 
-            // scale required to bring sprite to size of the range
-            var scale = RangeToDraw / spriteSize;
+                // scale required to bring sprite to size of the range
+                var scale = RangeToDraw / spriteSize;
 
-            transform.localScale = new Vector3(scale, scale, 1);
+                transform.localScale = new Vector3(scale, scale, 1);
+            }
         }
 
         private void SetShowRange(bool isSelected)

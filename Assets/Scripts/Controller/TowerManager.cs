@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 
@@ -10,8 +9,6 @@ namespace TDDemo.Assets.Scripts.Controller
         private int _selectedTowerIndex;
 
         public List<TowerBehaviour> Towers { get; }
-
-        public event Action<TowerBehaviour> OnSelectedTowerChange;
 
         public TowerManager() 
         {
@@ -108,13 +105,9 @@ namespace TDDemo.Assets.Scripts.Controller
             if (selectedTower != null)
             {
                 selectedTower.SetIsSelected(true);
-
-                OnSelectedTowerChange?.Invoke(selectedTower);
-
-                return selectedTower;
             }
 
-            return null;
+            return selectedTower;
         }
 
         private TowerBehaviour GetCurrentTower()

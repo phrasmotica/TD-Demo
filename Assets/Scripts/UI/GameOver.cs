@@ -27,10 +27,14 @@ namespace TDDemo.Assets.Scripts.UI
 
                 FinalMoneyText.text = $"You finished with {MoneyController.Money} money.";
 
-                RestartButton.onClick.AddListener(OnRestart);
+                RestartButton.onClick.AddListener(Restart);
             };
+        }
 
-            OnRestart += () => GameOverScreen.SetActive(false);
+        private void Restart()
+        {
+            GameOverScreen.SetActive(false);
+            OnRestart?.Invoke();
         }
     }
 }

@@ -50,8 +50,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
             GameOver.OnRestart += () =>
             {
-                _towerManager.DeselectCurrentTower();
-                OnChangeSelectedTower?.Invoke(null);
+                Deselect();
 
                 foreach (var t in _towerManager.Towers)
                 {
@@ -66,8 +65,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                _towerManager.DeselectCurrentTower();
-                OnChangeSelectedTower?.Invoke(null);
+                Deselect();
 
                 if (_newTower != null && _newTower.IsPositioning)
                 {
@@ -99,12 +97,9 @@ namespace TDDemo.Assets.Scripts.Controller
             var tower = towerPrefab.GetComponent<TowerBehaviour>();
             if (MoneyController.CanAffordToBuy(tower))
             {
-                _towerManager.DeselectCurrentTower();
-                OnChangeSelectedTower?.Invoke(null);
+                Deselect();
 
-                var newTowerObj = Instantiate(towerPrefab);
-
-                _newTower = newTowerObj.GetComponent<TowerBehaviour>();
+                _newTower = Instantiate(towerPrefab).GetComponent<TowerBehaviour>();
                 _newTower.OnPlace += () => PlaceTower(_newTower);
             }
         }
@@ -179,8 +174,7 @@ namespace TDDemo.Assets.Scripts.Controller
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
             {
-                _towerManager.DeselectCurrentTower();
-                OnChangeSelectedTower?.Invoke(null);
+                Deselect();
 
                 if (selectedTower != null)
                 {
@@ -190,6 +184,12 @@ namespace TDDemo.Assets.Scripts.Controller
 
                 OnSellSelectedTower?.Invoke(selectedTower);
             }
+        }
+
+        private void Deselect()
+        {
+            _towerManager.DeselectCurrentTower();
+            OnChangeSelectedTower?.Invoke(null);
         }
 
         private void CreateEphemeralXpText(TowerBehaviour tower, int amount)
