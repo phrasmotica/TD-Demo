@@ -41,6 +41,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsSelected { get; private set; }
 
+        public int KillCount { get; private set; }
+
         public ExperienceContainer Experience => _tower.Experience;
 
         public bool IsPositioning => _tower.IsPositioning();
@@ -68,6 +70,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public event UnityAction OnFinishUpgrade;
 
         public event UnityAction OnLevelChange;
+
+        public event UnityAction<int> OnKillCountChange;
 
         public event UnityAction<int> OnXpChange;
 
@@ -308,6 +312,12 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             var actionsWithFireRate = GetActions<IHasFireRate>();
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.GetFireRate()) : 0;
+        }
+
+        public void GainKill()
+        {
+            KillCount++;
+            OnKillCountChange?.Invoke(KillCount);
         }
 
         public void GainXp(int baseXp)

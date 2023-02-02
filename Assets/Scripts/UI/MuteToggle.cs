@@ -5,6 +5,7 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class MuteToggle : MonoBehaviour
     {
+        // TODO: change this to a list of audio sources, and mute them all
         public AudioSource MusicSource;
 
         private void Awake()

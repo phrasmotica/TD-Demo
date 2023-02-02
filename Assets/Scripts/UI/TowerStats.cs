@@ -20,11 +20,11 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Text FireRateText;
 
-        public Text XpText;
-
         public ExperienceBar XpBar;
 
         public TargetingButtons TargetingButtons;
+
+        public Text KillCountText;
 
         private void Awake()
         {
@@ -43,6 +43,8 @@ namespace TDDemo.Assets.Scripts.UI
                     XpBar.UpdateProgressBar(tower.Experience);
                 }
             };
+
+            TowerController.OnKillCountChangeTower += (tower, _) => SetStats(tower);
 
             TowerController.OnXpChangeTower += (tower, _) =>
             {
@@ -81,6 +83,9 @@ namespace TDDemo.Assets.Scripts.UI
                 XpBar.gameObject.SetActive(true);
 
                 TargetingButtons.gameObject.SetActive(true);
+
+                KillCountText.gameObject.SetActive(true);
+                KillCountText.text = $"Kills: {tower.KillCount}";
             }
             else
             {
@@ -98,6 +103,7 @@ namespace TDDemo.Assets.Scripts.UI
             FireRateText.gameObject.SetActive(false);
             XpBar.gameObject.SetActive(false);
             TargetingButtons.gameObject.SetActive(false);
+            KillCountText.gameObject.SetActive(false);
         }
     }
 }

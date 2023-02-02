@@ -38,6 +38,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public event UnityAction<TowerBehaviour> OnSetTargetMethodTower;
 
+        public event UnityAction<TowerBehaviour, int> OnKillCountChangeTower;
+
         public event UnityAction<TowerBehaviour, int> OnXpChangeTower;
 
         public event UnityAction<TowerBehaviour> OnSellSelectedTower;
@@ -146,6 +148,11 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 CreateEphemeralXpText(newTower, amount);
                 OnXpChangeTower?.Invoke(newTower, amount);
+            };
+
+            newTower.OnKillCountChange += kills =>
+            {
+                OnKillCountChangeTower?.Invoke(newTower, kills);
             };
 
             _newTower = null;

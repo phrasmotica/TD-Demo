@@ -57,6 +57,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             if (_health <= 0)
             {
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
+                LastDamagingTower.GainKill();
                 LastDamagingTower.GainXp(BaseXpReward);
 
                 OnKill?.Invoke(this, LastDamagingTower);

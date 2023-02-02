@@ -73,6 +73,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             {
                 var target = orderedEnemies.First().GetComponent<Enemy>();
 
+                // TODO: hide target line if tower is not in firing state
                 if (ShowTargetLine && TargetLine != null)
                 {
                     TargetLine.enabled = true;
