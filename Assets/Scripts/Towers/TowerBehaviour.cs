@@ -57,9 +57,9 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public event UnityAction OnPlace;
 
-        public event UnityAction<ITowerAction[]> OnAccumulateActions;
+        public event UnityAction<ITowerAction[]> OnRefreshActions;
 
-        public event UnityAction<StrikeProvider[]> OnAccumulateStrikes;
+        public event UnityAction<StrikeProvider[]> OnRefreshStrikes;
 
         public event UnityAction<float> OnWarmupProgress;
 
@@ -80,8 +80,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            AccumulateActions();
-            AccumulateStrikes();
+            RefreshActions();
+            RefreshStrikes();
 
             logger = new MethodLogger(nameof(TowerBehaviour));
         }
@@ -206,9 +206,6 @@ namespace TDDemo.Assets.Scripts.Towers
             _tower.FinishWarmingUp();
 
             ReadyActions();
-
-            AccumulateActions();
-            AccumulateStrikes();
             AllowFire();
 
             _spriteRenderer.color = ColourHelper.FullOpacity;
@@ -239,8 +236,8 @@ namespace TDDemo.Assets.Scripts.Towers
                 level.gameObject.SetActive(i == newLevel);
             }
 
-            AccumulateActions();
-            AccumulateStrikes();
+            RefreshActions();
+            RefreshStrikes();
             AllowFire();
 
             _spriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
@@ -275,8 +272,8 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             TargetMethod = method;
 
-            AccumulateActions();
-            AccumulateStrikes();
+            RefreshActions();
+            RefreshStrikes();
 
             OnSetTargetMethod?.Invoke(method);
         }
@@ -352,8 +349,7 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        // TODO: rename to RefreshActions() or similar
-        private void AccumulateActions()
+        private void RefreshActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
 
@@ -362,12 +358,12 @@ namespace TDDemo.Assets.Scripts.Towers
                 a.TargetMethod = TargetMethod;
             }
 
-            OnAccumulateActions?.Invoke(_actions);
+            OnRefreshActions?.Invoke(_actions);
         }
 
         private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
 
-        private void AccumulateStrikes()
+        private void RefreshStrikes()
         {
             _strikes = GetComponentsInChildren<StrikeProvider>();
 
@@ -376,7 +372,7 @@ namespace TDDemo.Assets.Scripts.Towers
                 s.TargetMethod = TargetMethod;
             }
 
-            OnAccumulateStrikes?.Invoke(_strikes);
+            OnRefreshStrikes?.Invoke(_strikes);
         }
 
         private IEnumerable<T> GetStrikes<T>() => _strikes.OfType<T>().Cast<T>();

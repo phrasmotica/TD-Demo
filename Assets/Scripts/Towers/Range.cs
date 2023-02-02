@@ -21,7 +21,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnCanBePlaced += SetTowerCanBePlaced;
 
-            TowerBehaviour.OnAccumulateActions += actions =>
+            TowerBehaviour.OnRefreshActions += actions =>
             {
                 var range = TowerBehaviour.GetRange();
                 SetRange(range);
