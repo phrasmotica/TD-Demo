@@ -93,11 +93,11 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
-        public void TakeDamage(float amount)
+        public void TakeDamage(float amount, bool isFromEffect)
         {
             _health -= amount;
 
-            if (_health > 0)
+            if (!isFromEffect && _health > 0)
             {
                 AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
             }

@@ -34,7 +34,7 @@ namespace TDDemo.Assets.Scripts.Towers.Effects
             _counter.Increment(time);
 
             var amount = _amountPerSecond * time;
-            enemy.TakeDamage(amount);
+            enemy.TakeDamage(amount, true);
         }
 
         public void End(Enemy enemy)

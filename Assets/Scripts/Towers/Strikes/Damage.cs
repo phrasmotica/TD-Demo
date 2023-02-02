@@ -15,7 +15,7 @@ namespace TDDemo.Assets.Scripts.Towers.Strikes
 
         public void Apply(Enemy enemy)
         {
-            enemy.TakeDamage(_amount);
+            enemy.TakeDamage(_amount, false);
             enemy.LastDamagingTower = SourceTower;
         }
     }
