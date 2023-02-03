@@ -108,8 +108,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void FireAtTarget()
         {
-            // if there is an enemy in range and enough time has passed since the last shot, fire a shot
-            if (_target != null && !_lastShotCounter.IsRunning || _lastShotCounter.IsFinished)
+            var enoughTimePassed = !_lastShotCounter.IsRunning || _lastShotCounter.IsFinished;
+            if (enoughTimePassed && _target != null)
             {
                 _lastShotCounter.Restart();
                 Shoot();

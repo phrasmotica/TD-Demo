@@ -99,8 +99,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void FireAtTarget()
         {
-            // if enough time has passed since the last effect, trigger an effect
-            if (_target != null && !_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished)
+            var enoughTimePassed = !_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished;
+            if (enoughTimePassed && _target != null)
             {
                 _lastEffectCounter.Restart();
 
