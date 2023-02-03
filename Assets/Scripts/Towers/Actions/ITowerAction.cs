@@ -11,6 +11,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         void Ready();
 
-        void Act(IEnumerable<GameObject> enemies);
+        void Survey(IEnumerable<GameObject> enemies);
+
+        void Act();
     }
 }

@@ -45,8 +45,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public ExperienceContainer Experience => _tower.Experience;
 
-        public bool IsPositioning => _tower.IsPositioning();
-
         public event UnityAction OnMouseEnterEvent;
 
         public event UnityAction OnMouseExitEvent;
@@ -131,11 +129,13 @@ namespace TDDemo.Assets.Scripts.Towers
                 OnUpgradeProgress?.Invoke(progress);
             }
 
-            if (_tower.IsFiring())
+            foreach (var action in _actions)
             {
-                foreach (var action in _actions)
+                action.Survey(_enemies);
+
+                if (_tower.IsFiring())
                 {
-                    action.Act(_enemies);
+                    action.Act();
                 }
             }
         }
@@ -256,7 +256,11 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool CanBeUpgraded() => _tower.IsFiring() && _tower.UpgradeLevel < Levels.Count - 1;
 
+        public bool IsPositioning() => _tower.IsPositioning();
+
         public bool IsWarmingUp() => _tower.IsWarmingUp();
+
+        public bool IsFiring() => _tower.IsFiring();
 
         public bool IsUpgrading() => _tower.IsUpgrading();
 

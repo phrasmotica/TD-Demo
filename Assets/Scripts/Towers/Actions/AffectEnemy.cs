@@ -9,6 +9,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 {
     public class AffectEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange
     {
+        public TowerBehaviour SourceTower;
+
         public EffectProvider EffectProvider;
 
         [Range(0.5f, 10f)]
@@ -22,6 +24,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public bool ShowTargetLine;
 
         private TimeCounter _lastEffectCounter;
+
+        private Enemy _target;
 
         public TargetMethod TargetMethod { get; set; }
 
@@ -46,60 +50,70 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public void Ready()
         {
-            // need to execute this AFTER the parent tower has been placed
-            // to get the correct position for the start of the line
             if (TargetLine != null)
             {
                 TargetLine.SetPosition(0, transform.position);
             }
         }
 
-        public void Act(IEnumerable<GameObject> enemies)
+        public void Survey(IEnumerable<GameObject> enemies)
         {
-            _lastEffectCounter.Increment(Time.deltaTime);
+            _target = EstablishTarget(enemies);
 
-            if (CanAct)
+            var isTargeting = _target != null && SourceTower.IsFiring();
+            var shouldDraw = ShowTargetLine && TargetLine != null;
+
+            if (isTargeting && shouldDraw)
             {
-                CheckForEnemiesInRange(enemies);
+                TargetLine.enabled = true;
+                TargetLine.SetPosition(1, _target.transform.position);
+            }
+            else
+            {
+                TargetLine.enabled = false;
             }
         }
 
-        private void CheckForEnemiesInRange(IEnumerable<GameObject> enemies)
+        public void Act()
+        {
+            if (CanAct)
+            {
+                _lastEffectCounter.Increment(Time.deltaTime);
+
+                FireAtTarget();
+            }
+        }
+
+        private Enemy EstablishTarget(IEnumerable<GameObject> enemies)
         {
             var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())
             {
-                var target = orderedEnemies.First().GetComponent<Enemy>();
-
-                // TODO: hide target line if tower is not in firing state
-                if (ShowTargetLine && TargetLine != null)
-                {
-                    TargetLine.enabled = true;
-                    TargetLine.SetPosition(1, target.transform.position);
-                }
-
-                // if enough time has passed since the last effect, trigger an effect
-                if (!_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished)
-                {
-                    _lastEffectCounter.Restart();
-
-                    if (!target.HasEffectCategory(EffectProvider.Category))
-                    {
-                        logger.Log(EffectProvider.ApplyingEffect);
-                        target.AddEffect(EffectProvider.CreateEffect());
-                    }
-                    else
-                    {
-                        // if the enemy is already affected, tough luck!
-                        logger.Log(EffectProvider.EffectAlreadyApplied);
-                    }
-                }
+                return orderedEnemies.First().GetComponent<Enemy>();
             }
-            else
+
+            return null;
+        }
+
+        private void FireAtTarget()
+        {
+            // if enough time has passed since the last effect, trigger an effect
+            if (_target != null && !_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished)
             {
-                TargetLine.enabled = false;
+                _lastEffectCounter.Restart();
+
+                if (!_target.HasEffectCategory(EffectProvider.Category))
+                {
+                    logger.Log(EffectProvider.ApplyingEffect);
+                    _target.AddEffect(EffectProvider.CreateEffect());
+                }
+                else
+                {
+                    // if the enemy is already affected, tough luck!
+                    logger.Log(EffectProvider.EffectAlreadyApplied);
+                }
             }
         }
     }

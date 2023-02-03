@@ -29,7 +29,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnMouseEnterEvent += () =>
             {
-                if (!TowerBehaviour.IsPositioning)
+                if (!TowerBehaviour.IsPositioning())
                 {
                     SetShowRange(true);
                 }
@@ -37,7 +37,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             TowerBehaviour.OnMouseExitEvent += () =>
             {
-                if (!TowerBehaviour.IsPositioning && !TowerBehaviour.IsSelected)
+                if (!TowerBehaviour.IsPositioning() && !TowerBehaviour.IsSelected)
                 {
                     SetShowRange(false);
                 }

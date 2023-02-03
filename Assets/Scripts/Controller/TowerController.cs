@@ -69,7 +69,7 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 Deselect();
 
-                if (_newTower != null && _newTower.IsPositioning)
+                if (_newTower != null && _newTower.IsPositioning())
                 {
                     CancelCreateTower();
                 }

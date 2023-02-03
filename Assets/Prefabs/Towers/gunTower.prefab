@@ -731,6 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36115d144360374eb4838478e38ef7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   StrikeProvider: {fileID: 6181368074440403425}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
@@ -963,6 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36115d144360374eb4838478e38ef7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   StrikeProvider: {fileID: 8312642539277265291}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
@@ -1358,6 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36115d144360374eb4838478e38ef7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
   StrikeProvider: {fileID: 8855862668166078070}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
