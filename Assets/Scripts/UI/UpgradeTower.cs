@@ -47,8 +47,9 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (_tower != null)
             {
-                var (_, cost) = _tower.GetUpgradeInfo();
-                GetComponent<Button>().interactable = money >= cost;
+                var (canUpgrade, cost) = _tower.GetUpgradeInfo();
+
+                GetComponent<Button>().interactable = canUpgrade && MoneyController.CanAfford(cost);
             }
             else
             {

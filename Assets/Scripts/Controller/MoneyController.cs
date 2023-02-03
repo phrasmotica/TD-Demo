@@ -25,6 +25,10 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public int Money { get; private set; }
 
+        // TODO: add the ability to earn "coupons", which cover the
+        // cost of a tower/upgrade/etc. Make enemies drop them and require
+        // the player to click on them to pick them up
+
         public event Action<int> OnMoneyChange;
 
         private void Start()
