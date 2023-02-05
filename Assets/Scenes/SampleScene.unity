@@ -1523,7 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42258e1e8c4fff54da07f65c2cb32217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   EndZone: {fileID: 576263752}
   GameOver: {fileID: 9070692961417390778}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
@@ -1562,7 +1562,7 @@ MonoBehaviour:
   RewardTextPrefab: {fileID: 5349574088421517419, guid: 5cccfc99b502a17469790d2d973e89dc,
     type: 3}
   LivesController: {fileID: 438958076}
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   WavesController: {fileID: 438958072}
   GameOver: {fileID: 9070692961417390778}
 --- !u!114 &438958075
@@ -3087,7 +3087,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
     type: 3}
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   TowerController: {fileID: 438958074}
 --- !u!114 &1012688284
 MonoBehaviour:
@@ -3605,7 +3605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a43cb0ba10a3e439d7e3b0f2e7fdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   TowerController: {fileID: 438958074}
 --- !u!1 &1274034835
 GameObject:
@@ -3660,7 +3660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221b605e15691d640859562736445c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   TowerController: {fileID: 438958074}
 --- !u!114 &1274034838
 MonoBehaviour:
@@ -3959,7 +3959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   TowerController: {fileID: 438958074}
 --- !u!114 &1421022782
 MonoBehaviour:
@@ -4471,7 +4471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8003f10082028ac49a7a79ebea00eeb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
 --- !u!1 &1705588063
 GameObject:
   m_ObjectHideFlags: 0
@@ -4956,7 +4956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
     type: 3}
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   TowerController: {fileID: 438958074}
 --- !u!114 &1841666782
 MonoBehaviour:
@@ -6082,7 +6082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LivesController: {fileID: 438958076}
-  MoneyController: {fileID: 438958075}
+  Bank: {fileID: 438958075}
   GameOverScreen: {fileID: 9070692963029854493}
   FinalMoneyText: {fileID: 9070692961149065817}
   RestartButton: {fileID: 9070692962548110435}

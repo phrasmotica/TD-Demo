@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
-    public class MoneyController : MonoBehaviour
+    public class BankManager : MonoBehaviour
     {
         public GameObject Canvas;
 

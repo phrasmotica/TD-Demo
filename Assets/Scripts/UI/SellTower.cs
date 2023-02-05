@@ -7,7 +7,7 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class SellTower : MonoBehaviour
     {
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public TowerController TowerController;
 
@@ -27,7 +27,7 @@ namespace TDDemo.Assets.Scripts.UI
 
             if (canSellTower)
             {
-                var sellPrice = MoneyController.GetSellPrice(tower);
+                var sellPrice = Bank.GetSellPrice(tower);
                 GetComponentInChildren<Text>().text = $"Sell ({sellPrice})";
             }
             else

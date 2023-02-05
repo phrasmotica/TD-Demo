@@ -12,7 +12,7 @@ namespace TDDemo.Assets.Scripts.Controller
 {
     public class WavesController : BaseBehaviour
     {
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public EndZone EndZone;
 
@@ -91,7 +91,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 var enemy = enemyObj.GetComponent<Enemy>();
                 enemy.OnKill += (e, tower) =>
                 {
-                    MoneyController.AddReward(e, tower);
+                    Bank.AddReward(e, tower);
                     RemoveEnemy(e);
                 };
 

@@ -16,7 +16,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public LivesController LivesController;
 
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public WavesController WavesController;
 
@@ -97,7 +97,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             // only create if we can afford the tower
             var tower = towerPrefab.GetComponent<TowerBehaviour>();
-            if (MoneyController.CanAffordToBuy(tower))
+            if (Bank.CanAffordToBuy(tower))
             {
                 Deselect();
 
@@ -173,7 +173,7 @@ namespace TDDemo.Assets.Scripts.Controller
             if (selectedTower != null)
             {
                 var (canUpgrade, cost) = selectedTower.GetUpgradeInfo();
-                if (canUpgrade && MoneyController.CanAfford(cost))
+                if (canUpgrade && Bank.CanAfford(cost))
                 {
                     OnStartUpgradeSelectedTower?.Invoke(selectedTower);
                 }

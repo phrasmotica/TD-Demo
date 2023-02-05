@@ -7,7 +7,7 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradeTower : MonoBehaviour
     {
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public TowerController TowerController;
 
@@ -17,7 +17,7 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
 
-            MoneyController.OnMoneyChange += SetInteractable;
+            Bank.OnMoneyChange += SetInteractable;
 
             TowerController.OnStartUpgradeSelectedTower += SetState;
             TowerController.OnFinishUpgradeSelectedTower += SetState;
@@ -33,7 +33,7 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 var (canUpgrade, cost) = _tower.GetUpgradeInfo();
 
-                GetComponent<Button>().interactable = canUpgrade && MoneyController.CanAfford(cost);
+                GetComponent<Button>().interactable = canUpgrade && Bank.CanAfford(cost);
                 GetComponentInChildren<Text>().text = canUpgrade ? $"Upgrade ({cost})" : "Upgrade";
             }
             else
@@ -49,7 +49,7 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 var (canUpgrade, cost) = _tower.GetUpgradeInfo();
 
-                GetComponent<Button>().interactable = canUpgrade && MoneyController.CanAfford(cost);
+                GetComponent<Button>().interactable = canUpgrade && Bank.CanAfford(cost);
             }
             else
             {

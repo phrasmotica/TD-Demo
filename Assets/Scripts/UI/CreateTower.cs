@@ -9,7 +9,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public GameObject TowerPrefab;
 
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public TowerController TowerController;
 
@@ -17,7 +17,7 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(() => TowerController.CreateNewTower(TowerPrefab));
 
-            MoneyController.OnMoneyChange += SetInteractable;
+            Bank.OnMoneyChange += SetInteractable;
         }
 
         private void SetInteractable(int money)

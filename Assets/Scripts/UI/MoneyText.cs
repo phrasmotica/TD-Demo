@@ -6,11 +6,11 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class MoneyText : MonoBehaviour
     {
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         private void Awake()
         {
-            MoneyController.OnMoneyChange += money =>
+            Bank.OnMoneyChange += money =>
             {
                 var text = GetComponent<Text>();
                 text.text = $"Money: {money}";

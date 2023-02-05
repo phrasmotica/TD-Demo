@@ -9,7 +9,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public LivesController LivesController;
 
-        public MoneyController MoneyController;
+        public BankManager Bank;
 
         public GameObject GameOverScreen;
 
@@ -25,7 +25,7 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 GameOverScreen.SetActive(true);
 
-                FinalMoneyText.text = $"You finished with {MoneyController.Money} money.";
+                FinalMoneyText.text = $"You finished with {Bank.Money} money.";
 
                 RestartButton.onClick.AddListener(Restart);
             };
