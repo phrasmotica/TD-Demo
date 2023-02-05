@@ -1,6 +1,5 @@
 using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
-using TDDemo.Assets.Scripts.Towers.Experience;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +13,11 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Text NameText;
 
-        public Text DamageText;
-
-        public Text RangeText;
-
-        public Text FireRateText;
+        public KillCount KillCount;
 
         public ExperienceBar XpBar;
 
         public TargetingButtons TargetingButtons;
-
-        public Text KillCountText;
 
         private void Awake()
         {
@@ -44,7 +37,13 @@ namespace TDDemo.Assets.Scripts.UI
                 }
             };
 
-            TowerController.OnKillCountChangeTower += (tower, _) => SetStats(tower);
+            TowerController.OnKillCountChangeTower += (tower, _) =>
+            {
+                if (tower != null && tower.IsSelected)
+                {
+                    KillCount.UpdateKillCount(tower.KillCount);
+                }
+            };
 
             TowerController.OnXpChangeTower += (tower, _) =>
             {
@@ -71,21 +70,11 @@ namespace TDDemo.Assets.Scripts.UI
                 NameText.gameObject.SetActive(true);
                 NameText.text = tower.Name;
 
-                DamageText.gameObject.SetActive(true);
-                DamageText.text = $"Damage: {tower.GetDamage()}";
-
-                RangeText.gameObject.SetActive(true);
-                RangeText.text = $"Range: {tower.GetRange()}";
-
-                FireRateText.gameObject.SetActive(true);
-                FireRateText.text = $"Fire rate: {tower.GetFireRate()}";
-
                 XpBar.gameObject.SetActive(true);
 
                 TargetingButtons.gameObject.SetActive(true);
 
-                KillCountText.gameObject.SetActive(true);
-                KillCountText.text = $"Kills: {tower.KillCount}";
+                KillCount.gameObject.SetActive(true);
             }
             else
             {
@@ -98,12 +87,9 @@ namespace TDDemo.Assets.Scripts.UI
         private void ClearStats()
         {
             NameText.gameObject.SetActive(false);
-            DamageText.gameObject.SetActive(false);
-            RangeText.gameObject.SetActive(false);
-            FireRateText.gameObject.SetActive(false);
             XpBar.gameObject.SetActive(false);
             TargetingButtons.gameObject.SetActive(false);
-            KillCountText.gameObject.SetActive(false);
+            KillCount.gameObject.SetActive(false);
         }
     }
 }

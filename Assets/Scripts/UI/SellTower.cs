@@ -7,7 +7,7 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class SellTower : MonoBehaviour
     {
-        public BankManager Bank;
+        public SpriteRenderer Sprite;
 
         public TowerController TowerController;
 
@@ -23,17 +23,9 @@ namespace TDDemo.Assets.Scripts.UI
         private void SetState(TowerBehaviour tower)
         {
             var canSellTower = tower != null;
-            GetComponent<Button>().interactable = canSellTower;
 
-            if (canSellTower)
-            {
-                var sellPrice = Bank.GetSellPrice(tower);
-                GetComponentInChildren<Text>().text = $"Sell ({sellPrice})";
-            }
-            else
-            {
-                GetComponentInChildren<Text>().text = "Sell";
-            }
+            GetComponent<Button>().interactable = canSellTower;
+            Sprite.color = canSellTower ? Color.white : Color.grey;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TDDemo.Assets.Scripts.UI
             TowerController.OnStartUpgradeSelectedTower += SetTower;
             TowerController.OnFinishUpgradeSelectedTower += SetTower;
             TowerController.OnChangeSelectedTower += SetTower;
-            TowerController.OnSellSelectedTower += SetTower;
+            TowerController.OnSellSelectedTower += tower => SetTower(null);
         }
 
         private void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
