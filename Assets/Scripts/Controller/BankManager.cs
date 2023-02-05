@@ -77,7 +77,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             if (purchaseMethod == PurchaseMethod.Coupons)
             {
-                return _useCoupons && Coupons > 0;
+                return Coupons > 0;
             }
 
             return price <= Money;
