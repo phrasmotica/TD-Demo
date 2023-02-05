@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.UI
             WavesController.OnWaveChange += wave =>
             {
                 var text = GetComponent<Text>();
-                text.text = $"Wave {wave}";
+                text.text = $"{wave}";
             };
         }
     }

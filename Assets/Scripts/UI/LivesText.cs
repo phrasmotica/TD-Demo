@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.UI
             LivesController.OnLivesChange += lives =>
             {
                 var text = GetComponent<Text>();
-                text.text = $"Lives: {lives}";
+                text.text = $"{lives}";
             };
         }
     }

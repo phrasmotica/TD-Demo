@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.UI
             Bank.OnMoneyChange += money =>
             {
                 var text = GetComponent<Text>();
-                text.text = $"Money: {money}";
+                text.text = $"{money}";
             };
         }
     }
