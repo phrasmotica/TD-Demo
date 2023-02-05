@@ -21,11 +21,11 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public LineRenderer TargetLine;
 
-        public bool ShowTargetLine;
-
         private TimeCounter _lastEffectCounter;
 
         private Enemy _target;
+
+        public bool ShowTargetLine { get; set; }
 
         public TargetMethod TargetMethod { get; set; }
 

@@ -26,13 +26,13 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public LineRenderer TargetLine;
 
-        public bool ShowTargetLine;
-
         private TimeCounter _lastShotCounter;
 
         private Enemy _target;
 
         private AudioSource _audio;
+
+        public bool ShowTargetLine { get; set; }
 
         public TargetMethod TargetMethod { get; set; }
 

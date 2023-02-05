@@ -375,7 +375,7 @@ namespace TDDemo.Assets.Scripts.Towers
             OnRefreshActions?.Invoke(_actions);
         }
 
-        private IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
+        public IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
 
         private void RefreshStrikes()
         {

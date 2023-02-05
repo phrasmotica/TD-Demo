@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +21,8 @@ namespace TDDemo.Assets.Scripts.UI
         public ExperienceBar XpBar;
 
         public TargetingButtons TargetingButtons;
+
+        public ShowTargetLineToggle ShowTargetLineToggle;
 
         private void Awake()
         {
@@ -80,10 +85,16 @@ namespace TDDemo.Assets.Scripts.UI
                 NameText.text = tower.Name;
 
                 XpBar.gameObject.SetActive(true);
-
                 TargetingButtons.gameObject.SetActive(true);
-
                 KillCount.gameObject.SetActive(true);
+
+                ShowTargetLineToggle.gameObject.SetActive(true);
+
+                var towerActions = tower.GetActions<ITowerAction>().ToList();
+                ShowTargetLineToggle.Actions = towerActions;
+
+                var firstAction = towerActions.FirstOrDefault();
+                ShowTargetLineToggle.GetComponent<Toggle>().isOn = firstAction?.ShowTargetLine ?? false;
             }
             else
             {
@@ -99,6 +110,9 @@ namespace TDDemo.Assets.Scripts.UI
             XpBar.gameObject.SetActive(false);
             TargetingButtons.gameObject.SetActive(false);
             KillCount.gameObject.SetActive(false);
+
+            ShowTargetLineToggle.gameObject.SetActive(false);
+            ShowTargetLineToggle.Actions = new List<ITowerAction>();
         }
     }
 }
