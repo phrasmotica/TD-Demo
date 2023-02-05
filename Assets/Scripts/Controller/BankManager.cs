@@ -20,22 +20,36 @@ namespace TDDemo.Assets.Scripts.Controller
         [Range(10, 100)]
         public int StartingMoney;
 
+        [Range(0, 5)]
+        public int StartingCoupons;
+
         [Range(0.5f, 1)]
         public float SellFraction;
 
         public int Money { get; private set; }
 
-        // TODO: add the ability to earn "coupons", which cover the
-        // cost of a tower/upgrade/etc. Make enemies drop them and require
-        // the player to click on them to pick them up
+        // TODO: make enemies drop coupons and require the player to click on them to pick them up
+        public int Coupons { get; private set; }
 
         public event Action<int> OnMoneyChange;
+
+        public event Action<int> OnCouponsChange;
 
         private void Start()
         {
             GameOver.OnRestart += ResetMoney;
 
-            TowerController.OnPlaceTower += tower => AddMoney(-tower.GetPrice());
+            TowerController.OnPlaceTower += tower =>
+            {
+                if (Coupons > 0)
+                {
+                    AddCoupons(-1);
+                }
+                else
+                {
+                    AddMoney(-tower.GetPrice());
+                }
+            };
 
             TowerController.OnStartUpgradeSelectedTower += tower =>
             {
@@ -59,9 +73,10 @@ namespace TDDemo.Assets.Scripts.Controller
             };
 
             ResetMoney();
+            ResetCoupons();
         }
 
-        public bool CanAfford(int price) => price <= Money;
+        public bool CanAfford(int price) => Coupons > 0 || price <= Money;
 
         public bool CanAffordToBuy(TowerBehaviour tower) => CanAfford(tower.GetPrice());
 
@@ -73,6 +88,16 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             Money = money;
             OnMoneyChange?.Invoke(money);
+        }
+
+        public void AddCoupons(int amount) => SetCoupons(Coupons + amount);
+
+        private void ResetCoupons() => SetCoupons(StartingCoupons);
+
+        private void SetCoupons(int coupons)
+        {
+            Coupons = coupons;
+            OnCouponsChange?.Invoke(coupons);
         }
 
         public void AddReward(Enemy e, TowerBehaviour tower)
