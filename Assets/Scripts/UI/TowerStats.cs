@@ -34,6 +34,7 @@ namespace TDDemo.Assets.Scripts.UI
                 if (tower != null)
                 {
                     XpBar.UpdateProgressBar(tower.Experience);
+                    KillCount.UpdateKillCount(tower.KillCount);
                 }
             };
 
