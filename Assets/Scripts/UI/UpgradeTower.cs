@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
+    // TODO: create tooltip prefab for when you hover over an upgrade button
+    // that shows the upgrade cost
     public class UpgradeTower : MonoBehaviour
     {
-        private const string CouponText = "Upgrade (    )";
-
         public BankManager Bank;
 
-        public TowerController TowerController;
+        public PurchaseMethod PurchaseMethod;
 
-        public SpriteRenderer SpriteRenderer;
+        public SpriteRenderer Sprite;
+
+        public TowerController TowerController;
 
         private TowerBehaviour _tower;
 
         private void Awake()
         {
-            GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
+            GetComponent<Button>().onClick.AddListener(Upgrade);
 
             Bank.OnMoneyChange += money => Refresh();
             Bank.OnCouponsChange += coupons => Refresh();
@@ -30,6 +32,8 @@ namespace TDDemo.Assets.Scripts.UI
             TowerController.OnChangeSelectedTower += SetTower;
             TowerController.OnSellSelectedTower += SetTower;
         }
+
+        private void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
 
         private void SetTower(TowerBehaviour tower)
         {
@@ -43,26 +47,16 @@ namespace TDDemo.Assets.Scripts.UI
             if (_tower != null && !_tower.IsUpgrading())
             {
                 var (canUpgrade, price) = _tower.GetUpgradeInfo();
-                var purchaseMethod = Bank.CanAfford(price);
+                var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
 
-                GetComponent<Button>().interactable = canUpgrade && purchaseMethod != PurchaseMethod.None;
-                GetComponentInChildren<Text>().text = canUpgrade ? ComputeText(purchaseMethod, price) : "Upgrade";
-
-                SpriteRenderer.enabled = canUpgrade && purchaseMethod == PurchaseMethod.Coupons;
+                GetComponent<Button>().interactable = canUpgrade && canAfford;
+                Sprite.color = canUpgrade && canAfford ? Color.white : Color.grey;
             }
             else
             {
                 GetComponent<Button>().interactable = false;
-                GetComponentInChildren<Text>().text = "Upgrade";
-
-                SpriteRenderer.enabled = false;
+                Sprite.color = Color.grey;
             }
         }
-
-        private string ComputeText(PurchaseMethod purchaseMethod, int price) => purchaseMethod switch
-        {
-            PurchaseMethod.Coupons => CouponText,
-            _ => $"Upgrade ({price})",
-        };
     }
 }

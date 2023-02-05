@@ -170,14 +170,14 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        public void UpgradeSelectedTower()
+        public void UpgradeSelectedTower(PurchaseMethod purchaseMethod)
         {
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
             {
                 var (canUpgrade, price) = selectedTower.GetUpgradeInfo();
 
-                if (canUpgrade && Bank.TryBuy(price))
+                if (canUpgrade && Bank.TryBuyVia(price, purchaseMethod))
                 {
                     selectedTower.DoUpgrade();
 

@@ -73,6 +73,16 @@ namespace TDDemo.Assets.Scripts.Controller
             return price <= Money ? PurchaseMethod.Money : PurchaseMethod.None;
         }
 
+        public bool CanAffordVia(int price, PurchaseMethod purchaseMethod)
+        {
+            if (purchaseMethod == PurchaseMethod.Coupons)
+            {
+                return _useCoupons && Coupons > 0;
+            }
+
+            return price <= Money;
+        }
+
         public PurchaseMethod CanAffordToBuy(TowerBehaviour tower) => CanAfford(tower.GetPrice());
 
         public void AddMoney(int amount) => SetMoney(Money + amount);
@@ -106,9 +116,32 @@ namespace TDDemo.Assets.Scripts.Controller
             return false;
         }
 
+        public bool TryBuyVia(int price, PurchaseMethod purchaseMethod)
+        {
+            if (CanAffordVia(price, purchaseMethod))
+            {
+                BuyVia(price, purchaseMethod);
+                return true;
+            }
+
+            return false;
+        }
+
         private void Buy(int price)
         {
             if (_useCoupons && Coupons > 0)
+            {
+                AddCoupons(-1);
+            }
+            else
+            {
+                AddMoney(-price);
+            }
+        }
+
+        private void BuyVia(int price, PurchaseMethod purchaseMethod)
+        {
+            if (purchaseMethod == PurchaseMethod.Coupons)
             {
                 AddCoupons(-1);
             }
