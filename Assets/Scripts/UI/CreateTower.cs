@@ -17,15 +17,15 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(() => TowerController.CreateNewTower(TowerPrefab));
 
-            Bank.OnMoneyChange += SetInteractable;
+            Bank.OnMoneyChange += money => SetInteractable();
+            Bank.OnCouponsChange += coupons => SetInteractable();
+            Bank.OnChangeUseCoupons += useCoupons => SetInteractable();
         }
 
-        private void SetInteractable(int money)
+        private void SetInteractable()
         {
-            var canAfford = money >= GetTowerPrice();
+            var canAfford = Bank.CanAffordToBuy(TowerPrefab.GetComponent<TowerBehaviour>());
             GetComponent<Button>().interactable = canAfford;
         }
-
-        private int GetTowerPrice() => TowerPrefab.GetComponent<TowerBehaviour>().GetPrice();
     }
 }

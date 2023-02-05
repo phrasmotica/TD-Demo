@@ -26,6 +26,8 @@ namespace TDDemo.Assets.Scripts.Controller
         [Range(0.5f, 1)]
         public float SellFraction;
 
+        private bool _useCoupons;
+
         public int Money { get; private set; }
 
         // TODO: make enemies drop coupons and require the player to click on them to pick them up
@@ -35,19 +37,17 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public event Action<int> OnCouponsChange;
 
+        public event Action<bool> OnChangeUseCoupons;
+
         private void Start()
         {
             GameOver.OnRestart += ResetMoney;
 
             TowerController.OnPlaceTower += tower =>
             {
-                if (Coupons > 0)
+                if (tower != null)
                 {
-                    AddCoupons(-1);
-                }
-                else
-                {
-                    AddMoney(-tower.GetPrice());
+                    Buy(tower.GetPrice());
                 }
             };
 
@@ -55,10 +55,10 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (tower != null)
                 {
-                    var (canUpgrade, cost) = tower.GetUpgradeInfo();
+                    var (canUpgrade, price) = tower.GetUpgradeInfo();
                     if (canUpgrade)
                     {
-                        AddMoney(-cost);
+                        Buy(price);
                         tower.DoUpgrade();
                     }
                 }
@@ -76,7 +76,7 @@ namespace TDDemo.Assets.Scripts.Controller
             ResetCoupons();
         }
 
-        public bool CanAfford(int price) => Coupons > 0 || price <= Money;
+        public bool CanAfford(int price) => (_useCoupons && Coupons > 0) || price <= Money;
 
         public bool CanAffordToBuy(TowerBehaviour tower) => CanAfford(tower.GetPrice());
 
@@ -100,6 +100,18 @@ namespace TDDemo.Assets.Scripts.Controller
             OnCouponsChange?.Invoke(coupons);
         }
 
+        private void Buy(int price)
+        {
+            if (_useCoupons && Coupons > 0)
+            {
+                AddCoupons(-1);
+            }
+            else
+            {
+                AddMoney(-price);
+            }
+        }
+
         public void AddReward(Enemy e, TowerBehaviour tower)
         {
             var reward = tower.ComputeGoldReward(e.BaseGoldReward);
@@ -118,6 +130,12 @@ namespace TDDemo.Assets.Scripts.Controller
             var textPos = e.transform.position + new Vector3(0, 0.2f);
             var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
             text.GetComponent<TextMeshProUGUI>().text = $"+{reward}";
+        }
+
+        public void SetUseCoupons(bool useCoupons)
+        {
+            _useCoupons = useCoupons;
+            OnChangeUseCoupons?.Invoke(useCoupons);
         }
     }
 }

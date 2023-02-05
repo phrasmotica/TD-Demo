@@ -17,7 +17,9 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
 
-            Bank.OnMoneyChange += SetInteractable;
+            Bank.OnMoneyChange += money => SetInteractable();
+            Bank.OnCouponsChange += coupons => SetInteractable();
+            Bank.OnChangeUseCoupons += useCoupons => SetInteractable();
 
             TowerController.OnStartUpgradeSelectedTower += SetState;
             TowerController.OnFinishUpgradeSelectedTower += SetState;
@@ -43,7 +45,7 @@ namespace TDDemo.Assets.Scripts.UI
             }
         }
 
-        private void SetInteractable(int money)
+        private void SetInteractable()
         {
             if (_tower != null)
             {
