@@ -53,6 +53,14 @@ namespace TDDemo.Assets.Scripts.UI
                     XpBar.UpdateProgressBar(tower.Experience);
                 }
             };
+
+            TowerController.OnLevelChangeSelectedTower += tower =>
+            {
+                if (tower != null)
+                {
+                    XpBar.UpdateProgressBar(tower.Experience);
+                }
+            };
         }
 
         private void Start()
