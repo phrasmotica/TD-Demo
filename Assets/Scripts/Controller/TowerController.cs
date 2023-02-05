@@ -1,4 +1,5 @@
-﻿using TDDemo.Assets.Scripts.Towers;
+﻿using System.Diagnostics;
+using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
@@ -97,7 +98,9 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             // only create if we can afford the tower
             var tower = towerPrefab.GetComponent<TowerBehaviour>();
-            if (Bank.CanAffordToBuy(tower))
+
+            var canBuy = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
+            if (canBuy)
             {
                 Deselect();
 
@@ -172,9 +175,12 @@ namespace TDDemo.Assets.Scripts.Controller
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
             {
-                var (canUpgrade, cost) = selectedTower.GetUpgradeInfo();
-                if (canUpgrade && Bank.CanAfford(cost))
+                var (canUpgrade, price) = selectedTower.GetUpgradeInfo();
+
+                if (canUpgrade && Bank.TryBuy(price))
                 {
+                    selectedTower.DoUpgrade();
+
                     OnStartUpgradeSelectedTower?.Invoke(selectedTower);
                 }
             }

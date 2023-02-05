@@ -7,9 +7,13 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradeTower : MonoBehaviour
     {
+        private const string CouponText = "Upgrade (    )";
+
         public BankManager Bank;
 
         public TowerController TowerController;
+
+        public SpriteRenderer SpriteRenderer;
 
         private TowerBehaviour _tower;
 
@@ -17,46 +21,48 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(TowerController.UpgradeSelectedTower);
 
-            Bank.OnMoneyChange += money => SetInteractable();
-            Bank.OnCouponsChange += coupons => SetInteractable();
-            Bank.OnChangeUseCoupons += useCoupons => SetInteractable();
+            Bank.OnMoneyChange += money => Refresh();
+            Bank.OnCouponsChange += coupons => Refresh();
+            Bank.OnChangeUseCoupons += useCoupons => Refresh();
 
-            TowerController.OnStartUpgradeSelectedTower += SetState;
-            TowerController.OnFinishUpgradeSelectedTower += SetState;
-            TowerController.OnChangeSelectedTower += SetState;
-            TowerController.OnSellSelectedTower += SetState;
+            TowerController.OnStartUpgradeSelectedTower += SetTower;
+            TowerController.OnFinishUpgradeSelectedTower += SetTower;
+            TowerController.OnChangeSelectedTower += SetTower;
+            TowerController.OnSellSelectedTower += SetTower;
         }
 
-        private void SetState(TowerBehaviour tower)
+        private void SetTower(TowerBehaviour tower)
         {
             _tower = tower;
 
-            if (_tower != null)
-            {
-                var (canUpgrade, cost) = _tower.GetUpgradeInfo();
+            Refresh();
+        }
 
-                GetComponent<Button>().interactable = canUpgrade && Bank.CanAfford(cost);
-                GetComponentInChildren<Text>().text = canUpgrade ? $"Upgrade ({cost})" : "Upgrade";
+        private void Refresh()
+        {
+            if (_tower != null && !_tower.IsUpgrading())
+            {
+                var (canUpgrade, price) = _tower.GetUpgradeInfo();
+                var purchaseMethod = Bank.CanAfford(price);
+
+                GetComponent<Button>().interactable = canUpgrade && purchaseMethod != PurchaseMethod.None;
+                GetComponentInChildren<Text>().text = canUpgrade ? ComputeText(purchaseMethod, price) : "Upgrade";
+
+                SpriteRenderer.enabled = canUpgrade && purchaseMethod == PurchaseMethod.Coupons;
             }
             else
             {
                 GetComponent<Button>().interactable = false;
                 GetComponentInChildren<Text>().text = "Upgrade";
+
+                SpriteRenderer.enabled = false;
             }
         }
 
-        private void SetInteractable()
+        private string ComputeText(PurchaseMethod purchaseMethod, int price) => purchaseMethod switch
         {
-            if (_tower != null)
-            {
-                var (canUpgrade, cost) = _tower.GetUpgradeInfo();
-
-                GetComponent<Button>().interactable = canUpgrade && Bank.CanAfford(cost);
-            }
-            else
-            {
-                GetComponent<Button>().interactable = false;
-            }
-        }
+            PurchaseMethod.Coupons => CouponText,
+            _ => $"Upgrade ({price})",
+        };
     }
 }

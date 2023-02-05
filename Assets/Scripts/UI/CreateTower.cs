@@ -24,7 +24,8 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void SetInteractable()
         {
-            var canAfford = Bank.CanAffordToBuy(TowerPrefab.GetComponent<TowerBehaviour>());
+            var tower = TowerPrefab.GetComponent<TowerBehaviour>();
+            var canAfford = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
             GetComponent<Button>().interactable = canAfford;
         }
     }

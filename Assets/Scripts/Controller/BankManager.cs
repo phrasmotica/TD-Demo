@@ -51,19 +51,6 @@ namespace TDDemo.Assets.Scripts.Controller
                 }
             };
 
-            TowerController.OnStartUpgradeSelectedTower += tower =>
-            {
-                if (tower != null)
-                {
-                    var (canUpgrade, price) = tower.GetUpgradeInfo();
-                    if (canUpgrade)
-                    {
-                        Buy(price);
-                        tower.DoUpgrade();
-                    }
-                }
-            };
-
             TowerController.OnSellSelectedTower += tower =>
             {
                 if (tower != null)
@@ -76,9 +63,17 @@ namespace TDDemo.Assets.Scripts.Controller
             ResetCoupons();
         }
 
-        public bool CanAfford(int price) => (_useCoupons && Coupons > 0) || price <= Money;
+        public PurchaseMethod CanAfford(int price)
+        {
+            if (_useCoupons && Coupons > 0)
+            {
+                return PurchaseMethod.Coupons;
+            }
 
-        public bool CanAffordToBuy(TowerBehaviour tower) => CanAfford(tower.GetPrice());
+            return price <= Money ? PurchaseMethod.Money : PurchaseMethod.None;
+        }
+
+        public PurchaseMethod CanAffordToBuy(TowerBehaviour tower) => CanAfford(tower.GetPrice());
 
         public void AddMoney(int amount) => SetMoney(Money + amount);
 
@@ -98,6 +93,17 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             Coupons = coupons;
             OnCouponsChange?.Invoke(coupons);
+        }
+
+        public bool TryBuy(int price)
+        {
+            if (CanAfford(price) != PurchaseMethod.None)
+            {
+                Buy(price);
+                return true;
+            }
+
+            return false;
         }
 
         private void Buy(int price)
@@ -137,5 +143,12 @@ namespace TDDemo.Assets.Scripts.Controller
             _useCoupons = useCoupons;
             OnChangeUseCoupons?.Invoke(useCoupons);
         }
+    }
+
+    public enum PurchaseMethod
+    {
+        Money,
+        Coupons,
+        None,
     }
 }
