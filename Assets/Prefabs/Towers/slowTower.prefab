@@ -313,9 +313,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -23614339
-  m_SortingLayer: 1
-  m_SortingOrder: 10
+  m_SortingLayerID: 1734897619
+  m_SortingLayer: 5
+  m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 1, y: 0, z: 0}
@@ -590,7 +590,6 @@ MonoBehaviour:
   FireRate: 0.5
   Range: 2
   TargetLine: {fileID: 8669928268687874843}
-  ShowTargetLine: 1
 --- !u!114 &7063431615754082267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,7 +867,6 @@ MonoBehaviour:
   FireRate: 1
   Range: 2
   TargetLine: {fileID: 8669928268687874843}
-  ShowTargetLine: 1
 --- !u!114 &1305869969212194372
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -58,3 +58,6 @@ TagManager:
   - name: Game Over UI
     uniqueID: 1078763103
     locked: 0
+  - name: Debug UI
+    uniqueID: 1734897619
+    locked: 0
