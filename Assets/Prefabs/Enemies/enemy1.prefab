@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 4101114792007328005}
   - component: {fileID: 2494292608936246408}
   - component: {fileID: 5049580195892582698}
+  - component: {fileID: 6375512407751788225}
   m_Layer: 0
   m_Name: enemy1
   m_TagString: Enemy
@@ -342,3 +343,19 @@ MonoBehaviour:
   Speed: 2
   IsParalysed: 0
   IsCircular: 0
+--- !u!114 &6375512407751788225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789323038238934127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddadb9b8be59874482a01f86bdf08c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 2494292608936246408}
+  DropPrefab: {fileID: 5196889056409023050, guid: 2dda072388f92a44f844182edb43cdc9,
+    type: 3}
+  DropChance: 0.02

@@ -44,6 +44,8 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public event UnityAction<IEffect> OnEffect;
 
+        public event UnityAction<Enemy> OnPreKill;
+
         public event UnityAction<Enemy, TowerBehaviour> OnKill;
 
         private void Start()
@@ -59,6 +61,9 @@ namespace TDDemo.Assets.Scripts.Enemies
                 AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
                 LastDamagingTower.GainKill();
                 LastDamagingTower.GainXp(BaseXpReward);
+
+                // required for things that need to happen before the game object is destroyed
+                OnPreKill?.Invoke(this);
 
                 OnKill?.Invoke(this, LastDamagingTower);
                 return;

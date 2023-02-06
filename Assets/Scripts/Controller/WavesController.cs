@@ -89,6 +89,14 @@ namespace TDDemo.Assets.Scripts.Controller
                 waypointFollower.Waypoints = Waypoints;
 
                 var enemy = enemyObj.GetComponent<Enemy>();
+
+                var itemDrops = enemy.GetComponents<ItemDropper>();
+
+                foreach (var item in itemDrops)
+                {
+                    item.Bank = Bank;
+                }
+
                 enemy.OnKill += (e, tower) =>
                 {
                     Bank.AddReward(e, tower);
