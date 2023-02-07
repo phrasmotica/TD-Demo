@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5196889056409023049}
   - component: {fileID: 872029146858168482}
   - component: {fileID: 8934009884978775407}
+  - component: {fileID: 4258785177863167133}
   m_Layer: 0
   m_Name: CouponDrop
   m_TagString: Untagged
@@ -72,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 609510229
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8be19163a95ad574797bb86d05737a8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -124,4 +125,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b75bd99cc0f50349b14e82617f9a3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bounty: 1
+--- !u!114 &4258785177863167133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5196889056409023050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef597818cb3ae84fad92b2ce8828764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: 1

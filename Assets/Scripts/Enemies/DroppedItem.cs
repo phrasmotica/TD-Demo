@@ -1,19 +1,15 @@
 using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace TDDemo.Assets.Scripts.Enemies
 {
-    public class CouponDrop : MonoBehaviour
+    public class DroppedItem : MonoBehaviour
     {
-        [Range(1, 2)]
-        public int Bounty;
-
         private bool _isMouseOver;
 
-        public BankManager Bank { get; set; }
+        public PickupRouter PickupRouter { get; set; }
 
         public event UnityAction OnMouseEnterEvent;
 
@@ -23,7 +19,9 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             if (_isMouseOver && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
-                Bank.AddCoupons(Bounty);
+                // TODO: allow attaching and picking up multiple items
+                var pickupItem = GetComponent<IPickupItem>();
+                pickupItem.Pickup(PickupRouter);
 
                 Destroy(gameObject);
             }

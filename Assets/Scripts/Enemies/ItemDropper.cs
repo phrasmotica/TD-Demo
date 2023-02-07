@@ -13,7 +13,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(0f, 1f)]
         public float DropChance;
 
-        public BankManager Bank { get; set; }
+        public PickupRouter PickupRouter { get; set; }
 
         private void Awake()
         {
@@ -29,11 +29,9 @@ namespace TDDemo.Assets.Scripts.Enemies
             {
                 Debug.Log($"Dropping a {DropPrefab.name}");
 
-                // TODO: change type argument to IItemDrop, which all drop
-                // scripts should implement
                 var pos = enemy.transform.position + new Vector3(0, -1, 0);
-                var drop = Instantiate(DropPrefab, pos, Quaternion.identity).GetComponent<CouponDrop>();
-                drop.Bank = Bank;
+                var drop = Instantiate(DropPrefab, pos, Quaternion.identity).GetComponent<DroppedItem>();
+                drop.PickupRouter = PickupRouter;
             }
         }
     }

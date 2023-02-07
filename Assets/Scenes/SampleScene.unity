@@ -1889,6 +1889,7 @@ GameObject:
   - component: {fileID: 438958075}
   - component: {fileID: 438958074}
   - component: {fileID: 438958072}
+  - component: {fileID: 438958077}
   m_Layer: 0
   m_Name: controller
   m_TagString: GameController
@@ -1909,6 +1910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bank: {fileID: 438958075}
+  PickupRouter: {fileID: 438958077}
   EndZone: {fileID: 576263752}
   GameOver: {fileID: 9070692961417390778}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
@@ -1985,6 +1987,19 @@ MonoBehaviour:
   EndZone: {fileID: 576263752}
   GameOver: {fileID: 9070692961417390778}
   StartingLives: 50
+--- !u!114 &438958077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438958071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e788c54e5c7714c8d8810cd718e647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bank: {fileID: 438958075}
 --- !u!1 &443308165
 GameObject:
   m_ObjectHideFlags: 0

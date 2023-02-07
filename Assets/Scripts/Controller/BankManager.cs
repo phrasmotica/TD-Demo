@@ -30,7 +30,6 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public int Money { get; private set; }
 
-        // TODO: make enemies drop coupons and require the player to click on them to pick them up
         public int Coupons { get; private set; }
 
         public event Action<int> OnMoneyChange;

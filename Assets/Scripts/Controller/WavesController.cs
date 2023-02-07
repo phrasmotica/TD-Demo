@@ -14,6 +14,8 @@ namespace TDDemo.Assets.Scripts.Controller
     {
         public BankManager Bank;
 
+        public PickupRouter PickupRouter;
+
         public EndZone EndZone;
 
         public GameOver GameOver;
@@ -94,7 +96,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
                 foreach (var item in itemDrops)
                 {
-                    item.Bank = Bank;
+                    item.PickupRouter = PickupRouter;
                 }
 
                 enemy.OnKill += (e, tower) =>
