@@ -2,6 +2,7 @@
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.UI;
+using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
 
@@ -158,6 +159,16 @@ namespace TDDemo.Assets.Scripts.Controller
             var textPos = e.transform.position + new Vector3(0, 0.2f);
             var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
             text.GetComponent<TextMeshProUGUI>().text = $"+{reward}";
+        }
+
+        public void CreateCouponText(Vector3 position, int amount)
+        {
+            var textPos = position + new Vector3(0, 0.2f);
+            var text = Instantiate(RewardTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+            var textComponent = text.GetComponent<TextMeshProUGUI>();
+
+            textComponent.text = $"+{amount}";
+            textComponent.color = ColourHelper.Coupon;
         }
 
         public void SetUseCoupons(bool useCoupons)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TDDemo.Assets.Scripts.Enemies;
+using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
@@ -9,6 +10,10 @@ namespace TDDemo.Assets.Scripts.Controller
     {
         public BankManager Bank;
 
-        public void AddCouponsToBank(int amount) => Bank.AddCoupons(amount);
+        public void AddCouponsToBank(IPickupItem source, int amount)
+        {
+            Bank.AddCoupons(amount);
+            Bank.CreateCouponText((source as MonoBehaviour).transform.position, amount);
+        }
     }
 }

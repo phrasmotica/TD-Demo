@@ -17,5 +17,7 @@ namespace TDDemo.Assets.Scripts.Util
         public static Color Xp => Color.cyan;
 
         public static Color XpLoss => Color.blue;
+
+        public static Color Coupon => new(255, 191, 171);
     }
 }

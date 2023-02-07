@@ -1,4 +1,5 @@
 using TDDemo.Assets.Scripts.Controller;
+using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Enemies
@@ -10,7 +11,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public void Pickup(PickupRouter pickupRouter)
         {
-            pickupRouter.AddCouponsToBank(Amount);
+            pickupRouter.AddCouponsToBank(this, Amount);
         }
     }
 }
