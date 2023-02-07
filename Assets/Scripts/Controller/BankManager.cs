@@ -41,6 +41,7 @@ namespace TDDemo.Assets.Scripts.Controller
         private void Start()
         {
             GameOver.OnRestart += ResetMoney;
+            GameOver.OnRestart += ResetCoupons;
 
             TowerController.OnPlaceTower += tower =>
             {
@@ -86,7 +87,7 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void AddMoney(int amount) => SetMoney(Money + amount);
 
-        public void ResetMoney() => SetMoney(StartingMoney);
+        private void ResetMoney() => SetMoney(StartingMoney);
 
         private void SetMoney(int money)
         {
@@ -102,17 +103,6 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             Coupons = coupons;
             OnCouponsChange?.Invoke(coupons);
-        }
-
-        public bool TryBuy(int price)
-        {
-            if (CanAfford(price) != PurchaseMethod.None)
-            {
-                Buy(price);
-                return true;
-            }
-
-            return false;
         }
 
         public bool TryBuyVia(int price, PurchaseMethod purchaseMethod)
