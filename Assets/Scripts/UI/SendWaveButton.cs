@@ -11,12 +11,6 @@ namespace TDDemo.Assets.Scripts.UI
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(WavesController.DoSendNextWave);
-
-            WavesController.OnWaveChange += wave =>
-            {
-                var text = GetComponentInChildren<Text>();
-                text.text = $"Send wave {wave + 1}";
-            };
         }
     }
 }
