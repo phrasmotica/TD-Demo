@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 2494292608936246408}
   - component: {fileID: 5049580195892582698}
   - component: {fileID: 6375512407751788225}
+  - component: {fileID: 8632440007577340792}
   m_Layer: 0
   m_Name: enemy1
   m_TagString: Enemy
@@ -270,7 +271,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -106283493
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2b84de1eda54df740b0611e6112210d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -356,6 +357,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 2494292608936246408}
+  DropSpecs:
+  - {fileID: 8632440007577340792}
+--- !u!114 &8632440007577340792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789323038238934127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27e6676ccd50814c988215cd278e715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   DropPrefab: {fileID: 5196889056409023050, guid: 2dda072388f92a44f844182edb43cdc9,
     type: 3}
   DropChance: 0.02

@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Enemies
@@ -8,10 +8,7 @@ namespace TDDemo.Assets.Scripts.Enemies
     {
         public Enemy Enemy;
 
-        public GameObject DropPrefab;
-
-        [Range(0f, 1f)]
-        public float DropChance;
+        public List<DropSpecs> DropSpecs;
 
         public PickupRouter PickupRouter { get; set; }
 
@@ -22,14 +19,28 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Enemy_OnPreKill(Enemy enemy)
         {
-            var r = new System.Random().NextDouble();
-            if (r < DropChance)
-            {
-                Debug.Log($"Dropping a {DropPrefab.name}");
+            var random = new System.Random();
 
-                var pos = enemy.transform.position + new Vector3(0, -1, 0);
-                var drop = Instantiate(DropPrefab, pos, Quaternion.identity).GetComponent<DroppedItem>();
-                drop.PickupRouter = PickupRouter;
+            var droppedCount = 0;
+
+            for (var i = 0; i < DropSpecs.Count; i++)
+            {
+                var spec = DropSpecs[i];
+
+                var r = random.NextDouble();
+                if (r < spec.DropChance)
+                {
+                    // TODO: render each successive drop in a nicer position
+                    var yPos = (float) -(1 + droppedCount * 0.5);
+                    var pos = enemy.transform.position + new Vector3(0, yPos, 0);
+
+                    Debug.Log($"Drop {i}: dropping a {spec.DropPrefab.name} at ({pos.x}, {pos.y})");
+
+                    var drop = Instantiate(spec.DropPrefab, pos, Quaternion.identity).GetComponent<DroppedItem>();
+                    drop.PickupRouter = PickupRouter;
+
+                    droppedCount++;
+                }
             }
         }
     }

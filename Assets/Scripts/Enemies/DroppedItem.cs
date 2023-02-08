@@ -19,7 +19,6 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             if (_isMouseOver && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
-                // TODO: allow attaching and picking up multiple items
                 var pickupItem = GetComponent<IPickupItem>();
                 pickupItem.Pickup(PickupRouter);
 
