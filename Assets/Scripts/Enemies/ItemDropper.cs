@@ -22,8 +22,6 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Enemy_OnPreKill(Enemy enemy)
         {
-            // TODO: this generates 0.0 <= x < 1.0.
-            // We need it to generate 0.0 < x <= 1.0
             var r = new System.Random().NextDouble();
             if (r < DropChance)
             {
