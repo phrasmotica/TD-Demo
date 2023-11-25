@@ -16,5 +16,10 @@ namespace TDDemo.Assets.Scripts.Menu
         {
             QualitySettings.SetQualityLevel(qualityIndex);
         }
+
+        public void SetFullScreen(bool isFullScreen)
+        {
+            Screen.fullScreen = isFullScreen;
+        }
     }
 }
