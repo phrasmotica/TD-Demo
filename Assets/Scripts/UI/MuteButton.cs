@@ -23,6 +23,7 @@ namespace TDDemo.Assets.Scripts.UI
             _isMuted = !_isMuted;
 
             // TODO: move all this into an AudioController script
+            // TODO: route enemy damage noise, enemy death noise and enemy heal noise through sound effects group
             if (_isMuted)
             {
                 AudioMixer.GetFloat("masterVolume", out var masterVolume);
@@ -33,12 +34,17 @@ namespace TDDemo.Assets.Scripts.UI
                 _currentVolumes["musicVolume"] = musicVolume;
                 AudioMixer.SetFloat("musicVolume", -80);
 
+                AudioMixer.GetFloat("soundEffectsVolume", out var soundEffectsVolume);
+                _currentVolumes["soundEffectsVolume"] = soundEffectsVolume;
+                AudioMixer.SetFloat("soundEffectsVolume", -80);
+
                 SpriteRenderer.sprite = MutedSprite;
             }
             else
             {
                 AudioMixer.SetFloat("masterVolume", _currentVolumes["masterVolume"]);
                 AudioMixer.SetFloat("musicVolume", _currentVolumes["musicVolume"]);
+                AudioMixer.SetFloat("soundEffectsVolume", _currentVolumes["soundEffectsVolume"]);
 
                 SpriteRenderer.sprite = UnmutedSprite;
             }
