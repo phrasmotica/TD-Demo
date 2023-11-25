@@ -6483,6 +6483,8 @@ GameObject:
   - component: {fileID: 1692388431}
   - component: {fileID: 1692388433}
   - component: {fileID: 1692388432}
+  - component: {fileID: 1692388434}
+  - component: {fileID: 1692388435}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -6551,6 +6553,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692388430}
   m_CullTransparentMesh: 1
+--- !u!95 &1692388434
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692388430}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c9e19fcf67e423488a60a466b12e2f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1692388435
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692388430}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1705588063
 GameObject:
   m_ObjectHideFlags: 0
@@ -7312,6 +7346,7 @@ GameObject:
   - component: {fileID: 1828751389}
   - component: {fileID: 1828751388}
   - component: {fileID: 1828751387}
+  - component: {fileID: 1828751390}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -7434,6 +7469,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828751385}
   m_CullTransparentMesh: 1
+--- !u!95 &1828751390
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828751385}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2f4679648cc71f44a5eb7633ecd56b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1836740492
 GameObject:
   m_ObjectHideFlags: 0
