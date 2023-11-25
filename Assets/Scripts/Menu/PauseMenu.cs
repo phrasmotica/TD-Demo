@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TDDemo
 {
@@ -24,7 +25,7 @@ namespace TDDemo
             }
         }
 
-        private void Resume()
+        public void Resume()
         {
             PauseMenuUI.SetActive(false);
             Time.timeScale = 1f;
@@ -36,6 +37,18 @@ namespace TDDemo
             PauseMenuUI.SetActive(true);
             Time.timeScale = 0f;
             GameIsPaused = true;
+        }
+
+        public void LoadMenu()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+
+        public void QuitGame()
+        {
+            Debug.Log("Quitting game...");
+            Application.Quit();
         }
     }
 }
