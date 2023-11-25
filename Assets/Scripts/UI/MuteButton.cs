@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
@@ -12,9 +12,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Sprite DisabledSprite;
 
-        // TODO: add audio sources to this list as they're created
-        // and remove them once they're gone
-        public List<AudioSource> AudioSources;
+        public AudioMixer AudioMixer;
 
         private bool _isOn;
 
@@ -27,7 +25,8 @@ namespace TDDemo.Assets.Scripts.UI
         {
             _isOn = !_isOn;
 
-            AudioSources.ForEach(s => s.mute = _isOn);
+            // TODO: reset to whatever the current volume is, rather than always 0
+            AudioMixer.SetFloat("volume", _isOn ? -80 : 0); // feel like these two values should be swapped?
 
             SpriteRenderer.sprite = _isOn ? EnabledSprite : DisabledSprite;
         }
