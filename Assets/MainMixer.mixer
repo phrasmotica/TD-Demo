@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-5622199663956335776
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 8a0de71f77d32de4d8e0815825e31db7
+  m_EffectName: Attenuation
+  m_MixLevel: 08b51f444e5b3c1468e8e837718ef397
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &-5133537394329913458
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Music
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 1e2fdadee5f53f242ab712678f76ac00
+  m_Children: []
+  m_Volume: 7c543a4ff54dd5e4ebadbdbd9f643937
+  m_Pitch: 56f09d2e2da71eb49834baa6285d7421
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -5622199663956335776}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -17,10 +50,13 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 11fc9c9cf6c8d95499139acd4f3e75ba
-    name: volume
+    name: masterVolume
+  - guid: 7c543a4ff54dd5e4ebadbdbd9f643937
+    name: musicVolume
   m_AudioMixerGroupViews:
   - guids:
     - ff8e83862b6d0d34f8b33172a5a459a0
+    - 1e2fdadee5f53f242ab712678f76ac00
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -33,7 +69,8 @@ AudioMixerGroupController:
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: ff8e83862b6d0d34f8b33172a5a459a0
-  m_Children: []
+  m_Children:
+  - {fileID: -5133537394329913458}
   m_Volume: 11fc9c9cf6c8d95499139acd4f3e75ba
   m_Pitch: 4f10d6eba7064034caefa8871b15e5cb
   m_Send: 00000000000000000000000000000000
@@ -66,5 +103,6 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 9dc4445e90d0ea34f869d0643aa4ceb2
-  m_FloatValues: {}
+  m_FloatValues:
+    7c543a4ff54dd5e4ebadbdbd9f643937: 0
   m_TransitionOverrides: {}
