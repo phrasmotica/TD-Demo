@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
@@ -8,27 +7,31 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public SpriteRenderer SpriteRenderer;
 
-        public Sprite EnabledSprite;
+        public Sprite MutedSprite;
 
-        public Sprite DisabledSprite;
+        public Sprite UnmutedSprite;
 
         public AudioMixer AudioMixer;
 
-        private bool _isOn;
+        private bool _isMuted;
 
-        private void Awake()
+        private float _currentVolume;
+
+        public void Toggle()
         {
-            GetComponent<Button>().onClick.AddListener(Toggle);
-        }
+            _isMuted = !_isMuted;
 
-        private void Toggle()
-        {
-            _isOn = !_isOn;
-
-            // TODO: reset to whatever the current volume is, rather than always 0
-            AudioMixer.SetFloat("volume", _isOn ? -80 : 0); // feel like these two values should be swapped?
-
-            SpriteRenderer.sprite = _isOn ? EnabledSprite : DisabledSprite;
+            if (_isMuted)
+            {
+                AudioMixer.GetFloat("volume", out _currentVolume);
+                AudioMixer.SetFloat("volume", -80);
+                SpriteRenderer.sprite = MutedSprite;
+            }
+            else
+            {
+                AudioMixer.SetFloat("volume", _currentVolume);
+                SpriteRenderer.sprite = UnmutedSprite;
+            }
         }
     }
 }
