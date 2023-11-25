@@ -18,11 +18,16 @@ namespace TDDemo.Assets.Scripts.Menu
         {
             _resolutions = Screen.resolutions.ToList();
 
+            var distinctRefreshRates = _resolutions.Select(r => r.refreshRate).Distinct();
+            var showRefreshRates = distinctRefreshRates.Count() > 1;
+
             resolutionDropdown.ClearOptions();
 
             resolutionDropdown.AddOptions(_resolutions.Select(r => new TMP_Dropdown.OptionData
             {
-                text = $"{r.width} x {r.height}",
+                text = showRefreshRates ? 
+                    $"{r.width} x {r.height} {r.refreshRate}Hz" :
+                    $"{r.width} x {r.height}",
             }).ToList());
 
             var currentIndex = _resolutions.FindIndex(r => 
