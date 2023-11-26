@@ -45,35 +45,35 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public ExperienceContainer Experience => _tower.Experience;
 
-        public event UnityAction OnMouseEnterEvent;
+        public UnityEvent<TowerBehaviour> OnMouseEnterEvent;
 
-        public event UnityAction OnMouseExitEvent;
+        public UnityEvent<TowerBehaviour> OnMouseExitEvent;
 
-        public event UnityAction<bool> OnSelected;
+        public UnityEvent<bool> OnSelected;
 
-        public event UnityAction OnClicked;
+        public UnityEvent OnClicked;
 
-        public event UnityAction<bool> OnCanBePlaced;
+        public UnityEvent<bool> OnCanBePlaced;
 
-        public event UnityAction OnPlace;
+        public UnityEvent OnPlace;
 
-        public event UnityAction<ITowerAction[]> OnRefreshActions;
+        public UnityEvent<ITowerAction[]> OnRefreshActions;
 
-        public event UnityAction<StrikeProvider[]> OnRefreshStrikes;
+        public UnityEvent<StrikeProvider[]> OnRefreshStrikes;
 
-        public event UnityAction<float> OnWarmupProgress;
+        public UnityEvent<TowerBehaviour, float> OnWarmupProgress;
 
-        public event UnityAction<float> OnUpgradeProgress;
+        public UnityEvent<TowerBehaviour, float> OnUpgradeProgress;
 
-        public event UnityAction OnFinishUpgrade;
+        public UnityEvent OnFinishUpgrade;
 
-        public event UnityAction OnLevelChange;
+        public UnityEvent OnLevelChange;
 
-        public event UnityAction<int> OnKillCountChange;
+        public UnityEvent<int> OnKillCountChange;
 
-        public event UnityAction<int> OnXpChange;
+        public UnityEvent<int> OnXpChange;
 
-        public event UnityAction<TargetMethod> OnSetTargetMethod;
+        public UnityEvent<TargetMethod> OnSetTargetMethod;
 
         private void Start()
         {
@@ -110,7 +110,7 @@ namespace TDDemo.Assets.Scripts.Towers
                         var worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
                         logger.Log($"Placed tower at {worldPoint}");
 
-                        OnPlace?.Invoke();
+                        OnPlace.Invoke();
 
                         StartCoroutine(Warmup());
                     }
@@ -120,13 +120,13 @@ namespace TDDemo.Assets.Scripts.Towers
             if (_tower.IsWarmingUp())
             {
                 var progress = _tower.Warmup(Time.deltaTime);
-                OnWarmupProgress?.Invoke(progress);
+                OnWarmupProgress.Invoke(this, progress);
             }
 
             if (_tower.IsUpgrading())
             {
                 var progress = _tower.Upgrade(Time.deltaTime);
-                OnUpgradeProgress?.Invoke(progress);
+                OnUpgradeProgress.Invoke(this, progress);
             }
 
             foreach (var action in _actions)
@@ -140,16 +140,16 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        private void OnMouseEnter() => OnMouseEnterEvent?.Invoke();
+        private void OnMouseEnter() => OnMouseEnterEvent.Invoke(this);
 
-        private void OnMouseExit() => OnMouseExitEvent?.Invoke();
+        private void OnMouseExit() => OnMouseExitEvent.Invoke(this);
 
         private void OnMouseUp()
         {
             if (_tower.IsFiring() && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
                 logger.Log("Selected tower");
-                OnClicked?.Invoke();
+                OnClicked.Invoke();
             }
         }
 
@@ -182,19 +182,19 @@ namespace TDDemo.Assets.Scripts.Towers
         public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;
-            OnSelected?.Invoke(isSelected);
+            OnSelected.Invoke(IsSelected);
         }
 
         public void SetIsCollidingWithAnotherTower(bool isColliding)
         {
             _isCollidingWithAnotherTower = isColliding;
-            OnCanBePlaced?.Invoke(CanBePlaced());
+            OnCanBePlaced.Invoke(CanBePlaced());
         }
 
         public void SetIsCollidingWithPathZone(bool isColliding)
         {
             _isCollidingWithPathZone = isColliding;
-            OnCanBePlaced?.Invoke(CanBePlaced());
+            OnCanBePlaced.Invoke(CanBePlaced());
         }
 
         private IEnumerator Warmup()
@@ -249,7 +249,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             logger.Log($"Tower upgraded, total value {GetTotalValue()}");
 
-            OnFinishUpgrade?.Invoke();
+            OnFinishUpgrade.Invoke();
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
@@ -283,7 +283,7 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshActions();
             RefreshStrikes();
 
-            OnSetTargetMethod?.Invoke(method);
+            OnSetTargetMethod.Invoke(method);
         }
 
         public int GetPrice() => Levels.First().Price;
@@ -306,32 +306,22 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithDamage.Any() ? actionsWithDamage.Max(a => a.Amount) : 0;
         }
 
-        public int GetRange()
-        {
-            var actionsWithRange = GetActions<IHasRange>();
-            return actionsWithRange.Any() ? actionsWithRange.Max(a => a.GetRange()) : 0;
-        }
-
         public float GetFireRate()
         {
             var actionsWithFireRate = GetActions<IHasFireRate>();
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.GetFireRate()) : 0;
         }
 
-        public void GainKill()
-        {
-            KillCount++;
-            OnKillCountChange?.Invoke(KillCount);
-        }
+        public void GainKill() => OnKillCountChange.Invoke(++KillCount);
 
         public void GainXp(int baseXp)
         {
             var xp = _tower.AddXp(baseXp);
-            OnXpChange?.Invoke(xp);
+            OnXpChange.Invoke(xp);
 
             if (_tower.TryLevelUp())
             {
-                OnLevelChange?.Invoke();
+                OnLevelChange.Invoke();
             }
         }
 
@@ -372,7 +362,7 @@ namespace TDDemo.Assets.Scripts.Towers
                 a.TargetMethod = TargetMethod;
             }
 
-            OnRefreshActions?.Invoke(_actions);
+            OnRefreshActions.Invoke(_actions);
         }
 
         public IEnumerable<T> GetActions<T>() => _actions.OfType<T>().Cast<T>();
@@ -386,7 +376,7 @@ namespace TDDemo.Assets.Scripts.Towers
                 s.TargetMethod = TargetMethod;
             }
 
-            OnRefreshStrikes?.Invoke(_strikes);
+            OnRefreshStrikes.Invoke(_strikes);
         }
 
         private IEnumerable<T> GetStrikes<T>() => _strikes.OfType<T>().Cast<T>();

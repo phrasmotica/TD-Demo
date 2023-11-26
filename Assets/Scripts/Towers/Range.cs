@@ -1,12 +1,12 @@
-﻿using TDDemo.Assets.Scripts.Util;
+﻿using System.Linq;
+using TDDemo.Assets.Scripts.Towers.Actions;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
     public class Range : BaseBehaviour
     {
-        public TowerBehaviour TowerBehaviour;
-
         public int RangeToDraw { get; private set; }
 
         private bool _towerCanBePlaced;
@@ -17,35 +17,33 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            TowerBehaviour.OnSelected += SetShowRange;
-
-            TowerBehaviour.OnCanBePlaced += SetTowerCanBePlaced;
-
-            TowerBehaviour.OnRefreshActions += actions =>
-            {
-                var range = TowerBehaviour.GetRange();
-                SetRange(range);
-            };
-
-            TowerBehaviour.OnMouseEnterEvent += () =>
-            {
-                if (!TowerBehaviour.IsPositioning())
-                {
-                    SetShowRange(true);
-                }
-            };
-
-            TowerBehaviour.OnMouseExitEvent += () =>
-            {
-                if (!TowerBehaviour.IsPositioning() && !TowerBehaviour.IsSelected)
-                {
-                    SetShowRange(false);
-                }
-            };
-
             logger = new MethodLogger(nameof(Range));
 
             SetTowerCanBePlaced(true);
+        }
+
+        public void Recompute(ITowerAction[] actions)
+        {
+            var actionsWithRange = actions.OfType<IHasRange>().Cast<IHasRange>();
+            var range = actionsWithRange.Any() ? actionsWithRange.Max(a => a.GetRange()) : 0;
+
+            SetRange(range);
+        }
+
+        public void HandleTowerMouseEnter(TowerBehaviour tower)
+        {
+            if (!tower.IsPositioning())
+            {
+                SetShowRange(true);
+            }
+        }
+
+        public void HandleTowerMouseExit(TowerBehaviour tower)
+        {
+            if (!tower.IsPositioning() && !tower.IsSelected)
+            {
+                SetShowRange(false);
+            }
         }
 
         public void SetTowerCanBePlaced(bool towerCanBePlaced)
@@ -78,7 +76,7 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        private void SetShowRange(bool isSelected)
+        public void SetShowRange(bool isSelected)
         {
             _spriteRenderer.enabled = isSelected;
         }

@@ -97,7 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb048fc6334570a4b855a9caaea6c5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerBehaviour: {fileID: 7631867566107524507}
 --- !u!1 &423853613815778029
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb186409c53e0147b2c9db4acfc90e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerBehaviour: {fileID: 7631867566107524507}
 --- !u!1 &2206435682495225910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1197,134 @@ MonoBehaviour:
   - {fileID: 5983188766679234428}
   - {fileID: 192136218426829519}
   - {fileID: 6429797936828976526}
+  OnMouseEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4304164710920557179}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Range, Assembly-CSharp
+        m_MethodName: HandleTowerMouseEnter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseExitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4304164710920557179}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Range, Assembly-CSharp
+        m_MethodName: HandleTowerMouseExit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8051739458771290507}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerSelection, Assembly-CSharp
+        m_MethodName: SetSelected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4304164710920557179}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Range, Assembly-CSharp
+        m_MethodName: SetShowRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCanBePlaced:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4304164710920557179}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Range, Assembly-CSharp
+        m_MethodName: SetTowerCanBePlaced
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlace:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRefreshActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4304164710920557179}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Range, Assembly-CSharp
+        m_MethodName: Recompute
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRefreshStrikes:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWarmupProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6141771451889693468}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
+          Assembly-CSharp
+        m_MethodName: DrawProgressBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUpgradeProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5145518482440733534}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
+          Assembly-CSharp
+        m_MethodName: DrawProgressBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &7281785081105197190
 Rigidbody2D:
   serializedVersion: 4

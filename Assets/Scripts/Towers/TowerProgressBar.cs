@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -17,18 +16,18 @@ namespace TDDemo.Assets.Scripts.Towers
             _line = GetComponent<LineRenderer>();
             _line.positionCount = 2;
             _line.useWorldSpace = false;
-
-            SetEventHandler(DrawUpgradeBar);
         }
 
         private void Update()
         {
+            // TODO: only do this when progress starts or finishes
+            // so we can remove the Tower field in this class
             _line.forceRenderingOff = !ShouldDraw();
         }
 
-        private void DrawUpgradeBar(float progress)
+        public void DrawProgressBar(TowerBehaviour tower, float progress)
         {
-            var sprite = Tower.GetComponent<SpriteRenderer>();
+            var sprite = tower.GetComponent<SpriteRenderer>();
             var spriteExtentX = sprite.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
@@ -37,8 +36,6 @@ namespace TDDemo.Assets.Scripts.Towers
             _line.SetPosition(0, new Vector3(start, 0, 0));
             _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }
-
-        protected abstract void SetEventHandler(UnityAction<float> handler);
 
         protected abstract bool ShouldDraw();
     }

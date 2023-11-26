@@ -85,12 +85,17 @@ namespace TDDemo.Assets.Scripts.Controller
                 Deselect();
 
                 _newTower = Instantiate(towerPrefab).GetComponent<TowerBehaviour>();
-                _newTower.OnPlace += () => PlaceTower(_newTower);
+
+                // cannot be set in the editor because the new tower is not known ahead of time
+                _newTower.OnPlace.AddListener(() => PlaceTower(_newTower));
             }
         }
 
         private void PlaceTower(TowerBehaviour newTower)
         {
+            // TODO: these events are a mess! Things get routed through multiple objects and with
+            // references to the objects whose events are being added to... fix them!
+
             _towerManager.Add(newTower);
 
             OnPlaceTower.Invoke(newTower);
@@ -100,46 +105,52 @@ namespace TDDemo.Assets.Scripts.Controller
             // that holds the list of enemies in a static field.
             WavesController.OnEnemiesChange.AddListener(newTower.SetEnemies);
 
-            newTower.OnClicked += () =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnClicked.AddListener(() =>
             {
                 _towerManager.Select(newTower);
                 OnChangeSelectedTower.Invoke(newTower);
-            };
+            });
 
-            newTower.OnFinishUpgrade += () =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnFinishUpgrade.AddListener(() =>
             {
                 if (newTower.IsSelected)
                 {
                     OnFinishUpgradeSelectedTower.Invoke(newTower);
                 }
-            };
+            });
 
-            newTower.OnLevelChange += () =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnLevelChange.AddListener(() =>
             {
                 if (newTower.IsSelected)
                 {
                     OnLevelChangeSelectedTower.Invoke(newTower);
                 }
-            };
+            });
 
-            newTower.OnSetTargetMethod += method =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnSetTargetMethod.AddListener(method =>
             {
                 if (newTower.IsSelected)
                 {
                     OnSetTargetMethodTower.Invoke(newTower);
                 }
-            };
+            });
 
-            newTower.OnXpChange += amount =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnXpChange.AddListener(amount =>
             {
                 CreateEphemeralXpText(newTower, amount);
                 OnXpChangeTower.Invoke(newTower, amount);
-            };
+            });
 
-            newTower.OnKillCountChange += kills =>
+            // cannot be set in the editor because the new tower is not known ahead of time
+            newTower.OnKillCountChange.AddListener(kills =>
             {
                 OnKillCountChangeTower.Invoke(newTower, kills);
-            };
+            });
 
             _newTower = null;
         }

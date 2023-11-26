@@ -4,14 +4,9 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class TowerSelection : MonoBehaviour
     {
-        public TowerBehaviour TowerBehaviour;
-
-        private void Awake()
+        public void SetSelected(bool isSelected)
         {
-            TowerBehaviour.OnSelected += isSelected =>
-            {
-                GetComponent<SpriteRenderer>().enabled = isSelected;
-            };
+            GetComponent<SpriteRenderer>().enabled = isSelected;
         }
     }
 }
