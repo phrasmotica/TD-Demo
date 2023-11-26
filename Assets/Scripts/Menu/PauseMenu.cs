@@ -7,6 +7,8 @@ namespace TDDemo
     {
         public static bool GameIsPaused = false;
 
+        public static float CurrentTimeScale = 1f;
+
         public GameObject PauseMenuUI;
 
         // Update is called once per frame
@@ -28,13 +30,14 @@ namespace TDDemo
         public void Resume()
         {
             PauseMenuUI.SetActive(false);
-            Time.timeScale = 1f;
+            Time.timeScale = CurrentTimeScale;
             GameIsPaused = false;
         }
 
         private void Pause()
         {
             PauseMenuUI.SetActive(true);
+            CurrentTimeScale = Time.timeScale;
             Time.timeScale = 0f;
             GameIsPaused = true;
         }
