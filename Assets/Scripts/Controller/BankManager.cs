@@ -1,10 +1,10 @@
 ﻿using System;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
-using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
@@ -13,8 +13,6 @@ namespace TDDemo.Assets.Scripts.Controller
         public GameObject Canvas;
 
         public GameObject RewardTextPrefab;
-
-        public GameOver GameOver;
 
         public TowerController TowerController;
 
@@ -33,17 +31,14 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public int Coupons { get; private set; }
 
-        public event Action<int> OnMoneyChange;
+        public UnityEvent<int> OnMoneyChange;
 
-        public event Action<int> OnCouponsChange;
+        public UnityEvent<int> OnCouponsChange;
 
-        public event Action<bool> OnChangeUseCoupons;
+        public UnityEvent<bool> OnChangeUseCoupons;
 
         private void Start()
         {
-            GameOver.OnRestart += ResetMoney;
-            GameOver.OnRestart += ResetCoupons;
-
             TowerController.OnPlaceTower += tower =>
             {
                 if (tower != null)
@@ -88,22 +83,22 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void AddMoney(int amount) => SetMoney(Money + amount);
 
-        private void ResetMoney() => SetMoney(StartingMoney);
+        public void ResetMoney() => SetMoney(StartingMoney);
 
         private void SetMoney(int money)
         {
             Money = money;
-            OnMoneyChange?.Invoke(money);
+            OnMoneyChange.Invoke(Money);
         }
 
         public void AddCoupons(int amount) => SetCoupons(Coupons + amount);
 
-        private void ResetCoupons() => SetCoupons(StartingCoupons);
+        public void ResetCoupons() => SetCoupons(StartingCoupons);
 
         private void SetCoupons(int coupons)
         {
             Coupons = coupons;
-            OnCouponsChange?.Invoke(coupons);
+            OnCouponsChange.Invoke(coupons);
         }
 
         public bool TryBuyVia(int price, PurchaseMethod purchaseMethod)
@@ -174,7 +169,7 @@ namespace TDDemo.Assets.Scripts.Controller
         public void SetUseCoupons(bool useCoupons)
         {
             _useCoupons = useCoupons;
-            OnChangeUseCoupons?.Invoke(useCoupons);
+            OnChangeUseCoupons.Invoke(useCoupons);
         }
     }
 

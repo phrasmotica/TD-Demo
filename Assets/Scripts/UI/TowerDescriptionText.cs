@@ -1,3 +1,4 @@
+using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,14 +6,9 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerDescriptionText : MonoBehaviour
     {
-        public TowerTooltip TowerTooltip;
-
-        private void Awake()
+        public void UpdateText(TowerBehaviour tower)
         {
-            TowerTooltip.OnSetTower += tower =>
-            {
-                GetComponent<Text>().text = tower.Description;
-            };
+            GetComponent<Text>().text = tower.Description;
         }
     }
 }

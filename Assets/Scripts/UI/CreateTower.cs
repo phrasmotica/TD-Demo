@@ -16,13 +16,9 @@ namespace TDDemo.Assets.Scripts.UI
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(() => TowerController.CreateNewTower(TowerPrefab));
-
-            Bank.OnMoneyChange += money => SetInteractable();
-            Bank.OnCouponsChange += coupons => SetInteractable();
-            Bank.OnChangeUseCoupons += useCoupons => SetInteractable();
         }
 
-        private void SetInteractable()
+        public void SetInteractable()
         {
             var tower = TowerPrefab.GetComponent<TowerBehaviour>();
             var canAfford = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;

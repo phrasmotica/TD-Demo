@@ -253,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7b44b5c4f1ea641a5d27a4dad6d2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerTooltip: {fileID: 7790724627398003049}
 --- !u!1 &5880894754291268389
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d38100b689aa4ca23357b82bf431a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerTooltip: {fileID: 7790724627398003049}
 --- !u!1 &6812441012088033664
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68a716d9620bdb4e86ca074d4865c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerTooltip: {fileID: 7790724627398003049}
 --- !u!1 &7463234556284243016
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ca1fa11ceffee429eb07795b211eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerTooltip: {fileID: 7790724627398003049}
 --- !u!1 &8467759742670934539
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,9 +661,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerController: {fileID: 0}
-  DamageText: {fileID: 0}
-  RangeText: {fileID: 0}
-  FireRateText: {fileID: 0}
+  DefaultText: {fileID: 0}
+  NameText: {fileID: 0}
+  KillCount: {fileID: 0}
+  XpBar: {fileID: 0}
+  TargetingButtons: {fileID: 0}
+  ShowTargetLineToggle: {fileID: 0}
 --- !u!1 &8804419208012671564
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,3 +761,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8072846d15aaff34c8f8838461709d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSetTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5935855363541260051}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerImage, Assembly-CSharp
+        m_MethodName: UpdateImage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7872150248734062659}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerNameText, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 683097668204659283}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerPriceText, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8142361030831718056}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerDescriptionText,
+          Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

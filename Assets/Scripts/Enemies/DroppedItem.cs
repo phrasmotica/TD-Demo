@@ -11,9 +11,9 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public PickupRouter PickupRouter { get; set; }
 
-        public event UnityAction OnMouseEnterEvent;
+        public UnityEvent OnMouseEnterEvent;
 
-        public event UnityAction OnMouseExitEvent;
+        public UnityEvent OnMouseExitEvent;
 
         private void Update()
         {
@@ -29,13 +29,13 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnMouseEnter()
         {
             _isMouseOver = true;
-            OnMouseEnterEvent?.Invoke();
+            OnMouseEnterEvent.Invoke();
         }
 
         private void OnMouseExit()
         {
             _isMouseOver = false;
-            OnMouseExitEvent?.Invoke();
+            OnMouseExitEvent.Invoke();
         }
     }
 }

@@ -1,27 +1,15 @@
 using System;
-using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.UI;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Music
 {
     public class MusicController : MonoBehaviour
     {
-        public GameOver GameOver;
-        public LivesController LivesController;
-        public WavesController WavesController;
-
         public AudioClip FirstStageMusic;
         public AudioClip SecondStageMusic;
 
         private void Awake()
         {
-            GameOver.OnRestart += StartMusic;
-
-            LivesController.OnEndGame += StopMusic;
-
-            WavesController.OnStageChange += SetMusic;
-
             StartMusic();
         }
 
@@ -33,14 +21,14 @@ namespace TDDemo.Assets.Scripts.Music
             audioSource.Play();
         }
 
-        private void StopMusic()
+        public void StopMusic()
         {
             var audioSource = GetComponent<AudioSource>();
             audioSource.Stop();
             audioSource.time = 0;
         }
 
-        private void SetMusic(int stageNumber)
+        public void SetMusic(int stageNumber)
         {
             var newClip = ComputeNewClip(stageNumber);
             if (newClip != null)

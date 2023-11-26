@@ -23,10 +23,6 @@ namespace TDDemo.Assets.Scripts.UI
         {
             GetComponent<Button>().onClick.AddListener(Upgrade);
 
-            Bank.OnMoneyChange += money => Refresh();
-            Bank.OnCouponsChange += coupons => Refresh();
-            Bank.OnChangeUseCoupons += useCoupons => Refresh();
-
             TowerController.OnStartUpgradeSelectedTower += SetTower;
             TowerController.OnFinishUpgradeSelectedTower += SetTower;
             TowerController.OnChangeSelectedTower += SetTower;
@@ -42,7 +38,7 @@ namespace TDDemo.Assets.Scripts.UI
             Refresh();
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             if (_tower != null && !_tower.IsUpgrading())
             {

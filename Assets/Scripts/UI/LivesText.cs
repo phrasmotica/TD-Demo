@@ -1,4 +1,3 @@
-using TDDemo.Assets.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,15 +5,10 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class LivesText : MonoBehaviour
     {
-        public LivesController LivesController;
-
-        private void Awake()
+        public void UpdateText(int lives)
         {
-            LivesController.OnLivesChange += lives =>
-            {
-                var text = GetComponent<Text>();
-                text.text = $"{lives}";
-            };
+            var text = GetComponent<Text>();
+            text.text = $"{lives}";
         }
     }
 }

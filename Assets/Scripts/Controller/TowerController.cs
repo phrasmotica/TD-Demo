@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using TDDemo.Assets.Scripts.Towers;
+﻿using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
-using TDDemo.Assets.Scripts.UI;
 using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
@@ -15,13 +13,9 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public GameObject RewardTextPrefab;
 
-        public LivesController LivesController;
-
         public BankManager Bank;
 
         public WavesController WavesController;
-
-        public GameOver GameOver;
 
         private TowerManager _towerManager;
 
@@ -48,20 +42,6 @@ namespace TDDemo.Assets.Scripts.Controller
         private void Start()
         {
             _towerManager = new TowerManager();
-
-            LivesController.OnEndGame += CancelCreateTower;
-
-            GameOver.OnRestart += () =>
-            {
-                Deselect();
-
-                foreach (var t in _towerManager.Towers)
-                {
-                    Destroy(t.gameObject);
-                }
-
-                _towerManager.Towers.Clear();
-            };
         }
 
         private void Update()
@@ -115,7 +95,10 @@ namespace TDDemo.Assets.Scripts.Controller
 
             OnPlaceTower?.Invoke(newTower);
 
-            WavesController.OnEnemiesChange += newTower.SetEnemies;
+            // cannot be set in the editor because the new tower is not known ahead of time?
+            // Maybe there's a way we can make it work... perhaps creating a new EnemiesController
+            // that holds the list of enemies in a static field.
+            WavesController.OnEnemiesChange.AddListener(newTower.SetEnemies);
 
             newTower.OnClicked += () =>
             {
@@ -159,6 +142,11 @@ namespace TDDemo.Assets.Scripts.Controller
             };
 
             _newTower = null;
+        }
+
+        public void SetEnemies()
+        {
+
         }
 
         public void SetTargetingSelectedTower(TargetMethod method)
@@ -222,13 +210,25 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        private void CancelCreateTower()
+        public void CancelCreateTower()
         {
             if (_newTower != null)
             {
                 Destroy(_newTower.gameObject);
                 _newTower = null;
             }
+        }
+
+        public void ResetAll()
+        {
+            Deselect();
+
+            foreach (var t in _towerManager.Towers)
+            {
+                Destroy(t.gameObject);
+            }
+
+            _towerManager.Towers.Clear();
         }
     }
 }
