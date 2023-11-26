@@ -21,23 +21,23 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private TowerBehaviour _newTower;
 
-        public event UnityAction<TowerBehaviour> OnPlaceTower;
+        public UnityEvent<TowerBehaviour> OnPlaceTower;
 
-        public event UnityAction<TowerBehaviour> OnStartUpgradeSelectedTower;
+        public UnityEvent<TowerBehaviour> OnStartUpgradeSelectedTower;
 
-        public event UnityAction<TowerBehaviour> OnFinishUpgradeSelectedTower;
+        public UnityEvent<TowerBehaviour> OnFinishUpgradeSelectedTower;
 
-        public event UnityAction<TowerBehaviour> OnChangeSelectedTower;
+        public UnityEvent<TowerBehaviour> OnChangeSelectedTower;
 
-        public event UnityAction<TowerBehaviour> OnLevelChangeSelectedTower;
+        public UnityEvent<TowerBehaviour> OnLevelChangeSelectedTower;
 
-        public event UnityAction<TowerBehaviour> OnSetTargetMethodTower;
+        public UnityEvent<TowerBehaviour> OnSetTargetMethodTower;
 
-        public event UnityAction<TowerBehaviour, int> OnKillCountChangeTower;
+        public UnityEvent<TowerBehaviour, int> OnKillCountChangeTower;
 
-        public event UnityAction<TowerBehaviour, int> OnXpChangeTower;
+        public UnityEvent<TowerBehaviour, int> OnXpChangeTower;
 
-        public event UnityAction<TowerBehaviour> OnSellSelectedTower;
+        public UnityEvent<TowerBehaviour> OnSellSelectedTower;
 
         private void Start()
         {
@@ -59,13 +59,13 @@ namespace TDDemo.Assets.Scripts.Controller
             if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
                 var tower = _towerManager.WakeOrSelectPrevious();
-                OnChangeSelectedTower?.Invoke(tower);
+                OnChangeSelectedTower.Invoke(tower);
             }
 
             if (Input.GetKeyUp(KeyCode.RightArrow))
             {
                 var tower = _towerManager.WakeOrSelectNext();
-                OnChangeSelectedTower?.Invoke(tower);
+                OnChangeSelectedTower.Invoke(tower);
             }
 
             if (Input.GetKeyUp(KeyCode.Delete))
@@ -93,7 +93,7 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _towerManager.Add(newTower);
 
-            OnPlaceTower?.Invoke(newTower);
+            OnPlaceTower.Invoke(newTower);
 
             // cannot be set in the editor because the new tower is not known ahead of time?
             // Maybe there's a way we can make it work... perhaps creating a new EnemiesController
@@ -103,14 +103,14 @@ namespace TDDemo.Assets.Scripts.Controller
             newTower.OnClicked += () =>
             {
                 _towerManager.Select(newTower);
-                OnChangeSelectedTower?.Invoke(newTower);
+                OnChangeSelectedTower.Invoke(newTower);
             };
 
             newTower.OnFinishUpgrade += () =>
             {
                 if (newTower.IsSelected)
                 {
-                    OnFinishUpgradeSelectedTower?.Invoke(newTower);
+                    OnFinishUpgradeSelectedTower.Invoke(newTower);
                 }
             };
 
@@ -118,7 +118,7 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (newTower.IsSelected)
                 {
-                    OnLevelChangeSelectedTower?.Invoke(newTower);
+                    OnLevelChangeSelectedTower.Invoke(newTower);
                 }
             };
 
@@ -126,19 +126,19 @@ namespace TDDemo.Assets.Scripts.Controller
             {
                 if (newTower.IsSelected)
                 {
-                    OnSetTargetMethodTower?.Invoke(newTower);
+                    OnSetTargetMethodTower.Invoke(newTower);
                 }
             };
 
             newTower.OnXpChange += amount =>
             {
                 CreateEphemeralXpText(newTower, amount);
-                OnXpChangeTower?.Invoke(newTower, amount);
+                OnXpChangeTower.Invoke(newTower, amount);
             };
 
             newTower.OnKillCountChange += kills =>
             {
-                OnKillCountChangeTower?.Invoke(newTower, kills);
+                OnKillCountChangeTower.Invoke(newTower, kills);
             };
 
             _newTower = null;
@@ -169,7 +169,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 {
                     selectedTower.DoUpgrade();
 
-                    OnStartUpgradeSelectedTower?.Invoke(selectedTower);
+                    OnStartUpgradeSelectedTower.Invoke(selectedTower);
                 }
             }
         }
@@ -187,14 +187,14 @@ namespace TDDemo.Assets.Scripts.Controller
                     Destroy(selectedTower.gameObject);
                 }
 
-                OnSellSelectedTower?.Invoke(selectedTower);
+                OnSellSelectedTower.Invoke(selectedTower);
             }
         }
 
         private void Deselect()
         {
             _towerManager.DeselectCurrentTower();
-            OnChangeSelectedTower?.Invoke(null);
+            OnChangeSelectedTower.Invoke(null);
         }
 
         private void CreateEphemeralXpText(TowerBehaviour tower, int amount)

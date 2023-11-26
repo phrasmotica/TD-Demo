@@ -14,8 +14,6 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public GameObject RewardTextPrefab;
 
-        public TowerController TowerController;
-
         [Range(10, 100)]
         public int StartingMoney;
 
@@ -31,6 +29,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public int Coupons { get; private set; }
 
+        // TODO: pass a function in these events that can compute whether
+        // we can afford a given price
         public UnityEvent<int> OnMoneyChange;
 
         public UnityEvent<int> OnCouponsChange;
@@ -39,24 +39,24 @@ namespace TDDemo.Assets.Scripts.Controller
 
         private void Start()
         {
-            TowerController.OnPlaceTower += tower =>
-            {
-                if (tower != null)
-                {
-                    Buy(tower.GetPrice());
-                }
-            };
-
-            TowerController.OnSellSelectedTower += tower =>
-            {
-                if (tower != null)
-                {
-                    AddMoney(GetSellPrice(tower));
-                }
-            };
-
             ResetMoney();
             ResetCoupons();
+        }
+
+        public void BuyTower(TowerBehaviour tower)
+        {
+            if (tower != null)
+            {
+                Buy(tower.GetPrice());
+            }
+        }
+
+        public void SellTower(TowerBehaviour tower)
+        {
+            if (tower != null)
+            {
+                AddMoney(GetSellPrice(tower));
+            }
         }
 
         public PurchaseMethod CanAfford(int price)

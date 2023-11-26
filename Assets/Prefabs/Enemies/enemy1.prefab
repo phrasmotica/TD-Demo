@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ad08e2e6780224f884b18c0835945c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2494292608936246408}
   EffectProgressPrefab: {fileID: 1938640339299269198, guid: e5282230ea199214f942df191a747c80,
     type: 3}
 --- !u!1 &3995965762032678742
@@ -191,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660769246b4390c45970b1aa1ed57857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2494292608936246408}
   HealthPeekTime: 0.5
 --- !u!1 &6789323038238934127
 GameObject:
@@ -329,6 +327,97 @@ MonoBehaviour:
   HurtAudio: {fileID: 8300000, guid: 5a69ab5f6edd67c44bebaa2ae5cdba4c, type: 3}
   HealAudio: {fileID: 8300000, guid: d669d377679f7a74880e94435d68275f, type: 3}
   DeadAudio: {fileID: 8300000, guid: 622dbeba05f3a744aae3aaecbfcb2a90, type: 3}
+  OnMouseEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5471408928598358338}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.HealthBar, Assembly-CSharp
+        m_MethodName: HandleMouseEnterEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMouseExitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5471408928598358338}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.HealthBar, Assembly-CSharp
+        m_MethodName: HandleMouseExitEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5471408928598358338}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.HealthBar, Assembly-CSharp
+        m_MethodName: DrawAndPeek
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHeal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5471408928598358338}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.HealthBar, Assembly-CSharp
+        m_MethodName: DrawAndPeek
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEffect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1419640540017838755}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.EffectProgressBarSet,
+          Assembly-CSharp
+        m_MethodName: AddEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPreKill:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6375512407751788225}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.ItemDropper, Assembly-CSharp
+        m_MethodName: OnPreKill
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5049580195892582698
 MonoBehaviour:
   m_ObjectHideFlags: 0

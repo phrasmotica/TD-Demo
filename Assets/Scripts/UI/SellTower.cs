@@ -14,13 +14,9 @@ namespace TDDemo.Assets.Scripts.UI
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(TowerController.SellSelectedTower);
-
-            TowerController.OnStartUpgradeSelectedTower += SetState;
-            TowerController.OnFinishUpgradeSelectedTower += SetState;
-            TowerController.OnChangeSelectedTower += SetState;
         }
 
-        private void SetState(TowerBehaviour tower)
+        public void SetState(TowerBehaviour tower)
         {
             var canSellTower = tower != null;
 

@@ -6,18 +6,11 @@ namespace TDDemo.Assets.Scripts.Enemies
 {
     public class ItemDropper : MonoBehaviour
     {
-        public Enemy Enemy;
-
         public List<DropSpecs> DropSpecs;
 
         public PickupRouter PickupRouter { get; set; }
 
-        private void Awake()
-        {
-            Enemy.OnPreKill += Enemy_OnPreKill;
-        }
-
-        private void Enemy_OnPreKill(Enemy enemy)
+        public void OnPreKill(Enemy enemy)
         {
             var random = new System.Random();
 

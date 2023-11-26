@@ -8,8 +8,6 @@ namespace TDDemo.Assets.Scripts.Enemies
 {
     public class EffectProgressBarSet : MonoBehaviour
     {
-        public Enemy Enemy;
-
         public GameObject EffectProgressPrefab;
 
         private List<EffectProgressBar> _progressBars;
@@ -17,8 +15,6 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void Start()
         {
             _progressBars = new List<EffectProgressBar>();
-
-            Enemy.OnEffect += AddEffect;
         }
 
         private void Update()
@@ -26,7 +22,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             CleanUpFinishedBars();
         }
 
-        public void AddEffect(IEffect effect)
+        public void AddEffect(Enemy enemy, IEffect effect)
         {
             var bar = Instantiate(EffectProgressPrefab, transform).GetComponent<EffectProgressBar>();
 
@@ -36,7 +32,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             bar.Effect = effect;
 
-            var enemySprite = Enemy.GetComponent<SpriteRenderer>().sprite;
+            var enemySprite = enemy.GetComponent<SpriteRenderer>().sprite;
             bar.StartPosX = -enemySprite.bounds.extents.x;
             bar.MaxWidth = 2 * enemySprite.bounds.extents.x;
 

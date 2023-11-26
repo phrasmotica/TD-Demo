@@ -5,8 +5,6 @@ namespace TDDemo.Assets.Scripts.Enemies
 {
     public class HealthBar : MonoBehaviour
     {
-        public Enemy Enemy;
-
         [Range(0.5f, 3f)]
         public float HealthPeekTime;
 
@@ -23,12 +21,6 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.useWorldSpace = false;
 
             _healthPeekCounter = new(HealthPeekTime);
-
-            Enemy.OnMouseEnterEvent += () => _mouseIsOverEnemy = true;
-            Enemy.OnMouseExitEvent += () => _mouseIsOverEnemy = false;
-
-            Enemy.OnHurt += DrawAndPeek;
-            Enemy.OnHeal += DrawAndPeek;
         }
 
         private void Update()
@@ -45,20 +37,30 @@ namespace TDDemo.Assets.Scripts.Enemies
             _line.forceRenderingOff = !ShouldDrawHealthBar();
         }
 
-        private void DrawAndPeek(float healthFraction)
+        public void HandleMouseEnterEnemy()
         {
-            DrawHealthBar(healthFraction);
-            PeekHealth();
+            _mouseIsOverEnemy = true;
         }
 
-        private void DrawHealthBar(float healthFraction)
+        public void HandleMouseExitEnemy()
         {
-            var enemySprite = Enemy.GetComponent<SpriteRenderer>();
+            _mouseIsOverEnemy = false;
+        }
+
+        public void DrawAndPeek(Enemy enemy)
+        {
+            var enemySprite = enemy.GetComponent<SpriteRenderer>();
             var spriteExtentX = enemySprite.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
-            var width = 2 * spriteExtentX * healthFraction;
+            var width = 2 * spriteExtentX * enemy.HealthFraction;
 
+            DrawHealthBar(start, width);
+            PeekHealth();
+        }
+
+        private void DrawHealthBar(float start, float width)
+        {
             _line.SetPosition(0, new Vector3(start, 0, 0));
             _line.SetPosition(1, new Vector3(start + width, 0, 0));
         }

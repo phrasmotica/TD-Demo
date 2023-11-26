@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using UnityEngine;
@@ -10,8 +9,6 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerStats : MonoBehaviour
     {
-        public TowerController TowerController;
-
         public Text DefaultText;
 
         public Text NameText;
@@ -23,50 +20,6 @@ namespace TDDemo.Assets.Scripts.UI
         public TargetingButtons TargetingButtons;
 
         public ShowTargetLineToggle ShowTargetLineToggle;
-
-        private void Awake()
-        {
-            TowerController.OnStartUpgradeSelectedTower += SetStats;
-            TowerController.OnFinishUpgradeSelectedTower += SetStats;
-            TowerController.OnLevelChangeSelectedTower += SetStats;
-
-            TowerController.OnSellSelectedTower += tower => ClearStats();
-
-            TowerController.OnChangeSelectedTower += tower =>
-            {
-                SetStats(tower);
-
-                if (tower != null)
-                {
-                    XpBar.UpdateProgressBar(tower.Experience);
-                    KillCount.UpdateKillCount(tower.KillCount);
-                }
-            };
-
-            TowerController.OnKillCountChangeTower += (tower, _) =>
-            {
-                if (tower != null && tower.IsSelected)
-                {
-                    KillCount.UpdateKillCount(tower.KillCount);
-                }
-            };
-
-            TowerController.OnXpChangeTower += (tower, _) =>
-            {
-                if (tower != null && tower.IsSelected)
-                {
-                    XpBar.UpdateProgressBar(tower.Experience);
-                }
-            };
-
-            TowerController.OnLevelChangeSelectedTower += tower =>
-            {
-                if (tower != null)
-                {
-                    XpBar.UpdateProgressBar(tower.Experience);
-                }
-            };
-        }
 
         private void Start()
         {
@@ -104,7 +57,46 @@ namespace TDDemo.Assets.Scripts.UI
             }
         }
 
-        private void ClearStats()
+        public void HandleChangeSelectedTower(TowerBehaviour tower)
+        {
+            SetStats(tower);
+
+            // TODO: move these into event handlers inside XpBar and KillCount?
+            if (tower != null)
+            {
+                XpBar.UpdateProgressBar(tower.Experience);
+                KillCount.UpdateKillCount(tower.KillCount);
+            }
+        }
+
+        public void HandleLevelChangeSelectedTower(TowerBehaviour tower)
+        {
+            SetStats(tower);
+
+            // TODO: move these into event handlers inside XpBar and KillCount?
+            if (tower != null)
+            {
+                XpBar.UpdateProgressBar(tower.Experience);
+            }
+        }
+
+        public void HandleKillCountChangeSelectedTower(TowerBehaviour tower, int killCount)
+        {
+            if (tower != null && tower.IsSelected)
+            {
+                KillCount.UpdateKillCount(tower.KillCount);
+            }
+        }
+
+        public void HandleOnXpChangeTower(TowerBehaviour tower, int amount)
+        {
+            if (tower != null && tower.IsSelected)
+            {
+                XpBar.UpdateProgressBar(tower.Experience);
+            }
+        }
+
+        public void ClearStats()
         {
             NameText.gameObject.SetActive(false);
             XpBar.gameObject.SetActive(false);

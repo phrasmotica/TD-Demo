@@ -12,17 +12,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TargetMethod Method;
 
-        private void Awake()
-        {
-            var button = GetComponent<Button>();
-
-            button.onClick.AddListener(SetTargeting);
-
-            TowerController.OnChangeSelectedTower += SetInteractable;
-            TowerController.OnSetTargetMethodTower += SetInteractable;
-        }
-
-        private void SetInteractable(TowerBehaviour tower)
+        public void SetInteractable(TowerBehaviour tower)
         {
             if (tower != null)
             {
@@ -30,6 +20,7 @@ namespace TDDemo.Assets.Scripts.UI
             }
         }
 
-        private void SetTargeting() => TowerController.SetTargetingSelectedTower(Method);
+        // TODO: create an event for this
+        public void SetTargeting() => TowerController.SetTargetingSelectedTower(Method);
     }
 }

@@ -22,21 +22,19 @@ namespace TDDemo.Assets.Scripts.UI
         private void Awake()
         {
             GetComponent<Button>().onClick.AddListener(Upgrade);
-
-            TowerController.OnStartUpgradeSelectedTower += SetTower;
-            TowerController.OnFinishUpgradeSelectedTower += SetTower;
-            TowerController.OnChangeSelectedTower += SetTower;
-            TowerController.OnSellSelectedTower += tower => SetTower(null);
         }
 
+        // TODO: create an event for this
         private void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
 
-        private void SetTower(TowerBehaviour tower)
+        public void SetTower(TowerBehaviour tower)
         {
             _tower = tower;
 
             Refresh();
         }
+
+        public void Clear() => SetTower(null);
 
         public void Refresh()
         {

@@ -1123,7 +1123,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 312478118}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 312478120}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetTargeting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &312478118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2060,6 +2072,345 @@ MonoBehaviour:
     type: 3}
   Bank: {fileID: 438958075}
   WavesController: {fileID: 438958072}
+  OnPlaceTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 438958075}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.BankManager, Assembly-CSharp
+        m_MethodName: BuyTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnStartUpgradeSelectedTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: SetStats
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1274034837}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 278093345}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1250217732}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.SellTower, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFinishUpgradeSelectedTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: SetStats
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1274034837}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 278093345}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1250217732}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.SellTower, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnChangeSelectedTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: HandleChangeSelectedTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 312478120}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2035294446}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 443308170}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1274034837}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 278093345}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: SetTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1250217732}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.SellTower, Assembly-CSharp
+        m_MethodName: SetState
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnLevelChangeSelectedTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: HandleLevelChangeSelectedTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSetTargetMethodTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 312478120}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2035294446}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 443308170}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetInteractable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnKillCountChangeTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: HandleKillCountChangeSelectedTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnXpChangeTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: HandleOnXpChangeTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSellSelectedTower:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 438958075}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.BankManager, Assembly-CSharp
+        m_MethodName: SellTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1039594392}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TowerStats, Assembly-CSharp
+        m_MethodName: ClearStats
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1274034837}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 278093345}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeTower, Assembly-CSharp
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &438958075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2075,7 +2426,6 @@ MonoBehaviour:
   Canvas: {fileID: 709282964}
   RewardTextPrefab: {fileID: 5349574088421517419, guid: 5cccfc99b502a17469790d2d973e89dc,
     type: 3}
-  TowerController: {fileID: 438958074}
   StartingMoney: 10
   StartingCoupons: 3
   SellFraction: 0.5
@@ -2457,7 +2807,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 443308168}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 443308170}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetTargeting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &443308168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4428,7 +4790,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a312f40da3a877d42a6313b8c16af0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerController: {fileID: 438958074}
   DefaultText: {fileID: 1039594393}
   NameText: {fileID: 523246870}
   KillCount: {fileID: 1641607635}
@@ -8579,7 +8940,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2035294444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2035294446}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
+        m_MethodName: SetTargeting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2035294444
 MonoBehaviour:
   m_ObjectHideFlags: 0

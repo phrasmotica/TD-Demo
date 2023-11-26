@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Path;
+using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.Events;
@@ -85,17 +86,20 @@ namespace TDDemo.Assets.Scripts.Controller
                     item.PickupRouter = PickupRouter;
                 }
 
-                enemy.OnKill += (e, tower) =>
-                {
-                    Bank.AddReward(e, tower);
-                    RemoveEnemy(e);
-                };
+                // cannot be set in the editor because the enemy is not known ahead of time
+                enemy.OnKill.AddListener(HandleEnemyKill);
 
                 _enemies.Add(enemy);
                 OnEnemiesChange.Invoke(GetEnemies());
 
                 yield return new WaitForSeconds(1);
             }
+        }
+
+        private void HandleEnemyKill(Enemy e, TowerBehaviour tower)
+        {
+            Bank.AddReward(e, tower);
+            RemoveEnemy(e);
         }
 
         private int GetEnemyCount(int waveNumber) => waveNumber;

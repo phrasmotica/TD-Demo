@@ -34,19 +34,19 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public float HealthFraction => _health / StartingHealth;
 
-        public event UnityAction OnMouseEnterEvent;
+        public UnityEvent OnMouseEnterEvent;
 
-        public event UnityAction OnMouseExitEvent;
+        public UnityEvent OnMouseExitEvent;
 
-        public event UnityAction<float> OnHurt;
+        public UnityEvent<Enemy> OnHurt;
 
-        public event UnityAction<float> OnHeal;
+        public UnityEvent<Enemy> OnHeal;
 
-        public event UnityAction<IEffect> OnEffect;
+        public UnityEvent<Enemy, IEffect> OnEffect;
 
-        public event UnityAction<Enemy> OnPreKill;
+        public UnityEvent<Enemy> OnPreKill;
 
-        public event UnityAction<Enemy, TowerBehaviour> OnKill;
+        public UnityEvent<Enemy, TowerBehaviour> OnKill;
 
         private void Start()
         {
@@ -63,9 +63,9 @@ namespace TDDemo.Assets.Scripts.Enemies
                 LastDamagingTower.GainXp(BaseXpReward);
 
                 // required for things that need to happen before the game object is destroyed
-                OnPreKill?.Invoke(this);
+                OnPreKill.Invoke(this);
 
-                OnKill?.Invoke(this, LastDamagingTower);
+                OnKill.Invoke(this, LastDamagingTower);
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace TDDemo.Assets.Scripts.Enemies
                 AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
             }
 
-            OnHurt?.Invoke(HealthFraction);
+            OnHurt.Invoke(this);
         }
 
         public void Heal(float amount)
@@ -120,14 +120,14 @@ namespace TDDemo.Assets.Scripts.Enemies
                 AudioSource.PlayClipAtPoint(HealAudio, Vector3.zero);
             }
 
-            OnHeal?.Invoke(HealthFraction);
+            OnHeal.Invoke(this);
         }
 
         public void AddEffect(IEffect effect)
         {
             _effects.Add(effect);
             effect.Start(this);
-            OnEffect?.Invoke(effect);
+            OnEffect.Invoke(this, effect);
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
