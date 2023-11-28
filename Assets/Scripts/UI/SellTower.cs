@@ -1,5 +1,4 @@
-﻿using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Towers;
+﻿using TDDemo.Assets.Scripts.Towers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +7,6 @@ namespace TDDemo.Assets.Scripts.UI
     public class SellTower : MonoBehaviour
     {
         public SpriteRenderer Sprite;
-
-        public TowerController TowerController;
-
-        private void Awake()
-        {
-            GetComponent<Button>().onClick.AddListener(TowerController.SellSelectedTower);
-        }
 
         public void SetState(TowerBehaviour tower)
         {

@@ -4609,7 +4609,6 @@ MonoBehaviour:
   TowerPrefab: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
     type: 3}
   Bank: {fileID: 438958075}
-  TowerController: {fileID: 438958074}
 --- !u!114 &1012688284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4653,7 +4652,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1012688285}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958074}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+          Assembly-CSharp
+        m_MethodName: CreateNewTower
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1012688285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5399,7 +5412,20 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1103518731}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.ShowTargetLineToggle,
+          Assembly-CSharp
+        m_MethodName: SetShowTargetLine
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &1135359296
 GameObject:
@@ -5735,7 +5761,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1250217730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958074}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+          Assembly-CSharp
+        m_MethodName: SellSelectedTower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1250217730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5787,7 +5826,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sprite: {fileID: 544843668}
-  TowerController: {fileID: 438958074}
 --- !u!1 &1274034835
 GameObject:
   m_ObjectHideFlags: 0
@@ -6278,7 +6316,6 @@ MonoBehaviour:
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
   Bank: {fileID: 438958075}
-  TowerController: {fileID: 438958074}
 --- !u!114 &1421022782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6322,7 +6359,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1421022783}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958074}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+          Assembly-CSharp
+        m_MethodName: CreateNewTower
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1421022783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7058,7 +7109,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1660599355}
   - component: {fileID: 1660599356}
-  - component: {fileID: 1660599357}
   m_Layer: 5
   m_Name: PreferCouponsToggle
   m_TagString: Untagged
@@ -7134,21 +7184,20 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958075}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.BankManager, Assembly-CSharp
+        m_MethodName: SetUseCoupons
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
---- !u!114 &1660599357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660599354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19cf6f208e5bc8f40a082b09d90d7a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bank: {fileID: 438958075}
 --- !u!1 &1676532556
 GameObject:
   m_ObjectHideFlags: 0
@@ -7478,7 +7527,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1741157843}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741157841}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.FastForwardButton, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1741157843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7566,7 +7627,6 @@ GameObject:
   - component: {fileID: 1775969661}
   - component: {fileID: 1775969660}
   - component: {fileID: 1775969659}
-  - component: {fileID: 1775969662}
   m_Layer: 5
   m_Name: SendWaveButton
   m_TagString: Untagged
@@ -7638,7 +7698,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1775969660}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958072}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.WavesController,
+          Assembly-CSharp
+        m_MethodName: DoSendNextWave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1775969660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7677,19 +7750,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775969657}
   m_CullTransparentMesh: 0
---- !u!114 &1775969662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775969657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7876ace0a6a91894797fd3b55ef07137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WavesController: {fileID: 438958072}
 --- !u!1 &1794165768
 GameObject:
   m_ObjectHideFlags: 0
@@ -8353,7 +8413,6 @@ MonoBehaviour:
   TowerPrefab: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
     type: 3}
   Bank: {fileID: 438958075}
-  TowerController: {fileID: 438958074}
 --- !u!114 &1841666782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8397,7 +8456,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1841666783}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 438958074}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+          Assembly-CSharp
+        m_MethodName: CreateNewTower
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1841666783
 MonoBehaviour:
   m_ObjectHideFlags: 0

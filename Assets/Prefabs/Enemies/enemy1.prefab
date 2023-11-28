@@ -418,6 +418,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnKill:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5049580195892582698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddadb9b8be59874482a01f86bdf08c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2494292608936246408}
   DropSpecs:
   - {fileID: 8632440007577340792}
 --- !u!114 &8632440007577340792

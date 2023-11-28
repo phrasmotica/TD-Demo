@@ -11,13 +11,6 @@ namespace TDDemo.Assets.Scripts.UI
 
         public BankManager Bank;
 
-        public TowerController TowerController;
-
-        private void Awake()
-        {
-            GetComponent<Button>().onClick.AddListener(() => TowerController.CreateNewTower(TowerPrefab));
-        }
-
         public void SetInteractable()
         {
             var tower = TowerPrefab.GetComponent<TowerBehaviour>();
