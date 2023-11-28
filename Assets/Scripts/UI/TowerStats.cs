@@ -61,7 +61,6 @@ namespace TDDemo.Assets.Scripts.UI
         {
             SetStats(tower);
 
-            // TODO: move these into event handlers inside XpBar and KillCount?
             if (tower != null)
             {
                 XpBar.UpdateProgressBar(tower.Experience);
@@ -73,7 +72,6 @@ namespace TDDemo.Assets.Scripts.UI
         {
             SetStats(tower);
 
-            // TODO: move these into event handlers inside XpBar and KillCount?
             if (tower != null)
             {
                 XpBar.UpdateProgressBar(tower.Experience);

@@ -20,7 +20,6 @@ namespace TDDemo.Assets.Scripts.UI
             }
         }
 
-        // TODO: create an event for this
         public void SetTargeting() => TowerController.SetTargetingSelectedTower(Method);
     }
 }
