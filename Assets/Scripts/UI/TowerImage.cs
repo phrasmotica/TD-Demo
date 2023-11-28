@@ -8,7 +8,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public void UpdateImage(TowerBehaviour tower)
         {
-            GetComponent<Image>().sprite = tower.GetComponent<SpriteRenderer>().sprite;
+            GetComponent<Image>().sprite = tower.SpriteRenderer.sprite;
         }
     }
 }

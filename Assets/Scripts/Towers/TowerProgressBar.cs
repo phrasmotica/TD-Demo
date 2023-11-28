@@ -9,6 +9,8 @@ namespace TDDemo.Assets.Scripts.Towers
     {
         public TowerBehaviour Tower;
 
+        public SpriteRenderer TowerSprite;
+
         private LineRenderer _line;
 
         private void Start()
@@ -27,8 +29,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void DrawProgressBar(TowerBehaviour tower, float progress)
         {
-            var sprite = tower.GetComponent<SpriteRenderer>();
-            var spriteExtentX = sprite.sprite.bounds.extents.x;
+            var spriteExtentX = TowerSprite.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * progress;

@@ -4,6 +4,7 @@ using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
@@ -25,6 +26,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public int Range;
 
         public LineRenderer TargetLine;
+
+        public UnityEvent<Enemy> OnEstablishedTarget;
 
         private TimeCounter _lastShotCounter;
 
@@ -68,6 +71,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public void Survey(IEnumerable<GameObject> enemies)
         {
             _target = EstablishTarget(enemies);
+
+            OnEstablishedTarget.Invoke(_target);
 
             var isTargeting = _target != null && SourceTower.IsFiring();
             var shouldDraw = ShowTargetLine && TargetLine != null;

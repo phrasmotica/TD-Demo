@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Experience;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
@@ -17,6 +18,10 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public string Description;
 
+        public SpriteRenderer SpriteRenderer;
+
+        public Transform PedestalTransform;
+
         public TargetMethod TargetMethod;
 
         public GoldCalculator GoldCalculator;
@@ -28,8 +33,6 @@ namespace TDDemo.Assets.Scripts.Towers
         private Tower _tower;
 
         private List<GameObject> _enemies;
-
-        private SpriteRenderer _spriteRenderer;
 
         private ITowerAction[] _actions;
 
@@ -79,8 +82,6 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             _tower = new Tower(GoldCalculator, XpCalculator);
             _enemies = new();
-
-            _spriteRenderer = GetComponent<SpriteRenderer>();
 
             RefreshActions();
             RefreshStrikes();
@@ -137,6 +138,15 @@ namespace TDDemo.Assets.Scripts.Towers
                 {
                     action.Act();
                 }
+            }
+        }
+
+        public void LookAtTarget(Enemy enemy)
+        {
+            if (enemy != null && _tower.IsFiring())
+            {
+                var direction = (enemy.transform.position - PedestalTransform.position).normalized;
+                PedestalTransform.up = direction;
             }
         }
 
@@ -202,7 +212,7 @@ namespace TDDemo.Assets.Scripts.Towers
             var warmupTime = GetWarmupTime();
             _tower.StartWarmingUp(warmupTime);
 
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
+            SpriteRenderer.color = ColourHelper.HalfOpacity;
 
             logger.Log($"Tower warming up for {warmupTime} seconds");
             yield return new WaitForSeconds(warmupTime);
@@ -212,7 +222,7 @@ namespace TDDemo.Assets.Scripts.Towers
             ReadyActions();
             AllowFire();
 
-            _spriteRenderer.color = ColourHelper.FullOpacity;
+            SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log("Tower ready");
         }
@@ -226,7 +236,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             PreventFire();
 
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
+            SpriteRenderer.color = ColourHelper.HalfOpacity;
 
             logger.Log($"Tower upgrading for {upgradeTime} seconds");
             yield return new WaitForSeconds(upgradeTime);
@@ -244,8 +254,8 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshStrikes();
             AllowFire();
 
-            _spriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
-            _spriteRenderer.color = ColourHelper.FullOpacity;
+            SpriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
+            SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log($"Tower upgraded, total value {GetTotalValue()}");
 
