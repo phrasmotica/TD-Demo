@@ -64,9 +64,15 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent<StrikeProvider[]> OnRefreshStrikes;
 
+        public UnityEvent OnStartWarmup;
+
+        public UnityEvent OnStartUpgrade;
+
         public UnityEvent<TowerBehaviour, float> OnWarmupProgress;
 
         public UnityEvent<TowerBehaviour, float> OnUpgradeProgress;
+
+        public UnityEvent OnFinishWarmup;
 
         public UnityEvent OnFinishUpgrade;
 
@@ -209,6 +215,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private IEnumerator Warmup()
         {
+            OnStartWarmup.Invoke();
+
             var warmupTime = GetWarmupTime();
             _tower.StartWarmingUp(warmupTime);
 
@@ -225,12 +233,16 @@ namespace TDDemo.Assets.Scripts.Towers
             SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log("Tower ready");
+
+            OnFinishWarmup.Invoke();
         }
 
         public void DoUpgrade() => StartCoroutine(Upgrade());
 
         private IEnumerator Upgrade()
         {
+            OnStartUpgrade.Invoke();
+
             var upgradeTime = GetUpgradeTime();
             _tower.StartUpgrading(upgradeTime);
 

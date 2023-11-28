@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5831091605674793471}
   - component: {fileID: 4241176339478496744}
-  - component: {fileID: 4871161673491206307}
+  - component: {fileID: 7253309283218228673}
   m_Layer: 0
   m_Name: upgradeBar
   m_TagString: Untagged
@@ -132,7 +132,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &4871161673491206307
+--- !u!114 &7253309283218228673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,11 +141,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 76718330624858384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645a02b6f662827458803b995f793968, type: 3}
+  m_Script: {fileID: 11500000, guid: 00230de05ed71ad429b551090755802f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 7861188637160861286}
   TowerSprite: {fileID: 261373220016692336}
+  Line: {fileID: 4241176339478496744}
 --- !u!1 &566283724406427687
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5832672748657457139}
   - component: {fileID: 2350697545940070443}
-  - component: {fileID: 5893715406662901985}
+  - component: {fileID: 6832958279491874294}
   m_Layer: 0
   m_Name: warmupBar
   m_TagString: Untagged
@@ -628,7 +628,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5051437668199712515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -735,7 +735,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &5893715406662901985
+--- !u!114 &6832958279491874294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -744,11 +744,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5051437668199712515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ed516e3af87c94295f01e5f50d376e, type: 3}
+  m_Script: {fileID: 11500000, guid: 00230de05ed71ad429b551090755802f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 7861188637160861286}
   TowerSprite: {fileID: 261373220016692336}
+  Line: {fileID: 2350697545940070443}
 --- !u!1 &6400886434690007880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,10 +1126,40 @@ MonoBehaviour:
   OnRefreshStrikes:
     m_PersistentCalls:
       m_Calls: []
+  OnStartWarmup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2350697545940070443}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnStartUpgrade:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4241176339478496744}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnWarmupProgress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5893715406662901985}
+      - m_Target: {fileID: 6832958279491874294}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
           Assembly-CSharp
         m_MethodName: DrawProgressBar
@@ -1145,7 +1175,7 @@ MonoBehaviour:
   OnUpgradeProgress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4871161673491206307}
+      - m_Target: {fileID: 7253309283218228673}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
           Assembly-CSharp
         m_MethodName: DrawProgressBar
@@ -1158,9 +1188,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnFinishWarmup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2350697545940070443}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnFinishUpgrade:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4241176339478496744}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLevelChange:
     m_PersistentCalls:
       m_Calls: []

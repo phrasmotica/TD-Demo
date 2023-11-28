@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6061115693638912514}
   - component: {fileID: 4479662293076858389}
-  - component: {fileID: 5145518482440733534}
+  - component: {fileID: 5863977521023294864}
   m_Layer: 0
   m_Name: upgradeBar
   m_TagString: Untagged
@@ -229,7 +229,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &5145518482440733534
+--- !u!114 &5863977521023294864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,11 +238,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 423853613815778029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645a02b6f662827458803b995f793968, type: 3}
+  m_Script: {fileID: 11500000, guid: 00230de05ed71ad429b551090755802f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 7631867566107524507}
   TowerSprite: {fileID: 4277198905856802237}
+  Line: {fileID: 4479662293076858389}
 --- !u!1 &1409095009617655794
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6052990189032350734}
   - component: {fileID: 2625036188410799062}
-  - component: {fileID: 6141771451889693468}
+  - component: {fileID: 2941035580008734992}
   m_Layer: 0
   m_Name: warmupBar
   m_TagString: Untagged
@@ -603,7 +603,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &6141771451889693468
+--- !u!114 &2941035580008734992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -612,11 +612,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4821971724821386494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ed516e3af87c94295f01e5f50d376e, type: 3}
+  m_Script: {fileID: 11500000, guid: 00230de05ed71ad429b551090755802f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 7631867566107524507}
   TowerSprite: {fileID: 4277198905856802237}
+  Line: {fileID: 2625036188410799062}
 --- !u!1 &7605472417552173125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,10 +1272,40 @@ MonoBehaviour:
   OnRefreshStrikes:
     m_PersistentCalls:
       m_Calls: []
+  OnStartWarmup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2625036188410799062}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnStartUpgrade:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4479662293076858389}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnWarmupProgress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6141771451889693468}
+      - m_Target: {fileID: 2941035580008734992}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
           Assembly-CSharp
         m_MethodName: DrawProgressBar
@@ -1291,7 +1321,7 @@ MonoBehaviour:
   OnUpgradeProgress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5145518482440733534}
+      - m_Target: {fileID: 5863977521023294864}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerProgressBar,
           Assembly-CSharp
         m_MethodName: DrawProgressBar
@@ -1304,9 +1334,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnFinishWarmup:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2625036188410799062}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnFinishUpgrade:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4479662293076858389}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLevelChange:
     m_PersistentCalls:
       m_Calls: []
