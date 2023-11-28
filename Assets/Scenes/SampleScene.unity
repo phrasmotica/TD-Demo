@@ -1993,6 +1993,7 @@ GameObject:
   - component: {fileID: 438958074}
   - component: {fileID: 438958072}
   - component: {fileID: 438958077}
+  - component: {fileID: 438958078}
   m_Layer: 0
   m_Name: controller
   m_TagString: GameController
@@ -2735,6 +2736,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bank: {fileID: 438958075}
+--- !u!114 &438958078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438958071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f456b4afa1843b54eaa29fe3075eee67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioMixer: {fileID: 24100000, guid: 87afe514ef72cb14ab323d4745a1491d, type: 2}
+  OnMute:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 533824257}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: 0ee373ab7b3233844be996a5568d8481,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUnmute:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 533824257}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: ceb87fb2bb59a8347bd21df895112ef9,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &443308165
 GameObject:
   m_ObjectHideFlags: 0
@@ -5006,7 +5052,6 @@ GameObject:
   - component: {fileID: 1060838692}
   - component: {fileID: 1060838691}
   - component: {fileID: 1060838690}
-  - component: {fileID: 1060838689}
   m_Layer: 5
   m_Name: MuteButton
   m_TagString: Untagged
@@ -5035,22 +5080,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1060838689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060838687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c219714485e47840a42097c7189e139, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 533824257}
-  MutedSprite: {fileID: 21300000, guid: 0ee373ab7b3233844be996a5568d8481, type: 3}
-  UnmutedSprite: {fileID: 21300000, guid: ceb87fb2bb59a8347bd21df895112ef9, type: 3}
-  AudioMixer: {fileID: 24100000, guid: 87afe514ef72cb14ab323d4745a1491d, type: 2}
 --- !u!114 &1060838690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5095,8 +5124,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1060838689}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.MuteButton, Assembly-CSharp
+      - m_Target: {fileID: 438958078}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
+          Assembly-CSharp
         m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
