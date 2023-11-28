@@ -21,7 +21,6 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _isMuted = !_isMuted;
 
-            // TODO: route enemy damage noise, enemy death noise and enemy heal noise through sound effects group
             if (_isMuted)
             {
                 AudioMixer.GetFloat("masterVolume", out var masterVolume);

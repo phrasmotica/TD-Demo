@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Effects;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int Strength;
 
+        public AudioSource AudioSource;
+
         public AudioClip HurtAudio;
         public AudioClip HealAudio;
         public AudioClip DeadAudio;
@@ -29,6 +32,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         private float _health;
 
         private List<IEffect> _effects;
+
+        private bool _isDead;
 
         public TowerBehaviour LastDamagingTower { get; set; }
 
@@ -56,16 +61,9 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Update()
         {
-            if (_health <= 0)
+            if (_health <= 0 && !_isDead)
             {
-                AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
-                LastDamagingTower.GainKill();
-                LastDamagingTower.GainXp(BaseXpReward);
-
-                // required for things that need to happen before the game object is destroyed
-                OnPreKill.Invoke(this);
-
-                OnKill.Invoke(this, LastDamagingTower);
+                StartCoroutine(DoDie());
                 return;
             }
 
@@ -105,7 +103,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (!isFromEffect && _health > 0)
             {
-                AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
+                AudioSource.PlayOneShot(HurtAudio);
             }
 
             OnHurt.Invoke(this);
@@ -117,7 +115,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (_health > 0)
             {
-                AudioSource.PlayClipAtPoint(HealAudio, Vector3.zero);
+                AudioSource.PlayOneShot(HealAudio);
             }
 
             OnHeal.Invoke(this);
@@ -131,5 +129,25 @@ namespace TDDemo.Assets.Scripts.Enemies
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
+
+        private System.Collections.IEnumerator DoDie()
+        {
+            _isDead = true;
+
+            LastDamagingTower.GainKill();
+            LastDamagingTower.GainXp(BaseXpReward);
+
+            // required for things that need to happen before the game object is destroyed
+            OnPreKill.Invoke(this);
+
+            AudioSource.PlayOneShot(DeadAudio);
+
+            while (AudioSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            OnKill.Invoke(this, LastDamagingTower);
+        }
     }
 }
