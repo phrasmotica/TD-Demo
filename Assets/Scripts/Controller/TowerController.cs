@@ -155,11 +155,6 @@ namespace TDDemo.Assets.Scripts.Controller
             _newTower = null;
         }
 
-        public void SetEnemies()
-        {
-
-        }
-
         public void SetTargetingSelectedTower(TargetMethod method)
         {
             var selectedTower = _towerManager.GetSelectedTower();
