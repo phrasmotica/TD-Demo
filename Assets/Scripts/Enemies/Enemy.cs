@@ -97,6 +97,8 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
+        public bool CanBeTargeted() => !_isDead;
+
         public void TakeDamage(float amount, bool isFromEffect)
         {
             _health -= amount;

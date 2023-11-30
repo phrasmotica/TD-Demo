@@ -100,7 +100,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private Enemy EstablishTarget(IEnumerable<GameObject> enemies)
         {
-            var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
+            var inRangeEnemies = enemies
+                .Where(e => transform.GetDistanceToObject(e) <= Range)
+                .Where(e => e.GetComponent<Enemy>().CanBeTargeted());
+
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())
