@@ -40,7 +40,7 @@ namespace TDDemo.Assets.Scripts.Menu
 
         public void SetVolume(float volume)
         {
-            audioMixer.SetFloat("volume", volume);
+            audioMixer.SetFloat("masterVolume", volume);
         }
 
         public void SetQuality(int qualityIndex)
