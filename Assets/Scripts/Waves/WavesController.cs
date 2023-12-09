@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Path;
 using TDDemo.Assets.Scripts.Towers;
@@ -8,7 +9,7 @@ using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDDemo.Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Waves
 {
     public class WavesController : BaseBehaviour
     {
