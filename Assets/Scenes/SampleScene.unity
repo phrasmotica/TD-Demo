@@ -3155,6 +3155,8 @@ MonoBehaviour:
   PickupRouter: {fileID: 438958077}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
+  BossEnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
+    type: 3}
   Waypoints:
   - {fileID: 1958374536}
   - {fileID: 1549701627}

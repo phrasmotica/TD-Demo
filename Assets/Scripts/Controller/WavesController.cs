@@ -18,6 +18,8 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public GameObject EnemyPrefab;
 
+        public GameObject BossEnemyPrefab;
+
         public Waypoint[] Waypoints;
 
         private int _currentWave;
@@ -67,12 +69,12 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             logger.Log($"SendWave({waveNumber})");
 
-            var enemyCount = GetEnemyCount(waveNumber);
+            var (enemyPrefab, count) = GetEnemyCount(waveNumber);
 
-            for (var i = 0; i < enemyCount; i++)
+            for (var i = 0; i < count; i++)
             {
                 var firstWaypointPos = Waypoints.First().transform.position;
-                var enemyObj = Instantiate(EnemyPrefab, firstWaypointPos, Quaternion.identity);
+                var enemyObj = Instantiate(enemyPrefab, firstWaypointPos, Quaternion.identity);
 
                 var waypointFollower = enemyObj.GetComponent<WaypointFollower>();
                 waypointFollower.Waypoints = Waypoints;
@@ -102,7 +104,15 @@ namespace TDDemo.Assets.Scripts.Controller
             RemoveEnemy(e);
         }
 
-        private int GetEnemyCount(int waveNumber) => waveNumber;
+        private (GameObject, int) GetEnemyCount(int waveNumber)
+        {
+            if (waveNumber % 2 == 0)
+            {
+                return (BossEnemyPrefab, waveNumber / 2);
+            }
+
+            return (EnemyPrefab, waveNumber);
+        }
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
 

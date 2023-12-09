@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Effects;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace TDDemo.Assets.Scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
-        [Range(1, 5)]
+        [Range(1, 20)]
         public float StartingHealth;
 
         [Range(1, 10)]
