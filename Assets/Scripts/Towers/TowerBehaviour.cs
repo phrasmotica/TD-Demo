@@ -54,7 +54,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent<bool> OnSelected;
 
-        public UnityEvent OnClicked;
+        public UnityEvent<TowerBehaviour> OnClicked;
 
         public UnityEvent<bool> OnCanBePlaced;
 
@@ -74,15 +74,15 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent OnFinishWarmup;
 
-        public UnityEvent OnFinishUpgrade;
+        public UnityEvent<TowerBehaviour> OnFinishUpgrade;
 
-        public UnityEvent OnLevelChange;
+        public UnityEvent<TowerBehaviour> OnLevelChange;
 
-        public UnityEvent<int> OnKillCountChange;
+        public UnityEvent<TowerBehaviour, int> OnKillCountChange;
 
-        public UnityEvent<int> OnXpChange;
+        public UnityEvent<TowerBehaviour, int> OnXpChange;
 
-        public UnityEvent<TargetMethod> OnSetTargetMethod;
+        public UnityEvent<TowerBehaviour, TargetMethod> OnSetTargetMethod;
 
         private void Start()
         {
@@ -165,7 +165,7 @@ namespace TDDemo.Assets.Scripts.Towers
             if (_tower.IsFiring() && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
                 logger.Log("Selected tower");
-                OnClicked.Invoke();
+                OnClicked.Invoke(this);
             }
         }
 
@@ -271,7 +271,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             logger.Log($"Tower upgraded, total value {GetTotalValue()}");
 
-            OnFinishUpgrade.Invoke();
+            OnFinishUpgrade.Invoke(this);
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
@@ -305,7 +305,7 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshActions();
             RefreshStrikes();
 
-            OnSetTargetMethod.Invoke(method);
+            OnSetTargetMethod.Invoke(this, method);
         }
 
         public int GetPrice() => Levels.First().Price;
@@ -334,16 +334,16 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.GetFireRate()) : 0;
         }
 
-        public void GainKill() => OnKillCountChange.Invoke(++KillCount);
+        public void GainKill() => OnKillCountChange.Invoke(this, ++KillCount);
 
         public void GainXp(int baseXp)
         {
             var xp = _tower.AddXp(baseXp);
-            OnXpChange.Invoke(xp);
+            OnXpChange.Invoke(this, xp);
 
             if (_tower.TryLevelUp())
             {
-                OnLevelChange.Invoke();
+                OnLevelChange.Invoke(this);
             }
         }
 
