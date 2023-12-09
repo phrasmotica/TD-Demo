@@ -15,6 +15,8 @@ namespace TDDemo.Assets.Scripts.Path
             if (otherObj.CompareTag(Tags.Enemy))
             {
                 OnEnemyCollide.Invoke(otherObj.GetComponent<Enemy>());
+
+                Destroy(otherObj);
             }
         }
     }
