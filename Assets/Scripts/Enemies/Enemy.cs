@@ -85,7 +85,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var otherObj = collision.gameObject;
-            if (otherObj.TryGetComponent<Projectile>(out var projectileComponent))
+            if (CanBeTargeted() && otherObj.TryGetComponent<Projectile>(out var projectileComponent))
             {
                 var strike = projectileComponent.CreateStrike();
                 strike.Apply(this);
