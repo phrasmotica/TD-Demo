@@ -10,7 +10,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public PickupRouter PickupRouter { get; set; }
 
-        public void OnPreKill(Enemy enemy)
+        public void OnKill(Enemy enemy)
         {
             var random = new System.Random();
 

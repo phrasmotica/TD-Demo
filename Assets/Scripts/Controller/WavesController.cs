@@ -110,8 +110,6 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _enemies.Remove(enemy);
             OnEnemiesChange.Invoke(GetEnemies());
-
-            Destroy(enemy.gameObject);
         }
 
         public void ResetAll()

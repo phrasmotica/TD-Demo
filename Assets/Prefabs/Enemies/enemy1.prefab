@@ -407,6 +407,9 @@ MonoBehaviour:
         m_CallState: 2
   OnPreKill:
     m_PersistentCalls:
+      m_Calls: []
+  OnKill:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1607858000847111180}
         m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
@@ -422,19 +425,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 6375512407751788225}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.ItemDropper, Assembly-CSharp
-        m_MethodName: OnPreKill
-        m_Mode: 0
+        m_MethodName: OnKill
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2494292608936246408}
+          m_ObjectArgumentAssemblyTypeName: TDDemo.Assets.Scripts.Enemies.Enemy,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnKill:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5049580195892582698
 MonoBehaviour:
   m_ObjectHideFlags: 0

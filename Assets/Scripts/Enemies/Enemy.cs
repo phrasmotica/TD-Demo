@@ -6,6 +6,7 @@ using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Effects;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace TDDemo.Assets.Scripts.Enemies
 {
@@ -48,8 +49,6 @@ namespace TDDemo.Assets.Scripts.Enemies
         public UnityEvent<Enemy> OnHeal;
 
         public UnityEvent<Enemy, IEffect> OnEffect;
-
-        public UnityEvent<Enemy> OnPreKill;
 
         public UnityEvent<Enemy, TowerBehaviour> OnKill;
 
@@ -139,8 +138,8 @@ namespace TDDemo.Assets.Scripts.Enemies
             LastDamagingTower.GainKill();
             LastDamagingTower.GainXp(BaseXpReward);
 
-            // required for things that need to happen before the game object is destroyed
-            OnPreKill.Invoke(this);
+            // required before the game object is destroyed
+            OnKill.Invoke(this, LastDamagingTower);
 
             AudioSource.PlayOneShot(DeadAudio);
 
@@ -149,7 +148,7 @@ namespace TDDemo.Assets.Scripts.Enemies
                 yield return null;
             }
 
-            OnKill.Invoke(this, LastDamagingTower);
+            Destroy(gameObject);
         }
     }
 }
