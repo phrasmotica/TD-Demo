@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.Menu
 {
@@ -10,12 +11,20 @@ namespace TDDemo.Assets.Scripts.Menu
     {
         public AudioMixer audioMixer;
 
+        public Slider volumeSlider;
+
         public TMP_Dropdown resolutionDropdown;
 
         private List<Resolution> _resolutions;
 
         private void Start()
         {
+            audioMixer.GetFloat("masterVolume", out var currentVolume);
+
+            Debug.Log($"Current volume is {currentVolume}");
+
+            volumeSlider.value = currentVolume;
+
             _resolutions = Screen.resolutions.ToList();
 
             var distinctRefreshRates = _resolutions.Select(r => r.refreshRate).Distinct();
