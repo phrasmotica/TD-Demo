@@ -1,6 +1,7 @@
 using TDDemo.Assets.Scripts.Controller;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace TDDemo.Assets.Scripts.UI
 {
@@ -8,15 +9,16 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public BankManager Bank;
 
-        public GameObject GameOverScreen;
+        public TMP_Text FinalMoneyText;
 
-        public Text FinalMoneyText;
-
-        public void ShowGameOverScreen()
+        public void UpdateText()
         {
-            GameOverScreen.SetActive(true);
-
             FinalMoneyText.text = $"You finished with {Bank.Money} money.";
+        }
+
+        public void LoadMenu()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
     }
 }
