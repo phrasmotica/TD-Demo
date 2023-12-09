@@ -2956,6 +2956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c552af3b024013f44b211aa95598a84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioSource: {fileID: 421968475}
   FirstStageMusic: {fileID: 8300000, guid: 3091b28700bc1564da8d5b98245535af, type: 3}
   SecondStageMusic: {fileID: 8300000, guid: e4c4ca5317da3cc48bfba0b1c353098a, type: 3}
 --- !u!4 &421968477
@@ -9436,6 +9437,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenuUI: {fileID: 1692388430}
+  OnGamePaused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 421968476}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Music.MusicController, Assembly-CSharp
+        m_MethodName: PauseMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnGameResumed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 421968476}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Music.MusicController, Assembly-CSharp
+        m_MethodName: ResumeMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1406460860
 GameObject:
   m_ObjectHideFlags: 0

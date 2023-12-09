@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace TDDemo
@@ -11,18 +12,25 @@ namespace TDDemo
 
         public GameObject PauseMenuUI;
 
-        // Update is called once per frame
-        void Update()
+        public UnityEvent OnGamePaused;
+
+        public UnityEvent OnGameResumed;
+
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (GameIsPaused)
                 {
                     Resume();
+
+                    OnGameResumed.Invoke();
                 }
                 else
                 {
                     Pause();
+
+                    OnGamePaused.Invoke();
                 }
             }
         }

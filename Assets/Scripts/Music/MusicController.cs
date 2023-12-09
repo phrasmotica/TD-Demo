@@ -5,6 +5,8 @@ namespace TDDemo.Assets.Scripts.Music
 {
     public class MusicController : MonoBehaviour
     {
+        public AudioSource AudioSource;
+
         public AudioClip FirstStageMusic;
         public AudioClip SecondStageMusic;
 
@@ -15,17 +17,25 @@ namespace TDDemo.Assets.Scripts.Music
 
         public void StartMusic()
         {
-            var audioSource = GetComponent<AudioSource>();
-            audioSource.clip = FirstStageMusic;
-            audioSource.loop = true;
-            audioSource.Play();
+            AudioSource.clip = FirstStageMusic;
+            AudioSource.loop = true;
+            AudioSource.Play();
+        }
+
+        public void PauseMusic()
+        {
+            AudioSource.Pause();
+        }
+
+        public void ResumeMusic()
+        {
+            AudioSource.UnPause();
         }
 
         public void StopMusic()
         {
-            var audioSource = GetComponent<AudioSource>();
-            audioSource.Stop();
-            audioSource.time = 0;
+            AudioSource.Stop();
+            AudioSource.time = 0;
         }
 
         public void SetMusic(int stageNumber)
@@ -33,15 +43,13 @@ namespace TDDemo.Assets.Scripts.Music
             var newClip = ComputeNewClip(stageNumber);
             if (newClip != null)
             {
-                var audioSource = GetComponent<AudioSource>();
+                AudioSource.Pause();
+                var currentTime = AudioSource.time;
 
-                audioSource.Pause();
-                var currentTime = audioSource.time;
+                AudioSource.clip = newClip;
+                AudioSource.time = currentTime;
 
-                audioSource.clip = newClip;
-                audioSource.time = currentTime;
-
-                audioSource.Play();
+                AudioSource.Play();
             }
         }
 
