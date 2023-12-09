@@ -18,6 +18,11 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public UnityEvent OnUnmute;
 
+        private void Start()
+        {
+            ResetAudio();
+        }
+
         public void Toggle()
         {
             _isMuted = !_isMuted;
@@ -46,6 +51,11 @@ namespace TDDemo.Assets.Scripts.Controller
 
                 OnUnmute.Invoke();
             }
+        }
+
+        public void ResetAudio()
+        {
+            AudioMixer.SetFloat("musicPitch", 1f);
         }
 
         public void SetMusicForWave(int waveNumber, Wave wave)
