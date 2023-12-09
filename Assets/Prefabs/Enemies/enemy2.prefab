@@ -191,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPeekTime: 0.5
+  EnemySprite: {fileID: 389218173807678723}
 --- !u!1 &6789323038238934127
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,9 +358,9 @@ MonoBehaviour:
   OnKill:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_enabled
+      - m_Target: {fileID: 7624730271070349620}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
