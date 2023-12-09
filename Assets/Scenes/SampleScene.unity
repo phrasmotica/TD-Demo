@@ -3160,6 +3160,27 @@ MonoBehaviour:
   Waypoints:
   - {fileID: 1958374536}
   - {fileID: 1549701627}
+  Waves:
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 1
+    Frequency: 1
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 2
+    Frequency: 1
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 2
+    Frequency: 2
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 3
+    Frequency: 2
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
+      type: 3}
+    Count: 1
+    Frequency: 1
   OnWaveChange:
     m_PersistentCalls:
       m_Calls:

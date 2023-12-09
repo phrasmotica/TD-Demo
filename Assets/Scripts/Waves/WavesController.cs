@@ -23,6 +23,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public Waypoint[] Waypoints;
 
+        public Wave[] Waves;
+
         private int _currentWave;
 
         private List<Enemy> _enemies;
@@ -70,12 +72,14 @@ namespace TDDemo.Assets.Scripts.Waves
         {
             logger.Log($"SendWave({waveNumber})");
 
-            var (enemyPrefab, count) = GetEnemyCount(waveNumber);
+            var wave = GetWave(waveNumber);
 
-            for (var i = 0; i < count; i++)
+            logger.Log($"Spawning {wave.EnemyPrefab.name} x{wave.Count} at {wave.Frequency} per second");
+
+            for (var i = 0; i < wave.Count; i++)
             {
                 var firstWaypointPos = Waypoints.First().transform.position;
-                var enemyObj = Instantiate(enemyPrefab, firstWaypointPos, Quaternion.identity);
+                var enemyObj = Instantiate(wave.EnemyPrefab, firstWaypointPos, Quaternion.identity);
 
                 var waypointFollower = enemyObj.GetComponent<WaypointFollower>();
                 waypointFollower.Waypoints = Waypoints;
@@ -95,7 +99,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 _enemies.Add(enemy);
                 OnEnemiesChange.Invoke(GetEnemies());
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f / wave.Frequency);
             }
         }
 
@@ -105,14 +109,29 @@ namespace TDDemo.Assets.Scripts.Waves
             RemoveEnemy(e);
         }
 
-        private (GameObject, int) GetEnemyCount(int waveNumber)
+        private Wave GetWave(int waveNumber)
         {
-            if (waveNumber % 2 == 0)
+            if (waveNumber - 1 < Waves.Length)
             {
-                return (BossEnemyPrefab, waveNumber / 2);
+                return Waves[waveNumber - 1];
             }
 
-            return (EnemyPrefab, waveNumber);
+            if (waveNumber % 5 == 0)
+            {
+                return new Wave
+                {
+                    EnemyPrefab = BossEnemyPrefab,
+                    Count = waveNumber / 5,
+                    Frequency = 1,
+                };
+            }
+
+            return new Wave
+            {
+                EnemyPrefab = EnemyPrefab,
+                Count = waveNumber,
+                Frequency = 2,
+            };
         }
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
