@@ -11,5 +11,13 @@ namespace TDDemo.Assets.Scripts.Waves
         public int Count;
 
         public int Frequency;
+
+        public WaveStyle WaveStyle;
+    }
+
+    public enum WaveStyle
+    {
+        Regular,
+        Boss,
     }
 }

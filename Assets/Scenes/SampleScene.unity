@@ -3197,22 +3197,27 @@ MonoBehaviour:
       type: 3}
     Count: 1
     Frequency: 1
+    WaveStyle: 0
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 2
     Frequency: 1
+    WaveStyle: 0
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 2
     Frequency: 2
+    WaveStyle: 0
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 3
     Frequency: 2
+    WaveStyle: 0
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
       type: 3}
     Count: 1
     Frequency: 1
+    WaveStyle: 1
   OnWaveChange:
     m_PersistentCalls:
       m_Calls:
@@ -3228,12 +3233,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 438958078}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
+          Assembly-CSharp
+        m_MethodName: SetMusicForWave
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnStageChange:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 421968476}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Music.MusicController, Assembly-CSharp
-        m_MethodName: SetMusic
+        m_MethodName: SetMusicForStage
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

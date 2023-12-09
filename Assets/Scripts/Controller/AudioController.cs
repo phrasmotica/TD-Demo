@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TDDemo.Assets.Scripts.Waves;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -44,6 +45,18 @@ namespace TDDemo.Assets.Scripts.Controller
                 AudioMixer.SetFloat("soundEffectsVolume", _currentVolumes["soundEffectsVolume"]);
 
                 OnUnmute.Invoke();
+            }
+        }
+
+        public void SetMusicForWave(int waveNumber, Wave wave)
+        {
+            if (wave.WaveStyle == WaveStyle.Boss)
+            {
+                AudioMixer.SetFloat("musicPitch", 0.9f);
+            }
+            else
+            {
+                AudioMixer.SetFloat("musicPitch", 1f);
             }
         }
     }

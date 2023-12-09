@@ -25,11 +25,11 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public Wave[] Waves;
 
-        private int _currentWave;
+        private int _currentWaveNumber;
 
         private List<Enemy> _enemies;
 
-        public UnityEvent<int> OnWaveChange;
+        public UnityEvent<int, Wave> OnWaveChange;
 
         public UnityEvent<int> OnStageChange;
 
@@ -46,16 +46,20 @@ namespace TDDemo.Assets.Scripts.Waves
             Physics2D.gravity = Vector2.zero;
         }
 
-        private void SetCurrentWave(int currentWave)
+        private Wave SetCurrentWave(int waveNumber)
         {
-            _currentWave = currentWave;
-            OnWaveChange.Invoke(_currentWave);
+            _currentWaveNumber = waveNumber;
 
-            if (IsStartOfStage(_currentWave))
+            var wave = GetWave(_currentWaveNumber);
+            OnWaveChange.Invoke(_currentWaveNumber, wave);
+
+            if (IsStartOfStage(_currentWaveNumber))
             {
-                var stageNumber = GetStageNumber(_currentWave);
+                var stageNumber = GetStageNumber(_currentWaveNumber);
                 OnStageChange.Invoke(stageNumber);
             }
+
+            return wave;
         }
 
         private static bool IsStartOfStage(int currentWave) => currentWave % 5 == 1;
@@ -64,15 +68,13 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public void DoSendNextWave()
         {
-            SetCurrentWave(_currentWave + 1);
-            StartCoroutine(SendWave(_currentWave));
+            var wave = SetCurrentWave(_currentWaveNumber + 1);
+            StartCoroutine(SendWave(wave));
         }
 
-        private IEnumerator SendWave(int waveNumber)
+        private IEnumerator SendWave(Wave wave)
         {
-            logger.Log($"SendWave({waveNumber})");
-
-            var wave = GetWave(waveNumber);
+            logger.Log($"SendWave({_currentWaveNumber})");
 
             logger.Log($"Spawning {wave.EnemyPrefab.name} x{wave.Count} at {wave.Frequency} per second");
 
@@ -113,7 +115,7 @@ namespace TDDemo.Assets.Scripts.Waves
         {
             if (waveNumber - 1 < Waves.Length)
             {
-                return Waves[waveNumber - 1];
+                return Waves[Mathf.Max(0, waveNumber - 1)];
             }
 
             if (waveNumber % 5 == 0)
@@ -123,6 +125,7 @@ namespace TDDemo.Assets.Scripts.Waves
                     EnemyPrefab = BossEnemyPrefab,
                     Count = waveNumber / 5,
                     Frequency = 1,
+                    WaveStyle = WaveStyle.Boss,
                 };
             }
 
@@ -131,6 +134,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 EnemyPrefab = EnemyPrefab,
                 Count = waveNumber,
                 Frequency = 2,
+                WaveStyle = WaveStyle.Regular,
             };
         }
 

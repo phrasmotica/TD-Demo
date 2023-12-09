@@ -38,7 +38,7 @@ namespace TDDemo.Assets.Scripts.Music
             AudioSource.time = 0;
         }
 
-        public void SetMusic(int stageNumber)
+        public void SetMusicForStage(int stageNumber)
         {
             var newClip = ComputeNewClip(stageNumber);
             if (newClip != null)
