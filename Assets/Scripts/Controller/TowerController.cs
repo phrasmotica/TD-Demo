@@ -104,6 +104,7 @@ namespace TDDemo.Assets.Scripts.Controller
             // Maybe there's a way we can make it work... perhaps creating a new EnemiesController
             // that holds the list of enemies in a static field.
             WavesController.OnEnemiesChange.AddListener(newTower.SetEnemies);
+            newTower.SetEnemies(WavesController.GetEnemies());
 
             // cannot be set in the editor because the new tower is not known ahead of time
             newTower.OnClicked.AddListener(tower =>
