@@ -130,7 +130,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (effect.Category == EffectCategory.Distract)
             {
-                AudioSource.PlayOneShot(DistractedAudio);
+                PlaySound(DistractedAudio);
             }
 
             OnEffect.Invoke(this, effect);
@@ -156,6 +156,13 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
 
             Destroy(gameObject);
+        }
+
+        private void PlaySound(AudioClip clip)
+        {
+            AudioSource.clip = clip;
+            AudioSource.pitch = 1 + 0.2f * (float) (new System.Random().NextDouble() - 0.5); // some randomness
+            AudioSource.Play();
         }
     }
 }
