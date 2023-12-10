@@ -416,8 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f722f932e00f16e4b883d1513d0807aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Poison Tower
-  Description: Inflicts poison, which drains health over time.
+  <Name>k__BackingField: Poison Tower
+  <Description>k__BackingField: Inflicts poison, which drains health over time.
   SpriteRenderer: {fileID: 671742766403863960}
   PedestalTransform: {fileID: 856063229956031916}
   TargetMethod: 0

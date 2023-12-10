@@ -12,11 +12,13 @@ using UnityEngine.UIElements;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
-    public class TowerBehaviour : BaseBehaviour
+    public class TowerBehaviour : BaseBehaviour, IStructure
     {
-        public string Name;
+        [field: SerializeField]
+        public string Name { get; set; }
 
-        public string Description;
+        [field: SerializeField]
+        public string Description { get; set; }
 
         public SpriteRenderer SpriteRenderer;
 

@@ -1165,8 +1165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f722f932e00f16e4b883d1513d0807aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Gun Tower
-  Description: Shoots bullets! Increased gold and XP yield as it levels up.
+  <Name>k__BackingField: Gun Tower
+  <Description>k__BackingField: Shoots bullets! Increased gold and XP yield as it
+    levels up.
   SpriteRenderer: {fileID: 4277198905856802237}
   PedestalTransform: {fileID: 372898879069006904}
   TargetMethod: 0
