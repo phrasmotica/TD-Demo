@@ -1,9 +1,9 @@
 ﻿using TDDemo.Assets.Scripts.Towers.Effects;
-using UnityEngine;
+using TDDemo.Assets.Scripts.Util;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public abstract class EffectProvider : MonoBehaviour
+    public abstract class EffectProvider : BaseBehaviour
     {
         public TowerBehaviour SourceTower;
 

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectProgressPrefab: {fileID: 1938640339299269198, guid: e5282230ea199214f942df191a747c80,
     type: 3}
+  EnemySprite: {fileID: 389218173807678723}
 --- !u!1 &3995965762032678742
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +276,9 @@ MonoBehaviour:
   BaseGoldReward: 5
   BaseXpReward: 3
   Strength: 2
+  SpriteTransform: {fileID: 6242603265064985947}
   AudioSource: {fileID: 4437958723029726264}
+  DistractedAudio: {fileID: 8300000, guid: 7fa40e8cc06b495468af69a1f757a89f, type: 3}
   HurtAudio: {fileID: 8300000, guid: c13f949b4a91b2149a34baf89e909532, type: 3}
   HealAudio: {fileID: 8300000, guid: d669d377679f7a74880e94435d68275f, type: 3}
   DeadAudio: {fileID: 8300000, guid: 049f45af785bbd94a86496c94a0af7ea, type: 3}

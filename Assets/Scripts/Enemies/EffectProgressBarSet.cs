@@ -10,6 +10,8 @@ namespace TDDemo.Assets.Scripts.Enemies
     {
         public GameObject EffectProgressPrefab;
 
+        public SpriteRenderer EnemySprite;
+
         private List<EffectProgressBar> _progressBars;
 
         private void Start()
@@ -32,9 +34,8 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             bar.Effect = effect;
 
-            var enemySprite = enemy.GetComponent<SpriteRenderer>().sprite;
-            bar.StartPosX = -enemySprite.bounds.extents.x;
-            bar.MaxWidth = 2 * enemySprite.bounds.extents.x;
+            bar.StartPosX = -EnemySprite.bounds.extents.x;
+            bar.MaxWidth = 2 * EnemySprite.bounds.extents.x;
 
             _progressBars.Add(bar);
         }

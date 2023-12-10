@@ -22,8 +22,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int Strength;
 
+        public Transform SpriteTransform;
+
         public AudioSource AudioSource;
 
+        public AudioClip DistractedAudio;
         public AudioClip HurtAudio;
         public AudioClip HealAudio;
         public AudioClip DeadAudio;
@@ -124,6 +127,12 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             _effects.Add(effect);
             effect.Start(this);
+
+            if (effect.Category == EffectCategory.Distract)
+            {
+                AudioSource.PlayOneShot(DistractedAudio);
+            }
+
             OnEffect.Invoke(this, effect);
         }
 
