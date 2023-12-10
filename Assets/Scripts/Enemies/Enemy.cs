@@ -105,7 +105,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (!isFromEffect && _health > 0)
             {
-                AudioSource.PlayOneShot(HurtAudio);
+                PlaySound(HurtAudio);
             }
 
             OnHurt.Invoke(this);
@@ -117,7 +117,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (_health > 0)
             {
-                AudioSource.PlayOneShot(HealAudio);
+                PlaySound(HealAudio);
             }
 
             OnHeal.Invoke(this);
@@ -148,7 +148,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             // required before the game object is destroyed
             OnKill.Invoke(this, LastDamagingTower);
 
-            AudioSource.PlayOneShot(DeadAudio);
+            PlaySound(DeadAudio);
 
             while (AudioSource.isPlaying)
             {
