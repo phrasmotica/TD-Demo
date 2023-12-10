@@ -5,7 +5,9 @@ using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Path;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Effects;
 using TDDemo.Assets.Scripts.Util;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,6 +15,8 @@ namespace TDDemo.Assets.Scripts.Waves
 {
     public class WavesController : BaseBehaviour
     {
+        public GameObject Canvas;
+
         public BankManager Bank;
 
         public PickupRouter PickupRouter;
@@ -20,6 +24,8 @@ namespace TDDemo.Assets.Scripts.Waves
         public GameObject EnemyPrefab;
 
         public GameObject BossEnemyPrefab;
+
+        public GameObject DistractionTextPrefab;
 
         public Waypoint[] Waypoints;
 
@@ -96,6 +102,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 }
 
                 // cannot be set in the editor because the enemy is not known ahead of time
+                enemy.OnEffect.AddListener(HandleEnemyEffect);
                 enemy.OnKill.AddListener(HandleEnemyKill);
 
                 _enemies.Add(enemy);
@@ -139,6 +146,20 @@ namespace TDDemo.Assets.Scripts.Waves
         }
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
+
+        public void HandleEnemyEffect(Enemy e, IEffect effect)
+        {
+            if (effect.Category == EffectCategory.Distract)
+            {
+                CreateDistractionText(e);
+            }
+        }
+
+        private void CreateDistractionText(Enemy e)
+        {
+            var textPos = e.transform.position + new Vector3(0, 0.6f);
+            Instantiate(DistractionTextPrefab, textPos, Quaternion.identity, Canvas.transform);
+        }
 
         public void RemoveEnemy(Enemy enemy)
         {

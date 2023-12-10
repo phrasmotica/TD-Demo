@@ -5,7 +5,7 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class EphemeralText : MonoBehaviour
     {
-        [Range(0.5f, 1f)]
+        [Range(0.2f, 1f)]
         public float LifeTimeSeconds;
 
         [Range(0.5f, 2f)]

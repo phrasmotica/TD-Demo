@@ -3259,11 +3259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42258e1e8c4fff54da07f65c2cb32217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Canvas: {fileID: 709282964}
   Bank: {fileID: 438958075}
   PickupRouter: {fileID: 438958077}
   EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
     type: 3}
   BossEnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
+    type: 3}
+  DistractionTextPrefab: {fileID: 5349574088421517419, guid: 9f37a05bd8be77f4399a280d0293663a,
     type: 3}
   Waypoints:
   - {fileID: 1958374536}
