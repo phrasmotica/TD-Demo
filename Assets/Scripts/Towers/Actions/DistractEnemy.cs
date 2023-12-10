@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class DistractEnemy : EffectProvider
+    public class DistractEnemy : BaseBehaviour
     {
         public Transform Source;
 
@@ -18,21 +18,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private readonly List<int> _distractedEnemies = new();
 
-        public override EffectCategory Category => EffectCategory.Distract;
-
-        public override string ApplyingEffect => $"Distracting enemy for {Duration} seconds.";
-
-        public override string EffectAlreadyApplied => "Enemy is already distracted!";
-
         private void Start()
         {
             logger = new MethodLogger(nameof(DistractEnemy));
         }
-
-        public override IEffect CreateEffect() => new Distract(Duration)
-        {
-            Source = Source,
-        };
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -42,24 +31,29 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 var target = otherObj.GetComponent<Enemy>();
                 var enemyId = target.gameObject.GetInstanceID();
 
-                if (!_distractedEnemies.Contains(enemyId) && !target.HasEffectCategory(Category))
+                if (!_distractedEnemies.Contains(enemyId) && !target.HasEffectCategory(EffectCategory.Distract))
                 {
                     var random = new System.Random();
                     if (random.NextDouble() < Chance)
                     {
-                        logger.Log(ApplyingEffect);
-                        target.AddEffect(CreateEffect());
+                        logger.Log($"Distracting enemy {enemyId} for {Duration} seconds.");
+
+                        target.AddEffect(new Distract(Duration)
+                        {
+                            Source = Source,
+                        });
+
                         _distractedEnemies.Add(enemyId);
                     }
                     else
                     {
-                        logger.Log($"Failed random check for {Category} distraction");
+                        logger.Log($"Failed random check for distraction");
                     }
                 }
                 else
                 {
                     // if the enemy is already distracted, tough luck!
-                    logger.Log(EffectAlreadyApplied);
+                    logger.Log($"Enemy {enemyId} is already distracted!");
                 }
             }
         }
