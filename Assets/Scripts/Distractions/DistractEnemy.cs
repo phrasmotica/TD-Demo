@@ -4,7 +4,7 @@ using TDDemo.Assets.Scripts.Towers.Effects;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 
-namespace TDDemo.Assets.Scripts.Towers.Actions
+namespace TDDemo.Assets.Scripts.Distractions
 {
     public class DistractEnemy : BaseBehaviour
     {

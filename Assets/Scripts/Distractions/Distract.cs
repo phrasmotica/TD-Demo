@@ -1,7 +1,9 @@
 ﻿using TDDemo.Assets.Scripts.Enemies;
+using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Effects;
 using UnityEngine;
 
-namespace TDDemo.Assets.Scripts.Towers.Effects
+namespace TDDemo.Assets.Scripts.Distractions
 {
     public class Distract : IEffect
     {
