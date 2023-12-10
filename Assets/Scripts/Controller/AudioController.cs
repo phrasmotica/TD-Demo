@@ -1,29 +1,32 @@
 using System.Collections.Generic;
+using TDDemo.Assets.Scripts.Waves;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
-namespace TDDemo.Assets.Scripts.UI
+namespace TDDemo.Assets.Scripts.Controller
 {
-    public class MuteButton : MonoBehaviour
+    public class AudioController : MonoBehaviour
     {
-        public SpriteRenderer SpriteRenderer;
-
-        public Sprite MutedSprite;
-
-        public Sprite UnmutedSprite;
-
         public AudioMixer AudioMixer;
 
         private bool _isMuted;
 
         private readonly Dictionary<string, float> _currentVolumes = new();
 
+        public UnityEvent OnMute;
+
+        public UnityEvent OnUnmute;
+
+        private void Start()
+        {
+            ResetAudio();
+        }
+
         public void Toggle()
         {
             _isMuted = !_isMuted;
 
-            // TODO: move all this into an AudioController script
-            // TODO: route enemy damage noise, enemy death noise and enemy heal noise through sound effects group
             if (_isMuted)
             {
                 AudioMixer.GetFloat("masterVolume", out var masterVolume);
@@ -38,7 +41,7 @@ namespace TDDemo.Assets.Scripts.UI
                 _currentVolumes["soundEffectsVolume"] = soundEffectsVolume;
                 AudioMixer.SetFloat("soundEffectsVolume", -80);
 
-                SpriteRenderer.sprite = MutedSprite;
+                OnMute.Invoke();
             }
             else
             {
@@ -46,7 +49,24 @@ namespace TDDemo.Assets.Scripts.UI
                 AudioMixer.SetFloat("musicVolume", _currentVolumes["musicVolume"]);
                 AudioMixer.SetFloat("soundEffectsVolume", _currentVolumes["soundEffectsVolume"]);
 
-                SpriteRenderer.sprite = UnmutedSprite;
+                OnUnmute.Invoke();
+            }
+        }
+
+        public void ResetAudio()
+        {
+            AudioMixer.SetFloat("musicPitch", 1f);
+        }
+
+        public void SetMusicForWave(int waveNumber, Wave wave)
+        {
+            if (wave.WaveStyle == WaveStyle.Boss)
+            {
+                AudioMixer.SetFloat("musicPitch", 0.9f);
+            }
+            else
+            {
+                AudioMixer.SetFloat("musicPitch", 1f);
             }
         }
     }

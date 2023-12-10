@@ -4,6 +4,7 @@ using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
@@ -25,6 +26,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public int Range;
 
         public LineRenderer TargetLine;
+
+        public UnityEvent<Enemy> OnEstablishedTarget;
 
         private TimeCounter _lastShotCounter;
 
@@ -69,6 +72,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             _target = EstablishTarget(enemies);
 
+            OnEstablishedTarget.Invoke(_target);
+
             var isTargeting = _target != null && SourceTower.IsFiring();
             var shouldDraw = ShowTargetLine && TargetLine != null;
 
@@ -95,7 +100,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private Enemy EstablishTarget(IEnumerable<GameObject> enemies)
         {
-            var inRangeEnemies = enemies.Where(e => transform.GetDistanceToObject(e) <= Range);
+            var inRangeEnemies = enemies
+                .Where(e => transform.GetDistanceToObject(e) <= Range)
+                .Where(e => e.GetComponent<Enemy>().CanBeTargeted());
+
             var orderedEnemies = EnemySorter.Sort(transform, inRangeEnemies, TargetMethod);
 
             if (orderedEnemies.Any())

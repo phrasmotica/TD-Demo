@@ -19,13 +19,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         private TowerBehaviour _tower;
 
-        private void Awake()
-        {
-            GetComponent<Button>().onClick.AddListener(Upgrade);
-        }
-
-        // TODO: create an event for this
-        private void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
+        public void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
 
         public void SetTower(TowerBehaviour tower)
         {

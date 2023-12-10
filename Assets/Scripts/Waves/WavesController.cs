@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Path;
 using TDDemo.Assets.Scripts.Towers;
@@ -8,7 +9,7 @@ using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TDDemo.Assets.Scripts.Controller
+namespace TDDemo.Assets.Scripts.Waves
 {
     public class WavesController : BaseBehaviour
     {
@@ -18,13 +19,17 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public GameObject EnemyPrefab;
 
+        public GameObject BossEnemyPrefab;
+
         public Waypoint[] Waypoints;
 
-        private int _currentWave;
+        public Wave[] Waves;
+
+        private int _currentWaveNumber;
 
         private List<Enemy> _enemies;
 
-        public UnityEvent<int> OnWaveChange;
+        public UnityEvent<int, Wave> OnWaveChange;
 
         public UnityEvent<int> OnStageChange;
 
@@ -41,16 +46,20 @@ namespace TDDemo.Assets.Scripts.Controller
             Physics2D.gravity = Vector2.zero;
         }
 
-        private void SetCurrentWave(int currentWave)
+        private Wave SetCurrentWave(int waveNumber)
         {
-            _currentWave = currentWave;
-            OnWaveChange.Invoke(_currentWave);
+            _currentWaveNumber = waveNumber;
 
-            if (IsStartOfStage(_currentWave))
+            var wave = GetWave(_currentWaveNumber);
+            OnWaveChange.Invoke(_currentWaveNumber, wave);
+
+            if (IsStartOfStage(_currentWaveNumber))
             {
-                var stageNumber = GetStageNumber(_currentWave);
+                var stageNumber = GetStageNumber(_currentWaveNumber);
                 OnStageChange.Invoke(stageNumber);
             }
+
+            return wave;
         }
 
         private static bool IsStartOfStage(int currentWave) => currentWave % 5 == 1;
@@ -59,20 +68,20 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void DoSendNextWave()
         {
-            SetCurrentWave(_currentWave + 1);
-            StartCoroutine(SendWave(_currentWave));
+            var wave = SetCurrentWave(_currentWaveNumber + 1);
+            StartCoroutine(SendWave(wave));
         }
 
-        private IEnumerator SendWave(int waveNumber)
+        private IEnumerator SendWave(Wave wave)
         {
-            logger.Log($"SendWave({waveNumber})");
+            logger.Log($"SendWave({_currentWaveNumber})");
 
-            var enemyCount = GetEnemyCount(waveNumber);
+            logger.Log($"Spawning {wave.EnemyPrefab.name} x{wave.Count} at {wave.Frequency} per second");
 
-            for (var i = 0; i < enemyCount; i++)
+            for (var i = 0; i < wave.Count; i++)
             {
                 var firstWaypointPos = Waypoints.First().transform.position;
-                var enemyObj = Instantiate(EnemyPrefab, firstWaypointPos, Quaternion.identity);
+                var enemyObj = Instantiate(wave.EnemyPrefab, firstWaypointPos, Quaternion.identity);
 
                 var waypointFollower = enemyObj.GetComponent<WaypointFollower>();
                 waypointFollower.Waypoints = Waypoints;
@@ -92,7 +101,7 @@ namespace TDDemo.Assets.Scripts.Controller
                 _enemies.Add(enemy);
                 OnEnemiesChange.Invoke(GetEnemies());
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f / wave.Frequency);
             }
         }
 
@@ -102,7 +111,32 @@ namespace TDDemo.Assets.Scripts.Controller
             RemoveEnemy(e);
         }
 
-        private int GetEnemyCount(int waveNumber) => waveNumber;
+        private Wave GetWave(int waveNumber)
+        {
+            if (waveNumber - 1 < Waves.Length)
+            {
+                return Waves[Mathf.Max(0, waveNumber - 1)];
+            }
+
+            if (waveNumber % 5 == 0)
+            {
+                return new Wave
+                {
+                    EnemyPrefab = BossEnemyPrefab,
+                    Count = waveNumber / 5,
+                    Frequency = 1,
+                    WaveStyle = WaveStyle.Boss,
+                };
+            }
+
+            return new Wave
+            {
+                EnemyPrefab = EnemyPrefab,
+                Count = waveNumber,
+                Frequency = 2,
+                WaveStyle = WaveStyle.Regular,
+            };
+        }
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
 
@@ -110,8 +144,6 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             _enemies.Remove(enemy);
             OnEnemiesChange.Invoke(GetEnemies());
-
-            Destroy(enemy.gameObject);
         }
 
         public void ResetAll()

@@ -8,6 +8,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(0.5f, 3f)]
         public float HealthPeekTime;
 
+        public SpriteRenderer EnemySprite;
+
         private LineRenderer _line;
 
         private bool _mouseIsOverEnemy;
@@ -49,8 +51,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public void DrawAndPeek(Enemy enemy)
         {
-            var enemySprite = enemy.GetComponent<SpriteRenderer>();
-            var spriteExtentX = enemySprite.sprite.bounds.extents.x;
+            var spriteExtentX = EnemySprite.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
             var width = 2 * spriteExtentX * enemy.HealthFraction;

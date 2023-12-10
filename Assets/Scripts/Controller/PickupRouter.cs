@@ -8,10 +8,14 @@ namespace TDDemo.Assets.Scripts.Controller
     /// </summary>
     public class PickupRouter : MonoBehaviour
     {
+        public AudioSource AudioSource;
+
         public BankManager Bank;
 
         public void AddCouponsToBank(IPickupItem source, int amount)
         {
+            AudioSource.Play();
+
             Bank.AddCoupons(amount);
             Bank.CreateCouponText((source as MonoBehaviour).transform.position, amount);
         }

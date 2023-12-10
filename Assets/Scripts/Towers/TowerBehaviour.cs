@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Experience;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
@@ -17,6 +18,10 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public string Description;
 
+        public SpriteRenderer SpriteRenderer;
+
+        public Transform PedestalTransform;
+
         public TargetMethod TargetMethod;
 
         public GoldCalculator GoldCalculator;
@@ -28,8 +33,6 @@ namespace TDDemo.Assets.Scripts.Towers
         private Tower _tower;
 
         private List<GameObject> _enemies;
-
-        private SpriteRenderer _spriteRenderer;
 
         private ITowerAction[] _actions;
 
@@ -51,7 +54,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent<bool> OnSelected;
 
-        public UnityEvent OnClicked;
+        public UnityEvent<TowerBehaviour> OnClicked;
 
         public UnityEvent<bool> OnCanBePlaced;
 
@@ -61,26 +64,30 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent<StrikeProvider[]> OnRefreshStrikes;
 
+        public UnityEvent OnStartWarmup;
+
+        public UnityEvent OnStartUpgrade;
+
         public UnityEvent<TowerBehaviour, float> OnWarmupProgress;
 
         public UnityEvent<TowerBehaviour, float> OnUpgradeProgress;
 
-        public UnityEvent OnFinishUpgrade;
+        public UnityEvent OnFinishWarmup;
 
-        public UnityEvent OnLevelChange;
+        public UnityEvent<TowerBehaviour> OnFinishUpgrade;
 
-        public UnityEvent<int> OnKillCountChange;
+        public UnityEvent<TowerBehaviour> OnLevelChange;
 
-        public UnityEvent<int> OnXpChange;
+        public UnityEvent<TowerBehaviour, int> OnKillCountChange;
 
-        public UnityEvent<TargetMethod> OnSetTargetMethod;
+        public UnityEvent<TowerBehaviour, int> OnXpChange;
+
+        public UnityEvent<TowerBehaviour, TargetMethod> OnSetTargetMethod;
 
         private void Start()
         {
             _tower = new Tower(GoldCalculator, XpCalculator);
             _enemies = new();
-
-            _spriteRenderer = GetComponent<SpriteRenderer>();
 
             RefreshActions();
             RefreshStrikes();
@@ -140,6 +147,15 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
+        public void LookAtTarget(Enemy enemy)
+        {
+            if (enemy != null && _tower.IsFiring())
+            {
+                var direction = (enemy.transform.position - PedestalTransform.position).normalized;
+                PedestalTransform.up = direction;
+            }
+        }
+
         private void OnMouseEnter() => OnMouseEnterEvent.Invoke(this);
 
         private void OnMouseExit() => OnMouseExitEvent.Invoke(this);
@@ -149,7 +165,7 @@ namespace TDDemo.Assets.Scripts.Towers
             if (_tower.IsFiring() && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
                 logger.Log("Selected tower");
-                OnClicked.Invoke();
+                OnClicked.Invoke(this);
             }
         }
 
@@ -199,10 +215,12 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private IEnumerator Warmup()
         {
+            OnStartWarmup.Invoke();
+
             var warmupTime = GetWarmupTime();
             _tower.StartWarmingUp(warmupTime);
 
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
+            SpriteRenderer.color = ColourHelper.HalfOpacity;
 
             logger.Log($"Tower warming up for {warmupTime} seconds");
             yield return new WaitForSeconds(warmupTime);
@@ -212,21 +230,25 @@ namespace TDDemo.Assets.Scripts.Towers
             ReadyActions();
             AllowFire();
 
-            _spriteRenderer.color = ColourHelper.FullOpacity;
+            SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log("Tower ready");
+
+            OnFinishWarmup.Invoke();
         }
 
         public void DoUpgrade() => StartCoroutine(Upgrade());
 
         private IEnumerator Upgrade()
         {
+            OnStartUpgrade.Invoke();
+
             var upgradeTime = GetUpgradeTime();
             _tower.StartUpgrading(upgradeTime);
 
             PreventFire();
 
-            _spriteRenderer.color = ColourHelper.HalfOpacity;
+            SpriteRenderer.color = ColourHelper.HalfOpacity;
 
             logger.Log($"Tower upgrading for {upgradeTime} seconds");
             yield return new WaitForSeconds(upgradeTime);
@@ -244,12 +266,12 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshStrikes();
             AllowFire();
 
-            _spriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
-            _spriteRenderer.color = ColourHelper.FullOpacity;
+            SpriteRenderer.sprite = Levels[newLevel].GetComponent<SpriteRenderer>().sprite;
+            SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log($"Tower upgraded, total value {GetTotalValue()}");
 
-            OnFinishUpgrade.Invoke();
+            OnFinishUpgrade.Invoke(this);
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
@@ -283,7 +305,7 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshActions();
             RefreshStrikes();
 
-            OnSetTargetMethod.Invoke(method);
+            OnSetTargetMethod.Invoke(this, method);
         }
 
         public int GetPrice() => Levels.First().Price;
@@ -312,16 +334,16 @@ namespace TDDemo.Assets.Scripts.Towers
             return actionsWithFireRate.Any() ? actionsWithFireRate.Max(a => a.GetFireRate()) : 0;
         }
 
-        public void GainKill() => OnKillCountChange.Invoke(++KillCount);
+        public void GainKill() => OnKillCountChange.Invoke(this, ++KillCount);
 
         public void GainXp(int baseXp)
         {
             var xp = _tower.AddXp(baseXp);
-            OnXpChange.Invoke(xp);
+            OnXpChange.Invoke(this, xp);
 
             if (_tower.TryLevelUp())
             {
-                OnLevelChange.Invoke();
+                OnLevelChange.Invoke(this);
             }
         }
 

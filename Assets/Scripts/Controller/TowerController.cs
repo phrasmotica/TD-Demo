@@ -1,6 +1,7 @@
 ﻿using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using TDDemo.Assets.Scripts.Util;
+using TDDemo.Assets.Scripts.Waves;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -97,67 +98,62 @@ namespace TDDemo.Assets.Scripts.Controller
             // references to the objects whose events are being added to... fix them!
 
             _towerManager.Add(newTower);
-
             OnPlaceTower.Invoke(newTower);
 
             // cannot be set in the editor because the new tower is not known ahead of time?
             // Maybe there's a way we can make it work... perhaps creating a new EnemiesController
             // that holds the list of enemies in a static field.
             WavesController.OnEnemiesChange.AddListener(newTower.SetEnemies);
+            newTower.SetEnemies(WavesController.GetEnemies());
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnClicked.AddListener(() =>
+            newTower.OnClicked.AddListener(tower =>
             {
-                _towerManager.Select(newTower);
-                OnChangeSelectedTower.Invoke(newTower);
+                _towerManager.Select(tower);
+                OnChangeSelectedTower.Invoke(tower);
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnFinishUpgrade.AddListener(() =>
+            newTower.OnFinishUpgrade.AddListener(tower =>
             {
-                if (newTower.IsSelected)
+                if (tower.IsSelected)
                 {
-                    OnFinishUpgradeSelectedTower.Invoke(newTower);
+                    OnFinishUpgradeSelectedTower.Invoke(tower);
                 }
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnLevelChange.AddListener(() =>
+            newTower.OnLevelChange.AddListener(tower =>
             {
-                if (newTower.IsSelected)
+                if (tower.IsSelected)
                 {
-                    OnLevelChangeSelectedTower.Invoke(newTower);
+                    OnLevelChangeSelectedTower.Invoke(tower);
                 }
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnSetTargetMethod.AddListener(method =>
+            newTower.OnSetTargetMethod.AddListener((tower, method) =>
             {
-                if (newTower.IsSelected)
+                if (tower.IsSelected)
                 {
-                    OnSetTargetMethodTower.Invoke(newTower);
+                    OnSetTargetMethodTower.Invoke(tower);
                 }
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnXpChange.AddListener(amount =>
+            newTower.OnXpChange.AddListener((tower, amount) =>
             {
-                CreateEphemeralXpText(newTower, amount);
-                OnXpChangeTower.Invoke(newTower, amount);
+                CreateEphemeralXpText(tower, amount);
+                OnXpChangeTower.Invoke(tower, amount);
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnKillCountChange.AddListener(kills =>
+            newTower.OnKillCountChange.AddListener((tower, kills) =>
             {
-                OnKillCountChangeTower.Invoke(newTower, kills);
+                OnKillCountChangeTower.Invoke(tower, kills);
             });
 
             _newTower = null;
-        }
-
-        public void SetEnemies()
-        {
-
         }
 
         public void SetTargetingSelectedTower(TargetMethod method)

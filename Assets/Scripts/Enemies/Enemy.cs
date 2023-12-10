@@ -10,7 +10,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
-        [Range(1, 5)]
+        [Range(1, 20)]
         public float StartingHealth;
 
         [Range(1, 10)]
@@ -22,6 +22,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int Strength;
 
+        public AudioSource AudioSource;
+
         public AudioClip HurtAudio;
         public AudioClip HealAudio;
         public AudioClip DeadAudio;
@@ -29,6 +31,8 @@ namespace TDDemo.Assets.Scripts.Enemies
         private float _health;
 
         private List<IEffect> _effects;
+
+        private bool _isDead;
 
         public TowerBehaviour LastDamagingTower { get; set; }
 
@@ -44,8 +48,6 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public UnityEvent<Enemy, IEffect> OnEffect;
 
-        public UnityEvent<Enemy> OnPreKill;
-
         public UnityEvent<Enemy, TowerBehaviour> OnKill;
 
         private void Start()
@@ -56,16 +58,9 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void Update()
         {
-            if (_health <= 0)
+            if (_health <= 0 && !_isDead)
             {
-                AudioSource.PlayClipAtPoint(DeadAudio, Vector3.zero);
-                LastDamagingTower.GainKill();
-                LastDamagingTower.GainXp(BaseXpReward);
-
-                // required for things that need to happen before the game object is destroyed
-                OnPreKill.Invoke(this);
-
-                OnKill.Invoke(this, LastDamagingTower);
+                StartCoroutine(DoDie());
                 return;
             }
 
@@ -90,7 +85,7 @@ namespace TDDemo.Assets.Scripts.Enemies
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var otherObj = collision.gameObject;
-            if (otherObj.TryGetComponent<Projectile>(out var projectileComponent))
+            if (CanBeTargeted() && otherObj.TryGetComponent<Projectile>(out var projectileComponent))
             {
                 var strike = projectileComponent.CreateStrike();
                 strike.Apply(this);
@@ -99,13 +94,15 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
         }
 
+        public bool CanBeTargeted() => !_isDead;
+
         public void TakeDamage(float amount, bool isFromEffect)
         {
             _health -= amount;
 
             if (!isFromEffect && _health > 0)
             {
-                AudioSource.PlayClipAtPoint(HurtAudio, Vector3.zero);
+                AudioSource.PlayOneShot(HurtAudio);
             }
 
             OnHurt.Invoke(this);
@@ -117,7 +114,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (_health > 0)
             {
-                AudioSource.PlayClipAtPoint(HealAudio, Vector3.zero);
+                AudioSource.PlayOneShot(HealAudio);
             }
 
             OnHeal.Invoke(this);
@@ -131,5 +128,25 @@ namespace TDDemo.Assets.Scripts.Enemies
         }
 
         public bool HasEffectCategory(EffectCategory category) => _effects.Any(e => e.Category == category);
+
+        private System.Collections.IEnumerator DoDie()
+        {
+            _isDead = true;
+
+            LastDamagingTower.GainKill();
+            LastDamagingTower.GainXp(BaseXpReward);
+
+            // required before the game object is destroyed
+            OnKill.Invoke(this, LastDamagingTower);
+
+            AudioSource.PlayOneShot(DeadAudio);
+
+            while (AudioSource.isPlaying)
+            {
+                yield return null;
+            }
+
+            Destroy(gameObject);
+        }
     }
 }
