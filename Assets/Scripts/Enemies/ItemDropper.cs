@@ -32,6 +32,8 @@ namespace TDDemo.Assets.Scripts.Enemies
                     var drop = Instantiate(spec.DropPrefab, pos, Quaternion.identity).GetComponent<DroppedItem>();
                     drop.PickupRouter = PickupRouter;
 
+                    //drop.OnPickup.AddListener(item => item.Pickup(PickupRouter));
+
                     droppedCount++;
                 }
             }
