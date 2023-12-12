@@ -1,4 +1,5 @@
 ﻿using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,14 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public SpriteRenderer Sprite;
 
+        public Button Button;
+
         public void SetState(TowerBehaviour tower)
         {
             var canSellTower = tower != null;
 
-            GetComponent<Button>().interactable = canSellTower;
-            Sprite.color = canSellTower ? Color.white : Color.grey;
+            Button.interactable = canSellTower;
+            Sprite.color = canSellTower ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
         }
     }
 }
