@@ -16,24 +16,20 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         private void Update()
         {
-            if (_newDistraction != null)
+            if (_newDistraction != null && _newDistraction.IsPositioning)
             {
                 if (Input.GetKeyUp(KeyCode.Escape))
                 {
-                    Debug.Log("Cancelling create distraction");
                     CancelCreateDistraction();
                     return;
                 }
 
                 if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
                 {
-                    // TODO: why does this immediately execute after buying?
-                    Debug.Log("Placing distraction");
                     PlaceDistraction();
                     return;
                 }
 
-                Debug.Log("Distraction following mouse");
                 _newDistraction.transform.FollowMouse();
             }
         }
@@ -52,9 +48,13 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         private void PlaceDistraction()
         {
-            OnPlaceDistraction.Invoke(_newDistraction);
+            if (_newDistraction != null)
+            {
+                OnPlaceDistraction.Invoke(_newDistraction);
 
-            _newDistraction = null;
+                _newDistraction.Place();
+                _newDistraction = null;
+            }
         }
 
         public void CancelCreateDistraction()
@@ -62,6 +62,7 @@ namespace TDDemo.Assets.Scripts.Distractions
             if (_newDistraction != null)
             {
                 Destroy(_newDistraction.gameObject);
+
                 _newDistraction = null;
             }
         }
