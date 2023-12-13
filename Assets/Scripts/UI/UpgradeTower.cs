@@ -1,5 +1,6 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ namespace TDDemo.Assets.Scripts.UI
         public BankManager Bank;
 
         public PurchaseMethod PurchaseMethod;
+
+        public Button Button;
 
         public SpriteRenderer Sprite;
 
@@ -37,13 +40,13 @@ namespace TDDemo.Assets.Scripts.UI
                 var (canUpgrade, price) = _tower.GetUpgradeInfo();
                 var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
 
-                GetComponent<Button>().interactable = canUpgrade && canAfford;
-                Sprite.color = canUpgrade && canAfford ? Color.white : Color.grey;
+                Button.interactable = canUpgrade && canAfford;
+                Sprite.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
             }
             else
             {
-                GetComponent<Button>().interactable = false;
-                Sprite.color = Color.grey;
+                Button.interactable = false;
+                Sprite.color = ColourHelper.HalfOpacity;
             }
         }
     }

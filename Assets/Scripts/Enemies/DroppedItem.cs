@@ -15,11 +15,21 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public UnityEvent OnMouseExitEvent;
 
+        //public UnityEvent<IPickupItem> OnPickup;
+
         private void Update()
         {
             if (_isMouseOver && Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
             {
                 var pickupItem = GetComponent<IPickupItem>();
+
+                // TODO: probably there's a more sensible way to pick up the items... currently they
+                // pick themselves up and pass themselves to the pickup router. Should really
+                // be the other way around.
+                // Why is this causing an exception that I can't track down?
+                // https://forum.unity.com/threads/object-of-type-unityengine-object-cannot-be-converted-to-type-unityengine-game.1186891/
+                //OnPickup.Invoke(pickupItem);
+
                 pickupItem.Pickup(PickupRouter);
 
                 Destroy(gameObject);

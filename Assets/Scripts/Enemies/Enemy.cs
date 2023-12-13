@@ -22,8 +22,11 @@ namespace TDDemo.Assets.Scripts.Enemies
         [Range(1, 10)]
         public int Strength;
 
+        public Transform SpriteTransform;
+
         public AudioSource AudioSource;
 
+        public AudioClip DistractedAudio;
         public AudioClip HurtAudio;
         public AudioClip HealAudio;
         public AudioClip DeadAudio;
@@ -102,7 +105,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (!isFromEffect && _health > 0)
             {
-                AudioSource.PlayOneShot(HurtAudio);
+                PlaySound(HurtAudio);
             }
 
             OnHurt.Invoke(this);
@@ -114,7 +117,7 @@ namespace TDDemo.Assets.Scripts.Enemies
 
             if (_health > 0)
             {
-                AudioSource.PlayOneShot(HealAudio);
+                PlaySound(HealAudio);
             }
 
             OnHeal.Invoke(this);
@@ -124,6 +127,12 @@ namespace TDDemo.Assets.Scripts.Enemies
         {
             _effects.Add(effect);
             effect.Start(this);
+
+            if (effect.Category == EffectCategory.Distract)
+            {
+                PlaySound(DistractedAudio);
+            }
+
             OnEffect.Invoke(this, effect);
         }
 
@@ -139,7 +148,7 @@ namespace TDDemo.Assets.Scripts.Enemies
             // required before the game object is destroyed
             OnKill.Invoke(this, LastDamagingTower);
 
-            AudioSource.PlayOneShot(DeadAudio);
+            PlaySound(DeadAudio);
 
             while (AudioSource.isPlaying)
             {
@@ -147,6 +156,13 @@ namespace TDDemo.Assets.Scripts.Enemies
             }
 
             Destroy(gameObject);
+        }
+
+        private void PlaySound(AudioClip clip)
+        {
+            AudioSource.clip = clip;
+            AudioSource.pitch = 1 + 0.2f * (float) (new System.Random().NextDouble() - 0.5); // some randomness
+            AudioSource.Play();
         }
     }
 }

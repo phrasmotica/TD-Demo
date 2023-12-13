@@ -1,14 +1,14 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
-using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Distractions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
-    public class CreateTower : MonoBehaviour
+    public class CreateDistraction : MonoBehaviour
     {
-        public GameObject TowerPrefab;
+        public DistractionSource DistractionSource;
 
         public BankManager Bank;
 
@@ -18,8 +18,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public void SetInteractable()
         {
-            var tower = TowerPrefab.GetComponent<TowerBehaviour>();
-            var canAfford = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
+            var canAfford = Bank.CanAfford(DistractionSource.Price) != PurchaseMethod.None;
             Button.interactable = canAfford;
             Image.color = canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
         }

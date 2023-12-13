@@ -5,11 +5,13 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class EphemeralText : MonoBehaviour
     {
-        [Range(0.5f, 1f)]
+        [Range(0.2f, 1f)]
         public float LifeTimeSeconds;
 
         [Range(0.5f, 2f)]
         public float Velocity;
+
+        public bool ShouldMove;
 
         private TimeCounter _counter;
 
@@ -21,7 +23,11 @@ namespace TDDemo.Assets.Scripts.UI
 
         private void Update()
         {
-            transform.Translate(new Vector3(0, Velocity * Time.deltaTime));
+            if (ShouldMove)
+            {
+                transform.Translate(new Vector3(0, Velocity * Time.deltaTime));
+            }
+
             _counter.Increment(Time.deltaTime);
 
             if (_counter.IsFinished)
