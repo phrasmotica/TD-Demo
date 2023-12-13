@@ -3434,6 +3434,7 @@ Transform:
   m_Children:
   - {fileID: 129484920}
   - {fileID: 421968477}
+  - {fileID: 1569292053}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3808,7 +3809,7 @@ MonoBehaviour:
   Canvas: {fileID: 709282964}
   RewardTextPrefab: {fileID: 5349574088421517419, guid: 5cccfc99b502a17469790d2d973e89dc,
     type: 3}
-  StartingMoney: 10
+  StartingMoney: 30
   StartingCoupons: 3
   SellFraction: 0.5
   OnMoneyChange:
@@ -11120,6 +11121,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554338128}
   m_CullTransparentMesh: 1
+--- !u!1 &1569292052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569292053}
+  - component: {fileID: 1569292054}
+  m_Layer: 0
+  m_Name: DistractionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1569292053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569292052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438958073}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569292054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569292052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b466024effca044ab1274187101b69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BankManager: {fileID: 438958075}
+  OnPlaceDistraction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 438958075}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.BankManager, Assembly-CSharp
+        m_MethodName: BuyDistraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1615902124
 GameObject:
   m_ObjectHideFlags: 0
@@ -14984,13 +15045,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 438958074}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+      - m_Target: {fileID: 1569292054}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Distractions.DistractionController,
           Assembly-CSharp
-        m_MethodName: CreateNewTower
+        m_MethodName: CreateNewDistraction
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
+          m_ObjectArgument: {fileID: 2225122322169148263, guid: ea68f54eb45c0804a998b195265face3,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0

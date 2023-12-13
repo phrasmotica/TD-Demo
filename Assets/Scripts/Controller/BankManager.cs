@@ -1,4 +1,5 @@
 ﻿using System;
+using TDDemo.Assets.Scripts.Distractions;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Util;
@@ -48,6 +49,14 @@ namespace TDDemo.Assets.Scripts.Controller
             if (tower != null)
             {
                 Buy(tower.GetPrice());
+            }
+        }
+
+        public void BuyDistraction(DistractionSource distractionSource)
+        {
+            if (distractionSource != null)
+            {
+                Buy(distractionSource.Price);
             }
         }
 
