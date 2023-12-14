@@ -32,6 +32,11 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 TogglePause();
             }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                ToggleFastForward();
+            }
         }
 
         public void TogglePause()
