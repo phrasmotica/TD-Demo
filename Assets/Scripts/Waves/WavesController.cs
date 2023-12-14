@@ -54,6 +54,14 @@ namespace TDDemo.Assets.Scripts.Waves
             Physics2D.gravity = Vector2.zero;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.N))
+            {
+                DoSendNextWave();
+            }
+        }
+
         private Wave SetCurrentWave(int waveNumber)
         {
             _currentWaveNumber = waveNumber;
