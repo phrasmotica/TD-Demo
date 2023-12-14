@@ -1530,6 +1530,7 @@ GameObject:
   - component: {fileID: 272667237}
   - component: {fileID: 272667239}
   - component: {fileID: 272667238}
+  - component: {fileID: 272667240}
   m_Layer: 5
   m_Name: WavePanel
   m_TagString: Untagged
@@ -1598,6 +1599,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272667236}
   m_CullTransparentMesh: 0
+--- !u!114 &272667240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272667236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a612649bbc1a84ea94eb393610d74b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyImage: {fileID: 1347731808}
+  AmountText: {fileID: 425462731}
 --- !u!1 &272705726
 GameObject:
   m_ObjectHideFlags: 0
@@ -3531,6 +3546,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
           Assembly-CSharp
         m_MethodName: SetMusicForWave
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNextWaveChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 272667240}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Waves.WavePanel, Assembly-CSharp
+        m_MethodName: UpdateText
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
