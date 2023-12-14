@@ -11001,6 +11001,24 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - KeyCode: 113
+    OnKey:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1569292054}
+          m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Distractions.DistractionController,
+            Assembly-CSharp
+          m_MethodName: CreateNewDistraction
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2225122322169148263, guid: ea68f54eb45c0804a998b195265face3,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1549701625
 GameObject:
   m_ObjectHideFlags: 0
