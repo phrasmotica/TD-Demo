@@ -11,7 +11,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         private bool _isFastForward;
 
-        private float _lastSpeed;
+        private float _currentSpeed;
 
         public UnityEvent OnPause;
 
@@ -20,6 +20,11 @@ namespace TDDemo.Assets.Scripts.UI
         public UnityEvent OnFastForward;
 
         public UnityEvent OnNormalSpeed;
+
+        private void Start()
+        {
+            _currentSpeed = Time.timeScale;
+        }
 
         private void Update()
         {
@@ -35,15 +40,16 @@ namespace TDDemo.Assets.Scripts.UI
 
             if (_isPaused)
             {
-                Debug.Log("Paused");
-                _lastSpeed = Time.timeScale;
                 Time.timeScale = 0;
+
+                Debug.Log("Paused");
                 OnPause.Invoke();
             }
             else
             {
+                Time.timeScale = _currentSpeed;
+
                 Debug.Log("Resumed");
-                Time.timeScale = _lastSpeed;
                 OnResume.Invoke();
             }
         }
@@ -54,15 +60,27 @@ namespace TDDemo.Assets.Scripts.UI
 
             if (_isFastForward)
             {
+                _currentSpeed = FastForwardSpeed;
+                
                 Debug.Log($"Fast forward x{FastForwardSpeed}");
-                Time.timeScale = FastForwardSpeed;
                 OnFastForward.Invoke();
+
+                if (!_isPaused)
+                {
+                    Time.timeScale = FastForwardSpeed;
+                }
             }
             else
             {
+                _currentSpeed = 1;
+
                 Debug.Log("Normal speed");
-                Time.timeScale = 1;
                 OnNormalSpeed.Invoke();
+
+                if (!_isPaused)
+                {
+                    Time.timeScale = 1;
+                }
             }
         }
     }
