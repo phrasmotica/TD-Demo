@@ -3578,6 +3578,7 @@ Transform:
   - {fileID: 421968477}
   - {fileID: 1569292053}
   - {fileID: 991943383}
+  - {fileID: 1525035604}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10901,6 +10902,105 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1525035603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1525035604}
+  - component: {fileID: 1525035605}
+  m_Layer: 0
+  m_Name: TowerHotkeys
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1525035604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525035603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438958073}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1525035605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525035603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82609a62102b144c8f855cf03aa59a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hotkeys:
+  - KeyCode: 49
+    OnKey:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 438958074}
+          m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+            Assembly-CSharp
+          m_MethodName: CreateNewTower
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - KeyCode: 50
+    OnKey:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 438958074}
+          m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+            Assembly-CSharp
+          m_MethodName: CreateNewTower
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - KeyCode: 51
+    OnKey:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 438958074}
+          m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.TowerController,
+            Assembly-CSharp
+          m_MethodName: CreateNewTower
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1549701625
 GameObject:
   m_ObjectHideFlags: 0
