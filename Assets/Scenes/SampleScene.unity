@@ -3577,6 +3577,7 @@ Transform:
   - {fileID: 129484920}
   - {fileID: 421968477}
   - {fileID: 1569292053}
+  - {fileID: 991943383}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5828,7 +5829,6 @@ GameObject:
   - component: {fileID: 614643650}
   - component: {fileID: 614643653}
   - component: {fileID: 614643652}
-  - component: {fileID: 614643651}
   m_Layer: 5
   m_Name: SpeedPanel
   m_TagString: Untagged
@@ -5857,20 +5857,6 @@ RectTransform:
   m_AnchoredPosition: {x: -402, y: 0}
   m_SizeDelta: {x: -804, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &614643651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614643649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a612649bbc1a84ea94eb393610d74b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyImage: {fileID: 0}
-  AmountText: {fileID: 0}
 --- !u!114 &614643652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7884,6 +7870,82 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &991943382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 991943383}
+  - component: {fileID: 991943384}
+  m_Layer: 0
+  m_Name: SpeedController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &991943383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991943382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438958073}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991943384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991943382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047f696276c2def44809abcb20eae14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFastForward:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1097484628}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: e4a37734b6892eb40962ae19b50ee978,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNormalSpeed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1097484628}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 21300000, guid: 07856fbc5b10173409f1514669d78486,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1012688281
 GameObject:
   m_ObjectHideFlags: 0
@@ -12279,7 +12341,6 @@ GameObject:
   - component: {fileID: 1741157844}
   - component: {fileID: 1741157843}
   - component: {fileID: 1741157842}
-  - component: {fileID: 1741157841}
   m_Layer: 5
   m_Name: FastForwardButton
   m_TagString: Untagged
@@ -12308,21 +12369,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: -5}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1741157841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741157839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047f696276c2def44809abcb20eae14b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 1097484628}
-  EnabledSprite: {fileID: 21300000, guid: e4a37734b6892eb40962ae19b50ee978, type: 3}
-  DisabledSprite: {fileID: 21300000, guid: 07856fbc5b10173409f1514669d78486, type: 3}
 --- !u!114 &1741157842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12367,9 +12413,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1741157841}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.FastForwardButton, Assembly-CSharp
-        m_MethodName: Toggle
+      - m_Target: {fileID: 991943384}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.SpeedController, Assembly-CSharp
+        m_MethodName: ToggleFastForward
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
