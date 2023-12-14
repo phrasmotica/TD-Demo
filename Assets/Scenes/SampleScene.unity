@@ -7914,6 +7914,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 047f696276c2def44809abcb20eae14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPause:
+    m_PersistentCalls:
+      m_Calls: []
+  OnResume:
+    m_PersistentCalls:
+      m_Calls: []
   OnFastForward:
     m_PersistentCalls:
       m_Calls:
