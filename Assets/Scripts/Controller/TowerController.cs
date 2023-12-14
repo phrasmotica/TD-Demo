@@ -77,18 +77,21 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public void CreateNewTower(GameObject towerPrefab)
         {
-            // only create if we can afford the tower
-            var tower = towerPrefab.GetComponent<TowerBehaviour>();
-
-            var canBuy = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
-            if (canBuy)
+            if (_newTower == null)
             {
-                Deselect();
+                // only create if we can afford the tower
+                var tower = towerPrefab.GetComponent<TowerBehaviour>();
 
-                _newTower = Instantiate(towerPrefab).GetComponent<TowerBehaviour>();
+                var canBuy = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
+                if (canBuy)
+                {
+                    Deselect();
 
-                // cannot be set in the editor because the new tower is not known ahead of time
-                _newTower.OnPlace.AddListener(() => PlaceTower(_newTower));
+                    _newTower = Instantiate(towerPrefab).GetComponent<TowerBehaviour>();
+
+                    // cannot be set in the editor because the new tower is not known ahead of time
+                    _newTower.OnPlace.AddListener(() => PlaceTower(_newTower));
+                }
             }
         }
 
