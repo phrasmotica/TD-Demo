@@ -7663,7 +7663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8278936702669702381, guid: db3c41d4c7d46534bace9984365bd334,
     type: 3}
-  Bank: {fileID: 0}
+  Bank: {fileID: 855898180}
   Button: {fileID: 1012688284}
   Image: {fileID: 531501296}
 --- !u!114 &1012688284
@@ -10041,7 +10041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 8508965897333167888, guid: 981d681464ba4a447b23baad8b0e6b6b,
     type: 3}
-  Bank: {fileID: 0}
+  Bank: {fileID: 855898180}
   Button: {fileID: 1421022782}
   Image: {fileID: 1494208591}
 --- !u!114 &1421022782
@@ -13817,7 +13817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerPrefab: {fileID: 4440911955698717880, guid: d57af3cb6b2068a4ba976f3da614e08c,
     type: 3}
-  Bank: {fileID: 0}
+  Bank: {fileID: 855898180}
   Button: {fileID: 1841666782}
   Image: {fileID: 264503442}
 --- !u!114 &1841666782
@@ -15905,7 +15905,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Bank
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 855898180}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767ed2977892cd5459814563e8546060, type: 3}
 --- !u!222 &9070692961046921250
