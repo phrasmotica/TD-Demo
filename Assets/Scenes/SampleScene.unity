@@ -2002,6 +2002,149 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285438875}
   m_CullTransparentMesh: 1
+--- !u!1 &293145691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 293145692}
+  - component: {fileID: 293145693}
+  m_Layer: 0
+  m_Name: WavesController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &293145692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293145691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438958073}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &293145693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293145691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42258e1e8c4fff54da07f65c2cb32217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 709282964}
+  Bank: {fileID: 0}
+  PickupRouter: {fileID: 438958077}
+  EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+    type: 3}
+  BossEnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
+    type: 3}
+  DistractionTextPrefab: {fileID: 5349574088421517419, guid: 9f37a05bd8be77f4399a280d0293663a,
+    type: 3}
+  Waypoints:
+  - {fileID: 1958374536}
+  - {fileID: 1549701627}
+  Waves:
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 1
+    Frequency: 1
+    WaveStyle: 0
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 2
+    Frequency: 1
+    WaveStyle: 0
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 2
+    Frequency: 2
+    WaveStyle: 0
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
+      type: 3}
+    Count: 3
+    Frequency: 2
+    WaveStyle: 0
+  - EnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
+      type: 3}
+    Count: 1
+    Frequency: 1
+    WaveStyle: 1
+  OnWaveChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 834971721}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.WaveText, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 129484921}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
+          Assembly-CSharp
+        m_MethodName: SetMusicForWave
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnNextWaveChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 272667240}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Waves.WavePanel, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnStageChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 421968476}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Music.MusicController, Assembly-CSharp
+        m_MethodName: SetMusicForStage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnemiesChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &312478115
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,7 +3581,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438958073}
-  - component: {fileID: 438958072}
   - component: {fileID: 438958077}
   - component: {fileID: 438958079}
   m_Layer: 0
@@ -3448,117 +3590,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &438958072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438958071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42258e1e8c4fff54da07f65c2cb32217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 709282964}
-  Bank: {fileID: 0}
-  PickupRouter: {fileID: 438958077}
-  EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
-    type: 3}
-  BossEnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
-    type: 3}
-  DistractionTextPrefab: {fileID: 5349574088421517419, guid: 9f37a05bd8be77f4399a280d0293663a,
-    type: 3}
-  Waypoints:
-  - {fileID: 1958374536}
-  - {fileID: 1549701627}
-  Waves:
-  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
-      type: 3}
-    Count: 1
-    Frequency: 1
-    WaveStyle: 0
-  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
-      type: 3}
-    Count: 2
-    Frequency: 1
-    WaveStyle: 0
-  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
-      type: 3}
-    Count: 2
-    Frequency: 2
-    WaveStyle: 0
-  - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
-      type: 3}
-    Count: 3
-    Frequency: 2
-    WaveStyle: 0
-  - EnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
-      type: 3}
-    Count: 1
-    Frequency: 1
-    WaveStyle: 1
-  OnWaveChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 834971721}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.WaveText, Assembly-CSharp
-        m_MethodName: UpdateText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 129484921}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
-          Assembly-CSharp
-        m_MethodName: SetMusicForWave
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnNextWaveChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 272667240}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Waves.WavePanel, Assembly-CSharp
-        m_MethodName: UpdateText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnStageChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 421968476}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Music.MusicController, Assembly-CSharp
-        m_MethodName: SetMusicForStage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnEnemiesChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &438958073
 Transform:
   m_ObjectHideFlags: 0
@@ -3578,6 +3609,7 @@ Transform:
   - {fileID: 421968477}
   - {fileID: 991943383}
   - {fileID: 1525035604}
+  - {fileID: 293145692}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4893,7 +4925,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 438958072}
+      - m_Target: {fileID: 293145693}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.WavesController,
           Assembly-CSharp
         m_MethodName: RemoveEnemy
@@ -10743,7 +10775,7 @@ MonoBehaviour:
   RewardTextPrefab: {fileID: 5349574088421517419, guid: 5cccfc99b502a17469790d2d973e89dc,
     type: 3}
   Bank: {fileID: 855898180}
-  WavesController: {fileID: 438958072}
+  WavesController: {fileID: 293145693}
   OnPlaceTower:
     m_PersistentCalls:
       m_Calls:
@@ -12837,9 +12869,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 438958072}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.WavesController,
-          Assembly-CSharp
+      - m_Target: {fileID: 293145693}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Waves.WavesController, Assembly-CSharp
         m_MethodName: DoSendNextWave
         m_Mode: 1
         m_Arguments:
@@ -16204,7 +16235,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 438958072}
+      - m_Target: {fileID: 293145693}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.WavesController,
           Assembly-CSharp
         m_MethodName: ResetAll
