@@ -2073,6 +2073,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5353210492930011332}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &285452478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5353210493215381626, guid: bc5f32c405e0b3c49bbcb33b21108be4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5353210492930011332}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb545fd839cc284d940e091451d3268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &293145691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2985,6 +2997,7 @@ GameObject:
   - component: {fileID: 419905730}
   - component: {fileID: 419905732}
   - component: {fileID: 419905731}
+  - component: {fileID: 419905733}
   m_Layer: 5
   m_Name: CreateTowerPanel
   m_TagString: Untagged
@@ -3055,6 +3068,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419905729}
   m_CullTransparentMesh: 0
+--- !u!114 &419905733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419905729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4146ec732d87f48b1e7fd50986b20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Buttons:
+  - {fileID: 112077872}
+  - {fileID: 1538693607}
+  - {fileID: 1978970359}
+  - {fileID: 285452478}
+  - {fileID: 1465864491}
 --- !u!1 &420619765
 GameObject:
   m_ObjectHideFlags: 0
@@ -6907,32 +6938,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 112077872}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1538693607}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1978970359}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
+      - m_Target: {fileID: 419905733}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTowerButtonsManager,
+          Assembly-CSharp
         m_MethodName: SetInteractable
         m_Mode: 1
         m_Arguments:
@@ -6994,32 +7002,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 112077872}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1538693607}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1978970359}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
+      - m_Target: {fileID: 419905733}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTowerButtonsManager,
+          Assembly-CSharp
         m_MethodName: SetInteractable
         m_Mode: 1
         m_Arguments:
@@ -7057,32 +7042,9 @@ MonoBehaviour:
   OnChangeUseCoupons:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 112077872}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1538693607}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1978970359}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTower, Assembly-CSharp
+      - m_Target: {fileID: 419905733}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.CreateTowerButtonsManager,
+          Assembly-CSharp
         m_MethodName: SetInteractable
         m_Mode: 1
         m_Arguments:
@@ -8473,7 +8435,7 @@ PrefabInstance:
     - target: {fileID: 5353210493215381624, guid: bc5f32c405e0b3c49bbcb33b21108be4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5353210493215381624, guid: bc5f32c405e0b3c49bbcb33b21108be4,
         type: 3}
@@ -10038,6 +10000,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462227306}
   m_CullTransparentMesh: 0
+--- !u!114 &1465864491 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5353210493215381626, guid: bc5f32c405e0b3c49bbcb33b21108be4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1137219010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcb545fd839cc284d940e091451d3268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1489124394
 GameObject:
   m_ObjectHideFlags: 0
@@ -15678,7 +15652,7 @@ PrefabInstance:
     - target: {fileID: 5353210493215381624, guid: bc5f32c405e0b3c49bbcb33b21108be4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5353210493215381624, guid: bc5f32c405e0b3c49bbcb33b21108be4,
         type: 3}
