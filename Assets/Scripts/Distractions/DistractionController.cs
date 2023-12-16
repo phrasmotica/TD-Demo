@@ -36,13 +36,16 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         public void CreateNewDistraction(GameObject distractionPrefab)
         {
-            // only create if we can afford the tower
-            var distraction = distractionPrefab.GetComponent<DistractionSource>();
-
-            var canBuy = BankManager.CanAfford(distraction.Price) != PurchaseMethod.None;
-            if (canBuy)
+            if (_newDistraction == null)
             {
-                _newDistraction = Instantiate(distractionPrefab).GetComponent<DistractionSource>();
+                // only create if we can afford the tower
+                var distraction = distractionPrefab.GetComponent<DistractionSource>();
+
+                var canBuy = BankManager.CanAfford(distraction.Price) != PurchaseMethod.None;
+                if (canBuy)
+                {
+                    _newDistraction = Instantiate(distractionPrefab).GetComponent<DistractionSource>();
+                }
             }
         }
 

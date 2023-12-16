@@ -18,10 +18,13 @@ namespace TDDemo.Assets.Scripts.UI
 
         public void SetInteractable()
         {
-            var tower = TowerPrefab.GetComponent<TowerBehaviour>();
-            var canAfford = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
-            Button.interactable = canAfford;
-            Image.color = canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+            if (TowerPrefab != null)
+            {
+                var tower = TowerPrefab.GetComponent<TowerBehaviour>();
+                var canAfford = Bank.CanAffordToBuy(tower) != PurchaseMethod.None;
+                Button.interactable = canAfford;
+                Image.color = canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+            }
         }
     }
 }

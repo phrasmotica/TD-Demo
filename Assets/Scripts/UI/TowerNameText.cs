@@ -8,7 +8,14 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public void UpdateText(TowerBehaviour tower)
         {
-            GetComponent<Text>().text = tower.Name;
+            if (tower != null)
+            {
+                GetComponent<Text>().text = tower.Name;
+            }
+            else
+            {
+                GetComponent<Text>().text = string.Empty;
+            }
         }
     }
 }

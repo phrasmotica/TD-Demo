@@ -37,6 +37,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public UnityEvent<int, Wave> OnWaveChange;
 
+        public UnityEvent<int, Wave> OnNextWaveChange;
+
         public UnityEvent<int> OnStageChange;
 
         public UnityEvent<List<GameObject>> OnEnemiesChange;
@@ -52,12 +54,23 @@ namespace TDDemo.Assets.Scripts.Waves
             Physics2D.gravity = Vector2.zero;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.N))
+            {
+                DoSendNextWave();
+            }
+        }
+
         private Wave SetCurrentWave(int waveNumber)
         {
             _currentWaveNumber = waveNumber;
 
             var wave = GetWave(_currentWaveNumber);
             OnWaveChange.Invoke(_currentWaveNumber, wave);
+
+            var nextWave = GetWave(_currentWaveNumber + 1);
+            OnNextWaveChange.Invoke(_currentWaveNumber + 1, nextWave);
 
             if (IsStartOfStage(_currentWaveNumber))
             {
