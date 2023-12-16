@@ -27,7 +27,7 @@ namespace TDDemo.Assets.Scripts.Menu
 
             _resolutions = Screen.resolutions.ToList();
 
-            var distinctRefreshRates = _resolutions.Select(r => r.refreshRate).Distinct();
+            var distinctRefreshRates = _resolutions.Select(r => r.refreshRateRatio.value).Distinct();
             var showRefreshRates = distinctRefreshRates.Count() > 1;
 
             resolutionDropdown.ClearOptions();
@@ -35,7 +35,7 @@ namespace TDDemo.Assets.Scripts.Menu
             resolutionDropdown.AddOptions(_resolutions.Select(r => new TMP_Dropdown.OptionData
             {
                 text = showRefreshRates ? 
-                    $"{r.width} x {r.height} {r.refreshRate}Hz" :
+                    $"{r.width} x {r.height} {r.refreshRateRatio.value}Hz" :
                     $"{r.width} x {r.height}",
             }).ToList());
 
