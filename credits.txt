@@ -1,1 +1,2 @@
 506054__mellau__button-click-1.wav: https://freesound.org/people/Mellau/sounds/506054/
+cannon.png: https://www.flaticon.com/free-icon/cannon_4219373
