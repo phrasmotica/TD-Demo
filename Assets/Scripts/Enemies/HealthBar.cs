@@ -51,6 +51,11 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         public void DrawAndPeek(Enemy enemy)
         {
+            if (enemy.HealthFraction <= 0)
+            {
+                return;
+            }
+
             var spriteExtentX = EnemySprite.sprite.bounds.extents.x;
 
             var start = -spriteExtentX;
