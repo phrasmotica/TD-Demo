@@ -15707,6 +15707,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5353210493215381625, guid: bc5f32c405e0b3c49bbcb33b21108be4,
         type: 3}
+      propertyPath: Tower
+      value: 
+      objectReference: {fileID: 7631867566107524507, guid: 1b158098d104f194b9474d39a13d0cac,
+        type: 3}
+    - target: {fileID: 5353210493215381625, guid: bc5f32c405e0b3c49bbcb33b21108be4,
+        type: 3}
       propertyPath: UiCanvas
       value: 
       objectReference: {fileID: 709282967}
