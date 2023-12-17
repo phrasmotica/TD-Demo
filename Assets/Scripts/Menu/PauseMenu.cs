@@ -1,3 +1,4 @@
+using TDDemo.Assets.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -6,11 +7,13 @@ namespace TDDemo
 {
     public class PauseMenu : MonoBehaviour
     {
-        public static bool GameIsPaused = false;
-
-        public static float CurrentTimeScale = 1f;
-
         public GameObject PauseMenuUI;
+
+        public TowerController TowerController;
+
+        private bool _gameIsPaused = false;
+
+        private float _currentTimeScale = 1f;
 
         public UnityEvent OnGamePaused;
 
@@ -18,9 +21,9 @@ namespace TDDemo
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && !TowerController.IsPositioning && !TowerController.IsSelected)
             {
-                if (GameIsPaused)
+                if (_gameIsPaused)
                 {
                     Resume();
 
@@ -38,16 +41,16 @@ namespace TDDemo
         public void Resume()
         {
             PauseMenuUI.SetActive(false);
-            Time.timeScale = CurrentTimeScale;
-            GameIsPaused = false;
+            Time.timeScale = _currentTimeScale;
+            _gameIsPaused = false;
         }
 
         private void Pause()
         {
             PauseMenuUI.SetActive(true);
-            CurrentTimeScale = Time.timeScale;
+            _currentTimeScale = Time.timeScale;
             Time.timeScale = 0f;
-            GameIsPaused = true;
+            _gameIsPaused = true;
         }
 
         public void LoadMenu()
