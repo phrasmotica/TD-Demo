@@ -87,13 +87,20 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            // TODO: move this to the Projectile script? Would prevent us needing to check whether
+            // the strike has already been handled each time...
             var otherObj = collision.gameObject;
             if (CanBeTargeted() && otherObj.TryGetComponent<Projectile>(out var projectileComponent))
             {
+                if (projectileComponent.HasStruck)
+                {
+                    return;
+                }
+
                 var strike = projectileComponent.CreateStrike();
                 strike.Apply(this);
 
-                Destroy(otherObj);
+                StartCoroutine(projectileComponent.DoStrike());
             }
         }
 
