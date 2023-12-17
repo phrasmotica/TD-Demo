@@ -298,6 +298,8 @@ namespace TDDemo.Assets.Scripts.Towers
             return nextLevel.Time;
         }
 
+        public List<GameObject> GetEnemies() => _enemies;
+
         public void SetEnemies(List<GameObject> enemies) => _enemies = enemies;
 
         public void SetTargetMethod(TargetMethod method)
