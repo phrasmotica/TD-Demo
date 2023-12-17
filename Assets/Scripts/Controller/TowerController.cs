@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Controller
 {
-    public class TowerController : MonoBehaviour
+    public class TowerController : BaseBehaviour
     {
         public GameObject Canvas;
 
@@ -40,9 +40,15 @@ namespace TDDemo.Assets.Scripts.Controller
 
         public UnityEvent<TowerBehaviour> OnSellSelectedTower;
 
+        public bool IsPositioning => _newTower != null && _newTower.IsPositioning();
+
+        public bool IsSelected => _towerManager.GetSelectedTower() != null;
+
         private void Start()
         {
             _towerManager = new TowerManager();
+
+            logger = new(nameof(TowerController));
         }
 
         private void Update()
@@ -201,8 +207,10 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        private void Deselect()
+        public void Deselect()
         {
+            logger.Log("Deselecting tower");
+
             _towerManager.DeselectCurrentTower();
             OnChangeSelectedTower.Invoke(null);
         }
