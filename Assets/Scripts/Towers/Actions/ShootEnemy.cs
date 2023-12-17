@@ -19,8 +19,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int ProjectileSpeed;
 
-        [Range(1, 10)]
-        public int FireRate;
+        [Range(0.5f, 10f)]
+        public float FireRate;
 
         [Range(1, 10)]
         public int Range;
@@ -48,7 +48,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 TargetLine.enabled = false;
             }
 
-            _lastShotCounter = new(1f / FireRate);
+            _lastShotCounter = new(1 / FireRate);
             _lastShotCounter.Start();
 
             _audio = GetComponent<AudioSource>();
