@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
-using TDDemo.Assets.Scripts.Towers.Strikes;
 using System.Collections;
+using TDDemo.Assets.Scripts.Enemies;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
@@ -11,8 +11,6 @@ namespace TDDemo.Assets.Scripts.Towers
         public SpriteRenderer SpriteRenderer;
 
         public AudioSource AudioSource;
-
-        public bool HasStruck {  get; private set; }
 
         public StrikeProvider StrikeProvider { get; set; }
 
@@ -29,12 +27,20 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        public IStrike CreateStrike() => StrikeProvider.CreateStrike();
-
-        public IEnumerator DoStrike()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            HasStruck = true;
+            var otherObj = collision.gameObject;
+            if (otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
+            {
+                var strike = StrikeProvider.CreateStrike();
+                strike.Apply(enemy);
 
+                StartCoroutine(DoStrike());
+            }
+        }
+
+        private IEnumerator DoStrike()
+        {
             SpriteRenderer.enabled = false;
 
             if (AudioSource != null)
