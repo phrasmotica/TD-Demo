@@ -12,5 +12,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             SourceTower = SourceTower,
         };
+
+        public override float? GetRadius() => null;
     }
 }

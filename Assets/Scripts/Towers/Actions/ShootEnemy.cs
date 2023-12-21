@@ -16,11 +16,13 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public GameObject ProjectilePrefab;
 
+        public GameObject ExplosionPrefab;
+
         [Range(1, 10)]
         public int ProjectileSpeed;
 
-        [Range(1, 10)]
-        public int FireRate;
+        [Range(0.5f, 10f)]
+        public float FireRate;
 
         [Range(1, 10)]
         public int Range;
@@ -48,7 +50,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
                 TargetLine.enabled = false;
             }
 
-            _lastShotCounter = new(1f / FireRate);
+            _lastShotCounter = new(1 / FireRate);
             _lastShotCounter.Start();
 
             _audio = GetComponent<AudioSource>();
@@ -134,6 +136,21 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             projectile.StrikeProvider = StrikeProvider;
             projectile.StartPosition = transform.position;
             projectile.Range = Range;
+
+            if (ExplosionPrefab != null)
+            {
+                projectile.OnStrike.AddListener(enemy =>
+                {
+                    var explosion = Instantiate(ExplosionPrefab, enemy.transform.position, Quaternion.identity)
+                        .GetComponent<Explosion>();
+
+                    var radius = StrikeProvider.GetRadius();
+                    if (radius.HasValue)
+                    {
+                        explosion.SetRadius(radius.Value);
+                    }
+                });
+            }
 
             var rb = projectileObj.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(_target.transform) * ProjectileSpeed;

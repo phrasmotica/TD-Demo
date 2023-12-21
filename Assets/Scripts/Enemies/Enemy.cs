@@ -85,18 +85,6 @@ namespace TDDemo.Assets.Scripts.Enemies
 
         private void OnMouseExit() => OnMouseExitEvent?.Invoke();
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            var otherObj = collision.gameObject;
-            if (CanBeTargeted() && otherObj.TryGetComponent<Projectile>(out var projectileComponent))
-            {
-                var strike = projectileComponent.CreateStrike();
-                strike.Apply(this);
-
-                Destroy(otherObj);
-            }
-        }
-
         public bool CanBeTargeted() => !_isDead;
 
         public void TakeDamage(float amount, bool isFromEffect)
