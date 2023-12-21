@@ -16,6 +16,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public GameObject ProjectilePrefab;
 
+        public GameObject ExplosionPrefab;
+
         [Range(1, 10)]
         public int ProjectileSpeed;
 
@@ -134,6 +136,14 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             projectile.StrikeProvider = StrikeProvider;
             projectile.StartPosition = transform.position;
             projectile.Range = Range;
+
+            if (ExplosionPrefab != null)
+            {
+                projectile.OnStrike.AddListener(enemy =>
+                {
+                    Instantiate(ExplosionPrefab, enemy.transform.position, Quaternion.identity);
+                });
+            }
 
             var rb = projectileObj.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(_target.transform) * ProjectileSpeed;

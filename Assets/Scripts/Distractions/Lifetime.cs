@@ -6,7 +6,7 @@ namespace TDDemo.Assets.Scripts.Distractions
 {
     public class Lifetime : BaseBehaviour
     {
-        [Range(5f, 30f)]
+        [Range(0.1f, 30f)]
         public float LifetimeSeconds;
 
         private TimeCounter _counter;

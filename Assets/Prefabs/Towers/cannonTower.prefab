@@ -750,6 +750,8 @@ MonoBehaviour:
   StrikeProvider: {fileID: 1794974907703698723}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 03917d183c1fb284fb0e5edececaf8ac,
     type: 3}
+  ExplosionPrefab: {fileID: 4738211679237068924, guid: 2e8cfb6c59d52604a83a6ad5f41b8329,
+    type: 3}
   ProjectileSpeed: 2
   FireRate: 0.5
   Range: 3

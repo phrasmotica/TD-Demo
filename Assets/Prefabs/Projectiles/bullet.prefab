@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d3fa1412f02e34f93d96fc3b2bbfe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpriteRenderer: {fileID: 1556733897230557745}
   AudioSource: {fileID: 0}
+  OnStrike:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &4004378876009511718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,7 +163,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

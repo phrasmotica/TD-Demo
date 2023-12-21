@@ -3,14 +3,17 @@ using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Towers.Actions;
 using System.Collections;
 using TDDemo.Assets.Scripts.Enemies;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers
 {
     public class Projectile : MonoBehaviour
     {
-        public SpriteRenderer SpriteRenderer;
+        private bool _hasStruck;
 
         public AudioSource AudioSource;
+
+        public UnityEvent<Enemy> OnStrike;
 
         public StrikeProvider StrikeProvider { get; set; }
 
@@ -30,18 +33,20 @@ namespace TDDemo.Assets.Scripts.Towers
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var otherObj = collision.gameObject;
-            if (otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
+            if (!_hasStruck && otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
             {
-                var strike = StrikeProvider.CreateStrike();
-                strike.Apply(enemy);
+                _hasStruck = true;
 
-                StartCoroutine(DoStrike());
+                StartCoroutine(DoStrike(enemy));
             }
         }
 
-        private IEnumerator DoStrike()
+        private IEnumerator DoStrike(Enemy enemy)
         {
-            SpriteRenderer.enabled = false;
+            var strike = StrikeProvider.CreateStrike();
+            strike.Apply(enemy);
+
+            OnStrike.Invoke(enemy);
 
             if (AudioSource != null)
             {
