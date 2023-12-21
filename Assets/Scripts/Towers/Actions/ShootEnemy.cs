@@ -141,7 +141,14 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             {
                 projectile.OnStrike.AddListener(enemy =>
                 {
-                    Instantiate(ExplosionPrefab, enemy.transform.position, Quaternion.identity);
+                    var explosion = Instantiate(ExplosionPrefab, enemy.transform.position, Quaternion.identity)
+                        .GetComponent<Explosion>();
+
+                    var radius = StrikeProvider.GetRadius();
+                    if (radius.HasValue)
+                    {
+                        explosion.SetRadius(radius.Value);
+                    }
                 });
             }
 

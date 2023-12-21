@@ -10,5 +10,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         public TargetMethod TargetMethod { get; set; }
 
         public abstract IStrike CreateStrike();
+
+        public abstract float? GetRadius();
     }
 }
