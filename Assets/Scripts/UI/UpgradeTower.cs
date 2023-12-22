@@ -14,6 +14,8 @@ namespace TDDemo.Assets.Scripts.UI
 
         public PurchaseMethod PurchaseMethod;
 
+        public int UpgradeIndex;
+
         public Button Button;
 
         public SpriteRenderer Sprite;
@@ -22,7 +24,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         private TowerBehaviour _tower;
 
-        public void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
+        public void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod, UpgradeIndex);
 
         public void SetTower(TowerBehaviour tower)
         {
@@ -37,7 +39,7 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (_tower != null && !_tower.IsUpgrading())
             {
-                var (canUpgrade, price) = _tower.GetUpgradeInfo();
+                var (canUpgrade, price) = _tower.GetUpgradeInfo(UpgradeIndex);
                 var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
 
                 Button.interactable = canUpgrade && canAfford;

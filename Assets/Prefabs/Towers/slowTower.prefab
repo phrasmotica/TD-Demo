@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 7257497590404841095}
   - component: {fileID: 7063431615754082267}
   m_Layer: 0
-  m_Name: level1
+  m_Name: paralyseInstead
   m_TagString: TowerUpgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Price: 5
   Time: 2
+  Upgrades: []
 --- !u!114 &7257497590404841095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,7 +865,7 @@ GameObject:
   - component: {fileID: 5835456185551732828}
   - component: {fileID: 1305869969212194372}
   m_Layer: 0
-  m_Name: level0
+  m_Name: baseTower
   m_TagString: TowerUpgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,6 +952,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Price: 3
   Time: 3
+  Upgrades:
+  - {fileID: 8586152713800763059}
 --- !u!114 &5835456185551732828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,7 +1046,7 @@ MonoBehaviour:
   TargetMethod: 0
   GoldCalculator: 0
   XpCalculator: 0
-  Upgrades: {fileID: 405980313748171083}
+  UpgradeTree: {fileID: 405980313748171083}
   OnMouseEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1256,9 +1259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1d3ce55a05e7945a5e8415183ecae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Levels:
-  - {fileID: 6339331099896013953}
-  - {fileID: 8586152713800763059}
+  RootNode: {fileID: 6339331099896013953}
+  OnUpgrade:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &7061435877974948731
 Rigidbody2D:
   serializedVersion: 4

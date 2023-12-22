@@ -30,7 +30,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public XpCalculator XpCalculator;
 
-        public TowerUpgrades Upgrades;
+        public UpgradeTree UpgradeTree;
 
         private Tower _tower;
 
@@ -76,7 +76,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public UnityEvent OnFinishWarmup;
 
-        public UnityEvent<TowerBehaviour, int> OnFinishUpgrade;
+        public UnityEvent<TowerBehaviour> OnFinishUpgrade;
 
         public UnityEvent<TowerBehaviour> OnLevelChange;
 
@@ -219,7 +219,7 @@ namespace TDDemo.Assets.Scripts.Towers
         {
             OnStartWarmup.Invoke();
 
-            var warmupTime = Upgrades.GetWarmupTime();
+            var warmupTime = UpgradeTree.GetWarmupTime();
             _tower.StartWarmingUp(warmupTime);
 
             SpriteRenderer.color = ColourHelper.HalfOpacity;
@@ -239,13 +239,13 @@ namespace TDDemo.Assets.Scripts.Towers
             OnFinishWarmup.Invoke();
         }
 
-        public void DoUpgrade() => StartCoroutine(Upgrade());
+        public void DoUpgrade(int index) => StartCoroutine(Upgrade(index));
 
-        private IEnumerator Upgrade()
+        private IEnumerator Upgrade(int index)
         {
             OnStartUpgrade.Invoke();
 
-            var upgradeTime = Upgrades.GetUpgradeTime(_tower.UpgradeLevel);
+            var upgradeTime = UpgradeTree.GetUpgradeTime(index);
             _tower.StartUpgrading(upgradeTime);
 
             PreventFire();
@@ -255,23 +255,24 @@ namespace TDDemo.Assets.Scripts.Towers
             logger.Log($"Tower upgrading for {upgradeTime} seconds");
             yield return new WaitForSeconds(upgradeTime);
 
-            var newLevel = _tower.FinishUpgrading();
+            _tower.FinishUpgrading();
+            UpgradeTree.Upgrade(index);
 
-            OnFinishUpgrade.Invoke(this, newLevel);
+            OnFinishUpgrade.Invoke(this);
 
             RefreshActions();
             RefreshStrikes();
             AllowFire();
 
-            SpriteRenderer.sprite = Upgrades.GetSprite(newLevel);
+            SpriteRenderer.sprite = UpgradeTree.GetSprite();
             SpriteRenderer.color = ColourHelper.FullOpacity;
 
-            logger.Log($"Tower upgraded, total value {Upgrades.GetTotalValue(newLevel)}");
+            logger.Log($"Tower upgraded, total value {GetTotalValue()}");
         }
 
         private bool CanBePlaced() => !_isCollidingWithAnotherTower && !_isCollidingWithPathZone;
 
-        public bool CanBeUpgraded() => _tower.IsFiring() && Upgrades.GetNextLevel(_tower.UpgradeLevel) != null;
+        public bool CanBeUpgraded() => _tower.IsFiring() && UpgradeTree.CanUpgrade();
 
         public bool IsPositioning() => _tower.IsPositioning();
 
@@ -279,7 +280,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public bool IsUpgrading() => _tower.IsUpgrading();
 
-        public int GetTotalValue() => Upgrades.GetTotalValue(_tower.UpgradeLevel);
+        public int GetTotalValue() => UpgradeTree.GetTotalValue();
 
         public List<GameObject> GetEnemies() => _enemies;
 
@@ -295,17 +296,22 @@ namespace TDDemo.Assets.Scripts.Towers
             OnSetTargetMethod.Invoke(this, method);
         }
 
-        public int GetPrice() => Upgrades.GetPrice();
+        public int GetPrice() => UpgradeTree.GetPrice();
 
-        public (bool, int) GetUpgradeInfo()
+        public (bool, int) GetUpgradeInfo(int index)
         {
-            var nextLevel = Upgrades.GetNextLevel(_tower.UpgradeLevel);
-            if (nextLevel == null)
+            var nextLevels = UpgradeTree.GetUpgrades();
+            if (nextLevels == null || !nextLevels.Any())
             {
                 return (false, 0);
             }
 
-            return (_tower.IsFiring(), nextLevel.Price);
+            if (index > nextLevels.Count - 1)
+            {
+                return (false, 0);
+            }
+
+            return (_tower.IsFiring(), nextLevels[index].Price);
         }
 
         public float GetDamage()

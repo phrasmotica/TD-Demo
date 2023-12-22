@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 1794974907703698723}
   - component: {fileID: 5009809676124491293}
   m_Layer: 0
-  m_Name: level0
+  m_Name: baseTower
   m_TagString: TowerUpgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,6 +734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Price: 8
   Time: 5
+  Upgrades: []
 --- !u!114 &9181127172246194813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,7 +944,7 @@ MonoBehaviour:
   TargetMethod: 0
   GoldCalculator: 1
   XpCalculator: 1
-  Upgrades: {fileID: 8574081293641672319}
+  UpgradeTree: {fileID: 8574081293641672319}
   OnMouseEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1156,8 +1157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1d3ce55a05e7945a5e8415183ecae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Levels:
-  - {fileID: 5983188766679234428}
+  RootNode: {fileID: 5983188766679234428}
+  OnUpgrade:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &7281785081105197190
 Rigidbody2D:
   serializedVersion: 4

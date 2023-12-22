@@ -123,7 +123,7 @@ namespace TDDemo.Assets.Scripts.Controller
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnFinishUpgrade.AddListener((tower, newLevel) =>
+            newTower.OnFinishUpgrade.AddListener(tower =>
             {
                 if (tower.IsSelected)
                 {
@@ -174,16 +174,16 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
-        public void UpgradeSelectedTower(PurchaseMethod purchaseMethod)
+        public void UpgradeSelectedTower(PurchaseMethod purchaseMethod, int index)
         {
             var selectedTower = _towerManager.GetSelectedTower();
             if (selectedTower != null)
             {
-                var (canUpgrade, price) = selectedTower.GetUpgradeInfo();
+                var (canUpgrade, price) = selectedTower.GetUpgradeInfo(index);
 
                 if (canUpgrade && Bank.TryBuyVia(price, purchaseMethod))
                 {
-                    selectedTower.DoUpgrade();
+                    selectedTower.DoUpgrade(index);
 
                     OnStartUpgradeSelectedTower.Invoke(selectedTower);
                 }
