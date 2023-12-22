@@ -35,7 +35,7 @@ namespace TDDemo.Assets.Scripts.UI
                 DefaultText.enabled = false;
 
                 NameText.gameObject.SetActive(true);
-                NameText.text = tower.Name;
+                NameText.text = tower.GetName();
 
                 XpBar.gameObject.SetActive(true);
                 TargetingButtons.gameObject.SetActive(true);

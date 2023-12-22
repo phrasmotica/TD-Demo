@@ -314,6 +314,18 @@ namespace TDDemo.Assets.Scripts.Towers
             return (_tower.IsFiring(), nextLevels[index].Price);
         }
 
+        public string GetName()
+        {
+            var upgradedName = UpgradeTree.GetCurrent().Name;
+
+            if (!string.IsNullOrEmpty(upgradedName))
+            {
+                return upgradedName;
+            }
+
+            return Name;
+        }
+
         public float GetDamage()
         {
             var actionsWithDamage = GetStrikes<DamageEnemy>();

@@ -10,7 +10,7 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (tower != null)
             {
-                GetComponent<Text>().text = tower.Name;
+                GetComponent<Text>().text = tower.GetName();
             }
             else
             {

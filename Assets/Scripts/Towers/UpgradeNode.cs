@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +7,8 @@ namespace TDDemo.Assets.Scripts.Towers
 {
     public class UpgradeNode : MonoBehaviour
     {
+        public string Name;
+
         [Range(1, 10)]
         public int Price;
 

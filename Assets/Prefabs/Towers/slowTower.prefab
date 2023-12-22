@@ -250,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Slower Tower
+  Sprite: {fileID: 21300000, guid: c3e0caec7cea2324896944ae0abceabd, type: 3}
   Price: 6
   Time: 2
   Upgrades: []
@@ -714,6 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Paralyse Tower
+  Sprite: {fileID: 0}
   Price: 5
   Time: 2
   Upgrades: []
@@ -1085,6 +1089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Slow Tower
+  Sprite: {fileID: 21300000, guid: c3e0caec7cea2324896944ae0abceabd, type: 3}
   Price: 3
   Time: 3
   Upgrades:

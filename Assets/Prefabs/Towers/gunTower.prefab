@@ -732,6 +732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
+  Sprite: {fileID: 0}
   Price: 2
   Time: 3
   Upgrades:
@@ -983,6 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Gun Tower ++
+  Sprite: {fileID: 0}
   Price: 2
   Time: 3
   Upgrades: []
@@ -1730,6 +1734,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc70776cb92db2c4383c5374c4dfa65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Gun Tower +
+  Sprite: {fileID: 0}
   Price: 2
   Time: 3
   Upgrades:
