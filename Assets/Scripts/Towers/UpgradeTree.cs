@@ -39,8 +39,6 @@ namespace TDDemo
 
         public UpgradePath GetPath() => RootNode.GetPath(_nodeIndexes.ToArray());
 
-        public Sprite GetSprite() => GetCurrent().GetComponent<SpriteRenderer>().sprite;
-
         public int GetPrice() => RootNode.Price;
 
         public float GetWarmupTime() => RootNode.Time;

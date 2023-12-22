@@ -264,7 +264,12 @@ namespace TDDemo.Assets.Scripts.Towers
             RefreshStrikes();
             AllowFire();
 
-            SpriteRenderer.sprite = UpgradeTree.GetSprite();
+            var upgradedSprite = UpgradeTree.GetCurrent().Sprite;
+            if (upgradedSprite != null)
+            {
+                SpriteRenderer.sprite = upgradedSprite;
+            }
+
             SpriteRenderer.color = ColourHelper.FullOpacity;
 
             logger.Log($"Tower upgraded, total value {GetTotalValue()}");
