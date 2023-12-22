@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
-    // TODO: create tooltip prefab for when you hover over an upgrade button
-    // that shows the upgrade cost
     public class UpgradeTower : MonoBehaviour
     {
         public BankManager Bank;
@@ -39,8 +37,8 @@ namespace TDDemo.Assets.Scripts.UI
         {
             if (_tower != null && !_tower.IsUpgrading())
             {
-                var (canUpgrade, price) = _tower.GetUpgradeInfo(UpgradeIndex);
-                var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
+                var (canUpgrade, upgrade) = _tower.GetUpgradeInfo(UpgradeIndex);
+                var canAfford = upgrade != null && Bank.CanAffordVia(upgrade.Price, PurchaseMethod);
 
                 Button.interactable = canUpgrade && canAfford;
                 Image.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;

@@ -8,11 +8,22 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public List<UpgradeTower> Buttons;
 
+        public List<UpgradeTooltipOnHover> Tooltips;
+
         public void SetTower(TowerBehaviour tower)
         {
             foreach (var button in Buttons)
             {
                 button.SetTower(tower);
+            }
+
+            if (tower != null)
+            {
+                foreach (var tooltip in Tooltips)
+                {
+                    var (canUpgrade, upgrade) = tower.GetUpgradeInfo(tooltip.UpgradeIndex);
+                    tooltip.Upgrade = upgrade;
+                }
             }
         }
 
@@ -21,6 +32,11 @@ namespace TDDemo.Assets.Scripts.UI
             foreach (var button in Buttons)
             {
                 button.Clear();
+            }
+
+            foreach (var tooltip in Tooltips)
+            {
+                tooltip.Upgrade = null;
             }
         }
     }

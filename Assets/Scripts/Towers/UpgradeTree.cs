@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Util;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace TDDemo

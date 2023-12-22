@@ -1697,6 +1697,9 @@ MonoBehaviour:
   - {fileID: 1274034837}
   - {fileID: 1134157955}
   - {fileID: 278093345}
+  Tooltips:
+  - {fileID: 1274034841}
+  - {fileID: 1134157959}
 --- !u!1 &278093343
 GameObject:
   m_ObjectHideFlags: 0
@@ -8152,6 +8155,7 @@ GameObject:
   - component: {fileID: 1134157957}
   - component: {fileID: 1134157956}
   - component: {fileID: 1134157955}
+  - component: {fileID: 1134157959}
   m_Layer: 5
   m_Name: UpgradeMoneyButton1
   m_TagString: Untagged
@@ -8291,6 +8295,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134157953}
   m_CullTransparentMesh: 0
+--- !u!114 &1134157959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134157953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bab037084b48f4db8271e7100832e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiCanvas: {fileID: 709282967}
+  TooltipPrefab: {fileID: 8804419208012671564, guid: db010bc2da3c25042bc80cd2e93cec72,
+    type: 3}
+  Button: {fileID: 1134157956}
+  Upgrade: {fileID: 0}
+  UpgradeIndex: 1
 --- !u!1 &1135359296
 GameObject:
   m_ObjectHideFlags: 0
@@ -9387,6 +9409,7 @@ GameObject:
   - component: {fileID: 1274034839}
   - component: {fileID: 1274034838}
   - component: {fileID: 1274034837}
+  - component: {fileID: 1274034841}
   m_Layer: 5
   m_Name: UpgradeMoneyButton0
   m_TagString: Untagged
@@ -9526,6 +9549,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274034835}
   m_CullTransparentMesh: 0
+--- !u!114 &1274034841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274034835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bab037084b48f4db8271e7100832e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiCanvas: {fileID: 709282967}
+  TooltipPrefab: {fileID: 8804419208012671564, guid: db010bc2da3c25042bc80cd2e93cec72,
+    type: 3}
+  Button: {fileID: 1274034838}
+  Upgrade: {fileID: 0}
+  UpgradeIndex: 0
 --- !u!1 &1314303199
 GameObject:
   m_ObjectHideFlags: 0

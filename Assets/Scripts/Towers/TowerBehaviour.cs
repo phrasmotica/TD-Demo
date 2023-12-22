@@ -303,20 +303,20 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public int GetPrice() => UpgradeTree.GetPrice();
 
-        public (bool, int) GetUpgradeInfo(int index)
+        public (bool, UpgradeNode) GetUpgradeInfo(int index)
         {
             var nextLevels = UpgradeTree.GetUpgrades();
             if (nextLevels == null || !nextLevels.Any())
             {
-                return (false, 0);
+                return (false, null);
             }
 
             if (index > nextLevels.Count - 1)
             {
-                return (false, 0);
+                return (false, null);
             }
 
-            return (_tower.IsFiring(), nextLevels[index].Price);
+            return (_tower.IsFiring(), nextLevels[index]);
         }
 
         public string GetName()

@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Slower Tower
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: c3e0caec7cea2324896944ae0abceabd, type: 3}
   Price: 6
   Time: 2
   Upgrades: []
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Paralyse Tower
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: c3e0caec7cea2324896944ae0abceabd, type: 3}
   Price: 5
   Time: 2
   Upgrades: []
