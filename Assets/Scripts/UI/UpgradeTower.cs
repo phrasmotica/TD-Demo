@@ -18,7 +18,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Button Button;
 
-        public SpriteRenderer Sprite;
+        public Image Image;
 
         public TowerController TowerController;
 
@@ -43,12 +43,12 @@ namespace TDDemo.Assets.Scripts.UI
                 var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
 
                 Button.interactable = canUpgrade && canAfford;
-                Sprite.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+                Image.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
             }
             else
             {
                 Button.interactable = false;
-                Sprite.color = ColourHelper.HalfOpacity;
+                Image.color = ColourHelper.HalfOpacity;
             }
         }
     }
