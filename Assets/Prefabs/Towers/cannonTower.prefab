@@ -893,6 +893,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2635238056331392155}
   - component: {fileID: 7631867566107524507}
+  - component: {fileID: 8574081293641672319}
   - component: {fileID: 7281785081105197190}
   - component: {fileID: 2426173281810395000}
   m_Layer: 0
@@ -942,8 +943,7 @@ MonoBehaviour:
   TargetMethod: 0
   GoldCalculator: 1
   XpCalculator: 1
-  Levels:
-  - {fileID: 5983188766679234428}
+  Upgrades: {fileID: 8574081293641672319}
   OnMouseEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1144,6 +1144,20 @@ MonoBehaviour:
   OnSetTargetMethod:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8574081293641672319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8508965897333167888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1d3ce55a05e7945a5e8415183ecae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Levels:
+  - {fileID: 5983188766679234428}
 --- !u!50 &7281785081105197190
 Rigidbody2D:
   serializedVersion: 4

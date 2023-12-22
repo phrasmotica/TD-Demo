@@ -750,6 +750,7 @@ MonoBehaviour:
   StrikeProvider: {fileID: 6181368074440403425}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
+  ExplosionPrefab: {fileID: 0}
   ProjectileSpeed: 4
   FireRate: 4
   Range: 3
@@ -998,6 +999,7 @@ MonoBehaviour:
   StrikeProvider: {fileID: 8312642539277265291}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
+  ExplosionPrefab: {fileID: 0}
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
@@ -1138,6 +1140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2635238056331392155}
   - component: {fileID: 7631867566107524507}
+  - component: {fileID: 641403388530570950}
   - component: {fileID: 7281785081105197190}
   - component: {fileID: 2426173281810395000}
   - component: {fileID: 8771081756150089282}
@@ -1193,6 +1196,7 @@ MonoBehaviour:
   - {fileID: 5983188766679234428}
   - {fileID: 192136218426829519}
   - {fileID: 6429797936828976526}
+  Upgrades: {fileID: 641403388530570950}
   OnMouseEnterEvent:
     m_PersistentCalls:
       m_Calls:
@@ -1431,6 +1435,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 641403388530570950}
+        m_TargetAssemblyTypeName: TDDemo.TowerUpgrades, Assembly-CSharp
+        m_MethodName: ToggleLevelObjects
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLevelChange:
     m_PersistentCalls:
       m_Calls: []
@@ -1443,6 +1459,22 @@ MonoBehaviour:
   OnSetTargetMethod:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &641403388530570950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8508965897333167888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1d3ce55a05e7945a5e8415183ecae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Levels:
+  - {fileID: 5983188766679234428}
+  - {fileID: 192136218426829519}
+  - {fileID: 6429797936828976526}
 --- !u!50 &7281785081105197190
 Rigidbody2D:
   serializedVersion: 4
@@ -1729,6 +1761,7 @@ MonoBehaviour:
   StrikeProvider: {fileID: 8855862668166078070}
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
+  ExplosionPrefab: {fileID: 0}
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4

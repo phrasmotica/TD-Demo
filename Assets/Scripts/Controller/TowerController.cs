@@ -123,7 +123,7 @@ namespace TDDemo.Assets.Scripts.Controller
             });
 
             // cannot be set in the editor because the new tower is not known ahead of time
-            newTower.OnFinishUpgrade.AddListener(tower =>
+            newTower.OnFinishUpgrade.AddListener((tower, newLevel) =>
             {
                 if (tower.IsSelected)
                 {
