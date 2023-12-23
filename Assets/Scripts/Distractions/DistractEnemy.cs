@@ -25,6 +25,7 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            // TODO: only distract once the object has been placed down
             var otherObj = collision.gameObject;
             if (otherObj.CompareTag(Tags.Enemy))
             {
