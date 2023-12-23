@@ -23,6 +23,16 @@ namespace TDDemo.Assets.Scripts.UI
             }
         }
 
+        public void Refresh()
+        {
+            foreach (var button in Buttons)
+            {
+                button.Refresh();
+            }
+
+            // TODO: update tooltips
+        }
+
         public void Clear()
         {
             foreach (var button in Buttons)

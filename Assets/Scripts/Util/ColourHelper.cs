@@ -8,6 +8,8 @@ namespace TDDemo.Assets.Scripts.Util
 
         public static Color HalfOpacity => new(1, 1, 1, 0.5f);
 
+        public static Color ZeroOpacity => new(1, 1, 1, 0f);
+
         public static Color SlowEffect => new(0, 127, 255);
 
         public static Color ParalyseEffect => Color.yellow;

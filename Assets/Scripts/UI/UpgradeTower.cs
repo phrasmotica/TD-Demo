@@ -41,12 +41,20 @@ namespace TDDemo.Assets.Scripts.UI
                 var canAfford = upgrade != null && Bank.CanAffordVia(upgrade.Price, PurchaseMethod);
 
                 Button.interactable = canUpgrade && canAfford;
-                Image.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+
+                Image.color = canUpgrade && canAfford ? 
+                    ColourHelper.FullOpacity : 
+                    upgrade != null ? 
+                        ColourHelper.HalfOpacity : 
+                        ColourHelper.ZeroOpacity;
+
+                Image.sprite = canAfford ? upgrade.Sprite : null;
             }
             else
             {
                 Button.interactable = false;
-                Image.color = ColourHelper.HalfOpacity;
+                Image.color = ColourHelper.ZeroOpacity;
+                Image.sprite = null;
             }
         }
     }
