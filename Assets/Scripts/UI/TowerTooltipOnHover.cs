@@ -6,35 +6,24 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerTooltipOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public Canvas UiCanvas;
-
-        public GameObject TooltipPrefab;
+        public GameObject Tooltip;
 
         public TowerBehaviour Tower;
 
-        private GameObject _currentTooltip;
-
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (_currentTooltip == null)
-            {
-                _currentTooltip = Instantiate(TooltipPrefab, UiCanvas.transform);
+            Tooltip.SetActive(true);
 
-                var tooltip = _currentTooltip.GetComponent<TowerTooltip>();
+            var tooltip = Tooltip.GetComponent<TowerTooltip>();
 
-                // by this point the Awake() methods of any children of _currentTooltip
-                // have been called, so it is safe to do this
-                tooltip.SetTower(Tower);
-            }
+            // by this point the Awake() methods of any children of _currentTooltip
+            // have been called, so it is safe to do this
+            tooltip.SetTower(Tower);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_currentTooltip != null)
-            {
-                Destroy(_currentTooltip);
-                _currentTooltip = null;
-            }
+            Tooltip.SetActive(false);
         }
     }
 }
