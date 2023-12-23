@@ -17,13 +17,9 @@ namespace TDDemo.Assets.Scripts.UI
                 button.SetTower(tower);
             }
 
-            if (tower != null)
+            foreach (var tooltip in Tooltips)
             {
-                foreach (var tooltip in Tooltips)
-                {
-                    var (canUpgrade, upgrade) = tower.GetUpgradeInfo(tooltip.UpgradeIndex);
-                    tooltip.Upgrade = upgrade;
-                }
+                tooltip.SetUpgradeFromTower(tower);
             }
         }
 
@@ -36,7 +32,7 @@ namespace TDDemo.Assets.Scripts.UI
 
             foreach (var tooltip in Tooltips)
             {
-                tooltip.Upgrade = null;
+                tooltip.SetUpgradeFromTower(null);
             }
         }
     }

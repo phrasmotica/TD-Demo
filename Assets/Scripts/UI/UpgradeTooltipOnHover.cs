@@ -7,40 +7,42 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradeTooltipOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public Canvas UiCanvas;
-
-        public GameObject TooltipPrefab;
+        public GameObject Tooltip;
 
         public Button Button;
 
-        public UpgradeNode Upgrade;
-
         public int UpgradeIndex;
 
-        private GameObject _currentTooltip;
+        private UpgradeNode _upgrade;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // TODO: make all instances of this script share ONE tooltip object
-            if (_currentTooltip == null && Button.interactable)
+            if (Button.interactable)
             {
-                _currentTooltip = Instantiate(TooltipPrefab, UiCanvas.transform);
+                Tooltip.SetActive(true);
             }
 
-            _currentTooltip.SetActive(true);
-
-            var tooltip = _currentTooltip.GetComponent<UpgradeTooltip>();
+            var tooltip = Tooltip.GetComponent<UpgradeTooltip>();
 
             // by this point the Awake() methods of any children of _currentTooltip
             // have been called, so it is safe to do this
-            tooltip.SetUpgrade(Upgrade);
+            tooltip.SetUpgrade(_upgrade);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (_currentTooltip != null)
+            Tooltip.SetActive(false);
+        }
+
+        public void SetUpgradeFromTower(TowerBehaviour tower)
+        {
+            if (tower != null)
             {
-                _currentTooltip.SetActive(false);
+                (_, _upgrade) = tower.GetUpgradeInfo(UpgradeIndex);
+            }
+            else
+            {
+                _upgrade = null;
             }
         }
     }
