@@ -7,16 +7,16 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class SellTower : MonoBehaviour
     {
-        public SpriteRenderer Sprite;
-
         public Button Button;
+
+        public Image Image;
 
         public void SetState(TowerBehaviour tower)
         {
             var canSellTower = tower != null;
 
             Button.interactable = canSellTower;
-            Sprite.color = canSellTower ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+            Image.color = canSellTower ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
         }
     }
 }
