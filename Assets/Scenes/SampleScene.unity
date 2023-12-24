@@ -1833,7 +1833,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 205, y: -5}
-  m_SizeDelta: {x: 90, y: 90}
+  m_SizeDelta: {x: 135, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &272705729
 MonoBehaviour:
@@ -7933,8 +7933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 45, y: 0}
-  m_SizeDelta: {x: 45, y: 45}
+  m_AnchoredPosition: {x: 0, y: -45}
+  m_SizeDelta: {x: 90, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1134157955
 MonoBehaviour:
@@ -7949,7 +7949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bank: {fileID: 855898180}
-  PurchaseMethod: 0
   UpgradeIndex: 1
   Button: {fileID: 1134157956}
   Image: {fileID: 1273538237}
@@ -8869,8 +8868,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 45, y: -45}
-  m_SizeDelta: {x: 45, y: 45}
+  m_AnchoredPosition: {x: 90, y: 0}
+  m_SizeDelta: {x: 45, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1250217729
 MonoBehaviour:
@@ -9206,7 +9205,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 45, y: 45}
+  m_SizeDelta: {x: 90, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1274034837
 MonoBehaviour:
@@ -9221,7 +9220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bank: {fileID: 855898180}
-  PurchaseMethod: 0
   UpgradeIndex: 0
   Button: {fileID: 1274034838}
   Image: {fileID: 1851992755}
@@ -9594,7 +9592,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 360, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 345, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1406460862
 MonoBehaviour:
