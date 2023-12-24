@@ -2,6 +2,7 @@
 using TDDemo.Assets.Scripts.Distractions;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Upgrades;
 using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
@@ -52,6 +53,7 @@ namespace TDDemo.Assets.Scripts.Controller
             }
         }
 
+        // TODO: simplify the public-facing methods in this class
         public void BuyTower(TowerBehaviour tower)
         {
             if (tower != null)
@@ -116,6 +118,17 @@ namespace TDDemo.Assets.Scripts.Controller
         {
             Coupons = coupons;
             OnCouponsChange.Invoke(coupons);
+        }
+
+        public bool TryBuyUpgrade(UpgradeNode upgrade)
+        {
+            if (CanAfford(upgrade.Price) != PurchaseMethod.None)
+            {
+                Buy(upgrade.Price);
+                return true;
+            }
+
+            return false;
         }
 
         public bool TryBuyVia(int price, PurchaseMethod purchaseMethod)
