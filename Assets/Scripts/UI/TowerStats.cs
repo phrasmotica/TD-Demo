@@ -17,7 +17,7 @@ namespace TDDemo.Assets.Scripts.UI
 
         public ExperienceBar XpBar;
 
-        public TargetingButtons TargetingButtons;
+        public TargetingButtonsManager TargetingButtons;
 
         public ShowTargetLineToggle ShowTargetLineToggle;
 

@@ -12,11 +12,17 @@ namespace TDDemo.Assets.Scripts.UI
 
         public TargetMethod Method;
 
-        public void SetInteractable(TowerBehaviour tower)
+        public Button Button;
+
+        public void SetTower(TowerBehaviour tower)
         {
             if (tower != null)
             {
-                GetComponent<Button>().interactable = tower.TargetMethod != Method;
+                Button.interactable = tower.TargetMethod != Method;
+            }
+            else
+            {
+                Button.interactable = false;
             }
         }
 

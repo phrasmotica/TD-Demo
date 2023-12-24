@@ -2539,6 +2539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerController: {fileID: 1525035606}
   Method: 0
+  Button: {fileID: 312478117}
 --- !u!1 &333918209
 GameObject:
   m_ObjectHideFlags: 0
@@ -3195,10 +3196,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 404377568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb13d9e5d16de5f4c9f7926f77dff271, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e4907fa7ff2cd349b2bae8e29fe6479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Buttons: []
+  Buttons:
+  - {fileID: 312478120}
+  - {fileID: 2035294446}
+  - {fileID: 443308170}
 --- !u!1 &419905729
 GameObject:
   m_ObjectHideFlags: 0
@@ -4185,6 +4189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerController: {fileID: 1525035606}
   Method: 2
+  Button: {fileID: 443308167}
 --- !u!1 &464767727
 GameObject:
   m_ObjectHideFlags: 0
@@ -8023,7 +8028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1103518730
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8043,7 +8048,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 60, y: -60}
-  m_SizeDelta: {x: 140, y: 25}
+  m_SizeDelta: {x: 135, y: 25}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1103518731
 MonoBehaviour:
@@ -10494,33 +10499,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 312478120}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2035294446}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 443308170}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
+      - m_Target: {fileID: 404377570}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButtonsManager,
+          Assembly-CSharp
+        m_MethodName: SetTower
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10560,33 +10542,10 @@ MonoBehaviour:
   OnSetTargetMethodTower:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 312478120}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2035294446}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 443308170}
-        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButton, Assembly-CSharp
-        m_MethodName: SetInteractable
+      - m_Target: {fileID: 404377570}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.TargetingButtonsManager,
+          Assembly-CSharp
+        m_MethodName: SetTower
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14976,6 +14935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TowerController: {fileID: 1525035606}
   Method: 1
+  Button: {fileID: 2035294443}
 --- !u!1 &2036196664
 GameObject:
   m_ObjectHideFlags: 0
