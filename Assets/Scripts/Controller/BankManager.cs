@@ -44,6 +44,14 @@ namespace TDDemo.Assets.Scripts.Controller
             ResetCoupons();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                SetUseCoupons(!_useCoupons);
+            }
+        }
+
         public void BuyTower(TowerBehaviour tower)
         {
             if (tower != null)
