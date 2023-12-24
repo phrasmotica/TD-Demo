@@ -10,9 +10,6 @@ namespace TDDemo.Assets.Scripts.UI
 
         public List<UpgradeTooltipOnHover> Tooltips;
 
-        // TODO: hide tooltips when selected tower changes, or when upgrade begins, etc.
-        // Check whether this should already be handled by SetTower()...
-
         public void SetTower(TowerBehaviour tower)
         {
             foreach (var button in Buttons)
@@ -32,8 +29,6 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 button.Refresh();
             }
-
-            // TODO: update tooltips
         }
 
         public void Clear()
