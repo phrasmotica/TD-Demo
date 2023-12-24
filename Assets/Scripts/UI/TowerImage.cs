@@ -6,15 +6,17 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class TowerImage : MonoBehaviour
     {
+        public Image Image;
+
         public void UpdateImage(TowerBehaviour tower)
         {
             if (tower != null)
             {
-                GetComponent<Image>().sprite = tower.SpriteRenderer.sprite;
+                Image.sprite = tower.SpriteRenderer.sprite;
             }
             else
-            { 
-                GetComponent<Image>().sprite = null;
+            {
+                Image.sprite = null;
             }
         }
     }

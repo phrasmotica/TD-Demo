@@ -12,6 +12,8 @@ namespace TDDemo.Assets.Scripts.UI
 
         public List<SellTower> SellButtons;
 
+        public List<SellTooltipOnHover> SellTooltips;
+
         private void Start()
         {
             foreach (var button in UpgradeButtons)
@@ -43,6 +45,11 @@ namespace TDDemo.Assets.Scripts.UI
                 button.gameObject.SetActive(tower != null);
                 button.SetState(tower);
             }
+
+            foreach (var tooltip in SellTooltips)
+            {
+                tooltip.SetTower(tower);
+            }
         }
 
         public void Refresh()
@@ -70,6 +77,11 @@ namespace TDDemo.Assets.Scripts.UI
             {
                 button.gameObject.SetActive(false);
                 button.SetState(null);
+            }
+
+            foreach (var tooltip in SellTooltips)
+            {
+                tooltip.SetTower(null);
             }
         }
     }
