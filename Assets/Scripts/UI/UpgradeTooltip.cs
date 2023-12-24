@@ -1,5 +1,5 @@
 ﻿using TDDemo.Assets.Scripts.Extensions;
-using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Upgrades;
 using UnityEngine;
 using UnityEngine.Events;
 

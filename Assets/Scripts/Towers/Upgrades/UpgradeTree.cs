@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine.Events;
 
-namespace TDDemo
+namespace TDDemo.Assets.Scripts.Towers.Upgrades
 {
     public class UpgradeTree : BaseBehaviour
     {

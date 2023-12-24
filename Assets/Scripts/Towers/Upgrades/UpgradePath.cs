@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace TDDemo.Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers.Upgrades
 {
     /// <summary>
     /// Represents a single path through an upgrade tree, starting with the root node.

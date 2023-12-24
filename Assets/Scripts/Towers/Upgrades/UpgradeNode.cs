@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace TDDemo.Assets.Scripts.Towers
+namespace TDDemo.Assets.Scripts.Towers.Upgrades
 {
     public class UpgradeNode : MonoBehaviour
     {
