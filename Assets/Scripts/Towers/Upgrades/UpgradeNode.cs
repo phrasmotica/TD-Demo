@@ -11,6 +11,8 @@ namespace TDDemo.Assets.Scripts.Towers.Upgrades
 
         public Sprite Sprite;
 
+        public string Description;
+
         [Range(1, 10)]
         public int Price;
 

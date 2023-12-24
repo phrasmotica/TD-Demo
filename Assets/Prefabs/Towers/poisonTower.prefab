@@ -284,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Poison Tower
   Sprite: {fileID: 21300000, guid: 9799257ffd9ca6a439ee77150eb476bc, type: 3}
+  Description: Base level poison tower.
   Price: 4
   Time: 2
   Upgrades: []

@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '{towerName}'
+  m_Text: '{upgradeName}'
 --- !u!114 &6875431024115598858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b74aad531e5424398cedf6923dd50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Text: {fileID: 6792250448680086502}
 --- !u!1 &6293294225246739395
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705624e121bd89f4ca83d7053e5e1a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Image: {fileID: 239410220719884627}
 --- !u!1 &6812441012088033664
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +261,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Price: {towerPrice}'
+  m_Text: 'Price: {upgradePrice}'
 --- !u!114 &1900118122614101549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f92ef58800cdf47badb834eb32c2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Text: {fileID: 856702607528394256}
 --- !u!1 &7463234556284243016
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,14 +286,14 @@ GameObject:
   - component: {fileID: 758297848246791875}
   - component: {fileID: 7220370437709325354}
   - component: {fileID: 6108837150757505064}
-  - component: {fileID: 8142361030831718056}
+  - component: {fileID: 4662770826332896154}
   m_Layer: 5
   m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &758297848246791875
 RectTransform:
   m_ObjectHideFlags: 0
@@ -351,8 +354,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '{towerDescription}'
---- !u!114 &8142361030831718056
+  m_Text: '{upgradeDescription}'
+--- !u!114 &4662770826332896154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,9 +364,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7463234556284243016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ca1fa11ceffee429eb07795b211eff, type: 3}
+  m_Script: {fileID: 11500000, guid: 820fd29c6617db643b1edbf8ebfa7625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Text: {fileID: 6108837150757505064}
 --- !u!1 &8804419208012671564
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +489,19 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1900118122614101549}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradePriceText, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4662770826332896154}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.UpgradeDescriptionText,
+          Assembly-CSharp
         m_MethodName: UpdateText
         m_Mode: 0
         m_Arguments:

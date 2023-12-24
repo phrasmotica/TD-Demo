@@ -6,15 +6,17 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradeNameText : MonoBehaviour
     {
+        public Text Text;
+
         public void UpdateText(UpgradeNode upgrade)
         {
             if (upgrade != null)
             {
-                GetComponent<Text>().text = upgrade.Name;
+                Text.text = upgrade.Name;
             }
             else
             {
-                GetComponent<Text>().text = string.Empty;
+                Text.text = string.Empty;
             }
         }
     }

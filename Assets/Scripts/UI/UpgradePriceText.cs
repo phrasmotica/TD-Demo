@@ -6,15 +6,17 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class UpgradePriceText : MonoBehaviour
     {
+        public Text Text;
+
         public void UpdateText(UpgradeNode upgrade)
         {
             if (upgrade != null)
             {
-                GetComponent<Text>().text = $"Price: {upgrade.Price}";
+                Text.text = $"Price: {upgrade.Price}";
             }
             else
             {
-                GetComponent<Text>().text = string.Empty;
+                Text.text = string.Empty;
             }
         }
     }

@@ -4,19 +4,19 @@ using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
-    public class UpgradeImage : MonoBehaviour
+    public class UpgradeDescriptionText : MonoBehaviour
     {
-        public Image Image;
+        public Text Text;
 
-        public void UpdateImage(UpgradeNode upgrade)
+        public void UpdateText(UpgradeNode upgrade)
         {
             if (upgrade != null)
             {
-                Image.sprite = upgrade.Sprite;
+                Text.text = upgrade.Description;
             }
             else
-            { 
-                Image.sprite = null;
+            {
+                Text.text = string.Empty;
             }
         }
     }

@@ -681,6 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Gun Tower
   Sprite: {fileID: 21300000, guid: 08884dfd9a55b5740b0f662a5aa6f696, type: 3}
+  Description: Base level gun tower.
   Price: 2
   Time: 3
   Upgrades:
@@ -881,6 +882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Gun Tower ++
   Sprite: {fileID: 21300000, guid: 7579a263e82cb4742a9c03c86ea8b16b, type: 3}
+  Description: Increased damage.
   Price: 2
   Time: 3
   Upgrades: []
@@ -1577,6 +1579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Gun Tower +
   Sprite: {fileID: 21300000, guid: 6579d646101a2034fafee81f35f2f9e5, type: 3}
+  Description: Shoots bullets further and faster.
   Price: 2
   Time: 3
   Upgrades:

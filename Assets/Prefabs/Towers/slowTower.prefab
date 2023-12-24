@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Slower Tower
   Sprite: {fileID: 21300000, guid: b3b2c5490ed8ac043a6950293b7a87f0, type: 3}
+  Description: Slows enemies for longer.
   Price: 6
   Time: 2
   Upgrades: []
@@ -612,6 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Paralyse Tower
   Sprite: {fileID: 21300000, guid: 6f9e3161250bfdf46a8b31ec421a454f, type: 3}
+  Description: Makes enemies freeze on the spot instead of slowing them.
   Price: 5
   Time: 2
   Upgrades: []
@@ -932,6 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Slow Tower
   Sprite: {fileID: 21300000, guid: c3e0caec7cea2324896944ae0abceabd, type: 3}
+  Description: Base level slow tower.
   Price: 3
   Time: 3
   Upgrades:
