@@ -8,7 +8,7 @@ namespace TDDemo.Assets.Scripts.Distractions
 {
     public class DistractEnemy : BaseBehaviour
     {
-        public Transform Source;
+        public DistractionSource Source;
 
         [Range(0.5f, 3f)]
         public float Duration;
@@ -25,9 +25,8 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // TODO: only distract once the object has been placed down
             var otherObj = collision.gameObject;
-            if (otherObj.CompareTag(Tags.Enemy))
+            if (!Source.IsPositioning && otherObj.CompareTag(Tags.Enemy))
             {
                 var target = otherObj.GetComponent<Enemy>();
                 var enemyId = target.gameObject.GetInstanceID();

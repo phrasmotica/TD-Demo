@@ -15,7 +15,7 @@ namespace TDDemo.Assets.Scripts.Distractions
 
         public TowerBehaviour SourceTower { get; set; }
 
-        public Transform Source {  get; set; }
+        public DistractionSource Source {  get; set; }
 
         public EffectCategory Category => EffectCategory.Distract;
 
@@ -42,7 +42,7 @@ namespace TDDemo.Assets.Scripts.Distractions
             _originalForward = enemy.transform.right;
 
             // enemy looks at source of distraction
-            enemy.SpriteTransform.right = Source.position - enemy.SpriteTransform.position;
+            enemy.SpriteTransform.right = Source.transform.position - enemy.SpriteTransform.position;
 
             _counter = new(_duration);
             _counter.Start();
