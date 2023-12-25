@@ -15815,7 +15815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9d55dcde13f2e41aab4668e5a2e8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bank: {fileID: 0}
+  Bank: {fileID: 855898180}
   FinalMoneyText: {fileID: 931598140}
 --- !u!222 &9070692962548110433
 CanvasRenderer:
