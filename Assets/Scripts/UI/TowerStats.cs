@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Actions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ namespace TDDemo.Assets.Scripts.UI
     {
         public Text DefaultText;
 
-        public Text NameText;
+        public TMP_Text NameText;
 
         public KillCount KillCount;
 

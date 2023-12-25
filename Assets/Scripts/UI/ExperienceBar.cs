@@ -1,16 +1,16 @@
 ﻿using TDDemo.Assets.Scripts.Experience;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
     public class ExperienceBar : MonoBehaviour
     {
-        public Text LevelText;
+        public TMP_Text LevelText;
 
-        public Text NextLevelText;
+        public TMP_Text NextLevelText;
 
-        public Text XpText;
+        public TMP_Text XpText;
 
         public LineRenderer LineBar;
 

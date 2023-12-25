@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.UI
 {
     public class KillCount : MonoBehaviour
     {
-        public Text KillCountText;
+        public TMP_Text KillCountText;
 
         public void UpdateKillCount(int killCount)
         {
