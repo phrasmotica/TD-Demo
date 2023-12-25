@@ -1,5 +1,6 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Upgrades;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,9 @@ namespace TDDemo.Assets.Scripts.UI
 
         public Button Button;
 
-        public Image Image;
+        public Image UpgradeImage;
+
+        public Image ArrowImage;
 
         public TowerController TowerController;
 
@@ -33,27 +36,48 @@ namespace TDDemo.Assets.Scripts.UI
 
         public void Refresh()
         {
-            if (_tower != null && !_tower.IsUpgrading())
+            if (_tower != null)
             {
                 var (canUpgrade, upgrade) = _tower.GetUpgradeInfo(UpgradeIndex);
+                canUpgrade &= !_tower.IsUpgrading();
+
                 var canAfford = upgrade != null && Bank.CanAfford(upgrade.Price) != PurchaseMethod.None;
 
                 Button.interactable = canUpgrade && canAfford;
 
-                Image.color = canUpgrade && canAfford ? 
-                    ColourHelper.FullOpacity : 
-                    upgrade != null ? 
-                        ColourHelper.HalfOpacity : 
-                        ColourHelper.ZeroOpacity;
+                var colour = ComputeImageColour(canUpgrade, canAfford, upgrade);
 
-                Image.sprite = canAfford ? upgrade.Sprite : null;
+                UpgradeImage.color = colour;
+                UpgradeImage.sprite = upgrade != null ? upgrade.Sprite : null;
+
+                ArrowImage.color = colour;
+                ArrowImage.gameObject.SetActive(true);
             }
             else
             {
                 Button.interactable = false;
-                Image.color = ColourHelper.ZeroOpacity;
-                Image.sprite = null;
+
+                UpgradeImage.color = ColourHelper.ZeroOpacity;
+                UpgradeImage.sprite = null;
+
+                ArrowImage.color = ColourHelper.ZeroOpacity;
+                ArrowImage.gameObject.SetActive(false);
             }
+        }
+
+        private static Color ComputeImageColour(bool canUpgrade, bool canAfford, UpgradeNode upgrade)
+        {
+            if (canUpgrade && canAfford)
+            {
+                return ColourHelper.FullOpacity;
+            }
+
+            if (upgrade != null)
+            {
+                return ColourHelper.HalfOpacity;
+            }
+
+            return ColourHelper.ZeroOpacity;
         }
     }
 }
