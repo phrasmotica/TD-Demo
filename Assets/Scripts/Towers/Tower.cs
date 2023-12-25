@@ -14,8 +14,6 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private readonly IXpCalculator _xpCalculator;
 
-        public int UpgradeLevel { get; private set; }
-
         public ExperienceContainer Experience { get; }
 
         public int Level => Experience.Level;
@@ -26,7 +24,6 @@ namespace TDDemo.Assets.Scripts.Towers
             _xpCalculator = CreateXpCalculator(xpCalculator);
 
             _state = TowerState.Positioning;
-            UpgradeLevel = 0;
             Experience = new(new PokemonExperienceCurve());
         }
 
@@ -65,12 +62,10 @@ namespace TDDemo.Assets.Scripts.Towers
             return _upgradeCounter.Progress;
         }
 
-        public int FinishUpgrading()
+        public void FinishUpgrading()
         {
             _state = TowerState.Firing;
             _upgradeCounter.Stop();
-
-            return ++UpgradeLevel;
         }
 
         public bool IsPositioning() => _state == TowerState.Positioning;

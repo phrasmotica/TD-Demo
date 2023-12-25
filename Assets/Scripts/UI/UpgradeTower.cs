@@ -1,28 +1,29 @@
 ﻿using TDDemo.Assets.Scripts.Controller;
 using TDDemo.Assets.Scripts.Towers;
+using TDDemo.Assets.Scripts.Towers.Upgrades;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TDDemo.Assets.Scripts.UI
 {
-    // TODO: create tooltip prefab for when you hover over an upgrade button
-    // that shows the upgrade cost
     public class UpgradeTower : MonoBehaviour
     {
         public BankManager Bank;
 
-        public PurchaseMethod PurchaseMethod;
+        public int UpgradeIndex;
 
         public Button Button;
 
-        public SpriteRenderer Sprite;
+        public Image UpgradeImage;
+
+        public Image ArrowImage;
 
         public TowerController TowerController;
 
         private TowerBehaviour _tower;
 
-        public void Upgrade() => TowerController.UpgradeSelectedTower(PurchaseMethod);
+        public void Upgrade() => TowerController.UpgradeSelectedTower(UpgradeIndex);
 
         public void SetTower(TowerBehaviour tower)
         {
@@ -35,19 +36,48 @@ namespace TDDemo.Assets.Scripts.UI
 
         public void Refresh()
         {
-            if (_tower != null && !_tower.IsUpgrading())
+            if (_tower != null)
             {
-                var (canUpgrade, price) = _tower.GetUpgradeInfo();
-                var canAfford = Bank.CanAffordVia(price, PurchaseMethod);
+                var (canUpgrade, upgrade) = _tower.GetUpgradeInfo(UpgradeIndex);
+                canUpgrade &= !_tower.IsUpgrading();
+
+                var canAfford = upgrade != null && Bank.CanAfford(upgrade.Price) != PurchaseMethod.None;
 
                 Button.interactable = canUpgrade && canAfford;
-                Sprite.color = canUpgrade && canAfford ? ColourHelper.FullOpacity : ColourHelper.HalfOpacity;
+
+                var colour = ComputeImageColour(canUpgrade, canAfford, upgrade);
+
+                UpgradeImage.color = colour;
+                UpgradeImage.sprite = upgrade != null ? upgrade.Sprite : null;
+
+                ArrowImage.color = colour;
+                ArrowImage.gameObject.SetActive(true);
             }
             else
             {
                 Button.interactable = false;
-                Sprite.color = ColourHelper.HalfOpacity;
+
+                UpgradeImage.color = ColourHelper.ZeroOpacity;
+                UpgradeImage.sprite = null;
+
+                ArrowImage.color = ColourHelper.ZeroOpacity;
+                ArrowImage.gameObject.SetActive(false);
             }
+        }
+
+        private static Color ComputeImageColour(bool canUpgrade, bool canAfford, UpgradeNode upgrade)
+        {
+            if (canUpgrade && canAfford)
+            {
+                return ColourHelper.FullOpacity;
+            }
+
+            if (upgrade != null)
+            {
+                return ColourHelper.HalfOpacity;
+            }
+
+            return ColourHelper.ZeroOpacity;
         }
     }
 }
