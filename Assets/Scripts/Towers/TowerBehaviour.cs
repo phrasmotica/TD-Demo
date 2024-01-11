@@ -234,7 +234,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _tower.FinishWarmingUp();
 
-            ReadyActions();
+            OnReadyActions.Invoke();
             AllowFire();
 
             SpriteRenderer.color = ColourHelper.FullOpacity;
@@ -377,18 +377,6 @@ namespace TDDemo.Assets.Scripts.Towers
             {
                 a.CanAct = false;
             }
-        }
-
-        private void ReadyActions()
-        {
-            _actions = GetComponentsInChildren<ITowerAction>();
-
-            foreach (var a in _actions)
-            {
-                a.Ready();
-            }
-
-            OnReadyActions.Invoke();
         }
 
         private void RefreshActions()

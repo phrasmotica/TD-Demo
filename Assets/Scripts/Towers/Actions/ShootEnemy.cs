@@ -53,10 +53,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public int GetRange() => Range;
 
-        public void Ready()
-        {
-        }
-
         public void Survey(IEnumerable<GameObject> enemies)
         {
             _target = EstablishTarget(enemies);
