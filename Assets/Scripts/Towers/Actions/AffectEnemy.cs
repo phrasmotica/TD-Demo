@@ -19,7 +19,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int Range;
 
-        public LineRenderer TargetLine;
+        public TargetLine TargetLine;
 
         private TimeCounter _lastEffectCounter;
 
@@ -52,7 +52,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             if (TargetLine != null)
             {
-                TargetLine.SetPosition(0, transform.position);
+                TargetLine.Ready();
             }
         }
 
@@ -60,17 +60,18 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             _target = EstablishTarget(enemies);
 
-            var isTargeting = _target != null && SourceTower.IsFiring();
-            var shouldDraw = ShowTargetLine && TargetLine != null;
+            if (TargetLine != null)
+            {
+                var isTargeting = _target != null && SourceTower.IsFiring();
 
-            if (isTargeting && shouldDraw)
-            {
-                TargetLine.enabled = true;
-                TargetLine.SetPosition(1, _target.transform.position);
-            }
-            else
-            {
-                TargetLine.enabled = false;
+                if (isTargeting && ShowTargetLine)
+                {
+                    TargetLine.Show(_target.transform.position);
+                }
+                else
+                {
+                    TargetLine.Hide();
+                }
             }
         }
 

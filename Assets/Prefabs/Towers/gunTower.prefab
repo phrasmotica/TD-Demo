@@ -354,6 +354,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1079982857253882074}
+  - component: {fileID: 2733585298557856514}
   - component: {fileID: 3295782485528660272}
   m_Layer: 0
   m_Name: targetLine
@@ -377,6 +378,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2635238056331392155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2733585298557856514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2206435682495225910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9e5a49105b6d64388d741d29ec1df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineRenderer: {fileID: 3295782485528660272}
 --- !u!120 &3295782485528660272
 LineRenderer:
   serializedVersion: 2
@@ -706,7 +720,7 @@ MonoBehaviour:
   ProjectileSpeed: 4
   FireRate: 4
   Range: 3
-  TargetLine: {fileID: 3295782485528660272}
+  TargetLine: {fileID: 2733585298557856514}
   OnEstablishedTarget:
     m_PersistentCalls:
       m_Calls:
@@ -906,7 +920,7 @@ MonoBehaviour:
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
-  TargetLine: {fileID: 3295782485528660272}
+  TargetLine: {fileID: 2733585298557856514}
   OnEstablishedTarget:
     m_PersistentCalls:
       m_Calls:
@@ -1604,7 +1618,7 @@ MonoBehaviour:
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
-  TargetLine: {fileID: 3295782485528660272}
+  TargetLine: {fileID: 2733585298557856514}
   OnEstablishedTarget:
     m_PersistentCalls:
       m_Calls:

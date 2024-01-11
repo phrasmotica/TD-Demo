@@ -304,7 +304,7 @@ MonoBehaviour:
   EffectProvider: {fileID: 4482429117503565492}
   FireRate: 0.5
   Range: 2
-  TargetLine: {fileID: 5374892577393432473}
+  TargetLine: {fileID: 726783113007806243}
 --- !u!114 &4482429117503565492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3637371821928040515}
+  - component: {fileID: 726783113007806243}
   - component: {fileID: 5374892577393432473}
   m_Layer: 0
   m_Name: targetLine
@@ -949,6 +950,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8009262226650756915}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &726783113007806243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6161956365513593288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9e5a49105b6d64388d741d29ec1df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineRenderer: {fileID: 5374892577393432473}
 --- !u!120 &5374892577393432473
 LineRenderer:
   serializedVersion: 2
