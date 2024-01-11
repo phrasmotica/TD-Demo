@@ -25,6 +25,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public Transform PedestalTransform;
 
+        public TargetLine TargetLine;
+
         public TargetMethod TargetMethod;
 
         public GoldCalculator GoldCalculator;
@@ -62,6 +64,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public UnityEvent<bool> OnCanBePlaced;
 
         public UnityEvent OnPlace;
+
+        public UnityEvent OnReadyActions;
 
         public UnityEvent<ITowerAction[]> OnRefreshActions;
 
@@ -383,6 +387,8 @@ namespace TDDemo.Assets.Scripts.Towers
             {
                 a.Ready();
             }
+
+            OnReadyActions.Invoke();
         }
 
         private void RefreshActions()

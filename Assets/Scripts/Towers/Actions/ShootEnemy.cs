@@ -27,8 +27,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int Range;
 
-        public TargetLine TargetLine;
-
         public UnityEvent<Enemy> OnEstablishedTarget;
 
         private TimeCounter _lastShotCounter;
@@ -37,19 +35,12 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private AudioSource _audio;
 
-        public bool ShowTargetLine { get; set; }
-
         public TargetMethod TargetMethod { get; set; }
 
         public bool CanAct { get; set; }
 
         private void Start()
         {
-            if (TargetLine != null)
-            {
-                TargetLine.enabled = false;
-            }
-
             _lastShotCounter = new(1 / FireRate);
             _lastShotCounter.Start();
 
@@ -64,10 +55,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public void Ready()
         {
-            if (TargetLine != null)
-            {
-                TargetLine.Ready();
-            }
         }
 
         public void Survey(IEnumerable<GameObject> enemies)
@@ -75,20 +62,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             _target = EstablishTarget(enemies);
 
             OnEstablishedTarget.Invoke(_target);
-
-            if (TargetLine != null)
-            {
-                var isTargeting = _target != null && SourceTower.IsFiring();
-
-                if (isTargeting && ShowTargetLine)
-                {
-                    TargetLine.Show(_target.transform.position);
-                }
-                else
-                {
-                    TargetLine.Hide();
-                }
-            }
         }
 
         public void Act()

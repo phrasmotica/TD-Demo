@@ -219,7 +219,22 @@ MonoBehaviour:
   EffectProvider: {fileID: 8540494680431190089}
   FireRate: 1
   Range: 2
-  TargetLine: {fileID: 4535205051833143044}
+  OnEstablishedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4535205051833143044}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8540494680431190089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LineRenderer: {fileID: 8669928268687874843}
+  SourceTower: {fileID: 7861188637160861286}
 --- !u!120 &8669928268687874843
 LineRenderer:
   serializedVersion: 2
@@ -647,7 +663,22 @@ MonoBehaviour:
   EffectProvider: {fileID: 7063431615754082267}
   FireRate: 0.5
   Range: 2
-  TargetLine: {fileID: 4535205051833143044}
+  OnEstablishedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4535205051833143044}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7063431615754082267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,7 +1001,22 @@ MonoBehaviour:
   EffectProvider: {fileID: 1305869969212194372}
   FireRate: 1
   Range: 2
-  TargetLine: {fileID: 4535205051833143044}
+  OnEstablishedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4535205051833143044}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1305869969212194372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,6 +1090,7 @@ MonoBehaviour:
     to paralyse.
   SpriteRenderer: {fileID: 261373220016692336}
   PedestalTransform: {fileID: 892581445618010306}
+  TargetLine: {fileID: 4535205051833143044}
   TargetMethod: 0
   GoldCalculator: 0
   XpCalculator: 0
@@ -1126,6 +1173,22 @@ MonoBehaviour:
   OnPlace:
     m_PersistentCalls:
       m_Calls: []
+  OnReadyActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4535205051833143044}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRefreshActions:
     m_PersistentCalls:
       m_Calls:

@@ -4,6 +4,7 @@ using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
@@ -19,13 +20,11 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int Range;
 
-        public TargetLine TargetLine;
+        public UnityEvent<Enemy> OnEstablishedTarget;
 
         private TimeCounter _lastEffectCounter;
 
         private Enemy _target;
-
-        public bool ShowTargetLine { get; set; }
 
         public TargetMethod TargetMethod { get; set; }
 
@@ -33,11 +32,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
-            if (TargetLine != null)
-            {
-                TargetLine.enabled = false;
-            }
-
             _lastEffectCounter = new(1f / FireRate);
             _lastEffectCounter.Start();
 
@@ -50,29 +44,13 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public void Ready()
         {
-            if (TargetLine != null)
-            {
-                TargetLine.Ready();
-            }
         }
 
         public void Survey(IEnumerable<GameObject> enemies)
         {
             _target = EstablishTarget(enemies);
 
-            if (TargetLine != null)
-            {
-                var isTargeting = _target != null && SourceTower.IsFiring();
-
-                if (isTargeting && ShowTargetLine)
-                {
-                    TargetLine.Show(_target.transform.position);
-                }
-                else
-                {
-                    TargetLine.Hide();
-                }
-            }
+            OnEstablishedTarget.Invoke(_target);
         }
 
         public void Act()

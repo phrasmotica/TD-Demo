@@ -304,7 +304,22 @@ MonoBehaviour:
   EffectProvider: {fileID: 4482429117503565492}
   FireRate: 0.5
   Range: 2
-  TargetLine: {fileID: 726783113007806243}
+  OnEstablishedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 726783113007806243}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4482429117503565492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +392,7 @@ MonoBehaviour:
   <Description>k__BackingField: Inflicts poison, which drains health over time.
   SpriteRenderer: {fileID: 671742766403863960}
   PedestalTransform: {fileID: 856063229956031916}
+  TargetLine: {fileID: 726783113007806243}
   TargetMethod: 0
   GoldCalculator: 0
   XpCalculator: 0
@@ -459,6 +475,22 @@ MonoBehaviour:
   OnPlace:
     m_PersistentCalls:
       m_Calls: []
+  OnReadyActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 726783113007806243}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRefreshActions:
     m_PersistentCalls:
       m_Calls:
@@ -963,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LineRenderer: {fileID: 5374892577393432473}
+  SourceTower: {fileID: 2476264691738361395}
 --- !u!120 &5374892577393432473
 LineRenderer:
   serializedVersion: 2

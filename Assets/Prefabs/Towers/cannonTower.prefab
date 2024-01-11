@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LineRenderer: {fileID: 3295782485528660272}
+  SourceTower: {fileID: 7631867566107524507}
 --- !u!120 &3295782485528660272
 LineRenderer:
   serializedVersion: 2
@@ -720,13 +721,25 @@ MonoBehaviour:
   ProjectileSpeed: 2
   FireRate: 0.5
   Range: 3
-  TargetLine: {fileID: 7482537299511661126}
   OnEstablishedTarget:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7631867566107524507}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerBehaviour, Assembly-CSharp
         m_MethodName: LookAtTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7482537299511661126}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -905,6 +918,7 @@ MonoBehaviour:
   <Description>k__BackingField: Fires bombs, which do heavy damage to multiple enemies.
   SpriteRenderer: {fileID: 4277198905856802237}
   PedestalTransform: {fileID: 372898879069006904}
+  TargetLine: {fileID: 7482537299511661126}
   TargetMethod: 0
   GoldCalculator: 1
   XpCalculator: 1
@@ -987,6 +1001,22 @@ MonoBehaviour:
   OnPlace:
     m_PersistentCalls:
       m_Calls: []
+  OnReadyActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7482537299511661126}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRefreshActions:
     m_PersistentCalls:
       m_Calls:
