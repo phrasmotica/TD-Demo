@@ -3,7 +3,6 @@ using System.Linq;
 using TDDemo.Assets.Scripts.Enemies;
 using TDDemo.Assets.Scripts.Extensions;
 using TDDemo.Assets.Scripts.Util;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,8 +20,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         [Range(1, 10)]
         public int Range;
 
-        // TODO: move this and related to its own script
-        public LineRenderer TargetLine;
+        public TargetLine TargetLine;
 
         public ShootLine ShootLine;
 
@@ -63,7 +61,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             if (TargetLine != null)
             {
-                TargetLine.SetPosition(0, transform.position);
+                TargetLine.Ready();
             }
 
             ShootLine.Ready();
@@ -75,18 +73,17 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
             OnEstablishedTarget.Invoke(_target);
 
-            var isTargeting = _target != null && SourceTower.IsFiring();
-
-            if (isTargeting && TargetLine != null)
+            if (TargetLine != null)
             {
-                if (ShowTargetLine)
+                var isTargeting = _target != null && SourceTower.IsFiring();
+
+                if (isTargeting && ShowTargetLine)
                 {
-                    TargetLine.enabled = true;
-                    TargetLine.SetPosition(1, _target.transform.position);
+                    TargetLine.Show(_target.transform.position);
                 }
                 else
                 {
-                    TargetLine.enabled = false;
+                    TargetLine.Hide();
                 }
             }
         }
