@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Sniper
-  Sprite: {fileID: 21300000, guid: 08884dfd9a55b5740b0f662a5aa6f696, type: 3}
+  Sprite: {fileID: 21300000, guid: a02b254a8d5dbe348b8b9a1972e9aca2, type: 3}
   Description: Shoots a high-speed bolt that passes through enemies.
   Price: 6
   Time: 5
@@ -1734,7 +1734,7 @@ SpriteRenderer:
   m_SortingLayerID: -23614339
   m_SortingLayer: 1
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: 08884dfd9a55b5740b0f662a5aa6f696, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a02b254a8d5dbe348b8b9a1972e9aca2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
