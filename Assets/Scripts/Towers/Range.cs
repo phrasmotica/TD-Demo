@@ -11,12 +11,10 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private bool _towerCanBePlaced;
 
-        private SpriteRenderer _spriteRenderer;
+        public SpriteRenderer SpriteRenderer;
 
         private void Awake()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-
             logger = new MethodLogger(nameof(Range));
 
             SetTowerCanBePlaced(true);
@@ -60,14 +58,14 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void DrawRange()
         {
-            if (_spriteRenderer != null)
+            if (SpriteRenderer != null)
             {
                 logger.Log($"Drawing range of {RangeToDraw}");
 
-                _spriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
+                SpriteRenderer.color = _towerCanBePlaced ? CanBePlacedColour : CannotBePlacedColour;
 
                 // radius of range sprite in world space units
-                var spriteSize = _spriteRenderer.sprite.bounds.size.x / 2;
+                var spriteSize = SpriteRenderer.sprite.bounds.size.x / 2;
 
                 // scale required to bring sprite to size of the range
                 var scale = RangeToDraw / spriteSize;
@@ -78,7 +76,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public void SetShowRange(bool isSelected)
         {
-            _spriteRenderer.enabled = isSelected;
+            SpriteRenderer.enabled = isSelected;
         }
 
         private static Color CanBePlacedColour => Color.white;
