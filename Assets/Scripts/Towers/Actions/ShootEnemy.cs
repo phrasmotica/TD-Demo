@@ -18,10 +18,12 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public GameObject ExplosionPrefab;
 
-        [Range(1, 10)]
+        public AudioSource AudioSource;
+
+        [Range(1, 15)]
         public int ProjectileSpeed;
 
-        [Range(0.5f, 10f)]
+        [Range(0.2f, 10f)]
         public float FireRate;
 
         [Range(1, 10)]
@@ -33,8 +35,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private Enemy _target;
 
-        private AudioSource _audio;
-
         public TargetMethod TargetMethod { get; set; }
 
         public bool CanAct { get; set; }
@@ -43,8 +43,6 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             _lastShotCounter = new(1 / FireRate);
             _lastShotCounter.Start();
-
-            _audio = GetComponent<AudioSource>();
 
             logger = new MethodLogger(nameof(ShootEnemy));
         }
@@ -125,9 +123,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var rb = projectileObj.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(_target.transform) * ProjectileSpeed;
 
-            if (_audio != null)
+            if (AudioSource != null)
             {
-                _audio.Play();
+                AudioSource.Play();
             }
         }
 

@@ -382,6 +382,7 @@ namespace TDDemo.Assets.Scripts.Towers
         private void RefreshActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
+            _actions = _actions.Where(a => (a as MonoBehaviour).enabled).ToArray();
 
             foreach (var a in _actions)
             {

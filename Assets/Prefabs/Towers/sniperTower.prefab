@@ -593,6 +593,219 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.1}
   m_EdgeRadius: 0
+--- !u!1 &4637502268650697504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2254839139670608364}
+  - component: {fileID: 2651897953626369961}
+  - component: {fileID: 4295806679526376028}
+  - component: {fileID: 8903695170332147241}
+  - component: {fileID: 4458863618815986772}
+  m_Layer: 0
+  m_Name: baseTowerProjectile
+  m_TagString: TowerUpgrade
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2254839139670608364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637502268650697504}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 372898879069006904}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2651897953626369961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637502268650697504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a54fc91e238f9c84da5326a68f010409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Sniper
+  Sprite: {fileID: 21300000, guid: a02b254a8d5dbe348b8b9a1972e9aca2, type: 3}
+  Description: Shoots a high-speed bolt that passes through enemies.
+  Price: 6
+  Time: 5
+  Upgrades: []
+--- !u!114 &4295806679526376028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637502268650697504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c36115d144360374eb4838478e38ef7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
+  StrikeProvider: {fileID: 8903695170332147241}
+  ProjectilePrefab: {fileID: 4586351982578491601, guid: 328a6dfc45999b544bf820cf21f18a15,
+    type: 3}
+  ExplosionPrefab: {fileID: 0}
+  AudioSource: {fileID: 4458863618815986772}
+  ProjectileSpeed: 15
+  FireRate: 0.2
+  Range: 6
+  OnEstablishedTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7631867566107524507}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.TowerBehaviour, Assembly-CSharp
+        m_MethodName: LookAtTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7879357119263313914}
+        m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Towers.Actions.TargetLine,
+          Assembly-CSharp
+        m_MethodName: SetTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8903695170332147241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637502268650697504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519f85c7eb392c640a1f56d6164f3526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SourceTower: {fileID: 7631867566107524507}
+  Amount: 10
+--- !u!82 &4458863618815986772
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637502268650697504}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5273159305091717807, guid: 87afe514ef72cb14ab323d4745a1491d,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 5836186f2121d3245b049b7965f9bbe4, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4821971724821386494
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2991663860666607943
 Transform:
   m_ObjectHideFlags: 0
@@ -910,12 +1123,12 @@ GameObject:
   - component: {fileID: 6181368074440403425}
   - component: {fileID: 5009809676124491293}
   m_Layer: 0
-  m_Name: baseTower
+  m_Name: baseTowerShootLine
   m_TagString: TowerUpgrade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4361648814158242797
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,7 +1702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 769f988b7723e0847a0fca2a1b34eec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RootNode: {fileID: 5983188766679234428}
+  RootNode: {fileID: 2651897953626369961}
   OnUpgrade:
     m_PersistentCalls:
       m_Calls: []
@@ -1692,6 +1905,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4361648814158242797}
+  - {fileID: 2254839139670608364}
   m_Father: {fileID: 2635238056331392155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4277198905856802237
