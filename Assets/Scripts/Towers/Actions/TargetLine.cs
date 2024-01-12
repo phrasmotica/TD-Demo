@@ -1,3 +1,4 @@
+using System;
 using TDDemo.Assets.Scripts.Enemies;
 using UnityEngine;
 
@@ -11,12 +12,19 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public bool ShowLine { get; set; }
 
+        private void Awake()
+        {
+            if (LineRenderer == null)
+            {
+                throw new InvalidOperationException($"TargetLine is missing its line renderer, object={gameObject.name}");
+            }
+
+            LineRenderer.enabled = false;
+        }
+
         public void Ready()
         {
-            if (LineRenderer != null)
-            {
-                LineRenderer.SetPosition(0, transform.position);
-            }
+            LineRenderer.SetPosition(0, transform.position);
         }
 
         public void SetTarget(Enemy target)
