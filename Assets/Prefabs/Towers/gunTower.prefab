@@ -431,8 +431,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1734897619
-  m_SortingLayer: 6
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -445,7 +445,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -457,8 +457,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.49803922, b: 0, a: 1}
-      key1: {r: 1, g: 0.49803922, b: 0, a: 1}
+      key0: {r: 1, g: 0.49803922, b: 0, a: 0.39215687}
+      key1: {r: 1, g: 0.49803922, b: 0, a: 0.39215687}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -718,6 +718,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
   ExplosionPrefab: {fileID: 0}
+  AudioSource: {fileID: 5009809676124491293}
   ProjectileSpeed: 4
   FireRate: 4
   Range: 3
@@ -930,6 +931,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
   ExplosionPrefab: {fileID: 0}
+  AudioSource: {fileID: 6718605576518355556}
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
@@ -1657,6 +1659,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 4586351982578491601, guid: 050ac25100b689d47aa552601982177d,
     type: 3}
   ExplosionPrefab: {fileID: 0}
+  AudioSource: {fileID: 487567890041266364}
   ProjectileSpeed: 5
   FireRate: 5
   Range: 4
