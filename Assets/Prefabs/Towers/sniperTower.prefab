@@ -544,6 +544,7 @@ MonoBehaviour:
   Collider: {fileID: 6549169182949837479}
   AudioSource: {fileID: 0}
   StrikeProvider: {fileID: 6181368074440403425}
+  LifetimeSeconds: 0.2
   OnStrike:
     m_PersistentCalls:
       m_Calls: []

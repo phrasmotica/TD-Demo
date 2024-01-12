@@ -86,7 +86,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Shoot()
         {
-            logger.Log("Shooting along sight line");
+            logger.Log($"{Time.frameCount} Shooting along sight line");
 
             var sightLine = GetSightLine(_target.transform);
 
@@ -96,6 +96,8 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             {
                 AudioSource.Play();
             }
+
+            //Debug.Break();
         }
 
         private Vector2 GetSightLine(Transform t)

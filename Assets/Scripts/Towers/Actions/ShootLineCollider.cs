@@ -14,6 +14,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public StrikeProvider StrikeProvider;
 
+        [Range(0.1f, 5f)]
+        public float LifetimeSeconds;
+
         public UnityEvent<Enemy> OnStrike;
 
         private void Start()
@@ -23,14 +26,11 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // TODO: work out why this isn't always working...
-            // do we just need to leave the collider up for longer
-            // in HideCollider()?
-
             var otherObj = collision.gameObject;
 
-            logger.Log($"Colliding with {otherObj.name}");
+            logger.Log($"{Time.frameCount} Colliding with {otherObj.name}");
 
+            // TODO: ensure enemies cannot walk into the line after it's been fired
             if (otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
             {
                 StartCoroutine(DoStrike(enemy));
@@ -71,10 +71,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private IEnumerator HideCollider()
         {
-            // wait two frames, so that collision detection happen in the next frame for enemies
-            // that are already colliding
-            yield return null;
-            yield return null;
+            // wait so that collision detection can happen - seems to take about 4 frames on average
+            // for this to occur
+            yield return new WaitForSeconds(LifetimeSeconds);
 
             Collider.enabled = false;
         }
