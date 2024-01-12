@@ -5,7 +5,7 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 {
     public class DamageEnemy : StrikeProvider
     {
-        [Range(1f, 3f)]
+        [Range(1f, 10f)]
         public float Amount;
 
         public override IStrike CreateStrike() => new Damage(Amount)

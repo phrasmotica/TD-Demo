@@ -44,11 +44,8 @@ namespace TDDemo.Assets.Scripts.UI
 
                 ShowTargetLineToggle.gameObject.SetActive(true);
 
-                var towerActions = tower.GetActions<ITowerAction>().ToList();
-                ShowTargetLineToggle.Actions = towerActions;
-
-                var firstAction = towerActions.FirstOrDefault();
-                ShowTargetLineToggle.GetComponent<Toggle>().isOn = firstAction?.ShowTargetLine ?? false;
+                ShowTargetLineToggle.TargetLine = tower.TargetLine;
+                ShowTargetLineToggle.GetComponent<Toggle>().isOn = tower.TargetLine.ShowLine;
             }
             else
             {
@@ -103,7 +100,7 @@ namespace TDDemo.Assets.Scripts.UI
             KillCount.gameObject.SetActive(false);
 
             ShowTargetLineToggle.gameObject.SetActive(false);
-            ShowTargetLineToggle.Actions = new List<ITowerAction>();
+            ShowTargetLineToggle.TargetLine = null;
         }
     }
 }

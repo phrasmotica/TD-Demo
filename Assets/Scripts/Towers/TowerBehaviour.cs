@@ -25,6 +25,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public Transform PedestalTransform;
 
+        public TargetLine TargetLine;
+
         public TargetMethod TargetMethod;
 
         public GoldCalculator GoldCalculator;
@@ -62,6 +64,8 @@ namespace TDDemo.Assets.Scripts.Towers
         public UnityEvent<bool> OnCanBePlaced;
 
         public UnityEvent OnPlace;
+
+        public UnityEvent OnReadyActions;
 
         public UnityEvent<ITowerAction[]> OnRefreshActions;
 
@@ -230,7 +234,7 @@ namespace TDDemo.Assets.Scripts.Towers
 
             _tower.FinishWarmingUp();
 
-            ReadyActions();
+            OnReadyActions.Invoke();
             AllowFire();
 
             SpriteRenderer.color = ColourHelper.FullOpacity;
@@ -375,19 +379,10 @@ namespace TDDemo.Assets.Scripts.Towers
             }
         }
 
-        private void ReadyActions()
-        {
-            _actions = GetComponentsInChildren<ITowerAction>();
-
-            foreach (var a in _actions)
-            {
-                a.Ready();
-            }
-        }
-
         private void RefreshActions()
         {
             _actions = GetComponentsInChildren<ITowerAction>();
+            _actions = _actions.Where(a => (a as MonoBehaviour).enabled).ToArray();
 
             foreach (var a in _actions)
             {

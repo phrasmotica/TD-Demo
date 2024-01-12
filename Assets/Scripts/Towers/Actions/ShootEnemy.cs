@@ -18,16 +18,16 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public GameObject ExplosionPrefab;
 
-        [Range(1, 10)]
+        public AudioSource AudioSource;
+
+        [Range(1, 15)]
         public int ProjectileSpeed;
 
-        [Range(0.5f, 10f)]
+        [Range(0.2f, 10f)]
         public float FireRate;
 
         [Range(1, 10)]
         public int Range;
-
-        public LineRenderer TargetLine;
 
         public UnityEvent<Enemy> OnEstablishedTarget;
 
@@ -35,25 +35,14 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private Enemy _target;
 
-        private AudioSource _audio;
-
-        public bool ShowTargetLine { get; set; }
-
         public TargetMethod TargetMethod { get; set; }
 
         public bool CanAct { get; set; }
 
         private void Start()
         {
-            if (TargetLine != null)
-            {
-                TargetLine.enabled = false;
-            }
-
             _lastShotCounter = new(1 / FireRate);
             _lastShotCounter.Start();
-
-            _audio = GetComponent<AudioSource>();
 
             logger = new MethodLogger(nameof(ShootEnemy));
         }
@@ -62,32 +51,11 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         public int GetRange() => Range;
 
-        public void Ready()
-        {
-            if (TargetLine != null)
-            {
-                TargetLine.SetPosition(0, transform.position);
-            }
-        }
-
         public void Survey(IEnumerable<GameObject> enemies)
         {
             _target = EstablishTarget(enemies);
 
             OnEstablishedTarget.Invoke(_target);
-
-            var isTargeting = _target != null && SourceTower.IsFiring();
-            var shouldDraw = ShowTargetLine && TargetLine != null;
-
-            if (isTargeting && shouldDraw)
-            {
-                TargetLine.enabled = true;
-                TargetLine.SetPosition(1, _target.transform.position);
-            }
-            else
-            {
-                TargetLine.enabled = false;
-            }
         }
 
         public void Act()
@@ -155,9 +123,9 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             var rb = projectileObj.GetComponent<Rigidbody2D>();
             rb.velocity = GetDirectionToTransform(_target.transform) * ProjectileSpeed;
 
-            if (_audio != null)
+            if (AudioSource != null)
             {
-                _audio.Play();
+                AudioSource.Play();
             }
         }
 

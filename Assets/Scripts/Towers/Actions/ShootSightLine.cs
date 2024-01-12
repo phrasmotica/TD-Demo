@@ -8,21 +8,25 @@ using UnityEngine.Events;
 
 namespace TDDemo.Assets.Scripts.Towers.Actions
 {
-    public class AffectEnemy : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange
+    public class ShootSightLine : BaseBehaviour, ITowerAction, IHasFireRate, IHasRange
     {
         public TowerBehaviour SourceTower;
 
-        public EffectProvider EffectProvider;
+        public StrikeProvider StrikeProvider;
 
-        [Range(0.5f, 10f)]
+        [Range(0.1f, 10f)]
         public float FireRate;
 
         [Range(1, 10)]
         public int Range;
 
+        public AudioSource AudioSource;
+
         public UnityEvent<Enemy> OnEstablishedTarget;
 
-        private TimeCounter _lastEffectCounter;
+        public UnityEvent<Vector2> OnSetLine;
+
+        private TimeCounter _lastShotCounter;
 
         private Enemy _target;
 
@@ -32,10 +36,10 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
 
         private void Start()
         {
-            _lastEffectCounter = new(1f / FireRate);
-            _lastEffectCounter.Start();
+            _lastShotCounter = new(1 / FireRate);
+            _lastShotCounter.Start();
 
-            logger = new MethodLogger(nameof(AffectEnemy));
+            logger = new(nameof(ShootSightLine));
         }
 
         public float GetFireRate() => FireRate;
@@ -53,9 +57,14 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
         {
             if (CanAct)
             {
-                _lastEffectCounter.Increment(Time.deltaTime);
+                _lastShotCounter.Increment(Time.deltaTime);
 
-                FireAtTarget();
+                var enoughTimePassed = !_lastShotCounter.IsRunning || _lastShotCounter.IsFinished;
+                if (enoughTimePassed && _target != null)
+                {
+                    _lastShotCounter.Restart();
+                    Shoot();
+                }
             }
         }
 
@@ -75,24 +84,25 @@ namespace TDDemo.Assets.Scripts.Towers.Actions
             return null;
         }
 
-        private void FireAtTarget()
+        private void Shoot()
         {
-            var enoughTimePassed = !_lastEffectCounter.IsRunning || _lastEffectCounter.IsFinished;
-            if (enoughTimePassed && _target != null)
-            {
-                _lastEffectCounter.Restart();
+            logger.Log($"{Time.frameCount} Shooting along sight line");
 
-                if (!_target.HasEffectCategory(EffectProvider.Category))
-                {
-                    logger.Log(EffectProvider.ApplyingEffect);
-                    _target.AddEffect(EffectProvider.CreateEffect());
-                }
-                else
-                {
-                    // if the enemy is already affected, tough luck!
-                    logger.Log(EffectProvider.EffectAlreadyApplied);
-                }
+            var sightLine = GetSightLine(_target.transform);
+
+            OnSetLine.Invoke(sightLine);
+
+            if (AudioSource != null)
+            {
+                AudioSource.Play();
             }
+
+            //Debug.Break();
+        }
+
+        private Vector2 GetSightLine(Transform t)
+        {
+            return -(transform.position - t.position).normalized * Range;
         }
     }
 }

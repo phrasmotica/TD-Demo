@@ -13,6 +13,8 @@ namespace TDDemo.Assets.Scripts.Towers
 
         public AudioSource AudioSource;
 
+        public bool PassesThroughEnemies;
+
         public UnityEvent<Enemy> OnStrike;
 
         public StrikeProvider StrikeProvider { get; set; }
@@ -32,8 +34,14 @@ namespace TDDemo.Assets.Scripts.Towers
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            var shouldStrike = PassesThroughEnemies || !_hasStruck;
+            if (!shouldStrike)
+            {
+                return;
+            }
+
             var otherObj = collision.gameObject;
-            if (!_hasStruck && otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
+            if (otherObj.TryGetComponent<Enemy>(out var enemy) && enemy.CanBeTargeted())
             {
                 _hasStruck = true;
 
@@ -59,7 +67,10 @@ namespace TDDemo.Assets.Scripts.Towers
                 }
             }
 
-            Destroy(gameObject);
+            if (!PassesThroughEnemies)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
