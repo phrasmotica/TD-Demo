@@ -13,6 +13,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public TMP_Text AmountText;
 
+        public TMP_Text WaveNumberText;
+
         public void UpdateText(int waveNumber, Wave wave)
         {
             BackgroundImage.color = wave.WaveStyle switch
@@ -28,6 +30,7 @@ namespace TDDemo.Assets.Scripts.Waves
             }
 
             AmountText.text = $"x{wave.Count}";
+            WaveNumberText.text = $"{waveNumber}";
         }
     }
 }
