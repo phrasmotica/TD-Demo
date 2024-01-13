@@ -1,3 +1,4 @@
+using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,12 +7,20 @@ namespace TDDemo.Assets.Scripts.Waves
 {
     public class WavePanel : MonoBehaviour
     {
+        public Image BackgroundImage;
+
         public Image EnemyImage;
 
         public TMP_Text AmountText;
 
         public void UpdateText(int waveNumber, Wave wave)
         {
+            BackgroundImage.color = wave.WaveStyle switch
+            {
+                WaveStyle.Boss => ColourHelper.BossWave,
+                _ => ColourHelper.DefaultWave,
+            };
+
             var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
             if (spriteRenderer != null)
             {
