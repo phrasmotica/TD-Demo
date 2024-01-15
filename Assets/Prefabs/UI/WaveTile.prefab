@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 320457555372418309}
   - component: {fileID: 1720719338318405543}
   - component: {fileID: 111308960339056593}
+  - component: {fileID: 1491274770253243352}
   m_Layer: 5
   m_Name: WaveTile
   m_TagString: Untagged
@@ -78,6 +79,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1491274770253243352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412521680396464413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a77753a93a72b45a0aef162bcc1de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundImage: {fileID: 111308960339056593}
+  EnemyImage: {fileID: 1249523785594878456}
+  AmountText: {fileID: 6761492382961160803}
+  WaveNumberText: {fileID: 631029377761460856}
 --- !u!1 &6063011890741210330
 GameObject:
   m_ObjectHideFlags: 0
