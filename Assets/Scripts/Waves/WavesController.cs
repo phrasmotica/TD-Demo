@@ -7,7 +7,6 @@ using TDDemo.Assets.Scripts.Path;
 using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Towers.Effects;
 using TDDemo.Assets.Scripts.Util;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,6 +29,8 @@ namespace TDDemo.Assets.Scripts.Waves
         public Waypoint[] Waypoints;
 
         public Wave[] Waves;
+
+        public int LastWave;
 
         private int _currentWaveNumber;
 
@@ -54,7 +55,7 @@ namespace TDDemo.Assets.Scripts.Waves
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.N))
+            if (Input.GetKeyUp(KeyCode.N) && _currentWaveNumber < LastWave)
             {
                 DoSendNextWave();
             }
@@ -74,7 +75,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 OnStageChange.Invoke(stageNumber);
             }
 
-            return nextWaves[0];
+            return nextWaves.Any() ? nextWaves[0] : null;
         }
 
         private static bool IsStartOfStage(int currentWave) => currentWave % 5 == 1;
@@ -84,7 +85,10 @@ namespace TDDemo.Assets.Scripts.Waves
         public void DoSendNextWave()
         {
             var wave = SetCurrentWave(_currentWaveNumber + 1);
-            StartCoroutine(SendWave(wave));
+            if (wave != null)
+            {
+                StartCoroutine(SendWave(wave));
+            }
         }
 
         private IEnumerator SendWave(Wave wave)
@@ -163,7 +167,7 @@ namespace TDDemo.Assets.Scripts.Waves
         private List<Wave> GetNextWaves(int waveNumber)
         {
             // current wave plus the following 5
-            var numbers = Enumerable.Range(waveNumber, 6);
+            var numbers = Enumerable.Range(waveNumber, 6).Where(n => n <= LastWave);
             return numbers.Select(GetWave).ToList();
         }
 

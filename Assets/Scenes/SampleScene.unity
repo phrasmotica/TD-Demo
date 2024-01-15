@@ -1849,6 +1849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7a612649bbc1a84ea94eb393610d74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NextWaveButton: {fileID: 1775969659}
   WaveTiles:
   - {fileID: 1972599008}
   - {fileID: 2106156152}
@@ -2238,12 +2239,7 @@ MonoBehaviour:
     Count: 1
     Frequency: 1
     WaveStyle: 1
-  OnWaveChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnNextWaveChange:
-    m_PersistentCalls:
-      m_Calls: []
+  LastWave: 10
   OnWavesChange:
     m_PersistentCalls:
       m_Calls:
