@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Waves;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +8,13 @@ namespace TDDemo.Assets.Scripts.UI
 {
     public class WaveText : MonoBehaviour
     {
-        public void UpdateText(int waveNumber, Wave wave)
+        public void SetWave(List<Wave> nextWaves)
         {
-            var text = GetComponent<Text>();
-            text.text = $"{waveNumber}";
+            if (nextWaves.Any())
+            {
+                var text = GetComponent<Text>();
+                text.text = $"{nextWaves[0].Number}";
+            }
         }
     }
 }

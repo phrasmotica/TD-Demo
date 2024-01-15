@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace TDDemo.Assets.Scripts.Waves
@@ -6,11 +8,16 @@ namespace TDDemo.Assets.Scripts.Waves
     {
         public WaveTile[] WaveTiles;
 
-        public void UpdateText(int waveNumber, Wave wave)
+        public void SetWaves(List<Wave> nextWaves)
         {
-            foreach (var waveTile in WaveTiles)
+            var futureWaves = nextWaves.Skip(1).ToList();
+
+            for (var i = 0; i < WaveTiles.Length; i++)
             {
-                waveTile.UpdateText(waveNumber, wave);
+                var waveTile = WaveTiles[i];
+                var wave = i < futureWaves.Count ? futureWaves[i] : null;
+
+                waveTile.SetWave(wave);
             }
         }
     }

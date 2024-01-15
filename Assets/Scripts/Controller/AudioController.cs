@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TDDemo.Assets.Scripts.Waves;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -58,9 +59,14 @@ namespace TDDemo.Assets.Scripts.Controller
             AudioMixer.SetFloat("musicPitch", 1f);
         }
 
-        public void SetMusicForWave(int waveNumber, Wave wave)
+        public void SetMusicForCurrentWave(List<Wave> nextWaves)
         {
-            if (wave.WaveStyle == WaveStyle.Boss)
+            if (!nextWaves.Any())
+            {
+                return;
+            }
+
+            if (nextWaves[0].WaveStyle == WaveStyle.Boss)
             {
                 AudioMixer.SetFloat("musicPitch", 0.9f);
             }

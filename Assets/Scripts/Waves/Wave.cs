@@ -6,6 +6,8 @@ namespace TDDemo.Assets.Scripts.Waves
     [Serializable]
     public class Wave
     {
+        public int Number { get; set; }
+
         public GameObject EnemyPrefab;
 
         public int Count;

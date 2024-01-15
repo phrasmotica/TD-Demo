@@ -15,22 +15,32 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public TMP_Text WaveNumberText;
 
-        public void UpdateText(int waveNumber, Wave wave)
+        public void SetWave(Wave wave)
         {
-            BackgroundImage.color = wave.WaveStyle switch
+            if (wave != null)
             {
-                WaveStyle.Boss => ColourHelper.BossWave,
-                _ => ColourHelper.DefaultWave,
-            };
+                BackgroundImage.color = wave.WaveStyle switch
+                {
+                    WaveStyle.Boss => ColourHelper.BossWave,
+                    _ => ColourHelper.DefaultWave,
+                };
 
-            var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                EnemyImage.sprite = spriteRenderer.sprite;
+                var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    EnemyImage.sprite = spriteRenderer.sprite;
+                }
+
+                AmountText.text = $"x{wave.Count}";
+                WaveNumberText.text = $"{wave.Number}";
             }
-
-            AmountText.text = $"x{wave.Count}";
-            WaveNumberText.text = $"{waveNumber}";
+            else
+            {
+                BackgroundImage.color = ColourHelper.NoWave;
+                EnemyImage.sprite = null;
+                AmountText.text = string.Empty;
+                WaveNumberText.text = "?";
+            }
         }
     }
 }

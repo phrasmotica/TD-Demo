@@ -1850,7 +1850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveTiles:
-  - {fileID: 1623500407984780454}
+  - {fileID: 1972599008}
   - {fileID: 2106156152}
   - {fileID: 788383222}
   - {fileID: 804221647}
@@ -2240,10 +2240,16 @@ MonoBehaviour:
     WaveStyle: 1
   OnWaveChange:
     m_PersistentCalls:
+      m_Calls: []
+  OnNextWaveChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWavesChange:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 834971721}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.UI.WaveText, Assembly-CSharp
-        m_MethodName: UpdateText
+        m_MethodName: SetWave
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2256,7 +2262,7 @@ MonoBehaviour:
       - m_Target: {fileID: 129484921}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Controller.AudioController,
           Assembly-CSharp
-        m_MethodName: SetMusicForWave
+        m_MethodName: SetMusicForCurrentWave
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2266,12 +2272,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnNextWaveChange:
-    m_PersistentCalls:
-      m_Calls:
       - m_Target: {fileID: 272667240}
         m_TargetAssemblyTypeName: TDDemo.Assets.Scripts.Waves.WavePanel, Assembly-CSharp
-        m_MethodName: UpdateText
+        m_MethodName: SetWaves
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14396,6 +14399,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1623500407984780453}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1972599008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1491274770253243352, guid: efeabf4c05412d74a9f5a7f695a993d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1623500407984780453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a77753a93a72b45a0aef162bcc1de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1978970357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15792,18 +15807,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efeabf4c05412d74a9f5a7f695a993d3, type: 3}
---- !u!114 &1623500407984780454 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1491274770253243352, guid: efeabf4c05412d74a9f5a7f695a993d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1623500407984780453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28a77753a93a72b45a0aef162bcc1de8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1868135691224066183
 PrefabInstance:
   m_ObjectHideFlags: 0

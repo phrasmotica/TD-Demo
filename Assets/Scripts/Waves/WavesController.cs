@@ -35,9 +35,7 @@ namespace TDDemo.Assets.Scripts.Waves
 
         private List<Enemy> _enemies;
 
-        public UnityEvent<int, Wave> OnWaveChange;
-
-        public UnityEvent<int, Wave> OnNextWaveChange;
+        public UnityEvent<List<Wave>> OnWavesChange;
 
         public UnityEvent<int> OnStageChange;
 
@@ -66,11 +64,9 @@ namespace TDDemo.Assets.Scripts.Waves
         {
             _currentWaveNumber = waveNumber;
 
-            var wave = GetWave(_currentWaveNumber);
-            OnWaveChange.Invoke(_currentWaveNumber, wave);
+            var nextWaves = GetNextWaves(_currentWaveNumber);
 
-            var nextWave = GetWave(_currentWaveNumber + 1);
-            OnNextWaveChange.Invoke(_currentWaveNumber + 1, nextWave);
+            OnWavesChange.Invoke(nextWaves);
 
             if (IsStartOfStage(_currentWaveNumber))
             {
@@ -78,7 +74,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 OnStageChange.Invoke(stageNumber);
             }
 
-            return wave;
+            return nextWaves[0];
         }
 
         private static bool IsStartOfStage(int currentWave) => currentWave % 5 == 1;
@@ -135,13 +131,18 @@ namespace TDDemo.Assets.Scripts.Waves
         {
             if (waveNumber - 1 < Waves.Length)
             {
-                return Waves[Mathf.Max(0, waveNumber - 1)];
+                var wave = Waves[Mathf.Max(0, waveNumber - 1)];
+
+                wave.Number = waveNumber;
+
+                return wave;
             }
 
             if (waveNumber % 5 == 0)
             {
                 return new Wave
                 {
+                    Number = waveNumber,
                     EnemyPrefab = BossEnemyPrefab,
                     Count = waveNumber / 5,
                     Frequency = 1,
@@ -151,11 +152,19 @@ namespace TDDemo.Assets.Scripts.Waves
 
             return new Wave
             {
+                Number = waveNumber,
                 EnemyPrefab = EnemyPrefab,
                 Count = waveNumber,
                 Frequency = 2,
                 WaveStyle = WaveStyle.Regular,
             };
+        }
+
+        private List<Wave> GetNextWaves(int waveNumber)
+        {
+            // current wave plus the following 5
+            var numbers = Enumerable.Range(waveNumber, 6);
+            return numbers.Select(GetWave).ToList();
         }
 
         public List<GameObject> GetEnemies() => _enemies.Select(e => e.gameObject).ToList();
