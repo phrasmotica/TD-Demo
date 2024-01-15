@@ -2240,6 +2240,7 @@ MonoBehaviour:
     Frequency: 1
     WaveStyle: 1
   LastWave: 10
+  FutureWaveCount: 5
   OnWavesChange:
     m_PersistentCalls:
       m_Calls:

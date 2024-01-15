@@ -32,6 +32,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public int LastWave;
 
+        public int FutureWaveCount;
+
         private int _currentWaveNumber;
 
         private List<Enemy> _enemies;
@@ -166,8 +168,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         private List<Wave> GetNextWaves(int waveNumber)
         {
-            // current wave plus the following 5
-            var numbers = Enumerable.Range(waveNumber, 6).Where(n => n <= LastWave);
+            // current wave plus the following N
+            var numbers = Enumerable.Range(waveNumber, FutureWaveCount + 1).Where(n => n <= LastWave);
             return numbers.Select(GetWave).ToList();
         }
 
