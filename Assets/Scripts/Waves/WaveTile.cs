@@ -1,3 +1,5 @@
+using System.Collections;
+using TDDemo.Assets.Scripts.Towers;
 using TDDemo.Assets.Scripts.Util;
 using TMPro;
 using UnityEngine;
@@ -10,7 +12,15 @@ namespace TDDemo.Assets.Scripts.Waves
     {
         private Wave _wave;
 
+        private TimeCounter _timeCounter;
+
+        private float _progressBarWidth;
+
+        private Coroutine _progressCoroutine;
+
         public Image BackgroundImage;
+
+        public Image ProgressImage;
 
         public Image EnemyImage;
 
@@ -24,9 +34,18 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public UnityEvent<Wave> OnSendWave;
 
+        private void Awake()
+        {
+            // https://discussions.unity.com/t/how-do-i-get-the-literal-width-of-a-recttransform/135984/2
+            _progressBarWidth = ProgressImage.rectTransform.rect.width;
+        }
+
         public void SetWave(Wave wave)
         {
             _wave = wave;
+
+            _timeCounter?.Stop();
+            SetProgress(0);
 
             if (wave != null)
             {
@@ -35,6 +54,8 @@ namespace TDDemo.Assets.Scripts.Waves
                     WaveStyle.Boss => ColourHelper.BossWave,
                     _ => ColourHelper.DefaultWave,
                 };
+
+                _progressCoroutine = StartCoroutine(AnimateProgress(5));
 
                 var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
                 if (spriteRenderer != null)
@@ -50,6 +71,8 @@ namespace TDDemo.Assets.Scripts.Waves
             }
             else
             {
+                StopCoroutine(_progressCoroutine);
+
                 BackgroundImage.color = ColourHelper.NoWave;
                 EnemyImage.sprite = null;
                 AmountText.text = string.Empty;
@@ -66,6 +89,30 @@ namespace TDDemo.Assets.Scripts.Waves
             {
                 OnSendWave.Invoke(_wave);
             }
+        }
+
+        private IEnumerator AnimateProgress(float time)
+        {
+            _timeCounter = new(time);
+            _timeCounter.Start();
+
+            while (!_timeCounter.IsFinished)
+            {
+                _timeCounter.Increment(Time.deltaTime);
+                SetProgress(_timeCounter.Progress);
+                yield return null;
+            }
+        }
+
+        private void SetProgress(float progress)
+        {
+            // ensure progress bar has zero width, achieved via a "right" value
+            // equal to the width of the bar. offsetMax requires the "right" value
+            // to be passed as negative:
+            // https://discussions.unity.com/t/access-left-right-top-and-bottom-of-recttransform-via-script/129237/3
+
+            var width = _progressBarWidth * (1 - progress);
+            ProgressImage.rectTransform.offsetMax = new(-width, 0);
         }
     }
 }
