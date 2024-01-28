@@ -27,5 +27,7 @@ namespace TDDemo.Assets.Scripts.Util
         public static Color BossWave => new(169 / 255f, 0, 1);
 
         public static Color NoWave => Color.grey;
+
+        public static Color InteractionDisabled => new(200 / 255f, 200 / 255f, 200 / 255f, 128 / 255f);
     }
 }

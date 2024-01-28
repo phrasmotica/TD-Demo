@@ -93,6 +93,14 @@ namespace TDDemo.Assets.Scripts.Waves
             }
         }
 
+        public void DoSendWave(Wave wave)
+        {
+            while (_currentWaveNumber < wave.Number)
+            {
+                DoSendNextWave();
+            }
+        }
+
         private IEnumerator SendWave(Wave wave)
         {
             logger.Log($"SendWave({_currentWaveNumber})");
