@@ -32,6 +32,8 @@ namespace TDDemo.Assets.Scripts.Waves
 
         public Image SendWaveButtonImage;
 
+        public bool ShowProgress;
+
         public UnityEvent<Wave> OnSendWave;
 
         private void Awake()
@@ -47,6 +49,11 @@ namespace TDDemo.Assets.Scripts.Waves
             _timeCounter?.Stop();
             SetProgress(0);
 
+            if (_progressCoroutine is not null)
+            {
+                StopCoroutine(_progressCoroutine);
+            }
+
             if (wave != null)
             {
                 BackgroundImage.color = wave.WaveStyle switch
@@ -55,7 +62,10 @@ namespace TDDemo.Assets.Scripts.Waves
                     _ => ColourHelper.DefaultWave,
                 };
 
-                _progressCoroutine = StartCoroutine(AnimateProgress(5));
+                if (ShowProgress)
+                {
+                    _progressCoroutine = StartCoroutine(AnimateProgress(5));
+                }
 
                 var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
                 if (spriteRenderer != null)
@@ -71,8 +81,6 @@ namespace TDDemo.Assets.Scripts.Waves
             }
             else
             {
-                StopCoroutine(_progressCoroutine);
-
                 BackgroundImage.color = ColourHelper.NoWave;
                 EnemyImage.sprite = null;
                 AmountText.text = string.Empty;
