@@ -110,6 +110,8 @@ namespace TDDemo.Assets.Scripts.Waves
                 SetProgress(_timeCounter.Progress);
                 yield return null;
             }
+
+            SendWave();
         }
 
         private void SetProgress(float progress)
