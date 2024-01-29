@@ -161,6 +161,7 @@ namespace TDDemo.Assets.Scripts.Waves
                     Count = waveNumber / 5,
                     Frequency = 1,
                     WaveStyle = WaveStyle.Boss,
+                    DelaySeconds = 10,
                 };
             }
 
@@ -171,6 +172,7 @@ namespace TDDemo.Assets.Scripts.Waves
                 Count = waveNumber,
                 Frequency = 2,
                 WaveStyle = WaveStyle.Regular,
+                DelaySeconds = 5,
             };
         }
 

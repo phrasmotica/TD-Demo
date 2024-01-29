@@ -64,7 +64,7 @@ namespace TDDemo.Assets.Scripts.Waves
 
                 if (ShowProgress)
                 {
-                    _progressCoroutine = StartCoroutine(AnimateProgress(5));
+                    _progressCoroutine = StartCoroutine(AnimateProgress(wave.DelaySeconds));
                 }
 
                 var spriteRenderer = wave.EnemyPrefab.GetComponentInChildren<SpriteRenderer>();
@@ -99,9 +99,9 @@ namespace TDDemo.Assets.Scripts.Waves
             }
         }
 
-        private IEnumerator AnimateProgress(float time)
+        private IEnumerator AnimateProgress(float timeSeconds)
         {
-            _timeCounter = new(time);
+            _timeCounter = new(timeSeconds);
             _timeCounter.Start();
 
             while (!_timeCounter.IsFinished)

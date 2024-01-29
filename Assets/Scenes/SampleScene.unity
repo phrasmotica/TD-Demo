@@ -2219,26 +2219,31 @@ MonoBehaviour:
     Count: 1
     Frequency: 1
     WaveStyle: 0
+    DelaySeconds: 5
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 2
     Frequency: 1
     WaveStyle: 0
+    DelaySeconds: 5
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 2
     Frequency: 2
     WaveStyle: 0
+    DelaySeconds: 5
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 70d2f4da9f814b84c8b4d6b0732c9bf9,
       type: 3}
     Count: 3
     Frequency: 2
     WaveStyle: 0
+    DelaySeconds: 5
   - EnemyPrefab: {fileID: 6789323038238934127, guid: 145b272046c0e4c43b5e324668eea7a3,
       type: 3}
     Count: 1
     Frequency: 1
     WaveStyle: 1
+    DelaySeconds: 10
   LastWave: 10
   FutureWaveCount: 5
   OnWavesChange:
